@@ -25,8 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 /**
  * @author matt on 07/06/14.
  */
 public interface NodeSelector {
+    Iterator<Node<?>> select(Tree tree);
 }
