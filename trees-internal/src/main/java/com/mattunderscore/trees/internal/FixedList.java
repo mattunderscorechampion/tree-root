@@ -58,18 +58,7 @@ public final class FixedList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            private int pos = 0;
-            @Override
-            public boolean hasNext() {
-                return pos < array.length;
-            }
-
-            @Override
-            public E next() {
-                return (E)array[pos++];
-            }
-        };
+        return new FLIterator();
     }
 
     @Override
@@ -175,16 +164,78 @@ public final class FixedList<E> implements List<E> {
 
     @Override
     public ListIterator<E> listIterator() {
-        throw new UnsupportedOperationException();
+        return new FLIterator();
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        throw new UnsupportedOperationException();
+        if (index < 0 || index > array.length) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        else {
+            return new FLIterator(index);
+        }
     }
 
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         throw new UnsupportedOperationException();
+    }
+
+    private final class FLIterator implements ListIterator<E> {
+        private int pos;
+
+        public FLIterator() {
+            pos = 0;
+        }
+
+        public FLIterator(int index) {
+            pos = index;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return pos < array.length;
+        }
+
+        @Override
+        public E next() {
+            return (E)array[pos++];
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return pos > 0;
+        }
+
+        @Override
+        public E previous() {
+            return (E)array[--pos];
+        }
+
+        @Override
+        public int nextIndex() {
+            return pos + 1;
+        }
+
+        @Override
+        public int previousIndex() {
+            return pos - 1;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void set(E e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void add(E e) {
+            throw new UnsupportedOperationException();
+        }
     }
 }
