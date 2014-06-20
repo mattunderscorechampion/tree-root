@@ -26,7 +26,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.strings;
 
 import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.internal.TreeBuilderImpl;
 import org.junit.Test;
+
+import java.util.Collection;
+import java.util.Iterator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author matt on 10/06/14.
@@ -34,11 +42,32 @@ import org.junit.Test;
 public class StringTreeBuilderTest {
     @Test
     public void build0() {
-        Trees trees;
-        trees.create("a",
-            trees.create("b",
-                trees.create("c")),
-            trees.create("d")
+        final TreeBuilder treeBuilder = new TreeBuilderImpl();
+        final Tree tree = treeBuilder.create("a",
+            treeBuilder.create("b",
+                treeBuilder.create("c")),
+            treeBuilder.create("d")
         );
+
+        final Node<?> root = tree.getRoot();
+        assertEquals(String.class, root.getElementClass());
+        assertEquals("a", root.getElement());
+        final Collection<Node<?>> children0 = root.getChildren();
+        final Iterator<Node<?>> iterator0 = children0.iterator();
+        assertEquals(2, children0.size());
+        assertEquals("a", root.getElement());
+        assertTrue(iterator0.hasNext());
+        final Node<?> bNode = iterator0.next();
+        assertTrue(iterator0.hasNext());
+        final Node<?> dNode = iterator0.next();
+        assertFalse(iterator0.hasNext());
+        assertEquals("b", bNode.getElement());
+        assertEquals("d", dNode.getElement());
+        final Collection<Node<?>> children1 = bNode.getChildren();
+        final Iterator<Node<?>> iterator1 = children1.iterator();
+        assertTrue(iterator1.hasNext());
+        final Node<?> cNode = iterator1.next();
+        assertFalse(iterator1.hasNext());
+        assertEquals("c", cNode.getElement());
     }
 }

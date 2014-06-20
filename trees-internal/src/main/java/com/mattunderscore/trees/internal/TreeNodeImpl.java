@@ -34,10 +34,11 @@ import java.util.List;
 /**
  * @author matt on 10/06/14.
  */
-public class TreeNodeImpl<E> implements Tree, Node<E> {
+public final class TreeNodeImpl<E> implements Tree, Node<E> {
     private final E element;
     private final List<Node<?>> children;
-    public TreeNodeImpl(E element, List<Node<?>> children, Tree parent) {
+
+    public TreeNodeImpl(E element, List<Node<?>> children) {
         this.element = element;
         this.children = children;
     }

@@ -25,8 +25,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.TreeBuilder;
+
+import java.util.Collections;
+
 /**
- * @author matt on 07/06/14.
+ * @author matt on 20/06/14.
  */
-public class TreeImpl {
+public final class TreeBuilderImpl implements TreeBuilder {
+
+    @Override
+    public <E> Tree create(E e) {
+        return new TreeNodeImpl(e, Collections.emptyList());
+    }
+
+    @Override
+    public <E> Tree create(E e, Tree... trees) {
+        return new TreeNodeImpl(e, new FixedList<Node<?>>(trees));
+    }
 }

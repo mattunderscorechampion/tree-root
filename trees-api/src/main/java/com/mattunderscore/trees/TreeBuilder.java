@@ -26,8 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
- * @author matt on 10/06/14.
+ * @author matt on 18/06/14.
  */
-public interface TreeBuilder extends TreeMutator {
-    Tree build();
+public interface TreeBuilder
+{
+    <E> Tree create(E e);
+    <E> Tree create(E e, Tree... trees);
 }

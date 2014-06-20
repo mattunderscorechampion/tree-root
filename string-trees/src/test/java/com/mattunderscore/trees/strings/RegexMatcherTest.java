@@ -27,8 +27,7 @@ package com.mattunderscore.trees.strings;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.NodeMatcher;
-import com.mattunderscore.trees.TreeMutator;
-import com.mattunderscore.trees.internal.NodeImpl;
+import com.mattunderscore.trees.internal.TreeNodeImpl;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -45,36 +44,31 @@ public final class RegexMatcherTest {
 
     @Test
     public void nodeMatches0() {
-        final Node<String> node = new NodeImpl(null, "A", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("A", Collections.emptyList());
         assertTrue(aMatcher.matches(node));
     }
 
     @Test
     public void nodeMatches1() {
-        final Node<String> node = new NodeImpl(null, "A", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("A", Collections.emptyList());
         assertTrue(aMatcherAlt.matches(node));
     }
 
     @Test
     public void nodeMatches2() {
-        final Node<String> nodeA = new NodeImpl(null, "A", Collections.emptyList());
-        final Node<String> nodeB = new NodeImpl(null, "B", Collections.emptyList());
-
-        final TreeMutator builder = null;
-        final TreeMutator.NodeAppender a = builder.setRoot(nodeA);
-        final TreeMutator.NodeAppender b = a.addChild(nodeB);
-
+        final Node<String> nodeA = new TreeNodeImpl("A", Collections.emptyList());
+        final Node<String> nodeB = new TreeNodeImpl("B", Collections.emptyList());
     }
 
     @Test
     public void nodeNoMatch() {
-        final Node<String> node = new NodeImpl(null, "B", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("B", Collections.emptyList());
         assertFalse(aMatcher.matches(node));
     }
 
     @Test
     public void nodeNoMatch1() {
-        final Node<String> node = new NodeImpl(null, "B", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("B", Collections.emptyList());
         assertFalse(aMatcherAlt.matches(node));
     }
 }
