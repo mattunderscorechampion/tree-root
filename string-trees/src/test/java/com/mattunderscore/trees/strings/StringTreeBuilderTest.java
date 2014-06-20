@@ -34,48 +34,6 @@ import org.junit.Test;
 public class StringTreeBuilderTest {
     @Test
     public void build0() {
-        TreeBuilder builder;
-        final TreeMutator.NodeAppender depth1 = builder.setRoot("a");
-        final TreeMutator.NodeAppender depth2 = depth1.addChild("b");
-        depth1.addChild("c");
-        depth2.addChild("d");
-    }
-
-    @Test
-    public void build1() {
-        TreeBuilder builder;
-        builder.setRoot("a")
-            .addChild("b")
-                .addChild("c")
-                .parent()
-            .addChild("d");
-    }
-
-    @Test
-    public void build2() {
-        TreeFactory factory;
-        factory.appendSubTrees(
-            factory.createNode("a"),
-            factory.appendSubTrees(
-                factory.createNode("b"),
-                factory.createNode("c")),
-            factory.createNode("d"));
-    }
-
-    @Test
-    public void build3() {
-        Treer treer;
-        treer.create(
-            treer.create("a"),
-            treer.create(
-                treer.create(
-                    treer.create("b"),
-                    treer.create("c")),
-                treer.create("d")));
-    }
-
-    @Test
-    public void build4() {
         Trees trees;
         trees.create("a",
             trees.create("b",
