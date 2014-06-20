@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -77,8 +78,29 @@ public final class FixedList<E> implements List<E> {
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
-        throw new UnsupportedOperationException();
+    public <T> T[] toArray(final T[] targetArray) {
+        final Class<?> componentType = array.getClass().getComponentType();
+        final E[] destArray;
+        if (targetArray == null) {
+            throw new NullPointerException();
+        }
+        else if (!targetArray.getClass().getComponentType().equals(componentType)) {
+            throw new ArrayStoreException();
+        }
+        else if (targetArray.length < array.length) {
+            destArray = (E[])Array.newInstance(componentType, array.length);
+        }
+        else {
+            destArray = (E[])targetArray;
+        }
+        int i = 0;
+        for (;i < array.length; i++) {
+            destArray[i] = (E)array[i];
+        }
+        for (;i < destArray.length; i++) {
+            destArray[i] = null;
+        }
+        return (T[])destArray;
     }
 
     @Override
