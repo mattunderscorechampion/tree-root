@@ -26,10 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * @author matt on 20/06/14.
@@ -63,7 +60,7 @@ public final class FixedList<E> implements List<E> {
 
     @Override
     public Object[] toArray() {
-        throw new UnsupportedOperationException();
+        return toArray((E[])Array.newInstance(array.getClass().getComponentType(), array.length));
     }
 
     @Override
@@ -200,7 +197,12 @@ public final class FixedList<E> implements List<E> {
 
         @Override
         public E next() {
-            return (E)array[pos++];
+            if (pos < array.length) {
+                return (E) array[pos++];
+            }
+            else {
+                throw new NoSuchElementException();
+            }
         }
 
         @Override
@@ -210,7 +212,12 @@ public final class FixedList<E> implements List<E> {
 
         @Override
         public E previous() {
-            return (E)array[--pos];
+            if (pos > 0) {
+                return (E) array[--pos];
+            }
+            else {
+                throw new NoSuchElementException();
+            }
         }
 
         @Override
