@@ -31,7 +31,7 @@ import com.mattunderscore.trees.NodeMatcher;
 /**
  * @author matt on 09/06/14.
  */
-public class DefaultMatcher<E> implements NodeMatcher<E> {
+public final class DefaultMatcher<E> implements NodeMatcher<E> {
     private final E value;
 
     public DefaultMatcher(E value) {

@@ -31,7 +31,10 @@ import java.util.Collection;
  * @author matt on 07/06/14.
  */
 public interface Node<E> {
+
     E getElement();
+
     Class<E> getElementClass();
+
     Collection<Node<?>> getChildren();
 }

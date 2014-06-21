@@ -28,8 +28,9 @@ package com.mattunderscore.trees;
 /**
  * @author matt on 18/06/14.
  */
-public interface TreeBuilder
-{
+public interface TreeBuilder {
+
     <E> Tree create(E e);
+
     <E> Tree create(E e, Tree... trees);
 }

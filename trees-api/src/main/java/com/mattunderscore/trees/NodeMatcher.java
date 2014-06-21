@@ -29,5 +29,6 @@ package com.mattunderscore.trees;
  * @author matt on 09/06/14.
  */
 public interface NodeMatcher<E> {
-    public boolean matches(Node<E> node);
+
+    boolean matches(Node<E> node);
 }

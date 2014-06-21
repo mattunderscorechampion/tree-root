@@ -40,6 +40,7 @@ import static org.junit.Assert.assertTrue;
  * @author matt on 10/06/14.
  */
 public class StringTreeBuilderTest {
+
     @Test
     public void build0() {
         final TreeBuilder treeBuilder = new TreeBuilderImpl();

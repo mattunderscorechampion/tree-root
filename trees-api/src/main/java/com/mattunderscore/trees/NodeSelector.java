@@ -32,5 +32,6 @@ import java.util.Iterator;
  * @author matt on 07/06/14.
  */
 public interface NodeSelector {
+
     Iterator<Node<?>> select(Tree tree);
 }
