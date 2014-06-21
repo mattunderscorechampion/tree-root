@@ -26,25 +26,36 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
- * Constructs tree from the bottom up.
- * @author matt on 18/06/14.
+ * Constructs trees from the top down.
+ * @author matt on 21/06/14.
  */
-public interface TreeFactory {
+public interface TreeBuilder {
 
     /**
-     * Create a tree containing a single root node.
+     * Sets the root node. Can only be called once.
      * @param e The element to set as root
      * @param <E> The class of the root element
-     * @return The tree
+     * @return A {@link NodeAppender} for the root node
+     * @throws IllegalStateException If called more than once
      */
-    <E> Tree create(E e);
+    <E> NodeAppender root(E e) throws IllegalStateException;
 
     /**
-     * Create a tree containing the trees as children to the root node.
-     * @param e The element to set as root
-     * @param trees All the child subtrees
-     * @param <E> The class of the root element
      * @return The tree
      */
-    <E> Tree create(E e, Tree... trees);
+    Tree build();
+
+    /**
+     * Each {@link NodeAppender} is associated with a node of the tree. It allows children to be added to that node.
+     */
+    public interface NodeAppender {
+
+        /**
+         * Append a child node to the position
+         * @param e The element to add as a child
+         * @param <E> The class of the element to add as a child
+         * @return A {@link NodeAppender} for the child node
+         */
+        <E> NodeAppender addChild(E e);
+    }
 }
