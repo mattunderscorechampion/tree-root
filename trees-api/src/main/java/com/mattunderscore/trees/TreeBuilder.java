@@ -42,8 +42,9 @@ public interface TreeBuilder {
 
     /**
      * @return The tree
+     * @throws IllegalStateException If called before root
      */
-    Tree build();
+    Tree build() throws IllegalStateException;
 
     /**
      * Each {@link NodeAppender} is associated with a node of the tree. It allows children to be added to that node.

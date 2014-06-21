@@ -27,22 +27,60 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.TreeFactory;
+import com.mattunderscore.trees.TreeBuilder;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author matt on 20/06/14.
+ * @author matt on 21/06/14.
  */
-public final class TreeFactoryImpl implements TreeFactory {
+public class TreeBuilderImpl implements TreeBuilder {
+    private NodeAppenderImpl root;
 
     @Override
-    public <E> Tree create(E e) {
-        return new TreeNodeImpl(e, Collections.emptyList());
+    public <E> NodeAppender root(E e) throws IllegalStateException {
+        if (root == null) {
+            root = new NodeAppenderImpl(e);
+            return root;
+        }
+        else {
+            throw new IllegalStateException("Root already set");
+        }
     }
 
     @Override
-    public <E> Tree create(E e, Tree... trees) {
-        return new TreeNodeImpl(e, new FixedUncheckedList<Node<?>>(trees));
+    public Tree build() {
+        if (root == null) {
+            throw new IllegalStateException("Root not set");
+        }
+        else {
+            return root.createTree();
+        }
+    }
+
+    private final class NodeAppenderImpl<R> implements NodeAppender {
+        private final R root;
+        private final List<NodeAppenderImpl> children = new ArrayList<>();
+
+        public NodeAppenderImpl(R root) {
+            this.root = root;
+        }
+
+        @Override
+        public <E> NodeAppender addChild(E e) {
+            final NodeAppenderImpl child = new NodeAppenderImpl(e);
+            children.add(child);
+            return child;
+        }
+
+        private TreeNodeImpl createTree() {
+            final TreeNodeImpl[] subTrees = new TreeNodeImpl[children.size()];
+            for (int i = 0; i < subTrees.length; i++) {
+                subTrees[i] = children.get(i).createTree();
+            }
+            final List<Node<?>> childNodes = new FixedUncheckedList<Node<?>>(subTrees);
+            return new TreeNodeImpl<>(root, childNodes);
+        }
     }
 }

@@ -31,10 +31,10 @@ import java.util.*;
 /**
  * @author matt on 20/06/14.
  */
-public final class FixedList<E> implements List<E> {
+public final class FixedUncheckedList<E> implements List<E> {
     private final Object[] array;
 
-    public <E> FixedList(E[] array) {
+    public FixedUncheckedList(Object[] array) {
         this.array = array;
     }
 

@@ -37,12 +37,12 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author matt on 20/06/14.
  */
-public final class FixedListTest {
+public final class FixedUncheckedListTest {
 
     @Test
     public void simpleTest() {
         final String[] array = {"a", "b", "c"};
-        final FixedList<String> strings = new FixedList<String>(array);
+        final FixedUncheckedList<String> strings = new FixedUncheckedList<String>(array);
         assertEquals(3, strings.size());
         assertEquals("a", strings.get(0));
         assertEquals("b", strings.get(1));
@@ -52,21 +52,21 @@ public final class FixedListTest {
     @Test(expected =  ArrayStoreException.class)
     public void toArray0() {
         final String[] array = {"a", "b", "c"};
-        final FixedList<String> strings = new FixedList<String>(array);
+        final FixedUncheckedList<String> strings = new FixedUncheckedList<String>(array);
         strings.toArray(new Integer[0]);
     }
 
     @Test(expected =  NullPointerException.class)
     public void toArray1() {
         final String[] array = {"a", "b", "c"};
-        final FixedList<String> strings = new FixedList<String>(array);
+        final FixedUncheckedList<String> strings = new FixedUncheckedList<String>(array);
         strings.toArray(null);
     }
 
     @Test
     public void toArray2() {
         final String[] array = {"a", "b", "c"};
-        final FixedList<String> strings = new FixedList<String>(array);
+        final FixedUncheckedList<String> strings = new FixedUncheckedList<String>(array);
         final String[] newArray = strings.toArray(new String[0]);
         assertEquals("a", newArray[0]);
         assertEquals("b", newArray[1]);
@@ -76,7 +76,7 @@ public final class FixedListTest {
     @Test
     public void toArray3() {
         final String[] array = {"a", "b", "c"};
-        final FixedList<String> strings = new FixedList<String>(array);
+        final FixedUncheckedList<String> strings = new FixedUncheckedList<String>(array);
         final String[] newArray = new String[5];
         assertSame(newArray, strings.toArray(newArray));
         assertEquals("a", newArray[0]);
@@ -89,7 +89,7 @@ public final class FixedListTest {
     @Test(expected = NoSuchElementException.class)
     public void iterator0() {
         final String[] array = {"a", "b", "c"};
-        final FixedList<String> strings = new FixedList<String>(array);
+        final FixedUncheckedList<String> strings = new FixedUncheckedList<String>(array);
         final Iterator<String> iterator = strings.iterator();
         assertTrue(iterator.hasNext());
         assertEquals("a", iterator.next());
@@ -105,7 +105,7 @@ public final class FixedListTest {
     @Test(expected = NoSuchElementException.class)
     public void iterator1() {
         final String[] array = {"a", "b", "c"};
-        final FixedList<String> strings = new FixedList<String>(array);
+        final FixedUncheckedList<String> strings = new FixedUncheckedList<String>(array);
         final ListIterator<String> iterator = strings.listIterator();
         assertFalse(iterator.hasPrevious());
         assertTrue(iterator.hasNext());

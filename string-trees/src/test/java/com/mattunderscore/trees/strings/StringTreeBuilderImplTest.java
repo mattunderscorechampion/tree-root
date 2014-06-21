@@ -25,7 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.strings;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.TreeBuilder;
+import com.mattunderscore.trees.TreeFactory;
+import com.mattunderscore.trees.internal.TreeBuilderImpl;
 import com.mattunderscore.trees.internal.TreeFactoryImpl;
 import org.junit.Test;
 
@@ -37,18 +41,17 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author matt on 10/06/14.
+ * @author matt on 21/06/14.
  */
-public final class StringTreeFactoryTest {
-
+public class StringTreeBuilderImplTest {
     @Test
     public void build0() {
-        final TreeFactory factory = new TreeFactoryImpl();
-        final Tree tree = factory.create("a",
-            factory.create("b",
-                factory.create("c")),
-            factory.create("d")
-        );
+        final TreeBuilder builder = new TreeBuilderImpl();
+        final TreeBuilder.NodeAppender nodeApp0 = builder.root("a");
+        final TreeBuilder.NodeAppender nodeApp1 = nodeApp0.addChild("b");
+        nodeApp1.addChild("c");
+        nodeApp0.addChild("d");
+        final Tree tree = builder.build();
 
         final Node<?> root = tree.getRoot();
         assertEquals(String.class, root.getElementClass());
