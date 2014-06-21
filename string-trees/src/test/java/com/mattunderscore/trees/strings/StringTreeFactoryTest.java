@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.strings;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.internal.TreeBuilderImpl;
+import com.mattunderscore.trees.internal.TreeFactoryImpl;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -39,15 +39,15 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author matt on 10/06/14.
  */
-public class StringTreeBuilderTest {
+public class StringTreeFactoryTest {
 
     @Test
     public void build0() {
-        final TreeBuilder treeBuilder = new TreeBuilderImpl();
-        final Tree tree = treeBuilder.create("a",
-            treeBuilder.create("b",
-                treeBuilder.create("c")),
-            treeBuilder.create("d")
+        final TreeFactory factory = new TreeFactoryImpl();
+        final Tree tree = factory.create("a",
+            factory.create("b",
+                factory.create("c")),
+            factory.create("d")
         );
 
         final Node<?> root = tree.getRoot();

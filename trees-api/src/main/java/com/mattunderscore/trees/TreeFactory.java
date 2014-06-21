@@ -23,26 +23,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
-
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.TreeBuilder;
-
-import java.util.Collections;
+package com.mattunderscore.trees;
 
 /**
- * @author matt on 20/06/14.
+ * @author matt on 18/06/14.
  */
-public final class TreeBuilderImpl implements TreeBuilder {
+public interface TreeFactory {
 
-    @Override
-    public <E> Tree create(E e) {
-        return new TreeNodeImpl(e, Collections.emptyList());
-    }
+    <E> Tree create(E e);
 
-    @Override
-    public <E> Tree create(E e, Tree... trees) {
-        return new TreeNodeImpl(e, new FixedList<Node<?>>(trees));
-    }
+    <E> Tree create(E e, Tree... trees);
 }
