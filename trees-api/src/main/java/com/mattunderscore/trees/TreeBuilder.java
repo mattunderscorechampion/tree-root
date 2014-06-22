@@ -29,34 +29,32 @@ package com.mattunderscore.trees;
  * Constructs trees from the top down.
  * @author matt on 21/06/14.
  */
-public interface TreeBuilder {
+public interface TreeBuilder<E> {
 
     /**
      * Sets the root node. Can only be called once.
      * @param e The element to set as root
-     * @param <E> The class of the root element
      * @return A {@link NodeAppender} for the root node
      * @throws IllegalStateException If called more than once
      */
-    <E> NodeAppender root(E e) throws IllegalStateException;
+    NodeAppender<E> root(E e) throws IllegalStateException;
 
     /**
      * @return The tree
      * @throws IllegalStateException If called before root
      */
-    Tree build() throws IllegalStateException;
+    Tree<E> build() throws IllegalStateException;
 
     /**
      * Each {@link NodeAppender} is associated with a node of the tree. It allows children to be added to that node.
      */
-    public interface NodeAppender {
+    public interface NodeAppender<R> {
 
         /**
          * Append a child node to the position
          * @param e The element to add as a child
-         * @param <E> The class of the element to add as a child
          * @return A {@link NodeAppender} for the child node
          */
-        <E> NodeAppender addChild(E e);
+        NodeAppender<R> addChild(R e);
     }
 }

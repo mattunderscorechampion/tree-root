@@ -36,9 +36,9 @@ import java.util.List;
  */
 public final class TreeNodeImpl<E> implements Tree, Node<E> {
     private final E element;
-    private final List<Node<?>> children;
+    private final List<Node<E>> children;
 
-    public TreeNodeImpl(E element, List<Node<?>> children) {
+    public TreeNodeImpl(E element, List<Node<E>> children) {
         this.element = element;
         this.children = children;
     }
@@ -54,7 +54,7 @@ public final class TreeNodeImpl<E> implements Tree, Node<E> {
     }
 
     @Override
-    public Collection<Node<?>> getChildren() {
+    public Collection<Node<E>> getChildren() {
         return children;
     }
 

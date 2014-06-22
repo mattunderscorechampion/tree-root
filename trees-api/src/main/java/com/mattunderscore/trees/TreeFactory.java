@@ -37,7 +37,7 @@ public interface TreeFactory {
      * @param <E> The class of the root element
      * @return The tree
      */
-    <E> Tree create(E e);
+    <E> Tree<E> create(E e);
 
     /**
      * Create a tree containing the trees as children to the root node.
@@ -46,5 +46,5 @@ public interface TreeFactory {
      * @param <E> The class of the root element
      * @return The tree
      */
-    <E> Tree create(E e, Tree... trees);
+    <E> Tree<E> create(E e, Tree<E>... trees);
 }

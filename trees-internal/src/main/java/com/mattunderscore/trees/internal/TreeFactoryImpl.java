@@ -37,12 +37,12 @@ import java.util.Collections;
 public final class TreeFactoryImpl implements TreeFactory {
 
     @Override
-    public <E> Tree create(E e) {
+    public <E> Tree<E> create(E e) {
         return new TreeNodeImpl(e, Collections.emptyList());
     }
 
     @Override
-    public <E> Tree create(E e, Tree... trees) {
-        return new TreeNodeImpl(e, new FixedUncheckedList<Node<?>>(trees));
+    public <E> Tree<E> create(E e, Tree<E>... trees) {
+        return new TreeNodeImpl(e, new FixedUncheckedList<Node<E>>(trees));
     }
 }

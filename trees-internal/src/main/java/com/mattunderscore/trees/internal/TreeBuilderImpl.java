@@ -35,13 +35,13 @@ import java.util.List;
 /**
  * @author matt on 21/06/14.
  */
-public class TreeBuilderImpl implements TreeBuilder {
-    private NodeAppenderImpl root;
+public class TreeBuilderImpl<E> implements TreeBuilder<E> {
+    private NodeAppenderImpl<E> root;
 
     @Override
-    public <E> NodeAppender root(E e) throws IllegalStateException {
+    public NodeAppender<E> root(E e) throws IllegalStateException {
         if (root == null) {
-            root = new NodeAppenderImpl(e);
+            root = new NodeAppenderImpl<E>(e);
             return root;
         }
         else {
@@ -59,7 +59,7 @@ public class TreeBuilderImpl implements TreeBuilder {
         }
     }
 
-    private final class NodeAppenderImpl<R> implements NodeAppender {
+    private final class NodeAppenderImpl<R> implements NodeAppender<R> {
         private final R root;
         private final List<NodeAppenderImpl> children = new ArrayList<>();
 
@@ -68,8 +68,8 @@ public class TreeBuilderImpl implements TreeBuilder {
         }
 
         @Override
-        public <E> NodeAppender addChild(E e) {
-            final NodeAppenderImpl child = new NodeAppenderImpl(e);
+        public NodeAppender addChild(R e) {
+            final NodeAppenderImpl<R> child = new NodeAppenderImpl<>(e);
             children.add(child);
             return child;
         }
@@ -79,7 +79,7 @@ public class TreeBuilderImpl implements TreeBuilder {
             for (int i = 0; i < subTrees.length; i++) {
                 subTrees[i] = children.get(i).createTree();
             }
-            final List<Node<?>> childNodes = new FixedUncheckedList<Node<?>>(subTrees);
+            final List<Node<R>> childNodes = new FixedUncheckedList<Node<R>>(subTrees);
             return new TreeNodeImpl<>(root, childNodes);
         }
     }

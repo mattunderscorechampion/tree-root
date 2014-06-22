@@ -44,30 +44,30 @@ public final class StringTreeFactoryTest {
     @Test
     public void build0() {
         final TreeFactory factory = new TreeFactoryImpl();
-        final Tree tree = factory.create("a",
+        final Tree<String> tree = factory.create("a",
             factory.create("b",
                 factory.create("c")),
             factory.create("d")
         );
 
-        final Node<?> root = tree.getRoot();
+        final Node<String> root = tree.getRoot();
         assertEquals(String.class, root.getElementClass());
         assertEquals("a", root.getElement());
-        final Collection<Node<?>> children0 = root.getChildren();
-        final Iterator<Node<?>> iterator0 = children0.iterator();
+        final Collection<Node<String>> children0 = root.getChildren();
+        final Iterator<Node<String>> iterator0 = children0.iterator();
         assertEquals(2, children0.size());
         assertEquals("a", root.getElement());
         assertTrue(iterator0.hasNext());
-        final Node<?> bNode = iterator0.next();
+        final Node<String> bNode = iterator0.next();
         assertTrue(iterator0.hasNext());
-        final Node<?> dNode = iterator0.next();
+        final Node<String> dNode = iterator0.next();
         assertFalse(iterator0.hasNext());
         assertEquals("b", bNode.getElement());
         assertEquals("d", dNode.getElement());
-        final Collection<Node<?>> children1 = bNode.getChildren();
-        final Iterator<Node<?>> iterator1 = children1.iterator();
+        final Collection<Node<String>> children1 = bNode.getChildren();
+        final Iterator<Node<String>> iterator1 = children1.iterator();
         assertTrue(iterator1.hasNext());
-        final Node<?> cNode = iterator1.next();
+        final Node<String> cNode = iterator1.next();
         assertFalse(iterator1.hasNext());
         assertEquals("c", cNode.getElement());
     }

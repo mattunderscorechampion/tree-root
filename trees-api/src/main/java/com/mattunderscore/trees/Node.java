@@ -36,5 +36,5 @@ public interface Node<E> {
 
     Class<E> getElementClass();
 
-    Collection<Node<?>> getChildren();
+    Collection<Node<E>> getChildren();
 }

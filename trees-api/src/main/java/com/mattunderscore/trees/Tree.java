@@ -28,7 +28,7 @@ package com.mattunderscore.trees;
 /**
  * @author matt on 07/06/14.
  */
-public interface Tree {
+public interface Tree<E> {
 
-    Node<?> getRoot();
+    Node<E> getRoot();
 }

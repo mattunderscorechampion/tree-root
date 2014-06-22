@@ -27,6 +27,8 @@ package com.mattunderscore.trees.strings;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.NodeMatcher;
+import com.mattunderscore.trees.TreeFactory;
+import com.mattunderscore.trees.internal.TreeFactoryImpl;
 import com.mattunderscore.trees.internal.TreeNodeImpl;
 import org.junit.Test;
 
@@ -39,8 +41,9 @@ import static org.junit.Assert.assertTrue;
  * @author matt on 09/06/14.
  */
 public final class RegexMatcherTest {
-    private final NodeMatcher<String> aMatcher = new RegexMatcher("^A$");
-    private final NodeMatcher<String> aMatcherAlt = new RegexMatcher("A");
+    private static final TreeFactory factory = new TreeFactoryImpl();
+    private static final NodeMatcher<String> aMatcher = new RegexMatcher("^A$");
+    private static final NodeMatcher<String> aMatcherAlt = new RegexMatcher("A");
 
     @Test
     public void nodeMatches0() {
@@ -61,7 +64,7 @@ public final class RegexMatcherTest {
     }
 
     @Test
-    public void nodeNoMatch() {
+    public void nodeNoMatch0() {
         final Node<String> node = new TreeNodeImpl("B", Collections.emptyList());
         assertFalse(aMatcher.matches(node));
     }
