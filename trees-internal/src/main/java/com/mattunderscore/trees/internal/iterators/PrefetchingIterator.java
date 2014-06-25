@@ -23,15 +23,44 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.internal.iterators;
 
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
- * @author matt on 07/06/14.
+ * @author matt on 25/06/14.
  */
-public interface NodeSelector<E> {
+public abstract class PrefetchingIterator<E> implements Iterator<E> {
+    private E prefetched;
 
-    Iterator<Node<E>> select(Tree<E> tree);
+    @Override
+    public final boolean hasNext() {
+        if (prefetched != null) {
+            return true;
+        }
+        else {
+            try {
+                prefetched = calculateNext();
+                return true;
+            }
+            catch (NoSuchElementException e) {
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public final E next() {
+        if (prefetched != null) {
+            final E next = prefetched;
+            prefetched = null;
+            return next;
+        }
+        else {
+            return calculateNext();
+        }
+    }
+
+    protected abstract E calculateNext();
 }
