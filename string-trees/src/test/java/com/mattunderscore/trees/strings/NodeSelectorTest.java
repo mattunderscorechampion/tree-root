@@ -52,12 +52,14 @@ public class NodeSelectorTest {
         final Iterator<Node<String>> nodeIterator0 = selector0.select(tree);
         assertTrue(nodeIterator0.hasNext());
         assertEquals("A", nodeIterator0.next().getElement());
+        assertFalse(nodeIterator0.hasNext());
 
         final NodeMatcher<String> matcher1 = new DefaultMatcher("B");
         final NodeSelector<String> selector1 = selectorFactory.newSelector(matcher1, selector0);
         final Iterator<Node<String>> nodeIterator1 = selector1.select(tree);
         assertTrue(nodeIterator1.hasNext());
         assertEquals("B", nodeIterator1.next().getElement());
+        assertFalse(nodeIterator1.hasNext());
 
         final NodeMatcher<String> matcher2 = new DefaultMatcher("C");
         final NodeSelector<String> selector2 = selectorFactory.newSelector(matcher2, selector1);
@@ -68,5 +70,6 @@ public class NodeSelectorTest {
         final Iterator<Node<String>> nodeIterator3 = selector3.select(tree);
         assertTrue(nodeIterator3.hasNext());
         assertEquals("C", nodeIterator3.next().getElement());
+        assertFalse(nodeIterator3.hasNext());
     }
 }

@@ -34,13 +34,19 @@ import com.mattunderscore.trees.internal.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.internal.iterators.SingletonIterator;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
+ * Factory for node selectors.
  * @author matt on 25/06/14.
  */
 public class NodeSelectorFactory {
 
+    /**
+     * Create a node selector for the root node.
+     * @param matcher
+     * @param <E>
+     * @return
+     */
     public <E> NodeSelector newSelector(final NodeMatcher<E> matcher) {
         return new NodeSelector<E>() {
             @Override
@@ -56,6 +62,13 @@ public class NodeSelectorFactory {
         };
     }
 
+    /**
+     * Create a node selector for the children of another node selector.
+     * @param matcher
+     * @param selector
+     * @param <E>
+     * @return
+     */
     public <E> NodeSelector newSelector(final NodeMatcher<E> matcher, final NodeSelector<E> selector) {
         return new NodeSelector<E>() {
             @Override
