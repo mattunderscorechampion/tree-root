@@ -29,6 +29,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /**
+ * Array backed, not typed checked, list implementation for immutable lists from a trusted source.
  * @author matt on 20/06/14.
  */
 public final class FixedUncheckedList<E> implements List<E> {

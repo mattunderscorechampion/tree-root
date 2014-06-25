@@ -42,7 +42,9 @@ public class NodeSelectorTest {
     @Test
     public void test() {
         final TreeFactory factory = new TreeFactoryImpl();
-        final Tree<String> tree = factory.create("A", factory.create("B"), factory.create("C"));
+        final Tree<String> tree = factory.create("A",
+            factory.create("B"),
+            factory.create("C"));
 
         final NodeSelectorFactory selectorFactory = new NodeSelectorFactory();
         final NodeMatcher<String> matcher0 = new DefaultMatcher("A");

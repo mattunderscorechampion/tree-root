@@ -29,6 +29,7 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.NodeMatcher;
 
 /**
+ * Matches nodes with the element equal to the value passed to it.
  * @author matt on 09/06/14.
  */
 public final class DefaultMatcher<E> implements NodeMatcher<E> {
