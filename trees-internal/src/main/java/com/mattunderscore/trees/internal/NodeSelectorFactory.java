@@ -64,12 +64,11 @@ public class NodeSelectorFactory {
 
     /**
      * Create a node selector for the children of another node selector.
-     * @param matcher
      * @param selector
-     * @param <E>
+     * @param matcher
      * @return
      */
-    public <E> NodeSelector newSelector(final NodeMatcher<E> matcher, final NodeSelector<E> selector) {
+    public <E> NodeSelector newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
         return new NodeSelector<E>() {
             @Override
             public Iterator<Node<E>> select(Tree<E> tree) {
