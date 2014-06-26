@@ -29,21 +29,20 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.NodeMatcher;
 
 /**
- * Matches the negation of the matcher passed to it.
- * @author matt on 25/06/14.
+ * Matches a node if one or both of the two matchers passed in match the node.
+ * @author matt on 26/06/14.
  */
-public final class NegatingMatcher<E> implements NodeMatcher<E> {
-    private final NodeMatcher<E> matcher;
+public final class DisjunctionMatcher<E> implements NodeMatcher<E> {
+    private final NodeMatcher<E> matcher0;
+    private final NodeMatcher<E> matcher1;
 
-    public NegatingMatcher(NodeMatcher<E> matcher) {
-        if (matcher == null) {
-            throw new NullPointerException();
-        }
-        this.matcher = matcher;
+    public DisjunctionMatcher(NodeMatcher<E> matcher0, NodeMatcher<E> matcher1) {
+        this.matcher0 = matcher0;
+        this.matcher1 = matcher1;
     }
 
     @Override
     public boolean matches(Node<E> node) {
-        return !matcher.matches(node);
+        return matcher0.matches(node) || matcher1.matches(node);
     }
 }

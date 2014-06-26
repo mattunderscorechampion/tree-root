@@ -32,7 +32,7 @@ import com.mattunderscore.trees.NodeMatcher;
  * Matches all nodes.
  * @author matt on 25/06/14.
  */
-public class AlwaysMatcher<E> implements NodeMatcher<E> {
+public final class AlwaysMatcher<E> implements NodeMatcher<E> {
     @Override
     public boolean matches(Node<E> node) {
         return true;

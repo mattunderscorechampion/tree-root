@@ -29,21 +29,21 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.NodeMatcher;
 
 /**
- * Matches the negation of the matcher passed to it.
- * @author matt on 25/06/14.
+ * Matches the class of the node element.
+ * @author matt on 26/06/14.
  */
-public final class NegatingMatcher<E> implements NodeMatcher<E> {
-    private final NodeMatcher<E> matcher;
+public final class TypeMatcher implements NodeMatcher {
+    private final Class<?> type;
 
-    public NegatingMatcher(NodeMatcher<E> matcher) {
-        if (matcher == null) {
+    public TypeMatcher(Class<?> type) {
+        if (type == null) {
             throw new NullPointerException();
         }
-        this.matcher = matcher;
+        this.type = type;
     }
 
     @Override
-    public boolean matches(Node<E> node) {
-        return !matcher.matches(node);
+    public boolean matches(Node node) {
+        return type.equals(node.getElementClass());
     }
 }
