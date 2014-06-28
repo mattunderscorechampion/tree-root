@@ -40,6 +40,7 @@ import java.util.Iterator;
  * @author matt on 25/06/14.
  */
 public class NodeSelectorFactory {
+    private final TreeHelper helper = new TreeHelper();
 
     /**
      * Create a node selector for the root node.
@@ -78,7 +79,17 @@ public class NodeSelectorFactory {
         };
     }
 
-    private static class NodeIterator<E> extends PrefetchingIterator<Node<E>> {
+    public <E> NodeSelector newSelector(final NodeSelector<E> selector0, final NodeSelector<E> selector1) {
+        return new NodeSelector<E>() {
+            @Override
+            public Iterator<Node<E>> select(Tree<E> tree) {
+                final Iterator<Node<E>> startingPoints = selector0.select(tree);
+                return new AsTreeIterator<>(startingPoints, selector1, helper);
+            }
+        };
+    }
+
+    private static final class NodeIterator<E> extends PrefetchingIterator<Node<E>> {
         private final Iterator<Node<E>> parents;
         private final NodeMatcher<E> matcher;
         private Iterator<Node<E>> possibles;
@@ -104,6 +115,35 @@ public class NodeSelectorFactory {
             }
             else {
                 possibles = null;
+                return calculateNext();
+            }
+        }
+    }
+
+    private static final class AsTreeIterator<E> extends PrefetchingIterator<Node<E>> {
+        private final Iterator<Node<E>> startingPoints;
+        private final NodeSelector<E> selector;
+        private final TreeHelper helper;
+        private Iterator<Node<E>> currentEndPoints;
+        private Node<E> current;
+
+        public AsTreeIterator(Iterator<Node<E>> startingPoints, NodeSelector<E> selector, TreeHelper helper) {
+            this.startingPoints = startingPoints;
+            this.selector = selector;
+            this.helper = helper;
+        }
+
+        protected Node<E> calculateNext() {
+            if (currentEndPoints == null) {
+                final Tree tree = helper.treeFromRootNode(startingPoints.next());
+                currentEndPoints = selector.select(tree);
+            }
+
+            if (currentEndPoints.hasNext()) {
+                return currentEndPoints.next();
+            }
+            else {
+                currentEndPoints = null;
                 return calculateNext();
             }
         }
