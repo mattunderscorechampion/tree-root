@@ -28,6 +28,7 @@ package com.mattunderscore.trees;
 import java.util.Iterator;
 
 /**
+ * Selects a subtree.
  * @author matt on 07/06/14.
  */
 public interface TreeSelector {

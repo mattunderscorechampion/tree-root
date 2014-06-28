@@ -29,7 +29,7 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.NodeMatcher;
 
 /**
- * Matches all nodes.
+ * Matches any node.
  * @author matt on 25/06/14.
  */
 public final class AlwaysMatcher<E> implements NodeMatcher<E> {

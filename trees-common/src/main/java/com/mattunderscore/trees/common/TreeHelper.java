@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
+ * Helper class for trees. Loads services to provide extensibility.
  * @author matt on 26/06/14.
  */
 public final class TreeHelper {

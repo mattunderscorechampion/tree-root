@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
+ * Represents a tree.
  * @author matt on 07/06/14.
  */
 public interface Tree<E> {

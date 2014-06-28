@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author matt on 21/06/14.
  */
-public class TreeBuilderImpl<E> implements TreeBuilder<E> {
+public final class TreeBuilderImpl<E> implements TreeBuilder<E> {
     private NodeAppenderImpl<E> root;
 
     @Override

@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
+ * Selects a node of the tree.
  * @author matt on 07/06/14.
  */
 public interface NodeSelector<E> {

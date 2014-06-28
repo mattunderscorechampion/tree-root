@@ -40,7 +40,7 @@ import java.util.Iterator;
  * Factory for node selectors.
  * @author matt on 25/06/14.
  */
-public class NodeSelectorFactory {
+public final class NodeSelectorFactory {
     private final TreeHelper helper = new TreeHelper();
 
     /**
