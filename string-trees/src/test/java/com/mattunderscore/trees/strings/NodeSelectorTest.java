@@ -28,7 +28,7 @@ package com.mattunderscore.trees.strings;
 import static org.junit.Assert.*;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.internal.DefaultMatcher;
+import com.mattunderscore.trees.common.DefaultMatcher;
 import com.mattunderscore.trees.internal.NodeSelectorFactory;
 import com.mattunderscore.trees.internal.TreeFactoryImpl;
 import org.junit.Test;

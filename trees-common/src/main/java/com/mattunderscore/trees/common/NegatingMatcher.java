@@ -23,24 +23,27 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.NodeMatcher;
 
 /**
- * Matches nodes with the element equal to the value passed to it.
- * @author matt on 09/06/14.
+ * Matches the negation of the matcher passed to it.
+ * @author matt on 25/06/14.
  */
-public final class DefaultMatcher<E> implements NodeMatcher<E> {
-    private final E value;
+public final class NegatingMatcher<E> implements NodeMatcher<E> {
+    private final NodeMatcher<E> matcher;
 
-    public DefaultMatcher(E value) {
-        this.value = value;
+    public NegatingMatcher(NodeMatcher<E> matcher) {
+        if (matcher == null) {
+            throw new NullPointerException();
+        }
+        this.matcher = matcher;
     }
 
     @Override
     public boolean matches(Node<E> node) {
-        return value.equals(node.getElement());
+        return !matcher.matches(node);
     }
 }
