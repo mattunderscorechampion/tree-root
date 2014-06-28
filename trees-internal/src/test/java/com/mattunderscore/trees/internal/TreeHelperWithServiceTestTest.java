@@ -35,7 +35,7 @@ import static org.junit.Assert.assertSame;
 /**
  * @author matt on 28/06/14.
  */
-public class TreeHelperTest {
+public final class TreeHelperWithServiceTestTest {
     @Test
     public void test0() {
         final TreeHelper helper = new TreeHelper();
