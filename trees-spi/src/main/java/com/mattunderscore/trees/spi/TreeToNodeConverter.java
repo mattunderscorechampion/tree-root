@@ -29,9 +29,18 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 
 /**
+* Converter from a specific class of node to a tree.
 * @author matt on 28/06/14.
 */
 public interface TreeToNodeConverter {
+    /**
+     * @param node The node to convert
+     * @return The tree
+     */
     Tree treeFromRootNode(Node node);
+
+    /**
+     * @return The class of node it can convert
+     */
     Class<? extends Node> forClass();
 }

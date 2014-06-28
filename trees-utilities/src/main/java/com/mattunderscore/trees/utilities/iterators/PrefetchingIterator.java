@@ -23,35 +23,44 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.utilities.iterators;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.spi.TreeToNodeConverter;
-
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.NoSuchElementException;
 
 /**
- * @author matt on 26/06/14.
+ * @author matt on 25/06/14.
  */
-public final class TreeHelper {
-    private final Map<Class<?>, TreeToNodeConverter> converters;
+public abstract class PrefetchingIterator<E> implements Iterator<E> {
+    private E prefetched;
 
-    public TreeHelper() {
-        converters = new HashMap<Class<?>, TreeToNodeConverter>();
-        final ServiceLoader<TreeToNodeConverter> loader = ServiceLoader.load(TreeToNodeConverter.class);
-        final Iterator<TreeToNodeConverter> iterator = loader.iterator();
-        while (iterator.hasNext()) {
-            final TreeToNodeConverter converter = iterator.next();
-            converters.put(converter.forClass(), converter);
+    @Override
+    public final boolean hasNext() {
+        if (prefetched != null) {
+            return true;
+        }
+        else {
+            try {
+                prefetched = calculateNext();
+                return true;
+            }
+            catch (NoSuchElementException e) {
+                return false;
+            }
         }
     }
 
-    public Tree treeFromRootNode(Node node) {
-        return converters.get(node.getClass()).treeFromRootNode(node);
+    @Override
+    public final E next() {
+        if (prefetched != null) {
+            final E next = prefetched;
+            prefetched = null;
+            return next;
+        }
+        else {
+            return calculateNext();
+        }
     }
 
+    protected abstract E calculateNext();
 }

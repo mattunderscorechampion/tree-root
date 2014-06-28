@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.iterators;
+package com.mattunderscore.trees.utilities.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -31,36 +31,27 @@ import java.util.NoSuchElementException;
 /**
  * @author matt on 25/06/14.
  */
-public abstract class PrefetchingIterator<E> implements Iterator<E> {
-    private E prefetched;
+public final class SingletonIterator<E> implements Iterator<E> {
+    private final E element;
+    private boolean used = false;
 
-    @Override
-    public final boolean hasNext() {
-        if (prefetched != null) {
-            return true;
-        }
-        else {
-            try {
-                prefetched = calculateNext();
-                return true;
-            }
-            catch (NoSuchElementException e) {
-                return false;
-            }
-        }
+    public SingletonIterator(E element) {
+        this.element = element;
     }
 
     @Override
-    public final E next() {
-        if (prefetched != null) {
-            final E next = prefetched;
-            prefetched = null;
-            return next;
-        }
-        else {
-            return calculateNext();
-        }
+    public boolean hasNext() {
+        return !used;
     }
 
-    protected abstract E calculateNext();
+    @Override
+    public E next() {
+        if (used) {
+            throw new NoSuchElementException();
+        }
+        else {
+            used = true;
+            return element;
+        }
+    }
 }

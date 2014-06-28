@@ -13,6 +13,8 @@
         <module>trees-internal</module>
         <module>string-trees</module>
         <module>trees-spi</module>
+        <module>trees-common</module>
+        <module>trees-utilities</module>
     </modules>
 
     <build>
@@ -45,6 +47,16 @@
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-spi</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>trees-utilities</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>trees-common</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>

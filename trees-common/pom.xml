@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trees-internal</artifactId>
+    <artifactId>trees-common</artifactId>
 
     <dependencies>
         <dependency>
@@ -19,20 +19,6 @@
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-spi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
-            <artifactId>trees-utilities</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
-            <artifactId>trees-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

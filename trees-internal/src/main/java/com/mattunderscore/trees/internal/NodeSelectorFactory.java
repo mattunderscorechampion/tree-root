@@ -29,9 +29,10 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.NodeMatcher;
 import com.mattunderscore.trees.NodeSelector;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.internal.iterators.EmptyIterator;
-import com.mattunderscore.trees.internal.iterators.PrefetchingIterator;
-import com.mattunderscore.trees.internal.iterators.SingletonIterator;
+import com.mattunderscore.trees.common.TreeHelper;
+import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
+import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
+import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 import java.util.Iterator;
 

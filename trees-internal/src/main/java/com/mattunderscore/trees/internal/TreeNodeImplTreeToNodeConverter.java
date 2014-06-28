@@ -30,6 +30,7 @@ import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.TreeToNodeConverter;
 
 /**
+ * Converter for {@link com.mattunderscore.trees.internal.TreeNodeImpl}.
 * @author matt on 28/06/14.
 */
 public final class TreeNodeImplTreeToNodeConverter implements TreeToNodeConverter {
@@ -39,7 +40,7 @@ public final class TreeNodeImplTreeToNodeConverter implements TreeToNodeConverte
     }
 
     @Override
-    public Class<? extends Node> forClass() {
+    public Class<TreeNodeImpl> forClass() {
         return TreeNodeImpl.class;
     }
 }

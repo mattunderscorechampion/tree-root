@@ -25,9 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.NodeSelector;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.TreeFactory;
+import com.mattunderscore.trees.common.TreeHelper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertSame;

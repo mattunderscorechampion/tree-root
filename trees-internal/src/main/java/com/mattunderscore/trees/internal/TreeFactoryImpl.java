@@ -28,6 +28,7 @@ package com.mattunderscore.trees.internal;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.TreeFactory;
+import com.mattunderscore.trees.utilities.FixedUncheckedList;
 
 import java.util.Collections;
 
