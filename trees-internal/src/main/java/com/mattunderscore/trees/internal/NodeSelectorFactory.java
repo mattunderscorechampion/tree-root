@@ -58,7 +58,7 @@ public final class NodeSelectorFactory {
                     return new SingletonIterator<>(root);
                 }
                 else {
-                    return new EmptyIterator<Node<E>>();
+                    return EmptyIterator.get();
                 }
             }
         };

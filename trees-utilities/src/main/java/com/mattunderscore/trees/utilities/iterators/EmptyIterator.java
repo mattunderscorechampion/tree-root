@@ -29,9 +29,15 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * Iterator over no objects.
  * @author matt on 25/06/14.
  */
 public final class EmptyIterator<E> implements Iterator<E> {
+    /**
+     * A single instance can be safely used regardless of type.
+     */
+    private static final EmptyIterator instance = new EmptyIterator();
+
     @Override
     public boolean hasNext() {
         return false;
@@ -40,5 +46,13 @@ public final class EmptyIterator<E> implements Iterator<E> {
     @Override
     public E next() {
         throw new NoSuchElementException();
+    }
+
+    /**
+     * @param <E> The type of objects that are not there
+     * @return An iterator over no objects
+     */
+    public static final <E> Iterator<E> get() {
+        return instance;
     }
 }
