@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * Iterator for a single object.
  * @author matt on 25/06/14.
  */
 public final class SingletonIterator<E> implements Iterator<E> {
