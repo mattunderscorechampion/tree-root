@@ -31,7 +31,7 @@ import java.util.Iterator;
  * Selects a subtree.
  * @author matt on 07/06/14.
  */
-public interface TreeSelector {
+public interface TreeSelector<E> {
 
-    Iterator<Tree> select(Tree tree);
+    Iterator<Tree<E>> select(Tree<E> tree);
 }

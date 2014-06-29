@@ -29,6 +29,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * Abstract iterator implementation.
+ * Iterator that may prefetch the element to return next on hasNext.
  * @author matt on 25/06/14.
  */
 public abstract class PrefetchingIterator<E> implements Iterator<E> {
@@ -62,5 +64,9 @@ public abstract class PrefetchingIterator<E> implements Iterator<E> {
         }
     }
 
-    protected abstract E calculateNext();
+    /**
+     * @return The next element to return when asked
+     * @throws NoSuchElementException If no more elements
+     */
+    protected abstract E calculateNext() throws NoSuchElementException;
 }
