@@ -55,4 +55,9 @@ public final class SingletonIterator<E> implements Iterator<E> {
             return element;
         }
     }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 }

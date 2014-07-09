@@ -48,11 +48,16 @@ public final class EmptyIterator<E> implements Iterator<E> {
         throw new NoSuchElementException();
     }
 
+    @Override
+    public void remove() {
+        throw new IllegalStateException();
+    }
+
     /**
      * @param <E> The type of objects that are not there
      * @return An iterator over no objects
      */
-    public static final <E> Iterator<E> get() {
+    public static <E> Iterator<E> get() {
         return instance;
     }
 }

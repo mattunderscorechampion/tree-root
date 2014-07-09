@@ -64,6 +64,11 @@ public abstract class PrefetchingIterator<E> implements Iterator<E> {
         }
     }
 
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * @return The next element to return when asked
      * @throws NoSuchElementException If no more elements
