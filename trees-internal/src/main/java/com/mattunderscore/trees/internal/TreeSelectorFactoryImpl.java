@@ -36,15 +36,10 @@ import java.util.Iterator;
 /**
  * @author matt on 29/06/14.
  */
-public final class TreeSelectorFactory {
+public final class TreeSelectorFactoryImpl implements com.mattunderscore.trees.TreeSelectorFactory {
     private final TreeHelper helper = new TreeHelper();
 
-    /**
-     * Create a tree selector for the root node (entire tree).
-     * @param matcher
-     * @param <E>
-     * @return
-     */
+    @Override
     public <E> TreeSelector newSelector(final NodeMatcher<E> matcher) {
         return new TreeSelector<E>() {
             @Override
@@ -60,12 +55,7 @@ public final class TreeSelectorFactory {
         };
     }
 
-    /**
-     * Create a node selector for the children of another node selector.
-     * @param selector
-     * @param matcher
-     * @return
-     */
+    @Override
     public <E> TreeSelector<E> newSelector(final TreeSelector<E> selector, final NodeMatcher<E> matcher) {
         return new TreeSelector<E>() {
             @Override

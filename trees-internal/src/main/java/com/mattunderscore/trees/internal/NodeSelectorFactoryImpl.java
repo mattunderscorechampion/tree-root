@@ -25,10 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.NodeMatcher;
-import com.mattunderscore.trees.NodeSelector;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.TreeHelper;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
@@ -40,15 +37,10 @@ import java.util.Iterator;
  * Factory for node selectors.
  * @author matt on 25/06/14.
  */
-public final class NodeSelectorFactory {
+public final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     private final TreeHelper helper = new TreeHelper();
 
-    /**
-     * Create a node selector for the root node.
-     * @param matcher
-     * @param <E>
-     * @return
-     */
+    @Override
     public <E> NodeSelector newSelector(final NodeMatcher<E> matcher) {
         return new NodeSelector<E>() {
             @Override
@@ -64,12 +56,7 @@ public final class NodeSelectorFactory {
         };
     }
 
-    /**
-     * Create a node selector for the children of another node selector.
-     * @param selector
-     * @param matcher
-     * @return
-     */
+    @Override
     public <E> NodeSelector newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
         return new NodeSelector<E>() {
             @Override
@@ -80,6 +67,7 @@ public final class NodeSelectorFactory {
         };
     }
 
+    @Override
     public <E> NodeSelector newSelector(final NodeSelector<E> selector0, final NodeSelector<E> selector1) {
         return new NodeSelector<E>() {
             @Override

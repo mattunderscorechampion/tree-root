@@ -46,7 +46,7 @@ public class TreeSelectorTest {
                 factory.create("B"),
                 factory.create("C"));
 
-        final TreeSelectorFactory selectorFactory = new TreeSelectorFactory();
+        final com.mattunderscore.trees.TreeSelectorFactory selectorFactory = new TreeSelectorFactoryImpl();
         final NodeMatcher<String> matcher0 = new DefaultMatcher("A");
         final TreeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<Tree<String>> treeIterator0 = selector0.select(tree);
