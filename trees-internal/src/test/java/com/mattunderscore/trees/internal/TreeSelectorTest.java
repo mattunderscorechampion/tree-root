@@ -27,6 +27,7 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.DefaultMatcher;
+import com.mattunderscore.trees.common.TreeSelectorFactory;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -46,7 +47,7 @@ public class TreeSelectorTest {
                 factory.create("B"),
                 factory.create("C"));
 
-        final com.mattunderscore.trees.TreeSelectorFactory selectorFactory = new TreeSelectorFactoryImpl();
+        final TreeSelectorFactory selectorFactory = new TreeSelectorFactory();
         final NodeMatcher<String> matcher0 = new DefaultMatcher("A");
         final TreeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<Tree<String>> treeIterator0 = selector0.select(tree);

@@ -23,10 +23,9 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.TreeHelper;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
@@ -36,10 +35,15 @@ import java.util.Iterator;
 /**
  * @author matt on 29/06/14.
  */
-public final class TreeSelectorFactoryImpl implements com.mattunderscore.trees.TreeSelectorFactory {
+public final class TreeSelectorFactory {
     private final TreeHelper helper = new TreeHelper();
 
-    @Override
+    /**
+     * Create a tree selector for the root node (entire tree).
+     * @param matcher
+     * @param <E>
+     * @return
+     */
     public <E> TreeSelector newSelector(final NodeMatcher<E> matcher) {
         return new TreeSelector<E>() {
             @Override
@@ -55,7 +59,12 @@ public final class TreeSelectorFactoryImpl implements com.mattunderscore.trees.T
         };
     }
 
-    @Override
+    /**
+     * Create a node selector for the children of another node selector.
+     * @param selector
+     * @param matcher
+     * @return
+     */
     public <E> TreeSelector<E> newSelector(final TreeSelector<E> selector, final NodeMatcher<E> matcher) {
         return new TreeSelector<E>() {
             @Override

@@ -23,10 +23,9 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.TreeHelper;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
@@ -37,10 +36,15 @@ import java.util.Iterator;
  * Factory for node selectors.
  * @author matt on 25/06/14.
  */
-public final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
+public final class NodeSelectorFactory {
     private final TreeHelper helper = new TreeHelper();
 
-    @Override
+    /**
+     * Create a node selector for the root node.
+     * @param matcher
+     * @param <E>
+     * @return
+     */
     public <E> NodeSelector newSelector(final NodeMatcher<E> matcher) {
         return new NodeSelector<E>() {
             @Override
@@ -56,7 +60,12 @@ public final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
         };
     }
 
-    @Override
+    /**
+     * Create a node selector for the children of another node selector.
+     * @param selector
+     * @param matcher
+     * @return
+     */
     public <E> NodeSelector newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
         return new NodeSelector<E>() {
             @Override
@@ -67,7 +76,12 @@ public final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
         };
     }
 
-    @Override
+    /**
+     * Create a node selector from the union of two selectors.
+     * @param selector0
+     * @param selector1
+     * @return
+     */
     public <E> NodeSelector newSelector(final NodeSelector<E> selector0, final NodeSelector<E> selector1) {
         return new NodeSelector<E>() {
             @Override

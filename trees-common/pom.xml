@@ -25,6 +25,10 @@
             <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-spi</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-utilities</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
