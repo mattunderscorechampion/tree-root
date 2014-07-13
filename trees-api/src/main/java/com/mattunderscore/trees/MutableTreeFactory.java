@@ -26,25 +26,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
- * @author matt on 12/07/14.
+ * @author matt on 13/07/14.
  */
-public interface Trees {
+public interface MutableTreeFactory {
 
-    /**
-     * Obtain a {@link TreeBuilder}
-     * @return
-     */
-    TreeBuilder builder();
-
-    /**
-     * Obtain a {@link TreeFactory}
-     * @return
-     */
-    TreeFactory factory();
-
-    /**
-     * Obtain a {@link MutableTreeFactory}
-     * @return
-     */
-    MutableTreeFactory mutableFactory();
+    <E> MutableTree<E> create(E e);
 }
