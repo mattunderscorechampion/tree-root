@@ -23,19 +23,32 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.internal;
+
+import com.mattunderscore.trees.MutableNode;
+import com.mattunderscore.trees.MutableTree;
+import com.mattunderscore.trees.MutableTreeFactory;
+import com.mattunderscore.trees.Node;
+import org.junit.Test;
 
 import java.util.Collection;
 
+import static org.junit.Assert.assertEquals;
+
 /**
- * Represents a mutable node of a tree.
- * @author matt on 13/07/14.
+ * @author matt on 15/07/14.
  */
-public interface MutableNode<E> extends Node<E>, TreeBuilder.NodeAppender<E> {
+public final class MutableTreeNodeImplTest {
 
-    @Override
-    Collection<Node<E>> getChildren();
+    @Test
+    public void mutateTree() {
+        final MutableTreeFactory factory = new MutableTreeFactoryImpl();
+        final MutableTree<String> tree = factory.create("a");
+        final MutableNode<String> root = tree.getRoot();
+        final MutableNode<String> depth1 = root.addChild("b");
+        depth1.addChild("c");
 
-    @Override
-    MutableNode<E> addChild(E e);
+        final Collection<Node<String>> children = root.getChildren();
+        assertEquals(1, children.size());
+    }
 }

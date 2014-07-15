@@ -23,19 +23,18 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.internal;
 
-import java.util.Collection;
+import com.mattunderscore.trees.MutableTree;
+import com.mattunderscore.trees.MutableTreeFactory;
 
 /**
- * Represents a mutable node of a tree.
- * @author matt on 13/07/14.
+ * @author matt on 15/07/14.
  */
-public interface MutableNode<E> extends Node<E>, TreeBuilder.NodeAppender<E> {
+public class MutableTreeFactoryImpl implements MutableTreeFactory {
 
     @Override
-    Collection<Node<E>> getChildren();
-
-    @Override
-    MutableNode<E> addChild(E e);
+    public <E> MutableTree<E> create(E e) {
+        return new MutableTreeNodeImpl(e);
+    }
 }
