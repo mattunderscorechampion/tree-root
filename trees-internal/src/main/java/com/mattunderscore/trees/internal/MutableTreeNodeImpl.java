@@ -29,7 +29,6 @@ import com.mattunderscore.trees.MutableNode;
 import com.mattunderscore.trees.MutableTree;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
-import javafx.collections.transformation.FilteredList;
 
 import java.util.ArrayList;
 import java.util.Collection;
