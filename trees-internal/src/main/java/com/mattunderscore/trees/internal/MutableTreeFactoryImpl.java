@@ -31,7 +31,7 @@ import com.mattunderscore.trees.MutableTreeFactory;
 /**
  * @author matt on 15/07/14.
  */
-public class MutableTreeFactoryImpl implements MutableTreeFactory {
+public final class MutableTreeFactoryImpl implements MutableTreeFactory {
 
     @Override
     public <E> MutableTree<E> create(E e) {

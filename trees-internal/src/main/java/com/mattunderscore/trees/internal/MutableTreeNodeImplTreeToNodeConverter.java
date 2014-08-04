@@ -25,59 +25,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.MutableNode;
-import com.mattunderscore.trees.MutableTree;
 import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.utilities.FixedUncheckedList;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.spi.TreeToNodeConverter;
 
 /**
- * @author matt on 15/07/14.
+ * Converter for {@link com.mattunderscore.trees.internal.MutableTreeNodeImpl}.
+ * @author matt on 04/08/14.
  */
-public final class MutableTreeNodeImpl<E> implements MutableTree<E>, MutableNode<E> {
-    private volatile List<Node<E>> elementList;
-    private final TreeNodeImpl<E> node;
-
-    public MutableTreeNodeImpl(E element) {
-        elementList = new FixedUncheckedList<>(new Object[0]);
-        node = new TreeNodeImpl<>(element, elementList);
+public final class MutableTreeNodeImplTreeToNodeConverter implements TreeToNodeConverter {
+    @Override
+    public Tree treeFromRootNode(Node node) {
+        return (Tree)node;
     }
 
     @Override
-    public MutableNode<E> addChild(E e) {
-        final MutableTreeNodeImpl child = new MutableTreeNodeImpl(e);
-        synchronized (this) {
-            final List<Node<E>> listProxy = elementList;
-            final Object[] newArray = new Object[listProxy.size() + 1];
-            for (int i = 0; i < listProxy.size(); i++) {
-                newArray[i] = listProxy.get(i);
-            }
-            elementList = new FixedUncheckedList<Node<E>>(newArray);
-        }
-        return child;
-    }
-
-    @Override
-    public MutableNode<E> getRoot() {
-        return this;
-    }
-
-    @Override
-    public E getElement() {
-        return node.getElement();
-    }
-
-    @Override
-    public Class<E> getElementClass() {
-        return node.getElementClass();
-    }
-
-    @Override
-    public Collection<Node<E>> getChildren() {
-        return Collections.unmodifiableList(elementList);
+    public Class<? extends Node> forClass() {
+        return MutableTreeNodeImpl.class;
     }
 }
