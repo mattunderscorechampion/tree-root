@@ -51,11 +51,13 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E>, MutableNode
     public MutableNode<E> addChild(E e) {
         final MutableTreeNodeImpl child = new MutableTreeNodeImpl(e);
         synchronized (this) {
-            final List<Node<E>> listProxy = elementList;
-            final Object[] newArray = new Object[listProxy.size() + 1];
-            for (int i = 0; i < listProxy.size(); i++) {
-                newArray[i] = listProxy.get(i);
+            final List<Node<E>> oldList = elementList;
+            final int size = oldList.size();
+            final Object[] newArray = new Object[size + 1];
+            for (int i = 0; i < size; i++) {
+                newArray[i] = oldList.get(i);
             }
+            newArray[size] = child;
             elementList = new FixedUncheckedList<Node<E>>(newArray);
         }
         return child;

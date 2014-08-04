@@ -44,7 +44,7 @@ public final class TreesImpl implements Trees {
 
     @Override
     public MutableTreeFactory mutableFactory() {
-        throw new UnsupportedOperationException();
+        return new MutableTreeFactoryImpl();
     }
 
 }

@@ -25,15 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.MutableNode;
-import com.mattunderscore.trees.MutableTree;
-import com.mattunderscore.trees.MutableTreeFactory;
-import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.spi.TreeToNodeConverter;
 import org.junit.Test;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author matt on 15/07/14.
@@ -50,5 +51,25 @@ public final class MutableTreeNodeImplTest {
 
         final Collection<Node<String>> children = root.getChildren();
         assertEquals(1, children.size());
+        final Iterator<Node<String>> iterator0 = children.iterator();
+        assertTrue(iterator0.hasNext());
+        final Node<String> child0 = iterator0.next();
+        assertEquals("b", child0.getElement());
+
+        final Iterator<Node<String>> iterator1 = child0.getChildren().iterator();
+        assertTrue(iterator1.hasNext());
+        final Node<String> child1 = iterator1.next();
+        assertEquals("c", child1.getElement());
+        assertFalse(iterator1.hasNext());
+
+        depth1.addChild("d");
+        final Iterator<Node<String>> iterator2 = child0.getChildren().iterator();
+        assertTrue(iterator2.hasNext());
+        final Node<String> child2 = iterator2.next();
+        assertEquals("c", child2.getElement());
+        assertTrue(iterator2.hasNext());
+        final Node<String> child3 = iterator2.next();
+        assertEquals("d", child3.getElement());
+        assertFalse(iterator2.hasNext());
     }
 }
