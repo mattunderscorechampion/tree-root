@@ -70,7 +70,7 @@ public final class TreeBuilderImpl<E> implements TreeBuilder<E> {
 
         @Override
         public NodeAppender addChild(R e) {
-            final NodeAppenderImpl<R> child = new NodeAppenderImpl<>(e);
+            final NodeAppenderImpl<R> child = new NodeAppenderImpl<>(e);b
             children.add(child);
             return child;
         }

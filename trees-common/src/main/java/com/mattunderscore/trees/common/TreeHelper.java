@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeToNodeConverter;
 
 import java.util.HashMap;
@@ -39,14 +40,23 @@ import java.util.ServiceLoader;
  * @author matt on 26/06/14.
  */
 public final class TreeHelper {
+    private final Map<Class<?>, TreeConstructor<?, ?>> constructors;
     private final Map<Class<?>, TreeToNodeConverter> converters;
 
     public TreeHelper() {
+        constructors = new HashMap<Class<?>, TreeConstructor<?, ?>>();
+        final ServiceLoader<TreeConstructor> constructorLoader = ServiceLoader.load(TreeConstructor.class);
+        final Iterator<TreeConstructor> constructorIterator = constructorLoader.iterator();
+        while (constructorIterator.hasNext()) {
+            final TreeConstructor constructor = constructorIterator.next();
+            constructors.put(constructor.forClass(), constructor);
+        }
+
         converters = new HashMap<Class<?>, TreeToNodeConverter>();
-        final ServiceLoader<TreeToNodeConverter> loader = ServiceLoader.load(TreeToNodeConverter.class);
-        final Iterator<TreeToNodeConverter> iterator = loader.iterator();
-        while (iterator.hasNext()) {
-            final TreeToNodeConverter converter = iterator.next();
+        final ServiceLoader<TreeToNodeConverter> converterLoader = ServiceLoader.load(TreeToNodeConverter.class);
+        final Iterator<TreeToNodeConverter> converterIterator = converterLoader.iterator();
+        while (converterIterator.hasNext()) {
+            final TreeToNodeConverter converter = converterIterator.next();
             converters.put(converter.forClass(), converter);
         }
     }
@@ -55,4 +65,8 @@ public final class TreeHelper {
         return converters.get(node.getClass()).treeFromRootNode(node);
     }
 
+    public <E, T extends Tree<E>> T treeFrom(Class<T> klass, Tree<E> tree) {
+        final TreeConstructor<E, T> constructor = (TreeConstructor<E, T>)constructors.get(klass);
+        return constructor.build(tree);
+    }
 }

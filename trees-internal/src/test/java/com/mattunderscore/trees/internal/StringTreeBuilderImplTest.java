@@ -25,10 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.TreeBuilder;
-import com.mattunderscore.trees.TreeFactory;
+import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.internal.TreeBuilderImpl;
 import com.mattunderscore.trees.internal.TreeFactoryImpl;
 import org.junit.Test;
@@ -52,6 +49,69 @@ public class StringTreeBuilderImplTest {
         nodeApp1.addChild("c");
         nodeApp0.addChild("d");
         final Tree<String> tree = builder.build();
+
+        final Node<String> root = tree.getRoot();
+        assertEquals(String.class, root.getElementClass());
+        assertEquals("a", root.getElement());
+        final Collection<Node<String>> children0 = root.getChildren();
+        final Iterator<Node<String>> iterator0 = children0.iterator();
+        assertEquals(2, children0.size());
+        assertEquals("a", root.getElement());
+        assertTrue(iterator0.hasNext());
+        final Node<String> bNode = iterator0.next();
+        assertTrue(iterator0.hasNext());
+        final Node<String> dNode = iterator0.next();
+        assertFalse(iterator0.hasNext());
+        assertEquals("b", bNode.getElement());
+        assertEquals("d", dNode.getElement());
+        final Collection<Node<String>> children1 = bNode.getChildren();
+        final Iterator<Node<String>> iterator1 = children1.iterator();
+        assertTrue(iterator1.hasNext());
+        final Node<String> cNode = iterator1.next();
+        assertFalse(iterator1.hasNext());
+        assertEquals("c", cNode.getElement());
+    }
+
+    @Test
+    public void build1() {
+        final AltTreeBuilder builder;
+        final AltTreeBuilder<String> builder1 = builder.create("a")
+                .addChild("b")
+                .addChild("c")
+                .addChild("d");
+        final Tree<String> tree = builder1.build(Tree.class);
+
+        final Node<String> root = tree.getRoot();
+        assertEquals(String.class, root.getElementClass());
+        assertEquals("a", root.getElement());
+        final Collection<Node<String>> children0 = root.getChildren();
+        final Iterator<Node<String>> iterator0 = children0.iterator();
+        assertEquals(2, children0.size());
+        assertEquals("a", root.getElement());
+        assertTrue(iterator0.hasNext());
+        final Node<String> bNode = iterator0.next();
+        assertTrue(iterator0.hasNext());
+        final Node<String> dNode = iterator0.next();
+        assertFalse(iterator0.hasNext());
+        assertEquals("b", bNode.getElement());
+        assertEquals("d", dNode.getElement());
+        final Collection<Node<String>> children1 = bNode.getChildren();
+        final Iterator<Node<String>> iterator1 = children1.iterator();
+        assertTrue(iterator1.hasNext());
+        final Node<String> cNode = iterator1.next();
+        assertFalse(iterator1.hasNext());
+        assertEquals("c", cNode.getElement());
+    }
+
+    @Test
+    public void build1() {
+        final AltTreeBuilder<String> builder;
+
+        final Tree<String> tree = builder.create("a",
+                builder.create("b",
+                    builder.create("c",
+                        builder.create("d")))).build(Tree.class);
+
 
         final Node<String> root = tree.getRoot();
         assertEquals(String.class, root.getElementClass());
