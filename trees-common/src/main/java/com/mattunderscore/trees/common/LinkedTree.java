@@ -91,7 +91,7 @@ public final class LinkedTree<E> implements MutableTree<E> {
         }
     }
 
-    final static class Converter implements TreeToNodeConverter {
+    public final static class Converter implements TreeToNodeConverter {
 
         @Override
         public Tree treeFromRootNode(Node node) {
@@ -105,7 +105,7 @@ public final class LinkedTree<E> implements MutableTree<E> {
         }
     }
 
-    final static class Constructor<E, T extends Tree<E>> implements TreeConstructor<E, T> {
+    public final static class Constructor<E, T extends Tree<E>> implements TreeConstructor<E, T> {
 
         @Override
         public T build(Tree<E> tree) {
