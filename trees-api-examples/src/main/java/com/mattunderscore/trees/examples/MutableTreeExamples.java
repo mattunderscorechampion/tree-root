@@ -33,7 +33,7 @@ import java.util.Iterator;
  * @author matt on 08/08/14.
  */
 public class MutableTreeExamples {
-    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeTraverser traverser)
+    public void createTreeFromTheBottomUp(IBottomUpTreeBuilder<String> builder, ITreeTraverser traverser)
     {
         final IMutableTree<String, IMutableNode<String>> tree = builder.create("root",
                 builder.create("a",
@@ -49,7 +49,7 @@ public class MutableTreeExamples {
         final IMutableNode<String> newNode = mutableNode.addChild("more");
     }
 
-    public void createTreeFromRoot(BottomUpTreeBuilder<String> builder, TreeTraverser traverser)
+    public void createTreeFromRoot(IBottomUpTreeBuilder<String> builder, ITreeTraverser traverser)
     {
         final IMutableTree<String, IMutableNode<String>> tree = builder.create("root").build(IMutableTree.class);
         final IMutableNode<String> root = tree.getRoot();
@@ -62,11 +62,11 @@ public class MutableTreeExamples {
         right.addChild("-");
     }
 
-    public void createTreeFromTopDown(TopDownTreeBuilder<String> builder, TreeTraverser traverser)
+    public void createTreeFromTopDown(ITopDownTreeBuilder<String> builder, ITreeTraverser traverser)
     {
-        final TopDownTreeBuilder<String> b0 = builder.create("root");
-        final TopDownTreeBuilder<String> left = b0.addChild("a");
-        final TopDownTreeBuilder<String> right = b0.addChild("b");
+        final ITopDownTreeBuilder<String> b0 = builder.create("root");
+        final ITopDownTreeBuilder<String> left = b0.addChild("a");
+        final ITopDownTreeBuilder<String> right = b0.addChild("b");
         left.addChild("1");
         left.addChild("2");
         left.addChild("3");
