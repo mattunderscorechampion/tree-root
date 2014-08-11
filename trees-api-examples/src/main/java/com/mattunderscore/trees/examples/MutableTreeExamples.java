@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.ITopDownTreeBuilder.ITopDownTreeBuilderAppender;
 
 import java.util.Iterator;
 
@@ -64,14 +65,14 @@ public class MutableTreeExamples {
 
     public void createTreeFromTopDown(ITopDownTreeBuilder<String> builder, ITreeTraverser traverser)
     {
-        final ITopDownTreeBuilder<String> b0 = builder.create("root");
-        final ITopDownTreeBuilder<String> left = b0.addChild("a");
-        final ITopDownTreeBuilder<String> right = b0.addChild("b");
+        final ITopDownTreeBuilderAppender<String> b0 = builder.create("root");
+        final ITopDownTreeBuilderAppender<String> left = b0.addChild("a");
+        final ITopDownTreeBuilderAppender<String> right = b0.addChild("b");
         left.addChild("1");
         left.addChild("2");
         left.addChild("3");
         right.addChild("+");
         right.addChild("-");
-        final IMutableTree<String, IMutableNode<String>> tree = b0.build(IMutableTree.class);
+        final IMutableTree<String, IMutableNode<String>> tree = builder.build(IMutableTree.class);
     }
 }

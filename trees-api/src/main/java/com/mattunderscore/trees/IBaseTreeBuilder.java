@@ -29,5 +29,11 @@ package com.mattunderscore.trees;
  * @author matt on 07/08/14.
  */
 public interface IBaseTreeBuilder<E> {
+    /**
+     * Create a new tree of the type provided.
+     * @param klass The class of the tree to create
+     * @param <T> The type of the tree to create
+     * @return The new tree
+     */
     <T extends ITree<E, INode<E>>> T build(Class<T> klass);
 }

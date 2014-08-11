@@ -28,6 +28,9 @@ package com.mattunderscore.trees;
 /**
  * @author matt on 07/08/14.
  */
-public interface ITopDownTreeBuilder<E> extends IBaseTreeBuilder<E>, INodeAppender<E, ITopDownTreeBuilder<E>> {
-    ITopDownTreeBuilder<E> create(E e);
+public interface ITopDownTreeBuilder<E> extends IBaseTreeBuilder<E> {
+    ITopDownTreeBuilderAppender<E> create(E e);
+
+    public interface ITopDownTreeBuilderAppender<S> extends INodeAppender<S, ITopDownTreeBuilderAppender<S>> {
+    }
 }

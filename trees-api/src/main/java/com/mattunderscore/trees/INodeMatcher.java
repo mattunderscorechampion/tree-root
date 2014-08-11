@@ -23,41 +23,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.examples;
-
-import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.ITopDownTreeBuilder.ITopDownTreeBuilderAppender;
-
-import java.util.Iterator;
+package com.mattunderscore.trees;
 
 /**
- * @author matt on 08/08/14.
+ * @author matt on 11/08/14.
  */
-public final class ImmutableTreeExamples {
-    public void createTreeFromTheBottomUp(IBottomUpTreeBuilder<String> builder, ITreeTraverser traverser)
-    {
-        final ITree<String, INode<String>> tree = builder.create("root",
-                builder.create("a",
-                        builder.create("1"),
-                        builder.create("2"),
-                        builder.create("3")),
-                builder.create("b",
-                        builder.create("+"),
-                        builder.create("-"))).build(ITree.class);
-
-        final Iterator<INode<String>> iterator = traverser.preOrderIterator(tree);
-    }
-
-    public void createTreeFromTopDown(ITopDownTreeBuilder<String> builder, ITreeTraverser traverser)
-    {
-        final ITopDownTreeBuilderAppender<String> b0 = builder.create("root");
-        final ITopDownTreeBuilderAppender<String> left = b0.addChild("a");
-        final ITopDownTreeBuilderAppender<String> right = b0.addChild("b");
-        left.addChild("1");
-        left.addChild("2");
-        left.addChild("3");
-        right.addChild("+");
-        right.addChild("-");
-        final ITree<String, INode<String>> tree = builder.build(ITree.class);
-    }
+public interface INodeMatcher {
+    <E, T extends INode<E>> boolean matches(T node);
 }
