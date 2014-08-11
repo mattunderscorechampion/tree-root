@@ -31,6 +31,7 @@ import com.mattunderscore.trees.INodeSelector;
 import com.mattunderscore.trees.ITree;
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  * @author matt on 08/08/14.
@@ -38,6 +39,12 @@ import java.util.Iterator;
 public class INodeSelectorExamples {
     public void selectorExample(INodeSelector selector, ITree<String, INode<String>> tree) {
         final Iterator<INode<String>> iterator = selector.select(tree);
+        iterator.forEachRemaining(new Consumer<INode<String>>() {
+            @Override
+            public void accept(INode<String> stringINode) {
+                System.out.println(stringINode.getElement());
+            }
+        });
     }
 
     public void selectorExampleOnMutableTree(INodeSelector selector, ITree<String, IMutableNode<String>> tree) {
