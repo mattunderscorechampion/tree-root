@@ -26,14 +26,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.ITopDownTreeBuilder.ITopDownTreeBuilderAppender;
+import com.mattunderscore.trees.ITopDownTreeRootBuilder.ITopDownTreeBuilder;
+import com.mattunderscore.trees.ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender;
 
 import java.util.Iterator;
 
 /**
  * @author matt on 08/08/14.
  */
-public class MutableTreeExamples {
+public final class MutableTreeExamples {
     public void createTreeFromTheBottomUp(IBottomUpTreeBuilder<String> builder, ITreeTraverser traverser)
     {
         final IMutableTree<String, IMutableNode<String>> tree = builder.create("root",
@@ -63,9 +64,9 @@ public class MutableTreeExamples {
         right.addChild("-");
     }
 
-    public void createTreeFromTopDown(ITopDownTreeBuilder<String> builder, ITreeTraverser traverser)
+    public void createTreeFromTopDown(ITopDownTreeRootBuilder<String> builder, ITreeTraverser traverser)
     {
-        final ITopDownTreeBuilderAppender<String> b0 = builder.create("root");
+        final ITopDownTreeBuilder<String> b0 = builder.root("root");
         final ITopDownTreeBuilderAppender<String> left = b0.addChild("a");
         final ITopDownTreeBuilderAppender<String> right = b0.addChild("b");
         left.addChild("1");
@@ -73,6 +74,6 @@ public class MutableTreeExamples {
         left.addChild("3");
         right.addChild("+");
         right.addChild("-");
-        final IMutableTree<String, IMutableNode<String>> tree = builder.build(IMutableTree.class);
+        final IMutableTree<String, IMutableNode<String>> tree = b0.build(IMutableTree.class);
     }
 }

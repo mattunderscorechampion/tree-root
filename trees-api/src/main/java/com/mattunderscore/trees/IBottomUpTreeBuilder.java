@@ -26,11 +26,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
+ * * Builder used to create the an empty tree or a non-empty tree.
  * @author matt on 07/08/14.
  */
 public interface IBottomUpTreeBuilder<E> extends IBaseTreeBuilder<E> {
 
+    /**
+     * @param e the root node
+     * @return a new builder that creates a tree containing a single node
+     */
     IBottomUpTreeBuilder<E> create(E e);
 
-    IBottomUpTreeBuilder<E> create(E e, IBottomUpTreeBuilder<E>... trees);
+    /**
+     * @param e the root node
+     * @param builders builders for subtrees
+     * @return a new builder that creates a tree containing the element as the root and the trees returned by the
+     * builders as children
+     */
+    IBottomUpTreeBuilder<E> create(E e, IBottomUpTreeBuilder<E>... builders);
 }

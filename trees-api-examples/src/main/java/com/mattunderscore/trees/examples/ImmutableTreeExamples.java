@@ -26,7 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.ITopDownTreeBuilder.ITopDownTreeBuilderAppender;
+import com.mattunderscore.trees.ITopDownTreeRootBuilder.ITopDownTreeBuilder;
+import com.mattunderscore.trees.ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender;
 
 import java.util.Iterator;
 
@@ -48,9 +49,9 @@ public final class ImmutableTreeExamples {
         final Iterator<INode<String>> iterator = traverser.preOrderIterator(tree);
     }
 
-    public void createTreeFromTopDown(ITopDownTreeBuilder<String> builder, ITreeTraverser traverser)
+    public void createTreeFromTopDown(ITopDownTreeRootBuilder<String> builder, ITreeTraverser traverser)
     {
-        final ITopDownTreeBuilderAppender<String> b0 = builder.create("root");
+        final ITopDownTreeBuilder<String> b0 = builder.root("root");
         final ITopDownTreeBuilderAppender<String> left = b0.addChild("a");
         final ITopDownTreeBuilderAppender<String> right = b0.addChild("b");
         left.addChild("1");
@@ -58,6 +59,6 @@ public final class ImmutableTreeExamples {
         left.addChild("3");
         right.addChild("+");
         right.addChild("-");
-        final ITree<String, INode<String>> tree = builder.build(ITree.class);
+        final ITree<String, INode<String>> tree = b0.build(ITree.class);
     }
 }

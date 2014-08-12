@@ -26,11 +26,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
+ * Builder used to create the root of a new tree or an empty tree.
  * @author matt on 07/08/14.
  */
-public interface ITopDownTreeBuilder<E> extends IBaseTreeBuilder<E> {
-    ITopDownTreeBuilderAppender<E> create(E e);
+public interface ITopDownTreeRootBuilder<E> extends IBaseTreeBuilder<E> {
 
+    /**
+     * @param e root element
+     * @return Builder for a non-empty tree
+     */
+    ITopDownTreeBuilder<E> root(E e);
+
+    /**
+     * Builder used to create a non-empty tree.
+     * @param <S>
+     */
+    public interface ITopDownTreeBuilder<S> extends IBaseTreeBuilder<S>, INodeAppender<S, ITopDownTreeBuilderAppender<S>> {
+    }
+
+    /**
+     * Appended to add a new child to the tree.
+     * @param <S>
+     */
     public interface ITopDownTreeBuilderAppender<S> extends INodeAppender<S, ITopDownTreeBuilderAppender<S>> {
     }
 }
