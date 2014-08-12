@@ -35,7 +35,7 @@ import java.util.Iterator;
 /**
  * @author matt on 08/08/14.
  */
-public class INodeSelectorExamples {
+public final class INodeSelectorExamples {
     public void selectorExample(INodeSelector selector, ITree<String, INode<String>> tree) {
         final Iterator<INode<String>> iterator = selector.select(tree);
         while (iterator.hasNext()) {

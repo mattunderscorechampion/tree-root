@@ -32,7 +32,7 @@ import java.util.Iterator;
 /**
  * @author matt on 08/08/14.
  */
-public class ITreeSelectorExamples {
+public final class ITreeSelectorExamples {
     public void selectorExample(ITreeSelector selector, ITree<String, INode<String>> tree) {
         final Iterator<ITree<String, INode<String>>> iterator = selector.select(tree);
     }
