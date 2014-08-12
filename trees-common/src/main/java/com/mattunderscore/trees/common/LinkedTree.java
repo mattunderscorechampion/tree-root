@@ -25,10 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.MutableNode;
-import com.mattunderscore.trees.MutableTree;
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.spi.INodeToTreeConverter;
+import com.mattunderscore.trees.spi.ITreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeToNodeConverter;
 
@@ -39,77 +38,58 @@ import java.util.List;
 /**
  * @author matt on 07/08/14.
  */
-public final class LinkedTree<E> implements MutableTree<E> {
-    private final MutableNode<E> root;
+public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMutableNode<E> {
+    private final E element;
+    private final List<LinkedTree<E>> children;
 
     public LinkedTree(E root) {
-        this.root = new LinkedTreeNode(root);
+        this.element = root;
+        children = new ArrayList<>();
     }
 
     @Override
-    public MutableNode<E> getRoot() {
-        return root;
+    public IMutableNode<E> getRoot() {
+        return this;
     }
 
-    private final class LinkedTreeNode implements MutableNode<E> {
-        private final E element;
-        private final List<LinkedTreeNode> children;
+    @Override
+    public E getElement() {
+        return element;
+    }
 
-        public LinkedTreeNode(E element) {
-            this.element = element;
-            children = new ArrayList<>();
+    @Override
+    public Class<E> getElementClass() {
+        return (Class<E>)element.getClass();
+    }
+
+    @Override
+    public Collection<? extends IMutableNode<E>> getChildren() {
+        return children;
+    }
+
+    @Override
+    public IMutableNode<E> addChild(E e) {
+        final LinkedTree<E> child = new LinkedTree<>(e);
+        children.add(child);
+        return child;
+    }
+
+    public final static class Converter<E> implements INodeToTreeConverter<E, IMutableNode<E>, LinkedTree<E>> {
+        @Override
+        public LinkedTree<E> treeFromRootNode(IMutableNode<E> node) {
+            return (LinkedTree)node;
         }
 
         @Override
-        public E getElement() {
-            return element;
-        }
-
-        @Override
-        public Class<E> getElementClass() {
-            return (Class<E>)element.getClass();
-        }
-
-        @Override
-        public Collection<Node<E>> getChildren() {
-            final List<Node<E>> newChildren = new ArrayList<>();
-            for (Node<E> child : children) {
-                newChildren.add(child);
-            }
-            return newChildren;
-        }
-
-        @Override
-        public MutableNode<E> addChild(E e) {
-            final LinkedTreeNode node = new LinkedTreeNode(e);
-            children.add(node);
-            return node;
-        }
-
-        public LinkedTree<E> getTree() {
-            return LinkedTree.this;
+        public Class<?> forClass() {
+            return LinkedTree.class;
         }
     }
 
-    public final static class Converter implements TreeToNodeConverter {
-
+    public final static class Constructor<E> implements ITreeConstructor<E, LinkedTree<E>> {
         @Override
-        public Tree treeFromRootNode(Node node) {
-            final LinkedTree.LinkedTreeNode linkedNode = (LinkedTree.LinkedTreeNode)node;
-            return linkedNode.getTree();
-        }
-
-        @Override
-        public Class<? extends Node> forClass() {
-            return LinkedTree.LinkedTreeNode.class;
-        }
-    }
-
-    public final static class Constructor<E, T extends Tree<E>> implements TreeConstructor<E, T> {
-
-        @Override
-        public T build(Tree<E> tree) {
-            return (T)tree;
+        public LinkedTree<E> build(Class<LinkedTree<E>> klass) {
+            return null;
         }
 
         @Override

@@ -23,14 +23,25 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.spi;
 
-import java.util.Collection;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.ITree;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
 
 /**
- * @author matt on 08/08/14.
+ * @author matt on 12/08/14.
  */
-public interface IMutableNode<E> extends INode<E>, INodeAppender<E, IMutableNode<E>>
-{
-    Collection<? extends IMutableNode<E>> getChildren();
+public interface INodeToTreeConverter<E, N extends INode<E>, T extends ITree<E, N>> {
+    /**
+     * @param node The node to convert
+     * @return The tree
+     */
+    T treeFromRootNode(N node);
+
+    /**
+     * @return The class of node it can convert
+     */
+    Class<?> forClass();
 }
