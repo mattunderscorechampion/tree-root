@@ -27,15 +27,13 @@ package com.mattunderscore.trees.spi;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITree;
-import com.mattunderscore.trees.Tree;
 
 /**
- * @author matt on 06/08/14.
+ * @author matt on 13/08/14.
  */
-public interface ITreeConstructor<E, T extends ITree<E, ? extends INode<E>>> {
+public interface IEmptyTreeConstructor<E, T extends ITree<E, ? extends INode<E>>> {
 
-    T build(E e, T[] subtrees);
+    T build();
 
     Class<?> forClass();
-
 }

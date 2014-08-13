@@ -25,8 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.ITree;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.spi.IEmptyTreeConstructor;
+import com.mattunderscore.trees.spi.ITreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeToNodeConverter;
 
@@ -40,10 +44,30 @@ import java.util.ServiceLoader;
  * @author matt on 26/06/14.
  */
 public final class TreeHelper {
+    private final Map<Class<?>, IEmptyTreeConstructor<?, ?>> emptyConstructors;
+    private final Map<Class<?>, ITreeConstructor<?, ?>> treeConstructors;
     private final Map<Class<?>, TreeConstructor<?, ?>> constructors;
     private final Map<Class<?>, TreeToNodeConverter> converters;
 
     public TreeHelper() {
+        emptyConstructors = new HashMap<Class<?>, IEmptyTreeConstructor<?, ?>>();
+        final ServiceLoader<IEmptyTreeConstructor> emptyConstructorLoader =
+                ServiceLoader.load(IEmptyTreeConstructor.class);
+        final Iterator<IEmptyTreeConstructor> emptyConstructorIterator = emptyConstructorLoader.iterator();
+        while (emptyConstructorIterator.hasNext()) {
+            final IEmptyTreeConstructor constructor = emptyConstructorIterator.next();
+            emptyConstructors.put(constructor.forClass(), constructor);
+        }
+
+        treeConstructors = new HashMap<Class<?>, ITreeConstructor<?, ?>>();
+        final ServiceLoader<ITreeConstructor> treeConstructorLoader =
+                ServiceLoader.load(ITreeConstructor.class);
+        final Iterator<ITreeConstructor> treeConstructorIterator = treeConstructorLoader.iterator();
+        while (treeConstructorIterator.hasNext()) {
+            final ITreeConstructor constructor = treeConstructorIterator.next();
+            treeConstructors.put(constructor.forClass(), constructor);
+        }
+
         constructors = new HashMap<Class<?>, TreeConstructor<?, ?>>();
         final ServiceLoader<TreeConstructor> constructorLoader = ServiceLoader.load(TreeConstructor.class);
         final Iterator<TreeConstructor> constructorIterator = constructorLoader.iterator();
@@ -68,5 +92,15 @@ public final class TreeHelper {
     public <E, T extends Tree<E>> T treeFrom(Class<T> klass, Tree<E> tree) {
         final TreeConstructor<E, T> constructor = (TreeConstructor<E, T>)constructors.get(klass);
         return constructor.build(tree);
+    }
+
+    public <E, T extends ITree<E, ? extends INode<E>>> T emptyTree(Class<T> klass) {
+        final IEmptyTreeConstructor<E, T> constructor = (IEmptyTreeConstructor<E, T>)emptyConstructors.get(klass);
+        return constructor.build();
+    }
+
+    public <E, N extends INode<E>, T extends ITree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) {
+        final ITreeConstructor<E, T> constructor = (ITreeConstructor<E, T>)treeConstructors.get(klass);
+        return constructor.build(e, subtrees);
     }
 }

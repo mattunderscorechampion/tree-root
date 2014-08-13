@@ -35,5 +35,5 @@ public interface IBaseTreeBuilder<E> {
      * @param <T> The type of the tree to create
      * @return The new tree
      */
-    <T extends ITree<E, ? extends INode<E>>> T build(Class<T> klass);
+    <N extends INode<E>, T extends ITree<E, N>> T build(Class<T> klass);
 }

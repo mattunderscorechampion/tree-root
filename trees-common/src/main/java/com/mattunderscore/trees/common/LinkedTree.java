@@ -26,10 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.spi.INodeToTreeConverter;
-import com.mattunderscore.trees.spi.ITreeConstructor;
-import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.spi.TreeToNodeConverter;
+import com.mattunderscore.trees.spi.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,9 +39,17 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
     private final E element;
     private final List<LinkedTree<E>> children;
 
-    public LinkedTree(E root) {
+    private LinkedTree(E root) {
         this.element = root;
         children = new ArrayList<>();
+    }
+
+    private LinkedTree(E root, LinkedTree[] subtrees) {
+        this.element = root;
+        children = new ArrayList<>();
+        for (int i = 0; i < subtrees.length; i++) {
+            children.add(subtrees[i]);
+        }
     }
 
     @Override
@@ -87,9 +92,23 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
     }
 
     public final static class Constructor<E> implements ITreeConstructor<E, LinkedTree<E>> {
+
         @Override
-        public LinkedTree<E> build(Class<LinkedTree<E>> klass) {
-            return null;
+        public LinkedTree<E> build(E e, LinkedTree<E>... subtrees) {
+            return new LinkedTree<E>(e, subtrees);
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return LinkedTree.class;
+        }
+    }
+
+    public final static class EmptyConstructor<E> implements IEmptyTreeConstructor<E, LinkedTree<E>> {
+
+        @Override
+        public LinkedTree<E> build() {
+            return new LinkedTree<E>(null);
         }
 
         @Override
