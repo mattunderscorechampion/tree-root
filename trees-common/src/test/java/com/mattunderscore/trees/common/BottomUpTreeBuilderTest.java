@@ -59,8 +59,28 @@ public final class BottomUpTreeBuilderTest {
     public void buildSimple() {
         final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>();
         final IBottomUpTreeBuilder<String> builder0 = builder.create("ROOT",
-                builder.create("a"),
-                builder.create("b"));
+            builder.create("a"),
+            builder.create("b"));
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(2, tree.getChildren().size());
+    }
+
+    @Test
+    public void buildComplex() {
+        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>();
+        final IBottomUpTreeBuilder<String> builder0 = builder.create("ROOT",
+            builder.create("a",
+                builder.create("+",
+                    builder.create("fah",
+                        builder.create("I'm falling")))),
+                builder.create("b",
+                    builder.create("-"),
+                    builder.create("!"),
+                    builder.create("t",
+                        builder.create("x",
+                            builder.create("7")))));
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.class);
         assertEquals("ROOT", tree.getRoot().getElement());
