@@ -39,7 +39,7 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
     private final E element;
     private final List<LinkedTree<E>> children;
 
-    private LinkedTree(E root) {
+    LinkedTree(E root) {
         this.element = root;
         children = new ArrayList<>();
     }
