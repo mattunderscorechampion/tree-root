@@ -36,7 +36,7 @@ public final class TopDownTreeRootBuilder<E> implements ITopDownTreeRootBuilder<
     private static final TreeHelper helper = new TreeHelper();
     @Override
     public ITopDownTreeBuilder<E> root(E e) {
-        return null;
+        return new TopDownTreeBuilder<>(e);
     }
 
     @Override

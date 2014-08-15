@@ -25,39 +25,43 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.IBottomUpTreeBuilder;
+import com.mattunderscore.trees.ITopDownTreeRootBuilder;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author matt on 15/08/14.
  */
-final class TopDownTreeBuilder<E> implements ITopDownTreeRootBuilder.ITopDownTreeBuilder<E> {
-    private static final TreeHelper helper = new TreeHelper();
-    final LinkedTree<E> tree;
-
-    public TopDownTreeBuilder(E root) {
-        tree = new LinkedTree<E>(root);
+public class TopDownTreeBuilderTest {
+    @Test
+    public void buildEmpty() {
+        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>();
+        final LinkedTree<String> tree = builder.build(LinkedTree.class);
+        assertNull(tree.getRoot().getElement());
     }
 
-    @Override
-    public <N extends INode<E>, T extends ITree<E, N>> T build(Class<T> klass) {
-        return helper.convertTree(klass, tree);
+    @Test
+    public void buildLeaf() {
+        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>();
+        final ITopDownTreeRootBuilder.ITopDownTreeBuilder<String> builder0 = builder.root("ROOT");
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(0, tree.getChildren().size());
     }
 
-    @Override
-    public ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<E> addChild(E e) {
-        return new Appender<>(tree.addChild(e));
-    }
+    @Test
+    public void buildSimple() {
+        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>();
+        final ITopDownTreeRootBuilder.ITopDownTreeBuilder<String> builder0 = builder.root("ROOT");
+        builder0.addChild("a");
+        builder0.addChild("b");
 
-    private final class Appender<S> implements ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<S> {
-        private final IMutableNode<S> root;
-
-        public Appender(IMutableNode<S> root) {
-            this.root = root;
-        }
-
-        @Override
-        public ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<S> addChild(S e) {
-            return new Appender<>(root.addChild(e));
-        }
+        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(2, tree.getChildren().size());
     }
 }

@@ -79,7 +79,7 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
         return child;
     }
 
-    public final static class Converter<E> implements INodeToTreeConverter<E, IMutableNode<E>, LinkedTree<E>> {
+    public final static class NodeConverter<E> implements INodeToTreeConverter<E, IMutableNode<E>, LinkedTree<E>> {
         @Override
         public LinkedTree<E> treeFromRootNode(IMutableNode<E> node) {
             return (LinkedTree)node;
@@ -114,6 +114,30 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
         @Override
         public Class<?> forClass() {
             return LinkedTree.class;
+        }
+    }
+
+    public final static class Converter<E> implements ITreeConverter<E, LinkedTree<E>> {
+        @Override
+        public LinkedTree<E> build(ITree<E, ? extends INode<E>> sourceTree) {
+            final INode<E> root = sourceTree.getRoot();
+            final LinkedTree<E> newTree = new LinkedTree<>(root.getElement());
+            for (final INode<E> child : root.getChildren()) {
+                duplicate(newTree, child);
+            }
+            return newTree;
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return LinkedTree.class;
+        }
+
+        private void duplicate(LinkedTree<E> newParent, INode<E> sourceChild) {
+            final LinkedTree<E> newChild = (LinkedTree<E>) newParent.addChild(sourceChild.getElement());
+            for (final INode<E> child : sourceChild.getChildren()) {
+                duplicate(newChild, child);
+            }
         }
     }
 }

@@ -23,41 +23,17 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.ITree;
 
 /**
  * @author matt on 15/08/14.
  */
-final class TopDownTreeBuilder<E> implements ITopDownTreeRootBuilder.ITopDownTreeBuilder<E> {
-    private static final TreeHelper helper = new TreeHelper();
-    final LinkedTree<E> tree;
+public interface ITreeConverter<E, T extends ITree<E, ? extends INode<E>>> {
 
-    public TopDownTreeBuilder(E root) {
-        tree = new LinkedTree<E>(root);
-    }
+    T build(ITree<E, ? extends INode<E>> sourceTree);
 
-    @Override
-    public <N extends INode<E>, T extends ITree<E, N>> T build(Class<T> klass) {
-        return helper.convertTree(klass, tree);
-    }
-
-    @Override
-    public ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<E> addChild(E e) {
-        return new Appender<>(tree.addChild(e));
-    }
-
-    private final class Appender<S> implements ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<S> {
-        private final IMutableNode<S> root;
-
-        public Appender(IMutableNode<S> root) {
-            this.root = root;
-        }
-
-        @Override
-        public ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<S> addChild(S e) {
-            return new Appender<>(root.addChild(e));
-        }
-    }
+    Class<?> forClass();
 }
