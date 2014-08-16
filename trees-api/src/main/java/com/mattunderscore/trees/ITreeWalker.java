@@ -25,18 +25,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
-import java.util.Iterator;
-
 /**
- * @author matt on 08/08/14.
+ * @author matt on 16/08/14.
  */
-public interface ITreeTraverser {
+public interface ITreeWalker {
 
-    <E, T extends INode<E>> Iterator<T> preOrderIterator(ITree<E, T> tree);
+    <E, N extends INode<E>, T extends ITree<E, N>> void walkPreOrder(T tree, Visitor<E, N> visitor);
 
-    <E, T extends INode<E>> Iterator<T> inOrderIterator(ITree<E, T> tree);
+    <E, N extends INode<E>, T extends ITree<E, N>> void walkInOrder(T tree, Visitor<E, N> visitor);
 
-    <E, T extends INode<E>> Iterator<T> postOrderIterator(ITree<E, T> tree);
+    <E, N extends INode<E>, T extends ITree<E, N>> void walkPostOrder(T tree, Visitor<E, N> visitor);
 
-    <E, T extends INode<E>> Iterator<T> breadthFirstIterator(ITree<E, T> tree);
+    <E, N extends INode<E>, T extends ITree<E, N>> void walkBreadthFirst(T tree, Visitor<E, N> visitor);
+
+    public interface Visitor<E, N extends INode<E>> {
+        void visit(N node);
+    }
 }

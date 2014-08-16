@@ -23,20 +23,36 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.common.walkers;
+
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.ITree;
+import com.mattunderscore.trees.ITreeWalker;
 
 import java.util.Iterator;
 
 /**
- * @author matt on 08/08/14.
+ * @author matt on 17/08/14.
  */
-public interface ITreeTraverser {
+public final class PostOrderWalker<E, N extends INode<E>, T extends ITree<E, N>> {
+    private final T tree;
+    private final ITreeWalker.Visitor<E, N> visitor;
 
-    <E, T extends INode<E>> Iterator<T> preOrderIterator(ITree<E, T> tree);
+    public PostOrderWalker(T tree, ITreeWalker.Visitor<E, N> visitor) {
+        this.tree = tree;
+        this.visitor = visitor;
+    }
 
-    <E, T extends INode<E>> Iterator<T> inOrderIterator(ITree<E, T> tree);
+    public void accept() {
+        accept(tree.getRoot());
+    }
 
-    <E, T extends INode<E>> Iterator<T> postOrderIterator(ITree<E, T> tree);
-
-    <E, T extends INode<E>> Iterator<T> breadthFirstIterator(ITree<E, T> tree);
+    private void accept(N node) {
+        final Iterator<? extends INode<E>> iterator = node.getChildren().iterator();
+        while (iterator.hasNext()) {
+            final N child = (N)iterator.next();
+            accept(child);
+        }
+        visitor.visit(node);
+    }
 }
