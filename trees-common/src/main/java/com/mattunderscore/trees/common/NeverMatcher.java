@@ -25,57 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.IBottomUpTreeBuilder;
 import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.ITree;
-
-import java.lang.reflect.Array;
+import com.mattunderscore.trees.INodeMatcher;
 
 /**
- * @author matt on 13/08/14.
+ * @author matt on 16/08/14.
  */
-public final class BottomUpTreeBuilder<E> implements IBottomUpTreeBuilder<E> {
-    private static final TreeHelper helper = new TreeHelper();
-
-    private final E root;
-    private final IBottomUpTreeBuilder<E>[] children;
-
-    public BottomUpTreeBuilder() {
-        root = null;
-        children = new IBottomUpTreeBuilder[0];
-    }
-
-    private BottomUpTreeBuilder(E e) {
-        root = e;
-        children = new IBottomUpTreeBuilder[0];
-    }
-
-    private BottomUpTreeBuilder(E e, IBottomUpTreeBuilder[] builders) {
-        root = e;
-        children = builders;
-    }
-
+public final class NeverMatcher<E> implements INodeMatcher<E> {
     @Override
-    public IBottomUpTreeBuilder<E> create(E e) {
-        return new BottomUpTreeBuilder<>(e);
-    }
-
-    @Override
-    public IBottomUpTreeBuilder<E> create(E e, IBottomUpTreeBuilder<E>... builders) {
-        return new BottomUpTreeBuilder<>(e, builders);
-    }
-
-    @Override
-    public <N extends INode<E>, T extends ITree<E, N>> T build(Class<T> klass) {
-        if (root == null) {
-            return helper.emptyTree(klass);
-        }
-        else {
-            final T[] subtrees = (T[])Array.newInstance(klass, children.length);
-            for (int i = 0; i < children.length; i++) {
-                subtrees[i] = children[i].build(klass);
-            }
-            return helper.<E, N, T>newTreeFrom(klass, root, subtrees);
-        }
+    public <T extends INode<E>> boolean matches(T node) {
+        return false;
     }
 }
