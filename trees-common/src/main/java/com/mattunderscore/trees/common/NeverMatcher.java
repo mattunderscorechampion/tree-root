@@ -27,10 +27,12 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.INodeMatcher;
+import net.jcip.annotations.Immutable;
 
 /**
  * @author matt on 16/08/14.
  */
+@Immutable
 public final class NeverMatcher<E> implements INodeMatcher<E> {
     @Override
     public <T extends INode<E>> boolean matches(T node) {

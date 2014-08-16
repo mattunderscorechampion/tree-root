@@ -28,6 +28,7 @@ package com.mattunderscore.trees.common;
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITopDownTreeRootBuilder;
 import com.mattunderscore.trees.ITree;
+import net.jcip.annotations.Immutable;
 
 /**
  * @author matt on 15/08/14.

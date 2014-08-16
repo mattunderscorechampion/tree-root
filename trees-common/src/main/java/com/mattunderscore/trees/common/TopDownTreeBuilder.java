@@ -26,13 +26,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * @author matt on 15/08/14.
  */
+@NotThreadSafe
 final class TopDownTreeBuilder<E> implements ITopDownTreeRootBuilder.ITopDownTreeBuilder<E> {
     private static final TreeHelper helper = new TreeHelper();
-    final LinkedTree<E> tree;
+    private final LinkedTree<E> tree;
 
     public TopDownTreeBuilder(E root) {
         tree = new LinkedTree<E>(root);
@@ -48,6 +50,7 @@ final class TopDownTreeBuilder<E> implements ITopDownTreeRootBuilder.ITopDownTre
         return new Appender<>(tree.addChild(e));
     }
 
+    @NotThreadSafe
     private final class Appender<S> implements ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<S> {
         private final IMutableNode<S> root;
 

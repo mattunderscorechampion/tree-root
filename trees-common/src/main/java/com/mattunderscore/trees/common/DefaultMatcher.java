@@ -27,11 +27,13 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.INodeMatcher;
+import net.jcip.annotations.Immutable;
 
 /**
  * Matches nodes with the element equal to the value passed to it.
  * @author matt on 09/06/14.
  */
+@Immutable
 public final class DefaultMatcher<E> implements INodeMatcher<E> {
     private final Object value;
 

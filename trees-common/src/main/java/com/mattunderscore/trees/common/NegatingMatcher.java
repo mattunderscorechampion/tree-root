@@ -27,11 +27,13 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.INodeMatcher;
+import net.jcip.annotations.Immutable;
 
 /**
  * Matches the negation of the matcher passed to it.
  * @author matt on 25/06/14.
  */
+@Immutable
 public final class NegatingMatcher<E> implements INodeMatcher<E> {
     private final INodeMatcher matcher;
 

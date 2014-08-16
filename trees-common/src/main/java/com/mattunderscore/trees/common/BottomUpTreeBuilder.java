@@ -28,12 +28,14 @@ package com.mattunderscore.trees.common;
 import com.mattunderscore.trees.IBottomUpTreeBuilder;
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITree;
+import net.jcip.annotations.Immutable;
 
 import java.lang.reflect.Array;
 
 /**
  * @author matt on 13/08/14.
  */
+@Immutable
 public final class BottomUpTreeBuilder<E> implements IBottomUpTreeBuilder<E> {
     private static final TreeHelper helper = new TreeHelper();
 

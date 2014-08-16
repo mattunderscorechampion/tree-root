@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities.iterators;
 
+import net.jcip.annotations.Immutable;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -32,6 +34,7 @@ import java.util.NoSuchElementException;
  * Iterator over no objects.
  * @author matt on 25/06/14.
  */
+@Immutable
 public final class EmptyIterator<E> implements Iterator<E> {
     /**
      * A single instance can be safely used regardless of type.

@@ -25,11 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities;
 
+import net.jcip.annotations.Immutable;
+
 import java.lang.reflect.Array;
 import java.util.*;
 
 /**
  * Array backed, not typed checked, list implementation for immutable lists from a trusted source.
+ * <p>This is immutable assuming the ownership of the backing array is exclusive.</p>
  * @author matt on 20/06/14.
  */
 public final class FixedUncheckedList<E> implements List<E> {

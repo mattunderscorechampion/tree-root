@@ -28,6 +28,7 @@ package com.mattunderscore.trees.common;
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITree;
 import com.mattunderscore.trees.spi.*;
+import net.jcip.annotations.Immutable;
 
 import java.util.HashMap;
 import java.util.Iterator;

@@ -27,11 +27,13 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.INodeMatcher;
+import net.jcip.annotations.Immutable;
 
 /**
  * Matches the class of the node element.
  * @author matt on 26/06/14.
  */
+@Immutable
 public final class TypeMatcher implements INodeMatcher<Object> {
     private final Class<?> type;
 
