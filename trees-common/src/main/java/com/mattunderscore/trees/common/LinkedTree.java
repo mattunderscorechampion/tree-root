@@ -77,6 +77,9 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
 
     @Override
     public IMutableNode<E> addChild(E e) {
+        if (e == null) {
+            throw new NullPointerException("You cannot add a child to an empty tree");
+        }
         final LinkedTree<E> child = new LinkedTree<>(e);
         children.add(child);
         return child;
