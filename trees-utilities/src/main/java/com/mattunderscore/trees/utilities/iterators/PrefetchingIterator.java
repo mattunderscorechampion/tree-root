@@ -54,8 +54,8 @@ public abstract class PrefetchingIterator<E> implements Iterator<E> {
 
     @Override
     public final E next() {
-        if (prefetched != null) {
-            final E next = prefetched;
+        final E next = prefetched;
+        if (next != null) {
             prefetched = null;
             return next;
         }

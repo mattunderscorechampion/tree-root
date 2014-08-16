@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities.iterators;
 
+import net.jcip.annotations.NotThreadSafe;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.Iterator;
@@ -34,7 +35,7 @@ import java.util.NoSuchElementException;
  * Iterator for a single object.
  * @author matt on 25/06/14.
  */
-@ThreadSafe
+@NotThreadSafe
 public final class SingletonIterator<E> implements Iterator<E> {
     private final E element;
     private boolean used = false;
@@ -44,12 +45,12 @@ public final class SingletonIterator<E> implements Iterator<E> {
     }
 
     @Override
-    public synchronized boolean hasNext() {
+    public boolean hasNext() {
         return !used;
     }
 
     @Override
-    public synchronized E next() {
+    public E next() {
         if (used) {
             throw new NoSuchElementException();
         }
