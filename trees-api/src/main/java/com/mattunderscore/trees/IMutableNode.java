@@ -34,4 +34,6 @@ import java.util.Collection;
 public interface IMutableNode<E> extends INode<E>, INodeAppender<E, IMutableNode<E>>
 {
     Collection<? extends IMutableNode<E>> getChildren();
+
+    boolean removeChild(IMutableNode<E> child);
 }

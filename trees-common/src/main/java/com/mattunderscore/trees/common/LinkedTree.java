@@ -79,6 +79,11 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
         return child;
     }
 
+    @Override
+    public boolean removeChild(IMutableNode<E> child) {
+        return children.remove(child);
+    }
+
     public final static class NodeConverter<E> implements INodeToTreeConverter<E, IMutableNode<E>, LinkedTree<E>> {
         @Override
         public LinkedTree<E> treeFromRootNode(IMutableNode<E> node) {

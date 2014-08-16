@@ -78,6 +78,37 @@ public final class MutableTreeNodeImpl<E> implements IMutableTree<E, IMutableNod
     }
 
     @Override
+    public boolean removeChild(IMutableNode<E> child) {
+        synchronized (this) {
+            final List<IMutableNode<E>> oldList = elementList;
+            final int size = oldList.size();
+            final Object[] searchArray = new Object[size];
+            int i = 0;
+            int j = 0;
+            for (; i < size; i++) {
+                final IMutableNode<E> currentNode = oldList.get(i);
+                if (child != currentNode) {
+                    searchArray[j] = currentNode;
+                    j++;
+                }
+            }
+            if (j == i) {
+                // Nothing removed
+                return false;
+            }
+            else {
+                final int newSize = size - 1;
+                final Object[] newArray = new Object[newSize];
+                for (int k = 0; k < newSize; k++) {
+                    newArray[k] = searchArray[k];
+                }
+                elementList = new FixedUncheckedList<>(newArray);
+                return true;
+            }
+        }
+    }
+
+    @Override
     public IMutableNode<E> getRoot() {
         return this;
     }
