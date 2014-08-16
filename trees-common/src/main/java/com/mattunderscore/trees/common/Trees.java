@@ -25,11 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.IBottomUpTreeBuilder;
-import com.mattunderscore.trees.ITopDownTreeRootBuilder;
-import com.mattunderscore.trees.ITrees;
+import com.mattunderscore.trees.*;
 
 /**
+ * Implementation of {@link ITrees}.
  * @author matt on 16/08/14.
  */
 public final class Trees implements ITrees {
@@ -43,5 +42,15 @@ public final class Trees implements ITrees {
     @Override
     public IBottomUpTreeBuilder bottomUpBuilder() {
         return new BottomUpTreeBuilder(helper);
+    }
+
+    @Override
+    public ITreeSelectorFactory treeSelectorFactory() {
+        return new TreeSelectorFactory(helper);
+    }
+
+    @Override
+    public INodeSelectorFactory nodeSelectorFactory() {
+        return new NodeSelectorFactory(helper);
     }
 }

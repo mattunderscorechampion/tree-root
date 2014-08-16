@@ -25,33 +25,34 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
+import com.mattunderscore.trees.INodeMatcher;
+import com.mattunderscore.trees.INodeSelector;
+
 /**
- * Source for tree builders.
- * @author matt on 12/07/14.
+ * @author matt on 16/08/14.
  */
-public interface ITrees {
-
+public interface INodeSelectorFactory {
     /**
-     * Obtain a {@link ITopDownTreeRootBuilder}
+     * Create a node selector for the root node.
+     * @param matcher
+     * @param <E>
      * @return
      */
-    ITopDownTreeRootBuilder topDownBuilder();
+    <E> INodeSelector newSelector(INodeMatcher matcher);
 
     /**
-     * Obtain a {@link IBottomUpTreeBuilder}
+     * Create a node selector for the children of another node selector.
+     * @param selector
+     * @param matcher
      * @return
      */
-    IBottomUpTreeBuilder bottomUpBuilder();
+    <E> INodeSelector newSelector(INodeSelector selector, INodeMatcher matcher);
 
     /**
-     * Obtain a {@link ITreeSelectorFactory}
+     * Create a node selector from the union of two selectors.
+     * @param selector0
+     * @param selector1
      * @return
      */
-    ITreeSelectorFactory treeSelectorFactory();
-
-    /**
-     * Obtain a {@link INodeSelectorFactory}
-     * @return
-     */
-    INodeSelectorFactory nodeSelectorFactory();
+    <E> INodeSelector newSelector(INodeSelector selector0, INodeSelector selector1);
 }

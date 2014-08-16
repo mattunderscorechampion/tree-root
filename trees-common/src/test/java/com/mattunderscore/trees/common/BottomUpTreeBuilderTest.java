@@ -38,16 +38,18 @@ import static org.junit.Assert.assertThat;
  * @author matt on 13/08/14.
  */
 public final class BottomUpTreeBuilderTest {
+    public static final TreeHelper helper = new TreeHelper();
+
     @Test
     public void buildEmpty() {
-        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>();
+        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>(helper);
         final LinkedTree<String> tree = builder.build(LinkedTree.class);
         assertNull(tree.getRoot().getElement());
     }
 
     @Test
     public void buildLeaf() {
-        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>();
+        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>(helper);
         final IBottomUpTreeBuilder<String> builder0 = builder.create("ROOT");
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.class);
@@ -57,7 +59,7 @@ public final class BottomUpTreeBuilderTest {
 
     @Test
     public void buildSimple() {
-        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>();
+        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>(helper);
         final IBottomUpTreeBuilder<String> builder0 = builder.create("ROOT",
             builder.create("a"),
             builder.create("b"));
@@ -69,7 +71,7 @@ public final class BottomUpTreeBuilderTest {
 
     @Test
     public void buildComplex() {
-        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>();
+        final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>(helper);
         final IBottomUpTreeBuilder<String> builder0 = builder.create("ROOT",
             builder.create("a",
                 builder.create("+",

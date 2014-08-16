@@ -37,19 +37,14 @@ import java.util.Iterator;
  * Factory for node selectors.
  * @author matt on 25/06/14.
  */
-public final class NodeSelectorFactory {
+public final class NodeSelectorFactory implements INodeSelectorFactory {
     private final TreeHelper helper;
 
     public NodeSelectorFactory(TreeHelper helper) {
         this.helper = helper;
     }
 
-    /**
-     * Create a node selector for the root node.
-     * @param matcher
-     * @param <E>
-     * @return
-     */
+    @Override
     public <E> INodeSelector newSelector(final INodeMatcher matcher) {
         return new INodeSelector() {
             @Override
@@ -65,12 +60,7 @@ public final class NodeSelectorFactory {
         };
     }
 
-    /**
-     * Create a node selector for the children of another node selector.
-     * @param selector
-     * @param matcher
-     * @return
-     */
+    @Override
     public <E> INodeSelector newSelector(final INodeSelector selector, final INodeMatcher matcher) {
         return new INodeSelector() {
             @Override
@@ -81,12 +71,7 @@ public final class NodeSelectorFactory {
         };
     }
 
-    /**
-     * Create a node selector from the union of two selectors.
-     * @param selector0
-     * @param selector1
-     * @return
-     */
+    @Override
     public <E> INodeSelector newSelector(final INodeSelector selector0, final INodeSelector selector1) {
         return new INodeSelector() {
             @Override

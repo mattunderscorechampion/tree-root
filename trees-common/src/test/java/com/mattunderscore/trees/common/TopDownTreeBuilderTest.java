@@ -36,16 +36,18 @@ import static org.junit.Assert.assertNull;
  * @author matt on 15/08/14.
  */
 public class TopDownTreeBuilderTest {
+    public static final TreeHelper helper = new TreeHelper();
+
     @Test
     public void buildEmpty() {
-        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>();
+        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>(helper);
         final LinkedTree<String> tree = builder.build(LinkedTree.class);
         assertNull(tree.getRoot().getElement());
     }
 
     @Test
     public void buildLeaf() {
-        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>();
+        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>(helper);
         final ITopDownTreeRootBuilder.ITopDownTreeBuilder<String> builder0 = builder.root("ROOT");
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.class);
@@ -55,7 +57,7 @@ public class TopDownTreeBuilderTest {
 
     @Test
     public void buildSimple() {
-        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>();
+        final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>(helper);
         final ITopDownTreeRootBuilder.ITopDownTreeBuilder<String> builder0 = builder.root("ROOT");
         builder0.addChild("a");
         builder0.addChild("b");

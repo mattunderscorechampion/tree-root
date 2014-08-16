@@ -29,6 +29,7 @@ import com.mattunderscore.trees.IMutableNode;
 import com.mattunderscore.trees.IMutableTree;
 import com.mattunderscore.trees.ITopDownTreeRootBuilder;
 import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.common.TreeHelper;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -42,10 +43,11 @@ import static org.junit.Assert.assertTrue;
  * @author matt on 15/07/14.
  */
 public final class MutableTreeNodeImplTest {
+    private static final TreeHelper helper = new TreeHelper();
 
     @Test
     public void mutateTree() {
-        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder();
+        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder(helper);
         final IMutableTree<String, IMutableNode<String>> tree = (IMutableTree<String, IMutableNode<String>>)builder.root("a").build(IMutableTree.class);
         final IMutableNode<String> root = tree.getRoot();
         final IMutableNode<String> depth1 = root.addChild("b");

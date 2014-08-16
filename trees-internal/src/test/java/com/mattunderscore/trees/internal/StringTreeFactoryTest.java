@@ -27,6 +27,7 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.common.TreeHelper;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -43,7 +44,7 @@ public final class StringTreeFactoryTest {
 
     @Test
     public void build0() {
-        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder();
+        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder(new TreeHelper());
         final ITopDownTreeRootBuilder.ITopDownTreeBuilder nodeApp0 = builder.root("a");
         nodeApp0.addChild("b").addChild("c");
         nodeApp0.addChild("d");

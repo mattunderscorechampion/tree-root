@@ -28,6 +28,7 @@ package com.mattunderscore.trees.internal;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.DefaultMatcher;
 import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.common.TreeHelper;
 import com.mattunderscore.trees.common.TreeSelectorFactory;
 import org.junit.Test;
 
@@ -41,15 +42,17 @@ import static org.junit.Assert.assertTrue;
  * @author matt on 29/06/14.
  */
 public class TreeSelectorTest {
+    private static final TreeHelper helper = new TreeHelper();
+
     @Test
     public void test() {
-        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder();
+        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder(helper);
         final ITopDownTreeRootBuilder.ITopDownTreeBuilder nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
         final ITree<String, INode<String>> tree = nodeApp0.build(ITree.class);
 
-        final TreeSelectorFactory selectorFactory = new TreeSelectorFactory();
+        final ITreeSelectorFactory selectorFactory = new TreeSelectorFactory(helper);
         final INodeMatcher matcher0 = new DefaultMatcher("A");
         final ITreeSelector selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<ITree<String, INode<String>>> treeIterator0 = selector0.select(tree);
