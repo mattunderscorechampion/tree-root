@@ -37,34 +37,32 @@ import java.lang.reflect.Array;
  */
 @Immutable
 public final class BottomUpTreeBuilder<E> implements IBottomUpTreeBuilder<E> {
-    private static final TreeHelper helper = new TreeHelper();
-
+    private final TreeHelper helper;
     private final E root;
     private final IBottomUpTreeBuilder<E>[] children;
 
-    public BottomUpTreeBuilder() {
-        root = null;
-        children = new IBottomUpTreeBuilder[0];
+    public BottomUpTreeBuilder(TreeHelper helper) {
+        this(helper, null, new IBottomUpTreeBuilder[0]);
     }
 
-    private BottomUpTreeBuilder(E e) {
-        root = e;
-        children = new IBottomUpTreeBuilder[0];
+    private BottomUpTreeBuilder(TreeHelper helper, E e) {
+        this(helper, e, new IBottomUpTreeBuilder[0]);
     }
 
-    private BottomUpTreeBuilder(E e, IBottomUpTreeBuilder[] builders) {
+    private BottomUpTreeBuilder(TreeHelper helper, E e, IBottomUpTreeBuilder[] builders) {
+        this.helper = helper;
         root = e;
         children = builders;
     }
 
     @Override
     public IBottomUpTreeBuilder<E> create(E e) {
-        return new BottomUpTreeBuilder<>(e);
+        return new BottomUpTreeBuilder<>(helper, e);
     }
 
     @Override
     public IBottomUpTreeBuilder<E> create(E e, IBottomUpTreeBuilder<E>... builders) {
-        return new BottomUpTreeBuilder<>(e, builders);
+        return new BottomUpTreeBuilder<>(helper, e, builders);
     }
 
     @Override

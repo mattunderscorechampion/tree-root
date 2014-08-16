@@ -34,10 +34,15 @@ import net.jcip.annotations.Immutable;
  * @author matt on 15/08/14.
  */
 public final class TopDownTreeRootBuilder<E> implements ITopDownTreeRootBuilder<E> {
-    private static final TreeHelper helper = new TreeHelper();
+    private final TreeHelper helper;
+
+    public TopDownTreeRootBuilder(TreeHelper helper) {
+        this.helper = helper;
+    }
+
     @Override
     public ITopDownTreeBuilder<E> root(E e) {
-        return new TopDownTreeBuilder<>(e);
+        return new TopDownTreeBuilder<>(helper, e);
     }
 
     @Override

@@ -38,7 +38,11 @@ import java.util.Iterator;
  * @author matt on 25/06/14.
  */
 public final class NodeSelectorFactory {
-    private final TreeHelper helper = new TreeHelper();
+    private final TreeHelper helper;
+
+    public NodeSelectorFactory(TreeHelper helper) {
+        this.helper = helper;
+    }
 
     /**
      * Create a node selector for the root node.
@@ -130,7 +134,6 @@ public final class NodeSelectorFactory {
         private final INodeSelector selector;
         private final TreeHelper helper;
         private Iterator<N> currentEndPoints;
-        private INode<E> current;
 
         public AsTreeIterator(Iterator<N> startingPoints, INodeSelector selector, TreeHelper helper) {
             this.startingPoints = startingPoints;

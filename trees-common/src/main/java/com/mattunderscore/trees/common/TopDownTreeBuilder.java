@@ -33,10 +33,11 @@ import net.jcip.annotations.NotThreadSafe;
  */
 @NotThreadSafe
 final class TopDownTreeBuilder<E> implements ITopDownTreeRootBuilder.ITopDownTreeBuilder<E> {
-    private static final TreeHelper helper = new TreeHelper();
+    private final TreeHelper helper;
     private final LinkedTree<E> tree;
 
-    public TopDownTreeBuilder(E root) {
+    public TopDownTreeBuilder(TreeHelper helper, E root) {
+        this.helper = helper;
         tree = new LinkedTree<E>(root);
     }
 
@@ -51,7 +52,7 @@ final class TopDownTreeBuilder<E> implements ITopDownTreeRootBuilder.ITopDownTre
     }
 
     @NotThreadSafe
-    private final class Appender<S> implements ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<S> {
+    private static final class Appender<S> implements ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender<S> {
         private final IMutableNode<S> root;
 
         public Appender(IMutableNode<S> root) {

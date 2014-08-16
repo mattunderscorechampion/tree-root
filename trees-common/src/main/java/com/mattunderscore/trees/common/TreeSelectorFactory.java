@@ -37,7 +37,11 @@ import java.util.Iterator;
  * @author matt on 29/06/14.
  */
 public final class TreeSelectorFactory {
-    private final TreeHelper helper = new TreeHelper();
+    private final TreeHelper helper;
+
+    public TreeSelectorFactory(TreeHelper helper) {
+        this.helper = helper;
+    }
 
     /**
      * Create a tree selector for the root node (entire tree).
