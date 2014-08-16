@@ -23,28 +23,29 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.common.matchers;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.INodeMatcher;
 import net.jcip.annotations.Immutable;
 
 /**
- * Matches a node if the both two matchers passed in match the node.
- * @author matt on 26/06/14.
+ * Matches nodes with the element equal to the value passed to it.
+ * @author matt on 09/06/14.
  */
 @Immutable
-public final class ConjunctionMatcher<E> implements INodeMatcher<E> {
-    private final INodeMatcher<E> matcher0;
-    private final INodeMatcher<E> matcher1;
+public final class EqualityMatcher<E> implements INodeMatcher<E> {
+    private final Object value;
 
-    public ConjunctionMatcher(INodeMatcher<E> matcher0, INodeMatcher<E> matcher1) {
-        this.matcher0 = matcher0;
-        this.matcher1 = matcher1;
+    public EqualityMatcher(Object value) {
+        if (value == null) {
+            throw new NullPointerException("Value must be null");
+        }
+        this.value = value;
     }
 
     @Override
     public <T extends INode<E>> boolean matches(T node) {
-        return matcher0.matches(node) && matcher1.matches(node);
+        return value.equals(node.getElement());
     }
 }

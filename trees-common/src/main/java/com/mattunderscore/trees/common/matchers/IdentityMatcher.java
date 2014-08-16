@@ -23,19 +23,26 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.common.matchers;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.INodeMatcher;
 import net.jcip.annotations.Immutable;
 
 /**
+ * Matches nodes to the same element passed to it.
  * @author matt on 16/08/14.
  */
 @Immutable
-public final class NeverMatcher<E> implements INodeMatcher<E> {
+public final class IdentityMatcher<E> implements INodeMatcher<E> {
+    private final E value;
+
+    public IdentityMatcher(E value) {
+        this.value = value;
+    }
+
     @Override
     public <T extends INode<E>> boolean matches(T node) {
-        return false;
+        return node.getElement() == value;
     }
 }

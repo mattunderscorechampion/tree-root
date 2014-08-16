@@ -27,6 +27,7 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.*;
+import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -38,7 +39,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author matt on 29/06/14.
  */
-public class TreeSelectorTest {
+public final class TreeSelectorTest {
     private static final ITrees trees = new Trees();
 
     @Test
@@ -50,14 +51,14 @@ public class TreeSelectorTest {
         final ITree<String, INode<String>> tree = nodeApp0.build(ITree.class);
 
         final ITreeSelectorFactory selectorFactory = trees.treeSelectorFactory();
-        final INodeMatcher matcher0 = new DefaultMatcher("A");
+        final INodeMatcher matcher0 = new EqualityMatcher("A");
         final ITreeSelector selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<ITree<String, INode<String>>> treeIterator0 = selector0.select(tree);
         assertTrue(treeIterator0.hasNext());
         assertEquals("A", treeIterator0.next().getRoot().getElement());
         assertFalse(treeIterator0.hasNext());
 
-        final INodeMatcher matcher1 = new DefaultMatcher("B");
+        final INodeMatcher matcher1 = new EqualityMatcher("B");
         final ITreeSelector selector1 = selectorFactory.newSelector(selector0, matcher1);
         final Iterator<ITree<String, INode<String>>> treeIterator1 = selector1.select(tree);
         assertTrue(treeIterator1.hasNext());

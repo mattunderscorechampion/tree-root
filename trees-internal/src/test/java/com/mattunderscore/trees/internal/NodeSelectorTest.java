@@ -30,6 +30,7 @@ import static org.junit.Assert.*;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.*;
 import com.mattunderscore.trees.INodeSelectorFactory;
+import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -37,7 +38,7 @@ import java.util.Iterator;
 /**
  * @author matt on 25/06/14.
  */
-public class NodeSelectorTest {
+public final class NodeSelectorTest {
     private static final ITrees trees = new Trees();
 
     @Test
@@ -49,21 +50,21 @@ public class NodeSelectorTest {
         final ITree<String, ?> tree = nodeApp0.build(ITree.class);
 
         final INodeSelectorFactory selectorFactory = trees.nodeSelectorFactory();
-        final INodeMatcher matcher0 = new DefaultMatcher("A");
+        final INodeMatcher matcher0 = new EqualityMatcher("A");
         final INodeSelector selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<? extends INode<String>> nodeIterator0 = selector0.select(tree);
         assertTrue(nodeIterator0.hasNext());
         assertEquals("A", nodeIterator0.next().getElement());
         assertFalse(nodeIterator0.hasNext());
 
-        final INodeMatcher matcher1 = new DefaultMatcher("B");
+        final INodeMatcher matcher1 = new EqualityMatcher("B");
         final INodeSelector selector1 = selectorFactory.newSelector(selector0, matcher1);
         final Iterator<? extends INode<String>> nodeIterator1 = selector1.select(tree);
         assertTrue(nodeIterator1.hasNext());
         assertEquals("B", nodeIterator1.next().getElement());
         assertFalse(nodeIterator1.hasNext());
 
-        final INodeMatcher matcher2 = new DefaultMatcher("C");
+        final INodeMatcher matcher2 = new EqualityMatcher("C");
         final INodeSelector selector2 = selectorFactory.newSelector(selector1, matcher2);
         final Iterator<? extends INode<String>> nodeIterator2 = selector2.select(tree);
         assertFalse(nodeIterator2.hasNext());
