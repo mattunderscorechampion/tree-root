@@ -27,13 +27,16 @@ package com.mattunderscore.trees.strings;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.INodeMatcher;
+import net.jcip.annotations.Immutable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Regular expression matcher for strings.
  * @author matt on 09/06/14.
  */
+@Immutable
 public final class RegexMatcher implements INodeMatcher<String> {
     private final Pattern value;
 
