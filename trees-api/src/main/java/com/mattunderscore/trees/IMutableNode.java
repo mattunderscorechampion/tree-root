@@ -28,6 +28,7 @@ package com.mattunderscore.trees;
 import java.util.Collection;
 
 /**
+ * Represents a mutable node of a tree.
  * @author matt on 08/08/14.
  */
 public interface IMutableNode<E> extends INode<E>, INodeAppender<E, IMutableNode<E>>

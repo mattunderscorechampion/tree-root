@@ -28,6 +28,7 @@ package com.mattunderscore.trees;
 import java.util.Collection;
 
 /**
+ * Represents a node of the tree.
  * @author matt on 08/08/14.
  */
 public interface INode<E> {

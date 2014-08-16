@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
+ * Matches a node.
  * @author matt on 11/08/14.
  */
 public interface INodeMatcher {

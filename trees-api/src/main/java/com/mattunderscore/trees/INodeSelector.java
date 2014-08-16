@@ -28,6 +28,7 @@ package com.mattunderscore.trees;
 import java.util.Iterator;
 
 /**
+ * Selects a node of the tree.
  * @author matt on 08/08/14.
  */
 public interface INodeSelector {
