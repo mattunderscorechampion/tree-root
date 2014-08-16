@@ -25,8 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.spi.TreeToNodeConverter;
+import com.mattunderscore.trees.IMutableNode;
+import com.mattunderscore.trees.IMutableTree;
+import com.mattunderscore.trees.ITopDownTreeRootBuilder;
+import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -43,32 +45,32 @@ public final class MutableTreeNodeImplTest {
 
     @Test
     public void mutateTree() {
-        final MutableTreeFactory factory = new MutableTreeFactoryImpl();
-        final MutableTree<String> tree = factory.create("a");
-        final MutableNode<String> root = tree.getRoot();
-        final MutableNode<String> depth1 = root.addChild("b");
+        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder();
+        final IMutableTree<String, IMutableNode<String>> tree = (IMutableTree<String, IMutableNode<String>>)builder.root("a").build(IMutableTree.class);
+        final IMutableNode<String> root = tree.getRoot();
+        final IMutableNode<String> depth1 = root.addChild("b");
         depth1.addChild("c");
 
-        final Collection<Node<String>> children = root.getChildren();
+        final Collection<? extends IMutableNode<String>> children = root.getChildren();
         assertEquals(1, children.size());
-        final Iterator<Node<String>> iterator0 = children.iterator();
+        final Iterator<? extends IMutableNode<String>> iterator0 = children.iterator();
         assertTrue(iterator0.hasNext());
-        final Node<String> child0 = iterator0.next();
+        final IMutableNode<String> child0 = iterator0.next();
         assertEquals("b", child0.getElement());
 
-        final Iterator<Node<String>> iterator1 = child0.getChildren().iterator();
+        final Iterator<? extends IMutableNode<String>> iterator1 = child0.getChildren().iterator();
         assertTrue(iterator1.hasNext());
-        final Node<String> child1 = iterator1.next();
+        final IMutableNode<String> child1 = iterator1.next();
         assertEquals("c", child1.getElement());
         assertFalse(iterator1.hasNext());
 
         depth1.addChild("d");
-        final Iterator<Node<String>> iterator2 = child0.getChildren().iterator();
+        final Iterator<? extends IMutableNode<String>> iterator2 = child0.getChildren().iterator();
         assertTrue(iterator2.hasNext());
-        final Node<String> child2 = iterator2.next();
+        final IMutableNode<String> child2 = iterator2.next();
         assertEquals("c", child2.getElement());
         assertTrue(iterator2.hasNext());
-        final Node<String> child3 = iterator2.next();
+        final IMutableNode<String> child3 = iterator2.next();
         assertEquals("d", child3.getElement());
         assertFalse(iterator2.hasNext());
     }

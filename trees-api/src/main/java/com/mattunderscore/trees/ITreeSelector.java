@@ -32,5 +32,5 @@ import java.util.Iterator;
  * @author matt on 08/08/14.
  */
 public interface ITreeSelector {
-    <E, T extends ITree<E, ? extends INode<E>>> Iterator<T> select(T tree);
+    <E, N extends INode<E>, T extends ITree<E, N>> Iterator<T> select(T tree);
 }

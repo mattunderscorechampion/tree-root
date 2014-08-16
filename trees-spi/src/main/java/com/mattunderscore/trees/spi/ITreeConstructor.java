@@ -27,7 +27,6 @@ package com.mattunderscore.trees.spi;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITree;
-import com.mattunderscore.trees.Tree;
 
 /**
  * @author matt on 06/08/14.

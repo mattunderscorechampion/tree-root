@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.NodeMatcher;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.INodeMatcher;
 
 /**
  * Matches the class of the node element.
  * @author matt on 26/06/14.
  */
-public final class TypeMatcher implements NodeMatcher {
+public final class TypeMatcher implements INodeMatcher<Object> {
     private final Class<?> type;
 
     public TypeMatcher(Class<?> type) {
@@ -43,7 +43,7 @@ public final class TypeMatcher implements NodeMatcher {
     }
 
     @Override
-    public boolean matches(Node node) {
+    public <T extends INode<Object>> boolean matches(T node) {
         return type.equals(node.getElementClass());
     }
 }

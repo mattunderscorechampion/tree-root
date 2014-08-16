@@ -25,24 +25,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.NodeMatcher;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.INodeMatcher;
 
 /**
  * Matches a node if the both two matchers passed in match the node.
  * @author matt on 26/06/14.
  */
-public final class ConjunctionMatcher<E> implements NodeMatcher<E> {
-    private final NodeMatcher<E> matcher0;
-    private final NodeMatcher<E> matcher1;
+public final class ConjunctionMatcher<E> implements INodeMatcher<E> {
+    private final INodeMatcher<E> matcher0;
+    private final INodeMatcher<E> matcher1;
 
-    public ConjunctionMatcher(NodeMatcher<E> matcher0, NodeMatcher<E> matcher1) {
+    public ConjunctionMatcher(INodeMatcher<E> matcher0, INodeMatcher<E> matcher1) {
         this.matcher0 = matcher0;
         this.matcher1 = matcher1;
     }
 
     @Override
-    public boolean matches(Node<E> node) {
+    public <T extends INode<E>> boolean matches(T node) {
         return matcher0.matches(node) && matcher1.matches(node);
     }
 }

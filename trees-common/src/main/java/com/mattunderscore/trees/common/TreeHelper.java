@@ -27,8 +27,6 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITree;
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.*;
 
 import java.util.HashMap;
@@ -44,8 +42,7 @@ public final class TreeHelper {
     private final Map<Class<?>, IEmptyTreeConstructor<?, ?>> emptyConstructors;
     private final Map<Class<?>, ITreeConstructor<?, ?>> treeConstructors;
     private final Map<Class<?>, ITreeConverter<?, ?>> treeConverters;
-    private final Map<Class<?>, TreeConstructor<?, ?>> constructors;
-    private final Map<Class<?>, TreeToNodeConverter> converters;
+    private final Map<Class<?>, INodeToTreeConverter> converters;
 
     public TreeHelper() {
         treeConverters = new HashMap<Class<?>, ITreeConverter<?, ?>>();
@@ -75,30 +72,13 @@ public final class TreeHelper {
             treeConstructors.put(constructor.forClass(), constructor);
         }
 
-        constructors = new HashMap<Class<?>, TreeConstructor<?, ?>>();
-        final ServiceLoader<TreeConstructor> constructorLoader = ServiceLoader.load(TreeConstructor.class);
-        final Iterator<TreeConstructor> constructorIterator = constructorLoader.iterator();
-        while (constructorIterator.hasNext()) {
-            final TreeConstructor constructor = constructorIterator.next();
-            constructors.put(constructor.forClass(), constructor);
-        }
-
-        converters = new HashMap<Class<?>, TreeToNodeConverter>();
-        final ServiceLoader<TreeToNodeConverter> converterLoader = ServiceLoader.load(TreeToNodeConverter.class);
-        final Iterator<TreeToNodeConverter> converterIterator = converterLoader.iterator();
+        converters = new HashMap<Class<?>, INodeToTreeConverter>();
+        final ServiceLoader<INodeToTreeConverter> converterLoader = ServiceLoader.load(INodeToTreeConverter.class);
+        final Iterator<INodeToTreeConverter> converterIterator = converterLoader.iterator();
         while (converterIterator.hasNext()) {
-            final TreeToNodeConverter converter = converterIterator.next();
+            final INodeToTreeConverter converter = converterIterator.next();
             converters.put(converter.forClass(), converter);
         }
-    }
-
-    public Tree treeFromRootNode(Node node) {
-        return converters.get(node.getClass()).treeFromRootNode(node);
-    }
-
-    public <E, T extends Tree<E>> T treeFrom(Class<T> klass, Tree<E> tree) {
-        final TreeConstructor<E, T> constructor = (TreeConstructor<E, T>)constructors.get(klass);
-        return constructor.build(tree);
     }
 
     public <E, T extends ITree<E, ? extends INode<E>>> T emptyTree(Class<T> klass) {
@@ -114,5 +94,10 @@ public final class TreeHelper {
     public <E, N extends INode<E>, T extends ITree<E, N>> T convertTree(Class<T> klass, ITree<E, ? extends INode<E>> sourceTree) {
         final ITreeConverter<E, T> converter = (ITreeConverter<E, T>)treeConverters.get(klass);
         return converter.build(sourceTree);
+    }
+
+    public <E, N extends INode<E>, T extends ITree<E, N>> T nodeToTree(N node) {
+        final INodeToTreeConverter<E, N, T> converter = (INodeToTreeConverter<E, N, T>)converters.get(node.getClass());
+        return converter.treeFromRootNode(node);
     }
 }

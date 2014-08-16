@@ -27,6 +27,7 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.DefaultMatcher;
+import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.common.TreeSelectorFactory;
 import org.junit.Test;
 
@@ -42,22 +43,23 @@ import static org.junit.Assert.assertTrue;
 public class TreeSelectorTest {
     @Test
     public void test() {
-        final TreeFactory factory = new TreeFactoryImpl();
-        final Tree<String> tree = factory.create("A",
-                factory.create("B"),
-                factory.create("C"));
+        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder();
+        final ITopDownTreeRootBuilder.ITopDownTreeBuilder nodeApp0 = builder.root("A");
+        nodeApp0.addChild("B");
+        nodeApp0.addChild("C");
+        final ITree<String, INode<String>> tree = nodeApp0.build(ITree.class);
 
         final TreeSelectorFactory selectorFactory = new TreeSelectorFactory();
-        final NodeMatcher<String> matcher0 = new DefaultMatcher("A");
-        final TreeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
-        final Iterator<Tree<String>> treeIterator0 = selector0.select(tree);
+        final INodeMatcher matcher0 = new DefaultMatcher("A");
+        final ITreeSelector selector0 = selectorFactory.newSelector(matcher0);
+        final Iterator<ITree<String, INode<String>>> treeIterator0 = selector0.select(tree);
         assertTrue(treeIterator0.hasNext());
         assertEquals("A", treeIterator0.next().getRoot().getElement());
         assertFalse(treeIterator0.hasNext());
 
-        final NodeMatcher<String> matcher1 = new DefaultMatcher("B");
-        final TreeSelector<String> selector1 = selectorFactory.newSelector(selector0, matcher1);
-        final Iterator<Tree<String>> treeIterator1 = selector1.select(tree);
+        final INodeMatcher matcher1 = new DefaultMatcher("B");
+        final ITreeSelector selector1 = selectorFactory.newSelector(selector0, matcher1);
+        final Iterator<ITree<String, INode<String>>> treeIterator1 = selector1.select(tree);
         assertTrue(treeIterator1.hasNext());
         assertEquals("B", treeIterator1.next().getRoot().getElement());
         assertFalse(treeIterator1.hasNext());

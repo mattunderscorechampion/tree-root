@@ -25,16 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.NodeMatcher;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.INodeMatcher;
 
 /**
  * Matches any node.
  * @author matt on 25/06/14.
  */
-public final class AlwaysMatcher<E> implements NodeMatcher<E> {
+public final class AlwaysMatcher<E> implements INodeMatcher<E> {
     @Override
-    public boolean matches(Node<E> node) {
+    public <T extends INode<E>> boolean matches(T node) {
         return true;
     }
 }

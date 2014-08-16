@@ -29,6 +29,6 @@ package com.mattunderscore.trees;
  * Matches a node.
  * @author matt on 11/08/14.
  */
-public interface INodeMatcher {
-    <E, T extends INode<E>> boolean matches(T node);
+public interface INodeMatcher<E> {
+    <T extends INode<E>> boolean matches(T node);
 }

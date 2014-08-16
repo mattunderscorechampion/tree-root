@@ -30,6 +30,7 @@ import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 /**
@@ -45,11 +46,11 @@ public final class NodeSelectorFactory {
      * @param <E>
      * @return
      */
-    public <E> NodeSelector newSelector(final NodeMatcher<E> matcher) {
-        return new NodeSelector<E>() {
+    public <E> INodeSelector newSelector(final INodeMatcher matcher) {
+        return new INodeSelector() {
             @Override
-            public Iterator<Node<E>> select(Tree<E> tree) {
-                final Node<E> root = tree.getRoot();
+            public <E, T extends INode<E>> Iterator<T> select(ITree<E, T> tree) {
+                final T root = tree.getRoot();
                 if (matcher.matches(root)) {
                     return new SingletonIterator<>(root);
                 }
@@ -66,11 +67,11 @@ public final class NodeSelectorFactory {
      * @param matcher
      * @return
      */
-    public <E> NodeSelector newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
-        return new NodeSelector<E>() {
+    public <E> INodeSelector newSelector(final INodeSelector selector, final INodeMatcher matcher) {
+        return new INodeSelector() {
             @Override
-            public Iterator<Node<E>> select(Tree<E> tree) {
-                final Iterator<Node<E>> parents = selector.select(tree);
+            public <E, T extends INode<E>> Iterator<T> select(ITree<E, T> tree) {
+                final Iterator<T> parents = selector.select(tree);
                 return new NodeIterator<>(parents, matcher);
             }
         };
@@ -82,34 +83,35 @@ public final class NodeSelectorFactory {
      * @param selector1
      * @return
      */
-    public <E> NodeSelector newSelector(final NodeSelector<E> selector0, final NodeSelector<E> selector1) {
-        return new NodeSelector<E>() {
+    public <E> INodeSelector newSelector(final INodeSelector selector0, final INodeSelector selector1) {
+        return new INodeSelector() {
             @Override
-            public Iterator<Node<E>> select(Tree<E> tree) {
-                final Iterator<Node<E>> startingPoints = selector0.select(tree);
+            public <E, N extends INode<E>> Iterator<N> select(ITree<E, N> tree) {
+                final Iterator<N> startingPoints = selector0.select(tree);
                 return new AsTreeIterator<>(startingPoints, selector1, helper);
             }
         };
     }
 
-    private static final class NodeIterator<E> extends PrefetchingIterator<Node<E>> {
-        private final Iterator<Node<E>> parents;
-        private final NodeMatcher<E> matcher;
-        private Iterator<Node<E>> possibles;
+    private static final class NodeIterator<E, N extends INode<E>> extends PrefetchingIterator<N> {
+        private final Iterator<N> parents;
+        private final INodeMatcher matcher;
+        private Iterator<N> possibles;
 
-        public NodeIterator(Iterator<Node<E>> parents, NodeMatcher<E> matcher) {
+        public NodeIterator(Iterator<N> parents, INodeMatcher matcher) {
             this.parents = parents;
             this.matcher = matcher;
         }
 
-        protected Node<E> calculateNext() {
+        protected N calculateNext() {
             if (possibles == null) {
-                final Node<E> next = parents.next();
-                possibles = next.getChildren().iterator();
+                final N next = parents.next();
+                final Collection<N> children = (Collection<N>)next.getChildren();
+                possibles = children.iterator();
             }
 
             if (possibles.hasNext()) {
-                final Node<E> possible = possibles.next();
+                final N possible = possibles.next();
                 if (matcher.matches(possible)) {
                     return possible;
                 } else {
@@ -123,22 +125,22 @@ public final class NodeSelectorFactory {
         }
     }
 
-    private static final class AsTreeIterator<E> extends PrefetchingIterator<Node<E>> {
-        private final Iterator<Node<E>> startingPoints;
-        private final NodeSelector<E> selector;
+    private static final class AsTreeIterator<E, N extends INode<E>> extends PrefetchingIterator<N> {
+        private final Iterator<N> startingPoints;
+        private final INodeSelector selector;
         private final TreeHelper helper;
-        private Iterator<Node<E>> currentEndPoints;
-        private Node<E> current;
+        private Iterator<N> currentEndPoints;
+        private INode<E> current;
 
-        public AsTreeIterator(Iterator<Node<E>> startingPoints, NodeSelector<E> selector, TreeHelper helper) {
+        public AsTreeIterator(Iterator<N> startingPoints, INodeSelector selector, TreeHelper helper) {
             this.startingPoints = startingPoints;
             this.selector = selector;
             this.helper = helper;
         }
 
-        protected Node<E> calculateNext() {
+        protected N calculateNext() {
             if (currentEndPoints == null) {
-                final Tree tree = helper.treeFromRootNode(startingPoints.next());
+                final ITree<E, N> tree = helper.nodeToTree(startingPoints.next());
                 currentEndPoints = selector.select(tree);
             }
 

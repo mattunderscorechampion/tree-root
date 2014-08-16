@@ -25,20 +25,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.IMutableTree;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.ITree;
+import com.mattunderscore.trees.spi.IEmptyTreeConstructor;
+import com.mattunderscore.trees.spi.INodeToTreeConverter;
+import com.mattunderscore.trees.spi.ITreeConstructor;
+import com.mattunderscore.trees.spi.ITreeConverter;
+import com.mattunderscore.trees.utilities.FixedUncheckedList;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author matt on 10/06/14.
  */
-public final class TreeNodeImpl<E> implements Tree, Node<E> {
+public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
     private final E element;
-    private final List<Node<E>> children;
+    private final List<INode<E>> children;
 
-    public TreeNodeImpl(E element, List<Node<E>> children) {
+    public TreeNodeImpl(E element, List<INode<E>> children) {
         this.element = element;
         this.children = children;
     }
@@ -54,12 +61,76 @@ public final class TreeNodeImpl<E> implements Tree, Node<E> {
     }
 
     @Override
-    public Collection<Node<E>> getChildren() {
+    public Collection<INode<E>> getChildren() {
         return children;
     }
 
     @Override
-    public Node<E> getRoot() {
+    public INode<E> getRoot() {
         return this;
+    }
+
+    public final static class Constructor<E> implements ITreeConstructor<E, TreeNodeImpl<E>> {
+
+        @Override
+        public TreeNodeImpl<E> build(E e, TreeNodeImpl<E>... subtrees) {
+            return new TreeNodeImpl(e, new FixedUncheckedList<>(subtrees));
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return ITree.class;
+        }
+    }
+
+    public final static class EmptyConstructor<E> implements IEmptyTreeConstructor<E, TreeNodeImpl<E>> {
+
+        @Override
+        public TreeNodeImpl<E> build() {
+            return new TreeNodeImpl(null, Collections.<INode<E>>emptyList());
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return ITree.class;
+        }
+    }
+
+    public static final class NodeConverter<E> implements INodeToTreeConverter<E, INode<E>, ITree<E, INode<E>>> {
+
+        @Override
+        public ITree<E, INode<E>> treeFromRootNode(INode<E> node) {
+            return (TreeNodeImpl<E>)node;
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return TreeNodeImpl.class;
+        }
+    }
+
+    public static final class Converter<E> implements ITreeConverter<E, TreeNodeImpl<E>> {
+
+        @Override
+        public TreeNodeImpl<E> build(ITree<E, ? extends INode<E>> sourceTree) {
+            final INode<E> root = sourceTree.getRoot();
+            return new TreeNodeImpl(root.getElement(), duplicateChildren(root.getChildren()));
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return ITree.class;
+        }
+
+        private List<INode<E>> duplicateChildren(Collection<? extends INode<E>> children) {
+            final INode[] newChildren = new INode[children.size()];
+            int i = 0;
+            for (final INode<E> sourceChild : children) {
+                final List<INode<E>> newGrandChildren = duplicateChildren(sourceChild.getChildren());
+                newChildren[i] = new TreeNodeImpl<>(sourceChild.getElement(), newGrandChildren);
+                i++;
+            }
+            return new FixedUncheckedList<>(newChildren);
+        }
     }
 }

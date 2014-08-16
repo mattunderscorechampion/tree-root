@@ -25,22 +25,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.NodeMatcher;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.INodeMatcher;
 
 /**
  * Matches nodes with the element equal to the value passed to it.
  * @author matt on 09/06/14.
  */
-public final class DefaultMatcher<E> implements NodeMatcher<E> {
-    private final E value;
+public final class DefaultMatcher<E> implements INodeMatcher<E> {
+    private final Object value;
 
-    public DefaultMatcher(E value) {
+    public DefaultMatcher(Object value) {
+        if (value == null) {
+            throw new NullPointerException("Value must be null");
+        }
         this.value = value;
     }
 
     @Override
-    public boolean matches(Node<E> node) {
+    public <T extends INode<E>> boolean matches(T node) {
         return value.equals(node.getElement());
     }
 }

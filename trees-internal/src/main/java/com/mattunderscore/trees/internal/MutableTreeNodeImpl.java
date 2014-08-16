@@ -25,12 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.MutableNode;
-import com.mattunderscore.trees.MutableTree;
-import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.IMutableNode;
+import com.mattunderscore.trees.IMutableTree;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.ITree;
+import com.mattunderscore.trees.spi.IEmptyTreeConstructor;
+import com.mattunderscore.trees.spi.INodeToTreeConverter;
+import com.mattunderscore.trees.spi.ITreeConstructor;
+import com.mattunderscore.trees.spi.ITreeConverter;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -38,48 +42,122 @@ import java.util.List;
 /**
  * @author matt on 15/07/14.
  */
-public final class MutableTreeNodeImpl<E> implements MutableTree<E>, MutableNode<E> {
-    private volatile List<Node<E>> elementList;
-    private final TreeNodeImpl<E> node;
+public final class MutableTreeNodeImpl<E> implements IMutableTree<E, IMutableNode<E>>, IMutableNode<E> {
+    private volatile List<IMutableNode<E>> elementList;
+    private final E element;
 
     public MutableTreeNodeImpl(E element) {
         elementList = new FixedUncheckedList<>(new Object[0]);
-        node = new TreeNodeImpl<>(element, elementList);
+        this.element = element;
+    }
+
+    private MutableTreeNodeImpl(E element, List<IMutableNode<E>> childList) {
+        this.element = element;
+        synchronized (this) {
+            elementList = childList;
+        }
     }
 
     @Override
-    public MutableNode<E> addChild(E e) {
+    public IMutableNode<E> addChild(E e) {
+        if (e == null) {
+            throw new NullPointerException("You cannot add a child to an empty tree");
+        }
         final MutableTreeNodeImpl child = new MutableTreeNodeImpl(e);
         synchronized (this) {
-            final List<Node<E>> oldList = elementList;
+            final List<IMutableNode<E>> oldList = elementList;
             final int size = oldList.size();
             final Object[] newArray = new Object[size + 1];
             for (int i = 0; i < size; i++) {
                 newArray[i] = oldList.get(i);
             }
             newArray[size] = child;
-            elementList = new FixedUncheckedList<Node<E>>(newArray);
+            elementList = new FixedUncheckedList<IMutableNode<E>>(newArray);
         }
         return child;
     }
 
     @Override
-    public MutableNode<E> getRoot() {
+    public IMutableNode<E> getRoot() {
         return this;
     }
 
     @Override
     public E getElement() {
-        return node.getElement();
+        return element;
     }
 
     @Override
     public Class<E> getElementClass() {
-        return node.getElementClass();
+        return (Class<E>)element.getClass();
     }
 
     @Override
-    public Collection<Node<E>> getChildren() {
+    public Collection<IMutableNode<E>> getChildren() {
         return Collections.unmodifiableList(elementList);
+    }
+
+    public final static class Constructor<E> implements ITreeConstructor<E, MutableTreeNodeImpl<E>> {
+
+        @Override
+        public MutableTreeNodeImpl<E> build(E e, MutableTreeNodeImpl<E>... subtrees) {
+            return new MutableTreeNodeImpl(e, new FixedUncheckedList<>(subtrees));
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return IMutableTree.class;
+        }
+    }
+
+    public final static class EmptyConstructor<E> implements IEmptyTreeConstructor<E, IMutableTree<E, IMutableNode<E>>> {
+
+        @Override
+        public IMutableTree<E, IMutableNode<E>> build() {
+            return new MutableTreeNodeImpl(null, Collections.<INode<E>>emptyList());
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return IMutableTree.class;
+        }
+    }
+
+    public static final class Converter<E> implements ITreeConverter<E, MutableTreeNodeImpl<E>> {
+
+        @Override
+        public MutableTreeNodeImpl<E> build(ITree<E, ? extends INode<E>> sourceTree) {
+            final INode<E> root = sourceTree.getRoot();
+            final MutableTreeNodeImpl<E> newTree = new MutableTreeNodeImpl<>(root.getElement());
+            for (final INode<E> child : root.getChildren()) {
+                duplicate(newTree, child);
+            }
+            return newTree;
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return IMutableTree.class;
+        }
+
+        private void duplicate(MutableTreeNodeImpl<E> newParent, INode<E> sourceChild) {
+            final MutableTreeNodeImpl<E> newChild = (MutableTreeNodeImpl<E>) newParent.addChild(sourceChild.getElement());
+            for (final INode<E> child : sourceChild.getChildren()) {
+                duplicate(newChild, child);
+            }
+        }
+    }
+
+    public static final class NodeConverter<E> implements INodeToTreeConverter<E, IMutableNode<E>, IMutableTree<E, IMutableNode<E>>> {
+
+        @Override
+        public IMutableTree<E, IMutableNode<E>> treeFromRootNode(IMutableNode<E> node) {
+            return (MutableTreeNodeImpl<E>)node;
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return MutableTreeNodeImpl.class;
+        }
     }
 }

@@ -25,17 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.NodeMatcher;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.INodeMatcher;
 
 /**
  * Matches the negation of the matcher passed to it.
  * @author matt on 25/06/14.
  */
-public final class NegatingMatcher<E> implements NodeMatcher<E> {
-    private final NodeMatcher<E> matcher;
+public final class NegatingMatcher<E> implements INodeMatcher<E> {
+    private final INodeMatcher matcher;
 
-    public NegatingMatcher(NodeMatcher<E> matcher) {
+    public NegatingMatcher(INodeMatcher<E> matcher) {
         if (matcher == null) {
             throw new NullPointerException();
         }
@@ -43,7 +43,7 @@ public final class NegatingMatcher<E> implements NodeMatcher<E> {
     }
 
     @Override
-    public boolean matches(Node<E> node) {
+    public <T extends INode<E>> boolean matches(T node) {
         return !matcher.matches(node);
     }
 }

@@ -25,8 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.TreeFactory;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.ITopDownTreeRootBuilder;
+import com.mattunderscore.trees.ITree;
+import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.common.TreeHelper;
 import org.junit.Test;
 
@@ -39,12 +41,12 @@ public final class TreeHelperWithServiceTestTest {
     @Test
     public void test0() {
         final TreeHelper helper = new TreeHelper();
-        final TreeFactory factory = new TreeFactoryImpl();
-        final Tree tree0 = factory.create(
-            "a",
-            factory.create("b"),
-            factory.create("c"));
-        final Tree tree1 = helper.treeFromRootNode(tree0.getRoot());
+        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder();
+        final ITopDownTreeRootBuilder.ITopDownTreeBuilder nodeApp0 = builder.root("A");
+        nodeApp0.addChild("B");
+        nodeApp0.addChild("C");
+        final ITree<String, INode<String>> tree0 = nodeApp0.build(ITree.class);
+        final ITree<String, INode<String>> tree1 = helper.nodeToTree(tree0.getRoot());
         assertSame(tree0, tree1);
     }
 }
