@@ -30,6 +30,7 @@ import com.mattunderscore.trees.spi.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -69,7 +70,7 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
 
     @Override
     public Collection<? extends IMutableNode<E>> getChildren() {
-        return children;
+        return Collections.unmodifiableList(children);
     }
 
     @Override
@@ -81,6 +82,9 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
 
     @Override
     public boolean removeChild(IMutableNode<E> child) {
+        if (child == null) {
+            return false;
+        }
         return children.remove(child);
     }
 

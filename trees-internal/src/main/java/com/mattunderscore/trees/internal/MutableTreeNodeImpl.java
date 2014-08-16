@@ -79,6 +79,9 @@ public final class MutableTreeNodeImpl<E> implements IMutableTree<E, IMutableNod
 
     @Override
     public boolean removeChild(IMutableNode<E> child) {
+        if (child == null) {
+            return false;
+        }
         synchronized (this) {
             final List<IMutableNode<E>> oldList = elementList;
             final int size = oldList.size();
@@ -124,7 +127,7 @@ public final class MutableTreeNodeImpl<E> implements IMutableTree<E, IMutableNod
     }
 
     @Override
-    public Collection<IMutableNode<E>> getChildren() {
+    public synchronized Collection<IMutableNode<E>> getChildren() {
         return Collections.unmodifiableList(elementList);
     }
 
