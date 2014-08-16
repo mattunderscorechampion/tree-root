@@ -26,25 +26,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
+ * Source for tree builders.
  * @author matt on 12/07/14.
  */
-public interface Trees {
+public interface ITrees {
 
     /**
-     * Obtain a {@link TreeBuilder}
+     * Obtain a {@link ITopDownTreeRootBuilder}
      * @return
      */
-    TreeBuilder builder();
+    ITopDownTreeRootBuilder topDownBuilder();
 
     /**
-     * Obtain a {@link TreeFactory}
+     * Obtain a {@link IBottomUpTreeBuilder}
      * @return
      */
-    TreeFactory factory();
+    IBottomUpTreeBuilder bottomUpBuilder();
 
-    /**
-     * Obtain a {@link MutableTreeFactory}
-     * @return
-     */
-    MutableTreeFactory mutableFactory();
 }
