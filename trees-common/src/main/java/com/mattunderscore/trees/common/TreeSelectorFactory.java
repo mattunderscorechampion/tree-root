@@ -36,7 +36,7 @@ import java.util.Iterator;
 /**
  * @author matt on 29/06/14.
  */
-public final class TreeSelectorFactory implements ITreeSelectorFactory {
+final class TreeSelectorFactory implements ITreeSelectorFactory {
     private final TreeHelper helper;
 
     public TreeSelectorFactory(TreeHelper helper) {

@@ -28,8 +28,8 @@ package com.mattunderscore.trees.internal;
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITopDownTreeRootBuilder;
 import com.mattunderscore.trees.ITree;
-import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.common.TreeHelper;
+import com.mattunderscore.trees.ITrees;
+import com.mattunderscore.trees.common.Trees;
 import org.junit.Test;
 
 import static org.junit.Assert.assertSame;
@@ -38,15 +38,16 @@ import static org.junit.Assert.assertSame;
  * @author matt on 28/06/14.
  */
 public final class TreeHelperWithServiceTestTest {
+    private static final ITrees trees = new Trees();
+
     @Test
     public void test0() {
-        final TreeHelper helper = new TreeHelper();
-        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder(helper);
+        final ITopDownTreeRootBuilder builder = trees.topDownBuilder();
         final ITopDownTreeRootBuilder.ITopDownTreeBuilder nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
         final ITree<String, INode<String>> tree0 = nodeApp0.build(ITree.class);
-        final ITree<String, INode<String>> tree1 = helper.nodeToTree(tree0.getRoot());
+        final ITree<String, INode<String>> tree1 = new TreeNodeImpl.NodeConverter<String>().treeFromRootNode(tree0.getRoot());
         assertSame(tree0, tree1);
     }
 }

@@ -26,10 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.DefaultMatcher;
-import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.common.TreeHelper;
-import com.mattunderscore.trees.common.TreeSelectorFactory;
+import com.mattunderscore.trees.common.*;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -42,17 +39,17 @@ import static org.junit.Assert.assertTrue;
  * @author matt on 29/06/14.
  */
 public class TreeSelectorTest {
-    private static final TreeHelper helper = new TreeHelper();
+    private static final ITrees trees = new Trees();
 
     @Test
     public void test() {
-        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder(helper);
+        final ITopDownTreeRootBuilder builder = trees.topDownBuilder();
         final ITopDownTreeRootBuilder.ITopDownTreeBuilder nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
         final ITree<String, INode<String>> tree = nodeApp0.build(ITree.class);
 
-        final ITreeSelectorFactory selectorFactory = new TreeSelectorFactory(helper);
+        final ITreeSelectorFactory selectorFactory = trees.treeSelectorFactory();
         final INodeMatcher matcher0 = new DefaultMatcher("A");
         final ITreeSelector selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<ITree<String, INode<String>>> treeIterator0 = selector0.select(tree);

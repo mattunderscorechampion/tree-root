@@ -39,7 +39,7 @@ import java.util.ServiceLoader;
  * Helper class for trees. Loads services to provide extensibility.
  * @author matt on 26/06/14.
  */
-public final class TreeHelper {
+final class TreeHelper {
     private final Map<Class<?>, IEmptyTreeConstructor<?, ?>> emptyConstructors;
     private final Map<Class<?>, ITreeConstructor<?, ?>> treeConstructors;
     private final Map<Class<?>, ITreeConverter<?, ?>> treeConverters;

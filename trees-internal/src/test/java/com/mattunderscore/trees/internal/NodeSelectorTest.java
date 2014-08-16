@@ -28,11 +28,8 @@ package com.mattunderscore.trees.internal;
 import static org.junit.Assert.*;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.DefaultMatcher;
+import com.mattunderscore.trees.common.*;
 import com.mattunderscore.trees.INodeSelectorFactory;
-import com.mattunderscore.trees.common.NodeSelectorFactory;
-import com.mattunderscore.trees.common.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.common.TreeHelper;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -41,17 +38,17 @@ import java.util.Iterator;
  * @author matt on 25/06/14.
  */
 public class NodeSelectorTest {
-    private static final TreeHelper helper = new TreeHelper();
+    private static final ITrees trees = new Trees();
 
     @Test
     public void test() {
-        final ITopDownTreeRootBuilder builder = new TopDownTreeRootBuilder(helper);
+        final ITopDownTreeRootBuilder builder = trees.topDownBuilder();
         final ITopDownTreeRootBuilder.ITopDownTreeBuilder nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
         final ITree<String, ?> tree = nodeApp0.build(ITree.class);
 
-        final INodeSelectorFactory selectorFactory = new NodeSelectorFactory(helper);
+        final INodeSelectorFactory selectorFactory = trees.nodeSelectorFactory();
         final INodeMatcher matcher0 = new DefaultMatcher("A");
         final INodeSelector selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<? extends INode<String>> nodeIterator0 = selector0.select(tree);

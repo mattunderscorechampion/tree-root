@@ -36,7 +36,7 @@ import java.lang.reflect.Array;
  * @author matt on 13/08/14.
  */
 @Immutable
-public final class BottomUpTreeBuilder<E> implements IBottomUpTreeBuilder<E> {
+final class BottomUpTreeBuilder<E> implements IBottomUpTreeBuilder<E> {
     private final TreeHelper helper;
     private final E root;
     private final IBottomUpTreeBuilder<E>[] children;
