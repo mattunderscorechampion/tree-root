@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.spi.*;
+import net.jcip.annotations.NotThreadSafe;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,6 +37,7 @@ import java.util.List;
 /**
  * @author matt on 07/08/14.
  */
+@NotThreadSafe
 public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMutableNode<E> {
     private final E element;
     private final List<LinkedTree<E>> children;

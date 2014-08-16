@@ -34,6 +34,7 @@ import com.mattunderscore.trees.spi.INodeToTreeConverter;
 import com.mattunderscore.trees.spi.ITreeConstructor;
 import com.mattunderscore.trees.spi.ITreeConverter;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
+import net.jcip.annotations.ThreadSafe;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -42,13 +43,16 @@ import java.util.List;
 /**
  * @author matt on 15/07/14.
  */
+@ThreadSafe
 public final class MutableTreeNodeImpl<E> implements IMutableTree<E, IMutableNode<E>>, IMutableNode<E> {
     private volatile List<IMutableNode<E>> elementList;
     private final E element;
 
     public MutableTreeNodeImpl(E element) {
         elementList = new FixedUncheckedList<>(new Object[0]);
-        this.element = element;
+        synchronized (this) {
+            this.element = element;
+        }
     }
 
     private MutableTreeNodeImpl(E element, List<IMutableNode<E>> childList) {

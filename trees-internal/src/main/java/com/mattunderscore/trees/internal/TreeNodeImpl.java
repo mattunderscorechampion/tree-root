@@ -33,6 +33,7 @@ import com.mattunderscore.trees.spi.INodeToTreeConverter;
 import com.mattunderscore.trees.spi.ITreeConstructor;
 import com.mattunderscore.trees.spi.ITreeConverter;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
+import net.jcip.annotations.Immutable;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -41,6 +42,7 @@ import java.util.List;
 /**
  * @author matt on 10/06/14.
  */
+@Immutable
 public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
     private final E element;
     private final List<INode<E>> children;
