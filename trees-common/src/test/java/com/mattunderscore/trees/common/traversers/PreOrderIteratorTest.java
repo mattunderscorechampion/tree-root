@@ -25,43 +25,33 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.ITree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
+import com.mattunderscore.trees.IMutableNode;
+import com.mattunderscore.trees.common.LinkedTree;
+import org.junit.Test;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Iterator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
- * @author matt on 17/08/14.
+ * @author matt on 23/08/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends INode<E>, T extends ITree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public final class PreOrderIteratorTest {
+    @Test
+    public void test0()
+    {
+        final LinkedTree.Constructor constructor = new LinkedTree.Constructor();
+        final LinkedTree<String> tree = constructor.build("a");
+        tree.addChild("b")
+            .addChild("c");
+        tree.addChild("d");
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
-    }
-
-    @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (N child : reversed) {
-                parents.push(child);
-            }
-            current = parents.pop();
-            return n;
-        }
-        throw new NoSuchElementException();
+        final Iterator<IMutableNode<String>> iterator = new PreOrderIterator<>(tree);
+        assertEquals("a", iterator.next().getElement());
+        assertEquals("b", iterator.next().getElement());
+        assertEquals("c", iterator.next().getElement());
+        assertEquals("d", iterator.next().getElement());
+        assertFalse(iterator.hasNext());
     }
 }
