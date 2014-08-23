@@ -73,8 +73,7 @@ public final class InOrderIterator<E , N extends INode<E>, T extends ITree<E, N>
         throw new NoSuchElementException();
     }
 
-    private static final class State<E, N extends INode<E>>
-    {
+    private static final class State<E, N extends INode<E>> {
         private final N node;
         private final Iterator<N> iterator;
 

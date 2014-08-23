@@ -45,12 +45,12 @@ public final class BreadthFirstWalker {
     }
 
     public <E, N extends INode<E>, T extends ITree<E, N>> void accept(T tree, ITreeWalker<E, N> walker) {
-        final N node = tree.getRoot();
-        if (node == null) {
+        if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
         }
         else {
+            final N node = tree.getRoot();
             final List<N> rootLevel = new FixedUncheckedList<>(new Object[]{node});
             accept(rootLevel, walker);
             walker.onCompleted();

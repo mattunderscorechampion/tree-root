@@ -69,7 +69,17 @@ public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
 
     @Override
     public INode<E> getRoot() {
-        return this;
+        if (isEmpty()) {
+            return null;
+        }
+        else {
+            return this;
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return element == null;
     }
 
     public final static class Constructor<E> implements ITreeConstructor<E, TreeNodeImpl<E>> {

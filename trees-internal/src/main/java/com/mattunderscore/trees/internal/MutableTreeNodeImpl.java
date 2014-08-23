@@ -117,7 +117,17 @@ public final class MutableTreeNodeImpl<E> implements IMutableTree<E, IMutableNod
 
     @Override
     public IMutableNode<E> getRoot() {
-        return this;
+        if (isEmpty()) {
+            return null;
+        }
+        else {
+            return this;
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return element == null;
     }
 
     @Override

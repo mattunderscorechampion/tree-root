@@ -29,11 +29,44 @@ package com.mattunderscore.trees;
  * @author matt on 23/08/14.
  */
 public interface ITreeWalkers {
+
+    /**
+     * Traverse the tree in preorder.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
     <E, N extends INode<E>, T extends ITree<E, N>> void walkPreOrder(T tree, ITreeWalker<E, N> walker);
 
+    /**
+     * Traverse the tree in order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
     <E, N extends INode<E>, T extends ITree<E, N>> void walkInOrder(T tree, ITreeWalker<E, N> walker);
 
+    /**
+     * Traverse the tree in post order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
     <E, N extends INode<E>, T extends ITree<E, N>> void walkPostOrder(T tree, ITreeWalker<E, N> walker);
 
+    /**
+     * Traverse the tree in breadth first order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
     <E, N extends INode<E>, T extends ITree<E, N>> void walkBreadthFirst(T tree, ITreeWalker<E, N> walker);
 }

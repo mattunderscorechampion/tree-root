@@ -33,11 +33,13 @@ import com.mattunderscore.trees.common.walkers.BreadthFirstWalker;
 import com.mattunderscore.trees.common.walkers.InOrderWalker;
 import com.mattunderscore.trees.common.walkers.PostOrderWalker;
 import com.mattunderscore.trees.common.walkers.PreOrderWalker;
+import net.jcip.annotations.Immutable;
 
 /**
  * @author matt on 23/08/14.
  */
-public class TreeWalkers implements ITreeWalkers {
+@Immutable
+public final class TreeWalkers implements ITreeWalkers {
     private final BreadthFirstWalker breadthFirstWalker;
     private final InOrderWalker inOrderWalker;
     private final PostOrderWalker postOrderWalker;

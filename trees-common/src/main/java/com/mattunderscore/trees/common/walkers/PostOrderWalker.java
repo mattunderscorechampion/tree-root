@@ -42,13 +42,13 @@ public final class PostOrderWalker {
     }
 
     public <E, N extends INode<E>, T extends ITree<E, N>> void accept(T tree, ITreeWalker<E, N> walker) {
-        final N root = tree.getRoot();
-        if (root == null) {
+        if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
         }
         else {
-            accept(root, walker);
+            final N node = tree.getRoot();
+            accept(node, walker);
             walker.onCompleted();
         }
     }

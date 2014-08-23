@@ -26,12 +26,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
+ * Interface for walking over trees.
  * @author matt on 16/08/14.
  */
 public interface ITreeWalker<E, N extends INode<E>> {
+
+    /**
+     * Invoked if the tree is empty.
+     */
     void onEmpty();
 
+    /**
+     * Invoked for each node.
+     * @param node The node
+     */
     void onNext(N node);
 
+    /**
+     * Invoked after all others have been invoked.
+     */
     void onCompleted();
 }
