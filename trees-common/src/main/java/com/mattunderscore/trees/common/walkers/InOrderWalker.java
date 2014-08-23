@@ -28,46 +28,44 @@ package com.mattunderscore.trees.common.walkers;
 import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITree;
 import com.mattunderscore.trees.ITreeWalker;
+import net.jcip.annotations.Immutable;
 
 import java.util.Iterator;
 
 /**
  * @author matt on 17/08/14.
  */
-public final class InOrderWalker<E, N extends INode<E>, T extends ITree<E, N>> {
-    private final T tree;
-    private final ITreeWalker.Visitor<E, N> visitor;
+@Immutable
+public final class InOrderWalker {
 
-    public InOrderWalker(T tree, ITreeWalker.Visitor<E, N> visitor) {
-        this.tree = tree;
-        this.visitor = visitor;
+    public InOrderWalker() {
     }
 
-    public void accept() {
+    public <E, N extends INode<E>, T extends ITree<E, N>> void accept(T tree, ITreeWalker<E, N> walker) {
         final N root = tree.getRoot();
         if (root == null) {
-            visitor.onEmpty();
-            visitor.onCompleted();
+            walker.onEmpty();
+            walker.onCompleted();
         }
         else {
-            accept(root);
-            visitor.onCompleted();
+            accept(root, walker);
+            walker.onCompleted();
         }
     }
 
-    private void accept(N node) {
+    private <E, N extends INode<E>, T extends ITree<E, N>> void accept(N node, ITreeWalker<E, N> walker) {
         final Iterator<? extends INode<E>> iterator = node.getChildren().iterator();
 
         if (iterator.hasNext()) {
             final N child = (N)iterator.next();
-            accept(child);
+            accept(child, walker);
         }
 
-        visitor.onNext(node);
+        walker.onNext(node);
 
         while (iterator.hasNext()) {
             final N child = (N)iterator.next();
-            accept(child);
+            accept(child, walker);
         }
     }
 }

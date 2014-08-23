@@ -25,37 +25,48 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.INode;
+import com.mattunderscore.trees.ITree;
+import com.mattunderscore.trees.ITreeWalker;
+import com.mattunderscore.trees.ITreeWalkers;
+import com.mattunderscore.trees.common.walkers.BreadthFirstWalker;
+import com.mattunderscore.trees.common.walkers.InOrderWalker;
+import com.mattunderscore.trees.common.walkers.PostOrderWalker;
+import com.mattunderscore.trees.common.walkers.PreOrderWalker;
 
 /**
- * Implementation of {@link ITrees}.
- * @author matt on 16/08/14.
+ * @author matt on 23/08/14.
  */
-public final class Trees implements ITrees {
-    public final TreeHelper helper = new TreeHelper();
+public class TreeWalkers implements ITreeWalkers {
+    private final BreadthFirstWalker breadthFirstWalker;
+    private final InOrderWalker inOrderWalker;
+    private final PostOrderWalker postOrderWalker;
+    private final PreOrderWalker preOrderWalker;
 
-    @Override
-    public ITopDownTreeRootBuilder topDownBuilder() {
-        return new TopDownTreeRootBuilder(helper);
+    public TreeWalkers() {
+        breadthFirstWalker = new BreadthFirstWalker();
+        inOrderWalker = new InOrderWalker();
+        postOrderWalker = new PostOrderWalker();
+        preOrderWalker = new PreOrderWalker();
     }
 
     @Override
-    public IBottomUpTreeBuilder bottomUpBuilder() {
-        return new BottomUpTreeBuilder(helper);
+    public <E, N extends INode<E>, T extends ITree<E, N>> void walkPreOrder(T tree, ITreeWalker<E, N> walker) {
+        preOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public ITreeSelectorFactory treeSelectorFactory() {
-        return new TreeSelectorFactory(helper);
+    public <E, N extends INode<E>, T extends ITree<E, N>> void walkInOrder(T tree, ITreeWalker<E, N> walker) {
+        inOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public INodeSelectorFactory nodeSelectorFactory() {
-        return new NodeSelectorFactory(helper);
+    public <E, N extends INode<E>, T extends ITree<E, N>> void walkPostOrder(T tree, ITreeWalker<E, N> walker) {
+        postOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public ITreeWalkers treeWalkers() {
-        return new TreeWalkers();
+    public <E, N extends INode<E>, T extends ITree<E, N>> void walkBreadthFirst(T tree, ITreeWalker<E, N> walker) {
+        breadthFirstWalker.accept(tree, walker);
     }
 }

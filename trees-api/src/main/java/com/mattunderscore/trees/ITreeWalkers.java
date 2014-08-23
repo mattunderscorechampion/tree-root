@@ -26,38 +26,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
- * Source for tree builders.
- * @author matt on 12/07/14.
+ * @author matt on 23/08/14.
  */
-public interface ITrees {
+public interface ITreeWalkers {
+    <E, N extends INode<E>, T extends ITree<E, N>> void walkPreOrder(T tree, ITreeWalker<E, N> walker);
 
-    /**
-     * Obtain a {@link ITopDownTreeRootBuilder}
-     * @return
-     */
-    ITopDownTreeRootBuilder topDownBuilder();
+    <E, N extends INode<E>, T extends ITree<E, N>> void walkInOrder(T tree, ITreeWalker<E, N> walker);
 
-    /**
-     * Obtain a {@link IBottomUpTreeBuilder}
-     * @return
-     */
-    IBottomUpTreeBuilder bottomUpBuilder();
+    <E, N extends INode<E>, T extends ITree<E, N>> void walkPostOrder(T tree, ITreeWalker<E, N> walker);
 
-    /**
-     * Obtain a {@link ITreeSelectorFactory}
-     * @return
-     */
-    ITreeSelectorFactory treeSelectorFactory();
-
-    /**
-     * Obtain a {@link INodeSelectorFactory}
-     * @return
-     */
-    INodeSelectorFactory nodeSelectorFactory();
-
-    /**
-     * Obtain a {@link ITreeWalkers}
-     * @return
-     */
-    ITreeWalkers treeWalkers();
+    <E, N extends INode<E>, T extends ITree<E, N>> void walkBreadthFirst(T tree, ITreeWalker<E, N> walker);
 }

@@ -29,6 +29,7 @@ import com.mattunderscore.trees.INode;
 import com.mattunderscore.trees.ITree;
 import com.mattunderscore.trees.ITreeWalker;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
+import net.jcip.annotations.Immutable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,34 +38,31 @@ import java.util.List;
 /**
  * @author matt on 17/08/14.
  */
-public final class BreadthFirstWalker<E, N extends INode<E>, T extends ITree<E, N>> {
-    private final T tree;
-    private final ITreeWalker.Visitor<E, N> visitor;
+@Immutable
+public final class BreadthFirstWalker {
 
-    public BreadthFirstWalker(T tree, ITreeWalker.Visitor<E, N> visitor) {
-        this.tree = tree;
-        this.visitor = visitor;
+    public BreadthFirstWalker() {
     }
 
-    public void accept() {
+    public <E, N extends INode<E>, T extends ITree<E, N>> void accept(T tree, ITreeWalker<E, N> walker) {
         final N node = tree.getRoot();
         if (node == null) {
-            visitor.onEmpty();
-            visitor.onCompleted();
+            walker.onEmpty();
+            walker.onCompleted();
         }
         else {
             final List<N> rootLevel = new FixedUncheckedList<>(new Object[]{node});
-            accept(rootLevel);
-            visitor.onCompleted();
+            accept(rootLevel, walker);
+            walker.onCompleted();
         }
     }
 
-    private void accept(List<N> currentLevel) {
+    private <E, N extends INode<E>, T extends ITree<E, N>> void accept(List<N> currentLevel, ITreeWalker<E,N> walker) {
         final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
         for (final N node : currentLevel) {
-            visitor.onNext(node);
+            walker.onNext(node);
             nextLevel.addAll((Collection<N>)node.getChildren());
         }
-        accept(nextLevel);
+        accept(nextLevel, walker);
     }
 }

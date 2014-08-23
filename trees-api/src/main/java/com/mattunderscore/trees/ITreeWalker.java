@@ -28,21 +28,10 @@ package com.mattunderscore.trees;
 /**
  * @author matt on 16/08/14.
  */
-public interface ITreeWalker {
+public interface ITreeWalker<E, N extends INode<E>> {
+    void onEmpty();
 
-    <E, N extends INode<E>, T extends ITree<E, N>> void walkPreOrder(T tree, Visitor<E, N> visitor);
+    void onNext(N node);
 
-    <E, N extends INode<E>, T extends ITree<E, N>> void walkInOrder(T tree, Visitor<E, N> visitor);
-
-    <E, N extends INode<E>, T extends ITree<E, N>> void walkPostOrder(T tree, Visitor<E, N> visitor);
-
-    <E, N extends INode<E>, T extends ITree<E, N>> void walkBreadthFirst(T tree, Visitor<E, N> visitor);
-
-    public interface Visitor<E, N extends INode<E>> {
-        void onEmpty();
-
-        void onNext(N node);
-
-        void onCompleted();
-    }
+    void onCompleted();
 }
