@@ -48,14 +48,21 @@ public final class BreadthFirstWalker<E, N extends INode<E>, T extends ITree<E, 
 
     public void accept() {
         final N node = tree.getRoot();
-        final List<N> rootLevel = new FixedUncheckedList<>(new Object[] {node});
-        accept(rootLevel);
+        if (node == null) {
+            visitor.onEmpty();
+            visitor.onCompleted();
+        }
+        else {
+            final List<N> rootLevel = new FixedUncheckedList<>(new Object[]{node});
+            accept(rootLevel);
+            visitor.onCompleted();
+        }
     }
 
     private void accept(List<N> currentLevel) {
         final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
         for (final N node : currentLevel) {
-            visitor.visit(node);
+            visitor.onNext(node);
             nextLevel.addAll((Collection<N>)node.getChildren());
         }
         accept(nextLevel);

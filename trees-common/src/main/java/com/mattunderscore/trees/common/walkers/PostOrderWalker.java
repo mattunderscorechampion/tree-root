@@ -44,7 +44,15 @@ public final class PostOrderWalker<E, N extends INode<E>, T extends ITree<E, N>>
     }
 
     public void accept() {
-        accept(tree.getRoot());
+        final N root = tree.getRoot();
+        if (root == null) {
+            visitor.onEmpty();
+            visitor.onCompleted();
+        }
+        else {
+            accept(root);
+            visitor.onCompleted();
+        }
     }
 
     private void accept(N node) {
@@ -53,6 +61,6 @@ public final class PostOrderWalker<E, N extends INode<E>, T extends ITree<E, N>>
             final N child = (N)iterator.next();
             accept(child);
         }
-        visitor.visit(node);
+        visitor.onNext(node);
     }
 }

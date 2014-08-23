@@ -39,6 +39,10 @@ public interface ITreeWalker {
     <E, N extends INode<E>, T extends ITree<E, N>> void walkBreadthFirst(T tree, Visitor<E, N> visitor);
 
     public interface Visitor<E, N extends INode<E>> {
-        void visit(N node);
+        void onEmpty();
+
+        void onNext(N node);
+
+        void onCompleted();
     }
 }

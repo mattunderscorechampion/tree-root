@@ -44,12 +44,20 @@ public final class PreOrderWalker<E, N extends INode<E>, T extends ITree<E, N>> 
     }
 
     public void accept() {
-        accept(tree.getRoot());
+        final N root = tree.getRoot();
+        if (root == null) {
+            visitor.onEmpty();
+            visitor.onCompleted();
+        }
+        else {
+            accept(root);
+            visitor.onCompleted();
+        }
     }
 
     private void accept(N node) {
         final Iterator<? extends INode<E>> iterator = node.getChildren().iterator();
-        visitor.visit(node);
+        visitor.onNext(node);
         while (iterator.hasNext()) {
             final N child = (N)iterator.next();
             accept(child);
