@@ -32,9 +32,19 @@ import java.util.Collection;
  * @author matt on 08/08/14.
  */
 public interface INode<E> {
+
+    /**
+     * @return The element stored in the node
+     */
     E getElement();
 
+    /**
+     * @return The class of the element stored in the node
+     */
     Class<E> getElementClass();
 
+    /**
+     * @return The children of the node
+     */
     Collection<? extends INode<E>> getChildren();
 }

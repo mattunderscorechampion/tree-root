@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
- * * Builder used to create the an empty tree or a non-empty tree.
+ * Builder used to create the an empty tree or a non-empty tree.
  * @author matt on 07/08/14.
  */
 public interface IBottomUpTreeBuilder<E> extends IBaseTreeBuilder<E> {

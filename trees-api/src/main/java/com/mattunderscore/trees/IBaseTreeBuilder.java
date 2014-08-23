@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
+ * Base implementation of all tree builders.
  * @author matt on 07/08/14.
  */
 public interface IBaseTreeBuilder<E> {

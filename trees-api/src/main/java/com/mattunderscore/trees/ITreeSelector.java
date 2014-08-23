@@ -32,5 +32,13 @@ import java.util.Iterator;
  * @author matt on 08/08/14.
  */
 public interface ITreeSelector {
+
+    /**
+     * @param tree The tree to select from
+     * @param <E> The type of elements in the nodes
+     * @param <N> The type of nodes in the tree
+     * @param <T> The type of the tree
+     * @return An {@link java.util.Iterator} over the selected subtrees
+     */
     <E, N extends INode<E>, T extends ITree<E, N>> Iterator<T> select(T tree);
 }

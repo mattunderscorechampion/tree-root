@@ -32,11 +32,35 @@ import java.util.Iterator;
  */
 public interface ITreeTraverser {
 
+    /**
+     * @param tree
+     * @param <E>
+     * @param <T>
+     * @return An {@link Iterator} that returns nodes in pre-order
+     */
     <E, T extends INode<E>> Iterator<T> preOrderIterator(ITree<E, T> tree);
 
+    /**
+     * @param tree
+     * @param <E>
+     * @param <T>
+     * @return An {@link Iterator} that returns nodes in in-order
+     */
     <E, T extends INode<E>> Iterator<T> inOrderIterator(ITree<E, T> tree);
 
+    /**
+     * @param tree
+     * @param <E>
+     * @param <T>
+     * @return An {@link Iterator} that returns nodes in post-order
+     */
     <E, T extends INode<E>> Iterator<T> postOrderIterator(ITree<E, T> tree);
 
+    /**
+     * @param tree
+     * @param <E>
+     * @param <T>
+     * @return An {@link Iterator} that returns nodes in breadth first order
+     */
     <E, T extends INode<E>> Iterator<T> breadthFirstIterator(ITree<E, T> tree);
 }

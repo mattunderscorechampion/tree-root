@@ -30,7 +30,14 @@ package com.mattunderscore.trees;
  * @author matt on 08/08/14.
  */
 public interface ITree<E, T extends INode<E>> {
+
+    /**
+     * @return the root node of the tree or null if the tree is empty
+     */
     T getRoot();
 
+    /**
+     * @return {@code true} if the tree is empty
+     */
     boolean isEmpty();
 }

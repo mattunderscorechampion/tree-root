@@ -33,7 +33,15 @@ import java.util.Collection;
  */
 public interface IMutableNode<E> extends INode<E>, INodeAppender<E, IMutableNode<E>>
 {
+    /**
+     * @return the children of the node
+     */
     Collection<? extends IMutableNode<E>> getChildren();
 
+    /**
+     * Remove the node if it is a child of the recipient
+     * @param child the node to remove
+     * @return {@code true} if the node was removed
+     */
     boolean removeChild(IMutableNode<E> child);
 }

@@ -30,5 +30,11 @@ package com.mattunderscore.trees;
  * @author matt on 11/08/14.
  */
 public interface INodeMatcher<E> {
+
+    /**
+     * @param node The node to test
+     * @param <T> The type of the node
+     * @return {@code true} if the node matches
+     */
     <T extends INode<E>> boolean matches(T node);
 }

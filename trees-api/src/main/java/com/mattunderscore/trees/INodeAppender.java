@@ -29,5 +29,11 @@ package com.mattunderscore.trees;
  * @author matt on 08/08/14.
  */
 public interface INodeAppender<E, T extends INodeAppender<E, T>> {
-     T addChild(E e);
+
+    /**
+     * Add a child
+     * @param e The element of the child to add
+     * @return A node appender for the child
+     */
+    T addChild(E e);
 }

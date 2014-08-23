@@ -29,6 +29,7 @@ import com.mattunderscore.trees.INodeMatcher;
 import com.mattunderscore.trees.INodeSelector;
 
 /**
+ * Factory for node selectors.
  * @author matt on 16/08/14.
  */
 public interface INodeSelectorFactory {
