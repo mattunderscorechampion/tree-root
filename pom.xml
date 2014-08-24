@@ -4,10 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+
     <groupId>com.mattunderscore.trees</groupId>
     <artifactId>trees-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.0-SNAPSHOT</version>
     <description>Parent container for trees library.</description>
 
     <properties>
@@ -24,6 +30,37 @@
         <module>trees-api-examples</module>
         <module>trees-spi-examples</module>
     </modules>
+
+    <licenses>
+        <license>
+            <name>BSD 3-clause License</name>
+            <url>https://raw.github.com/mattunderscorechampion/trees-parent/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/mattunderscorechampion/trees-parent</connection>
+        <developerConnection>scm:git:https://github.com/mattunderscorechampion/trees-parent</developerConnection>
+        <url>https://github.com/mattunderscorechampion/trees-parent</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>com.mattunderscore</id>
+            <name>mattunderscore.com</name>
+            <url>scp://site@mattunderscore.com/trees-parent/</url>
+        </site>
+    </distributionManagement>
+
+    <developers>
+        <developer>
+            <name>Matthew Champion</name>
+            <url>http://www.mattunderscore.com</url>
+            <email>matt_champion1@yahoo.co.uk</email>
+            <timezone>+0</timezone>
+        </developer>
+    </developers>
 
     <build>
         <pluginManagement>
@@ -85,4 +122,27 @@
         </dependencies>
     </dependencyManagement>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
