@@ -82,32 +82,32 @@
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-api</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-internal</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-spi</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-utilities</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-common</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>string-trees</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
