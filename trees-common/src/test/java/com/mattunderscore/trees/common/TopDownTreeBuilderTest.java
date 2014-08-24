@@ -29,8 +29,7 @@ import com.mattunderscore.trees.IBottomUpTreeBuilder;
 import com.mattunderscore.trees.ITopDownTreeRootBuilder;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * @author matt on 15/08/14.
@@ -42,7 +41,8 @@ public class TopDownTreeBuilderTest {
     public void buildEmpty() {
         final TopDownTreeRootBuilder<String> builder = new TopDownTreeRootBuilder<>(helper);
         final LinkedTree<String> tree = builder.build(LinkedTree.class);
-        assertNull(tree.getRoot().getElement());
+        assertNull(tree.getRoot());
+        assertTrue(tree.isEmpty());
     }
 
     @Test
@@ -53,6 +53,7 @@ public class TopDownTreeBuilderTest {
         final LinkedTree<String> tree = builder0.build(LinkedTree.class);
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(0, tree.getChildren().size());
+        assertFalse(tree.isEmpty());
     }
 
     @Test
@@ -65,5 +66,6 @@ public class TopDownTreeBuilderTest {
         final LinkedTree<String> tree = builder0.build(LinkedTree.class);
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(2, tree.getChildren().size());
+        assertFalse(tree.isEmpty());
     }
 }

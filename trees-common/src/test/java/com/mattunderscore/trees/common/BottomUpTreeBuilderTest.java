@@ -30,9 +30,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.hasItem;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author matt on 13/08/14.
@@ -44,7 +42,8 @@ public final class BottomUpTreeBuilderTest {
     public void buildEmpty() {
         final BottomUpTreeBuilder<String> builder = new BottomUpTreeBuilder<>(helper);
         final LinkedTree<String> tree = builder.build(LinkedTree.class);
-        assertNull(tree.getRoot().getElement());
+        assertNull(tree.getRoot());
+        assertTrue(tree.isEmpty());
     }
 
     @Test
@@ -55,6 +54,7 @@ public final class BottomUpTreeBuilderTest {
         final LinkedTree<String> tree = builder0.build(LinkedTree.class);
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(0, tree.getChildren().size());
+        assertFalse(tree.isEmpty());
     }
 
     @Test
@@ -67,6 +67,7 @@ public final class BottomUpTreeBuilderTest {
         final LinkedTree<String> tree = builder0.build(LinkedTree.class);
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(2, tree.getChildren().size());
+        assertFalse(tree.isEmpty());
     }
 
     @Test
@@ -87,5 +88,6 @@ public final class BottomUpTreeBuilderTest {
         final LinkedTree<String> tree = builder0.build(LinkedTree.class);
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(2, tree.getChildren().size());
+        assertFalse(tree.isEmpty());
     }
 }
