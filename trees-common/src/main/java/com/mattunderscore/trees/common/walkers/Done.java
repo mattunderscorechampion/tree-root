@@ -25,53 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.walkers;
 
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.ITree;
-import com.mattunderscore.trees.ITreeWalker;
-import net.jcip.annotations.Immutable;
-
-import java.util.Iterator;
-
 /**
- * @author matt on 17/08/14.
+ * @author matt on 24/08/14.
  */
-@Immutable
-public final class InOrderWalker {
-
-    public InOrderWalker() {
-    }
-
-    public <E, N extends INode<E>, T extends ITree<E, N>> void accept(T tree, ITreeWalker<E, N> walker) {
-        if (tree.isEmpty()) {
-            walker.onEmpty();
-            walker.onCompleted();
-        }
-        else {
-            final N node = tree.getRoot();
-            try {
-                accept(node, walker);
-                walker.onCompleted();
-            }
-            catch (Done done) {
-            }
-        }
-    }
-
-    private <E, N extends INode<E>, T extends ITree<E, N>> void accept(N node, ITreeWalker<E, N> walker) throws Done {
-        final Iterator<? extends INode<E>> iterator = node.getChildren().iterator();
-
-        if (iterator.hasNext()) {
-            final N child = (N) iterator.next();
-            accept(child, walker);
-        }
-
-        if (!walker.onNext(node)) {
-            throw new Done();
-        }
-
-        while (iterator.hasNext()) {
-            final N child = (N) iterator.next();
-            accept(child, walker);
-        }
-    }
+final class Done extends Exception {
 }

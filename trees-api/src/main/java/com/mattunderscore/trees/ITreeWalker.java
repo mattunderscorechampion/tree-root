@@ -39,11 +39,12 @@ public interface ITreeWalker<E, N extends INode<E>> {
     /**
      * Invoked for each node.
      * @param node The node
+     * @return {@code true} if the walker should continue to the next node
      */
-    void onNext(N node);
+    boolean onNext(N node);
 
     /**
-     * Invoked after all others have been invoked.
+     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(INode)}.
      */
     void onCompleted();
 }

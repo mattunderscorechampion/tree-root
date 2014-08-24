@@ -52,15 +52,22 @@ public final class BreadthFirstWalker {
         else {
             final N node = tree.getRoot();
             final List<N> rootLevel = new FixedUncheckedList<>(new Object[]{node});
-            accept(rootLevel, walker);
-            walker.onCompleted();
+            try {
+                accept(rootLevel, walker);
+                walker.onCompleted();
+            }
+            catch (Done done) {
+                done.printStackTrace();
+            }
         }
     }
 
-    private <E, N extends INode<E>, T extends ITree<E, N>> void accept(List<N> currentLevel, ITreeWalker<E,N> walker) {
+    private <E, N extends INode<E>, T extends ITree<E, N>> void accept(List<N> currentLevel, ITreeWalker<E,N> walker) throws Done {
         final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
         for (final N node : currentLevel) {
-            walker.onNext(node);
+            if (!walker.onNext(node)) {
+                throw new Done();
+            }
             nextLevel.addAll((Collection<N>)node.getChildren());
         }
         accept(nextLevel, walker);
