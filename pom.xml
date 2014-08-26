@@ -26,7 +26,6 @@
         <module>trees-common</module>
         <module>trees-utilities</module>
         <module>trees-api-examples</module>
-        <module>trees-spi-examples</module>
     </modules>
 
     <licenses>
