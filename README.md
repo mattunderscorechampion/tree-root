@@ -9,7 +9,7 @@ Building trees
 There are two ways to build trees. From the bottom-up, starting with leaves and attaching them to a parent. From the
 top-down, starting the root and adding children.
 
-Prior Art
+Prior art
 =========
 
 There is a [TreeSet](http://docs.oracle.com/javase/7/docs/api/java/util/TreeSet.html) and a
@@ -29,4 +29,10 @@ st run time that should be enforced by the API.
 
 There is an implementation of the [DOM Document](http://docs.oracle.com/javase/7/docs/api/org/w3c/dom/Document.html)
 API that provides a use case specific tree implementation. Tree elements and node metadata both implement the same Node
-interface. 
+interface.
+ 
+Tree implementations
+====================
+
+Tree implementations are flexible. Child collection mutability is based on the tree implementation. Likewise the
+ordering of children is based on the tree implementation.
