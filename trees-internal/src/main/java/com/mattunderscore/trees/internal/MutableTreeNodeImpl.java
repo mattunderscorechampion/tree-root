@@ -145,6 +145,11 @@ public final class MutableTreeNodeImpl<E> implements IMutableTree<E, IMutableNod
         return Collections.unmodifiableList(elementList);
     }
 
+    @Override
+    public synchronized boolean isLeaf() {
+        return elementList.size() == 0;
+    }
+
     public final static class Constructor<E> implements ITreeConstructor<E, MutableTreeNodeImpl<E>> {
 
         @Override

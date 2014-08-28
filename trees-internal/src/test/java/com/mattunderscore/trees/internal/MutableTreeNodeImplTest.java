@@ -50,7 +50,9 @@ public final class MutableTreeNodeImplTest {
         final ITopDownTreeRootBuilder builder = trees.topDownBuilder();
         final IMutableTree<String, IMutableNode<String>> tree = (IMutableTree<String, IMutableNode<String>>)builder.root("a").build(IMutableTree.class);
         final IMutableNode<String> root = tree.getRoot();
+        assertTrue(root.isLeaf());
         final IMutableNode<String> depth1 = root.addChild("b");
+        assertFalse(root.isLeaf());
         depth1.addChild("c");
 
         final Collection<? extends IMutableNode<String>> children = root.getChildren();

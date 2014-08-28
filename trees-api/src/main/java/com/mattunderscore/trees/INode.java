@@ -47,4 +47,9 @@ public interface INode<E> {
      * @return The children of the node
      */
     Collection<? extends INode<E>> getChildren();
+
+    /**
+     * @return {@code true} if the node is a leaf node
+     */
+    boolean isLeaf();
 }

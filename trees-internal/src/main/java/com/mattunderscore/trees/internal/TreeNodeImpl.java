@@ -82,6 +82,11 @@ public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
         return element == null;
     }
 
+    @Override
+    public boolean isLeaf() {
+        return children.size() == 0;
+    }
+
     public final static class Constructor<E> implements ITreeConstructor<E, TreeNodeImpl<E>> {
 
         @Override
