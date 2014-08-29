@@ -23,45 +23,22 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
-
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Iterator;
 
 /**
- * @author matt on 17/08/14.
+ * Selects a subtree.
+ * @author matt on 08/08/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public interface TreeSelector {
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
-    }
-
-    @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (N child : reversed) {
-                parents.push(child);
-            }
-            current = parents.pop();
-            return n;
-        }
-        throw new NoSuchElementException();
-    }
+    /**
+     * @param tree The tree to select from
+     * @param <E> The type of elements in the nodes
+     * @param <N> The type of nodes in the tree
+     * @param <T> The type of the tree
+     * @return An {@link java.util.Iterator} over the selected subtrees
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree);
 }

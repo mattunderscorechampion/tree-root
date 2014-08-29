@@ -38,7 +38,7 @@ import java.util.List;
  * @author matt on 07/08/14.
  */
 @NotThreadSafe
-public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMutableNode<E> {
+public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E> {
     private final E element;
     private final List<LinkedTree<E>> children;
 
@@ -56,7 +56,7 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
     }
 
     @Override
-    public IMutableNode<E> getRoot() {
+    public MutableNode<E> getRoot() {
         if (isEmpty()) {
             return null;
         }
@@ -81,12 +81,12 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
     }
 
     @Override
-    public Collection<? extends IMutableNode<E>> getChildren() {
+    public Collection<? extends MutableNode<E>> getChildren() {
         return Collections.unmodifiableList(children);
     }
 
     @Override
-    public IMutableNode<E> addChild(E e) {
+    public MutableNode<E> addChild(E e) {
         if (e == null) {
             throw new NullPointerException("You cannot add a child to an empty tree");
         }
@@ -96,7 +96,7 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
     }
 
     @Override
-    public boolean removeChild(IMutableNode<E> child) {
+    public boolean removeChild(MutableNode<E> child) {
         if (child == null) {
             return false;
         }
@@ -108,9 +108,9 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
         return children.size() == 0;
     }
 
-    public final static class NodeConverter<E> implements INodeToTreeConverter<E, IMutableNode<E>, LinkedTree<E>> {
+    public final static class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, LinkedTree<E>> {
         @Override
-        public LinkedTree<E> treeFromRootNode(IMutableNode<E> node) {
+        public LinkedTree<E> treeFromRootNode(MutableNode<E> node) {
             return (LinkedTree)node;
         }
 
@@ -120,7 +120,7 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
         }
     }
 
-    public final static class Constructor<E> implements ITreeConstructor<E, LinkedTree<E>> {
+    public final static class Constructor<E> implements TreeConstructor<E, LinkedTree<E>> {
 
         @Override
         public LinkedTree<E> build(E e, LinkedTree<E>... subtrees) {
@@ -133,7 +133,7 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
         }
     }
 
-    public final static class EmptyConstructor<E> implements IEmptyTreeConstructor<E, LinkedTree<E>> {
+    public final static class EmptyConstructor<E> implements EmptyTreeConstructor<E, LinkedTree<E>> {
 
         @Override
         public LinkedTree<E> build() {
@@ -146,12 +146,12 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
         }
     }
 
-    public final static class Converter<E> implements ITreeConverter<E, LinkedTree<E>> {
+    public final static class Converter<E> implements TreeConverter<E, LinkedTree<E>> {
         @Override
-        public LinkedTree<E> build(ITree<E, ? extends INode<E>> sourceTree) {
-            final INode<E> root = sourceTree.getRoot();
+        public LinkedTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {
+            final Node<E> root = sourceTree.getRoot();
             final LinkedTree<E> newTree = new LinkedTree<>(root.getElement());
-            for (final INode<E> child : root.getChildren()) {
+            for (final Node<E> child : root.getChildren()) {
                 duplicate(newTree, child);
             }
             return newTree;
@@ -162,9 +162,9 @@ public final class LinkedTree<E> implements IMutableTree<E, LinkedTree<E>>, IMut
             return LinkedTree.class;
         }
 
-        private void duplicate(LinkedTree<E> newParent, INode<E> sourceChild) {
+        private void duplicate(LinkedTree<E> newParent, Node<E> sourceChild) {
             final LinkedTree<E> newChild = (LinkedTree<E>) newParent.addChild(sourceChild.getElement());
-            for (final INode<E> child : sourceChild.getChildren()) {
+            for (final Node<E> child : sourceChild.getChildren()) {
                 duplicate(newChild, child);
             }
         }

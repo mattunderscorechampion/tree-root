@@ -23,45 +23,50 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
-
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
-
-import java.lang.reflect.Array;
-import java.util.*;
+package com.mattunderscore.trees;
 
 /**
- * @author matt on 17/08/14.
+ * @author matt on 23/08/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public interface TreeWalkers {
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
-    }
+    /**
+     * Traverse the tree in preorder.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<E, N> walker);
 
-    @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (N child : reversed) {
-                parents.push(child);
-            }
-            current = parents.pop();
-            return n;
-        }
-        throw new NoSuchElementException();
-    }
+    /**
+     * Traverse the tree in order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkInOrder(T tree, TreeWalker<E, N> walker);
+
+    /**
+     * Traverse the tree in post order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkPostOrder(T tree, TreeWalker<E, N> walker);
+
+    /**
+     * Traverse the tree in breadth first order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkBreadthFirst(T tree, TreeWalker<E, N> walker);
 }

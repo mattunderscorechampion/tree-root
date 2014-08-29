@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.strings;
 
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.INodeMatcher;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.NodeMatcher;
 import net.jcip.annotations.Immutable;
 
 import java.util.regex.Matcher;
@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  * @author matt on 09/06/14.
  */
 @Immutable
-public final class RegexMatcher implements INodeMatcher<String> {
+public final class RegexMatcher implements NodeMatcher<String> {
     private final Pattern value;
 
     public RegexMatcher(final String pattern) {
@@ -45,7 +45,7 @@ public final class RegexMatcher implements INodeMatcher<String> {
     }
 
     @Override
-    public <T extends INode<String>> boolean matches(T node) {
+    public <T extends Node<String>> boolean matches(T node) {
         final Matcher matcher = value.matcher(node.getElement());
         return matcher.matches();
     }

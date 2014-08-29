@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.strings;
 
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.INodeMatcher;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.NodeMatcher;
 import com.mattunderscore.trees.internal.TreeNodeImpl;
 import org.junit.Test;
 
@@ -39,36 +39,36 @@ import static org.junit.Assert.assertTrue;
  * @author matt on 09/06/14.
  */
 public final class RegexMatcherTest {
-    private static final INodeMatcher<String> aMatcher = new RegexMatcher("^A$");
-    private static final INodeMatcher<String> aMatcherAlt = new RegexMatcher("A");
+    private static final NodeMatcher<String> aMatcher = new RegexMatcher("^A$");
+    private static final NodeMatcher<String> aMatcherAlt = new RegexMatcher("A");
 
     @Test
     public void nodeMatches0() {
-        final INode<String> node = new TreeNodeImpl("A", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("A", Collections.emptyList());
         assertTrue(aMatcher.matches(node));
     }
 
     @Test
     public void nodeMatches1() {
-        final INode<String> node = new TreeNodeImpl("A", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("A", Collections.emptyList());
         assertTrue(aMatcherAlt.matches(node));
     }
 
     @Test
     public void nodeMatches2() {
-        final INode<String> nodeA = new TreeNodeImpl("A", Collections.emptyList());
-        final INode<String> nodeB = new TreeNodeImpl("B", Collections.emptyList());
+        final Node<String> nodeA = new TreeNodeImpl("A", Collections.emptyList());
+        final Node<String> nodeB = new TreeNodeImpl("B", Collections.emptyList());
     }
 
     @Test
     public void nodeNoMatch0() {
-        final INode<String> node = new TreeNodeImpl("B", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("B", Collections.emptyList());
         assertFalse(aMatcher.matches(node));
     }
 
     @Test
     public void nodeNoMatch1() {
-        final INode<String> node = new TreeNodeImpl("B", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("B", Collections.emptyList());
         assertFalse(aMatcherAlt.matches(node));
     }
 }

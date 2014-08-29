@@ -23,31 +23,48 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.TreesImpl;
 import org.junit.Test;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 /**
- * @author matt on 28/06/14.
+ * @author matt on 15/08/14.
  */
-public final class TreeHelperWithServiceTestTest {
-    private static final Trees trees = new TreesImpl();
+public class TopDownTreeBuilderImplTest {
+    public static final TreeHelper helper = new TreeHelper();
 
     @Test
-    public void test0() {
-        final TopDownTreeRootBuilder builder = trees.topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder nodeApp0 = builder.root("A");
-        nodeApp0.addChild("B");
-        nodeApp0.addChild("C");
-        final Tree<String, Node<String>> tree0 = nodeApp0.build(Tree.class);
-        final Tree<String, Node<String>> tree1 = new TreeNodeImpl.NodeConverter<String>().treeFromRootNode(tree0.getRoot());
-        assertSame(tree0, tree1);
+    public void buildEmpty() {
+        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
+        final LinkedTree<String> tree = builder.build(LinkedTree.class);
+        assertNull(tree.getRoot());
+        assertTrue(tree.isEmpty());
+    }
+
+    @Test
+    public void buildLeaf() {
+        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("ROOT");
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(0, tree.getChildren().size());
+        assertFalse(tree.isEmpty());
+    }
+
+    @Test
+    public void buildSimple() {
+        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("ROOT");
+        builder0.addChild("a");
+        builder0.addChild("b");
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(2, tree.getChildren().size());
+        assertFalse(tree.isEmpty());
     }
 }

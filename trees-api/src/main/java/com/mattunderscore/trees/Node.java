@@ -23,45 +23,33 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
-
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Collection;
 
 /**
- * @author matt on 17/08/14.
+ * Represents a node of the tree.
+ * @author matt on 08/08/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public interface Node<E> {
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
-    }
+    /**
+     * @return The element stored in the node
+     */
+    E getElement();
 
-    @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (N child : reversed) {
-                parents.push(child);
-            }
-            current = parents.pop();
-            return n;
-        }
-        throw new NoSuchElementException();
-    }
+    /**
+     * @return The class of the element stored in the node
+     */
+    Class<E> getElementClass();
+
+    /**
+     * @return The children of the node
+     */
+    Collection<? extends Node<E>> getChildren();
+
+    /**
+     * @return {@code true} if the node is a leaf node
+     */
+    boolean isLeaf();
 }

@@ -25,13 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.IMutableTree;
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.ITree;
-import com.mattunderscore.trees.spi.IEmptyTreeConstructor;
-import com.mattunderscore.trees.spi.INodeToTreeConverter;
-import com.mattunderscore.trees.spi.ITreeConstructor;
-import com.mattunderscore.trees.spi.ITreeConverter;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.spi.TreeConstructor;
+import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
 import net.jcip.annotations.Immutable;
 
@@ -43,11 +42,11 @@ import java.util.List;
  * @author matt on 10/06/14.
  */
 @Immutable
-public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
+public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
     private final E element;
-    private final List<INode<E>> children;
+    private final List<Node<E>> children;
 
-    public TreeNodeImpl(E element, List<INode<E>> children) {
+    public TreeNodeImpl(E element, List<Node<E>> children) {
         this.element = element;
         this.children = children;
     }
@@ -63,12 +62,12 @@ public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
     }
 
     @Override
-    public Collection<INode<E>> getChildren() {
+    public Collection<Node<E>> getChildren() {
         return children;
     }
 
     @Override
-    public INode<E> getRoot() {
+    public Node<E> getRoot() {
         if (isEmpty()) {
             return null;
         }
@@ -87,7 +86,7 @@ public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
         return children.size() == 0;
     }
 
-    public final static class Constructor<E> implements ITreeConstructor<E, TreeNodeImpl<E>> {
+    public final static class Constructor<E> implements TreeConstructor<E, TreeNodeImpl<E>> {
 
         @Override
         public TreeNodeImpl<E> build(E e, TreeNodeImpl<E>... subtrees) {
@@ -96,27 +95,27 @@ public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
 
         @Override
         public Class<?> forClass() {
-            return ITree.class;
+            return Tree.class;
         }
     }
 
-    public final static class EmptyConstructor<E> implements IEmptyTreeConstructor<E, TreeNodeImpl<E>> {
+    public final static class EmptyConstructor<E> implements EmptyTreeConstructor<E, TreeNodeImpl<E>> {
 
         @Override
         public TreeNodeImpl<E> build() {
-            return new TreeNodeImpl(null, Collections.<INode<E>>emptyList());
+            return new TreeNodeImpl(null, Collections.<Node<E>>emptyList());
         }
 
         @Override
         public Class<?> forClass() {
-            return ITree.class;
+            return Tree.class;
         }
     }
 
-    public static final class NodeConverter<E> implements INodeToTreeConverter<E, INode<E>, ITree<E, INode<E>>> {
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, Node<E>, Tree<E, Node<E>>> {
 
         @Override
-        public ITree<E, INode<E>> treeFromRootNode(INode<E> node) {
+        public Tree<E, Node<E>> treeFromRootNode(Node<E> node) {
             return (TreeNodeImpl<E>)node;
         }
 
@@ -126,24 +125,24 @@ public final class TreeNodeImpl<E> implements ITree<E, INode<E>>, INode<E> {
         }
     }
 
-    public static final class Converter<E> implements ITreeConverter<E, TreeNodeImpl<E>> {
+    public static final class Converter<E> implements TreeConverter<E, TreeNodeImpl<E>> {
 
         @Override
-        public TreeNodeImpl<E> build(ITree<E, ? extends INode<E>> sourceTree) {
-            final INode<E> root = sourceTree.getRoot();
+        public TreeNodeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
+            final Node<E> root = sourceTree.getRoot();
             return new TreeNodeImpl(root.getElement(), duplicateChildren(root.getChildren()));
         }
 
         @Override
         public Class<?> forClass() {
-            return ITree.class;
+            return Tree.class;
         }
 
-        private List<INode<E>> duplicateChildren(Collection<? extends INode<E>> children) {
-            final INode[] newChildren = new INode[children.size()];
+        private List<Node<E>> duplicateChildren(Collection<? extends Node<E>> children) {
+            final Node[] newChildren = new Node[children.size()];
             int i = 0;
-            for (final INode<E> sourceChild : children) {
-                final List<INode<E>> newGrandChildren = duplicateChildren(sourceChild.getChildren());
+            for (final Node<E> sourceChild : children) {
+                final List<Node<E>> newGrandChildren = duplicateChildren(sourceChild.getChildren());
                 newChildren[i] = new TreeNodeImpl<>(sourceChild.getElement(), newGrandChildren);
                 i++;
             }

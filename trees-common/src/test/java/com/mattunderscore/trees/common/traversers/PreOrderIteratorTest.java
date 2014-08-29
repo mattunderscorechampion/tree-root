@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.IMutableNode;
+import com.mattunderscore.trees.MutableNode;
 import com.mattunderscore.trees.common.LinkedTree;
 import org.junit.Test;
 
@@ -47,7 +47,7 @@ public final class PreOrderIteratorTest {
             .addChild("c");
         tree.addChild("d");
 
-        final Iterator<IMutableNode<String>> iterator = new PreOrderIterator<>(tree);
+        final Iterator<MutableNode<String>> iterator = new PreOrderIterator<>(tree);
         assertEquals("a", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());

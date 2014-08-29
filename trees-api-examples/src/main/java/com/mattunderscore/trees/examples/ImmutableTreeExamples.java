@@ -26,8 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.ITopDownTreeRootBuilder.ITopDownTreeBuilder;
-import com.mattunderscore.trees.ITopDownTreeRootBuilder.ITopDownTreeBuilderAppender;
 
 import java.util.Iterator;
 
@@ -35,30 +33,30 @@ import java.util.Iterator;
  * @author matt on 08/08/14.
  */
 public final class ImmutableTreeExamples {
-    public void createTreeFromTheBottomUp(IBottomUpTreeBuilder<String> builder, ITreeTraverser traverser)
+    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeTraverser traverser)
     {
-        final ITree<String, INode<String>> tree = builder.create("root",
+        final Tree<String, Node<String>> tree = builder.create("root",
                 builder.create("a",
                         builder.create("1"),
                         builder.create("2"),
                         builder.create("3")),
                 builder.create("b",
                         builder.create("+"),
-                        builder.create("-"))).build(ITree.class);
+                        builder.create("-"))).build(Tree.class);
 
-        final Iterator<INode<String>> iterator = traverser.preOrderIterator(tree);
+        final Iterator<Node<String>> iterator = traverser.preOrderIterator(tree);
     }
 
-    public void createTreeFromTopDown(ITopDownTreeRootBuilder<String> builder, ITreeTraverser traverser)
+    public void createTreeFromTopDown(TopDownTreeRootBuilder<String> builder, TreeTraverser traverser)
     {
-        final ITopDownTreeBuilder<String> b0 = builder.root("root");
-        final ITopDownTreeBuilderAppender<String> left = b0.addChild("a");
-        final ITopDownTreeBuilderAppender<String> right = b0.addChild("b");
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> b0 = builder.root("root");
+        final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> left = b0.addChild("a");
+        final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> right = b0.addChild("b");
         left.addChild("1");
         left.addChild("2");
         left.addChild("3");
         right.addChild("+");
         right.addChild("-");
-        final ITree<String, INode<String>> tree = b0.build(ITree.class);
+        final Tree<String, Node<String>> tree = b0.build(Tree.class);
     }
 }

@@ -23,45 +23,45 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
+import com.mattunderscore.trees.*;
 import net.jcip.annotations.NotThreadSafe;
 
-import java.lang.reflect.Array;
-import java.util.*;
-
 /**
- * @author matt on 17/08/14.
+ * @author matt on 15/08/14.
  */
 @NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E> {
+    private final TreeHelper helper;
+    private final LinkedTree<E> tree;
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
+    public TopDownTreeBuilderImpl(TreeHelper helper, E root) {
+        this.helper = helper;
+        tree = new LinkedTree<E>(root);
     }
 
     @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (N child : reversed) {
-                parents.push(child);
-            }
-            current = parents.pop();
-            return n;
+    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) {
+        return helper.convertTree(klass, tree);
+    }
+
+    @Override
+    public TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> addChild(E e) {
+        return new Appender<>(tree.addChild(e));
+    }
+
+    @NotThreadSafe
+    private static final class Appender<S> implements TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> {
+        private final MutableNode<S> root;
+
+        public Appender(MutableNode<S> root) {
+            this.root = root;
         }
-        throw new NoSuchElementException();
+
+        @Override
+        public TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> addChild(S e) {
+            return new Appender<>(root.addChild(e));
+        }
     }
 }

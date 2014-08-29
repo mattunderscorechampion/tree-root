@@ -37,33 +37,33 @@ import java.util.ServiceLoader;
 public final class CompleteExample {
 
     public void completeExampleServiceLoaderEntry() {
-        final ServiceLoader<ITrees> serviceLoader = ServiceLoader.load(ITrees.class);
-        final Iterator<ITrees> iterator = serviceLoader.iterator();
+        final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
+        final Iterator<Trees> iterator = serviceLoader.iterator();
         if (iterator.hasNext()) {
             createTree(iterator.next());
         }
     }
 
-    public void createTree(ITrees trees) {
-        final IBottomUpTreeBuilder<String> builder = trees.bottomUpBuilder();
-        final ITree<String, INode<String>> tree = builder.create("a",
+    public void createTree(Trees trees) {
+        final BottomUpTreeBuilder<String> builder = trees.bottomUpBuilder();
+        final Tree<String, Node<String>> tree = builder.create("a",
                 builder.create("b"),
                 builder.create("c"))
-            .build(ITree.class);
+            .build(Tree.class);
 
         nodeSelector(trees, tree);
         treeSelector(trees, tree);
     }
 
-    public void nodeSelector(ITrees trees, ITree<String, INode<String>> tree) {
-        final INodeSelectorFactory selectorFactory = trees.nodeSelectorFactory();
-        final INodeSelector selector = selectorFactory.newSelector(new EqualityMatcher("a"));
-        final Iterator<INode<String>> iterator = selector.select(tree);
+    public void nodeSelector(Trees trees, Tree<String, Node<String>> tree) {
+        final NodeSelectorFactory selectorFactory = trees.nodeSelectorFactory();
+        final NodeSelector selector = selectorFactory.newSelector(new EqualityMatcher("a"));
+        final Iterator<Node<String>> iterator = selector.select(tree);
     }
 
-    public void treeSelector(ITrees trees, ITree<String, INode<String>> tree) {
-        final ITreeSelectorFactory selectorFactory = trees.treeSelectorFactory();
-        final ITreeSelector selector = selectorFactory.newSelector(new EqualityMatcher("a"));
-        final Iterator<ITree<String, INode<String>>> iterator = selector.select(tree);
+    public void treeSelector(Trees trees, Tree<String, Node<String>> tree) {
+        final TreeSelectorFactory selectorFactory = trees.treeSelectorFactory();
+        final TreeSelector selector = selectorFactory.newSelector(new EqualityMatcher("a"));
+        final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
     }
 }

@@ -23,45 +23,39 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
-
-import java.lang.reflect.Array;
-import java.util.*;
+import com.mattunderscore.trees.*;
 
 /**
- * @author matt on 17/08/14.
+ * Implementation of {@link com.mattunderscore.trees.Trees}.
+ * @author matt on 16/08/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public final class TreesImpl implements Trees {
+    public final TreeHelper helper = new TreeHelper();
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
+    @Override
+    public TopDownTreeRootBuilder topDownBuilder() {
+        return new TopDownTreeRootBuilderImpl(helper);
     }
 
     @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (N child : reversed) {
-                parents.push(child);
-            }
-            current = parents.pop();
-            return n;
-        }
-        throw new NoSuchElementException();
+    public BottomUpTreeBuilder bottomUpBuilder() {
+        return new BottomUpTreeBuilderImpl(helper);
+    }
+
+    @Override
+    public TreeSelectorFactory treeSelectorFactory() {
+        return new TreeSelectorFactoryImpl(helper);
+    }
+
+    @Override
+    public NodeSelectorFactory nodeSelectorFactory() {
+        return new NodeSelectorFactoryImpl(helper);
+    }
+
+    @Override
+    public TreeWalkers treeWalkers() {
+        return new TreeWalkersImpl();
     }
 }

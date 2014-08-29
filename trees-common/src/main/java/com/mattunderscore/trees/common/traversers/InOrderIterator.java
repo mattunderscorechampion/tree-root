@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.ITree;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import net.jcip.annotations.NotThreadSafe;
 
@@ -38,7 +38,7 @@ import java.util.Stack;
  * @author matt on 22/08/14.
  */
 @NotThreadSafe
-public final class InOrderIterator<E , N extends INode<E>, T extends ITree<E, N>> extends PrefetchingIterator<N> {
+public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
     private final Stack<State<E, N>> parents = new Stack<>();
     private N current;
 
@@ -73,7 +73,7 @@ public final class InOrderIterator<E , N extends INode<E>, T extends ITree<E, N>
         throw new NoSuchElementException();
     }
 
-    private static final class State<E, N extends INode<E>> {
+    private static final class State<E, N extends Node<E>> {
         private final N node;
         private final Iterator<N> iterator;
 

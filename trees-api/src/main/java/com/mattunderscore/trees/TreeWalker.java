@@ -23,45 +23,28 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
-
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
-
-import java.lang.reflect.Array;
-import java.util.*;
+package com.mattunderscore.trees;
 
 /**
- * @author matt on 17/08/14.
+ * Interface for walking over trees.
+ * @author matt on 16/08/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public interface TreeWalker<E, N extends Node<E>> {
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
-    }
+    /**
+     * Invoked if the tree is empty.
+     */
+    void onEmpty();
 
-    @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (N child : reversed) {
-                parents.push(child);
-            }
-            current = parents.pop();
-            return n;
-        }
-        throw new NoSuchElementException();
-    }
+    /**
+     * Invoked for each node.
+     * @param node The node
+     * @return {@code true} if the walker should continue to the next node
+     */
+    boolean onNext(N node);
+
+    /**
+     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(Node)}.
+     */
+    void onCompleted();
 }

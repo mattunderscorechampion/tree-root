@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.Trees;
+import com.mattunderscore.trees.common.TreesImpl;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -40,34 +40,34 @@ import static org.junit.Assert.assertTrue;
  * @author matt on 10/06/14.
  */
 public final class StringTreeFactoryTest {
-    private static final ITrees trees = new Trees();
+    private static final Trees trees = new TreesImpl();
 
     @Test
     public void build0() {
-        final ITopDownTreeRootBuilder builder = trees.topDownBuilder();
-        final ITopDownTreeRootBuilder.ITopDownTreeBuilder nodeApp0 = builder.root("a");
+        final TopDownTreeRootBuilder builder = trees.topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder nodeApp0 = builder.root("a");
         nodeApp0.addChild("b").addChild("c");
         nodeApp0.addChild("d");
-        final ITree<String, ?> tree = nodeApp0.build(ITree.class);
+        final Tree<String, ?> tree = nodeApp0.build(Tree.class);
 
-        final INode<String> root = tree.getRoot();
+        final Node<String> root = tree.getRoot();
         assertEquals(String.class, root.getElementClass());
         assertEquals("a", root.getElement());
-        final Collection<? extends INode<String>> children0 = root.getChildren();
-        final Iterator<? extends INode<String>> iterator0 = children0.iterator();
+        final Collection<? extends Node<String>> children0 = root.getChildren();
+        final Iterator<? extends Node<String>> iterator0 = children0.iterator();
         assertEquals(2, children0.size());
         assertEquals("a", root.getElement());
         assertTrue(iterator0.hasNext());
-        final INode<String> bNode = iterator0.next();
+        final Node<String> bNode = iterator0.next();
         assertTrue(iterator0.hasNext());
-        final INode<String> dNode = iterator0.next();
+        final Node<String> dNode = iterator0.next();
         assertFalse(iterator0.hasNext());
         assertEquals("b", bNode.getElement());
         assertEquals("d", dNode.getElement());
-        final Collection<? extends INode<String>> children1 = bNode.getChildren();
-        final Iterator<? extends INode<String>> iterator1 = children1.iterator();
+        final Collection<? extends Node<String>> children1 = bNode.getChildren();
+        final Iterator<? extends Node<String>> iterator1 = children1.iterator();
         assertTrue(iterator1.hasNext());
-        final INode<String> cNode = iterator1.next();
+        final Node<String> cNode = iterator1.next();
         assertFalse(iterator1.hasNext());
         assertEquals("c", cNode.getElement());
     }

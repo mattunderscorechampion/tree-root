@@ -23,45 +23,59 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.common;
 
+import com.mattunderscore.trees.BottomUpTreeBuilder;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
+import net.jcip.annotations.Immutable;
 
 import java.lang.reflect.Array;
-import java.util.*;
 
 /**
- * @author matt on 17/08/14.
+ * @author matt on 13/08/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+@Immutable
+final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
+    private final TreeHelper helper;
+    private final E root;
+    private final BottomUpTreeBuilder<E>[] children;
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
+    public BottomUpTreeBuilderImpl(TreeHelper helper) {
+        this(helper, null, new BottomUpTreeBuilder[0]);
+    }
+
+    private BottomUpTreeBuilderImpl(TreeHelper helper, E e) {
+        this(helper, e, new BottomUpTreeBuilder[0]);
+    }
+
+    private BottomUpTreeBuilderImpl(TreeHelper helper, E e, BottomUpTreeBuilder[] builders) {
+        this.helper = helper;
+        root = e;
+        children = builders;
     }
 
     @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (N child : reversed) {
-                parents.push(child);
-            }
-            current = parents.pop();
-            return n;
+    public BottomUpTreeBuilder<E> create(E e) {
+        return new BottomUpTreeBuilderImpl<>(helper, e);
+    }
+
+    @Override
+    public BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders) {
+        return new BottomUpTreeBuilderImpl<>(helper, e, builders);
+    }
+
+    @Override
+    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) {
+        if (root == null) {
+            return helper.emptyTree(klass);
         }
-        throw new NoSuchElementException();
+        else {
+            final T[] subtrees = (T[])Array.newInstance(klass, children.length);
+            for (int i = 0; i < children.length; i++) {
+                subtrees[i] = children[i].build(klass);
+            }
+            return helper.<E, N, T>newTreeFrom(klass, root, subtrees);
+        }
     }
 }

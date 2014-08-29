@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.matchers;
 
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.INodeMatcher;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.NodeMatcher;
 import net.jcip.annotations.Immutable;
 
 /**
@@ -34,10 +34,10 @@ import net.jcip.annotations.Immutable;
  * @author matt on 25/06/14.
  */
 @Immutable
-public final class NegatingMatcher<E> implements INodeMatcher<E> {
-    private final INodeMatcher matcher;
+public final class NegatingMatcher<E> implements NodeMatcher<E> {
+    private final NodeMatcher matcher;
 
-    public NegatingMatcher(INodeMatcher<E> matcher) {
+    public NegatingMatcher(NodeMatcher<E> matcher) {
         if (matcher == null) {
             throw new NullPointerException();
         }
@@ -45,7 +45,7 @@ public final class NegatingMatcher<E> implements INodeMatcher<E> {
     }
 
     @Override
-    public <T extends INode<E>> boolean matches(T node) {
+    public <T extends Node<E>> boolean matches(T node) {
         return !matcher.matches(node);
     }
 }

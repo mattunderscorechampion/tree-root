@@ -25,9 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.walkers;
 
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.ITree;
-import com.mattunderscore.trees.ITreeWalker;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.TreeWalker;
 import net.jcip.annotations.Immutable;
 
 import java.util.Iterator;
@@ -41,7 +41,7 @@ public final class PostOrderWalker {
     public PostOrderWalker() {
     }
 
-    public <E, N extends INode<E>, T extends ITree<E, N>> void accept(T tree, ITreeWalker<E, N> walker) {
+    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, TreeWalker<E, N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
@@ -57,8 +57,8 @@ public final class PostOrderWalker {
         }
     }
 
-    private <E, N extends INode<E>, T extends ITree<E, N>> void accept(N node, ITreeWalker<E, N> walker) throws Done {
-        final Iterator<? extends INode<E>> iterator = node.getChildren().iterator();
+    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, TreeWalker<E, N> walker) throws Done {
+        final Iterator<? extends Node<E>> iterator = node.getChildren().iterator();
         while (iterator.hasNext()) {
             final N child = (N)iterator.next();
             accept(child, walker);

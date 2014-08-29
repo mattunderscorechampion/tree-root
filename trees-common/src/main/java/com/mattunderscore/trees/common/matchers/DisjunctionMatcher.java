@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.matchers;
 
-import com.mattunderscore.trees.INode;
-import com.mattunderscore.trees.INodeMatcher;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.NodeMatcher;
 import net.jcip.annotations.Immutable;
 
 /**
@@ -34,17 +34,17 @@ import net.jcip.annotations.Immutable;
  * @author matt on 26/06/14.
  */
 @Immutable
-public final class DisjunctionMatcher<E> implements INodeMatcher<E> {
-    private final INodeMatcher<E> matcher0;
-    private final INodeMatcher<E> matcher1;
+public final class DisjunctionMatcher<E> implements NodeMatcher<E> {
+    private final NodeMatcher<E> matcher0;
+    private final NodeMatcher<E> matcher1;
 
-    public DisjunctionMatcher(INodeMatcher<E> matcher0, INodeMatcher<E> matcher1) {
+    public DisjunctionMatcher(NodeMatcher<E> matcher0, NodeMatcher<E> matcher1) {
         this.matcher0 = matcher0;
         this.matcher1 = matcher1;
     }
 
     @Override
-    public <T extends INode<E>> boolean matches(T node) {
+    public <T extends Node<E>> boolean matches(T node) {
         return matcher0.matches(node) || matcher1.matches(node);
     }
 }

@@ -23,53 +23,52 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.walkers;
+package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.TreeWalker;
-import com.mattunderscore.trees.utilities.FixedUncheckedList;
+import com.mattunderscore.trees.TreeWalkers;
+import com.mattunderscore.trees.common.walkers.BreadthFirstWalker;
+import com.mattunderscore.trees.common.walkers.InOrderWalker;
+import com.mattunderscore.trees.common.walkers.PostOrderWalker;
+import com.mattunderscore.trees.common.walkers.PreOrderWalker;
 import net.jcip.annotations.Immutable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
- * @author matt on 17/08/14.
+ * @author matt on 23/08/14.
  */
 @Immutable
-public final class BreadthFirstWalker {
+public final class TreeWalkersImpl implements TreeWalkers {
+    private final BreadthFirstWalker breadthFirstWalker;
+    private final InOrderWalker inOrderWalker;
+    private final PostOrderWalker postOrderWalker;
+    private final PreOrderWalker preOrderWalker;
 
-    public BreadthFirstWalker() {
+    public TreeWalkersImpl() {
+        breadthFirstWalker = new BreadthFirstWalker();
+        inOrderWalker = new InOrderWalker();
+        postOrderWalker = new PostOrderWalker();
+        preOrderWalker = new PreOrderWalker();
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, TreeWalker<E, N> walker) {
-        if (tree.isEmpty()) {
-            walker.onEmpty();
-            walker.onCompleted();
-        }
-        else {
-            final N node = tree.getRoot();
-            final List<N> rootLevel = new FixedUncheckedList<>(new Object[]{node});
-            try {
-                accept(rootLevel, walker);
-                walker.onCompleted();
-            }
-            catch (Done done) {
-                done.printStackTrace();
-            }
-        }
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<E, N> walker) {
+        preOrderWalker.accept(tree, walker);
     }
 
-    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(List<N> currentLevel, TreeWalker<E,N> walker) throws Done {
-        final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
-        for (final N node : currentLevel) {
-            if (!walker.onNext(node)) {
-                throw new Done();
-            }
-            nextLevel.addAll((Collection<N>)node.getChildren());
-        }
-        accept(nextLevel, walker);
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkInOrder(T tree, TreeWalker<E, N> walker) {
+        inOrderWalker.accept(tree, walker);
+    }
+
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkPostOrder(T tree, TreeWalker<E, N> walker) {
+        postOrderWalker.accept(tree, walker);
+    }
+
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkBreadthFirst(T tree, TreeWalker<E, N> walker) {
+        breadthFirstWalker.accept(tree, walker);
     }
 }
