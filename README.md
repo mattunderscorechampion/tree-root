@@ -44,7 +44,16 @@ There are other tree implementations provided as a part of other libraries. The
 [Prefuse visualisation toolkit](http://prefuse.org/doc/api/index.html?prefuse/data/Tree.html), the
 [Apache POI for Open and Microsoft office documents](https://poi.apache.org/apidocs/org/apache/poi/util/BinaryTree.html),
 the [Zkoss framework](http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zul/Tree.html).
- 
+
+Design principles
+=================
+
+The intention is to provide an easily extendable, generic tree API. The API should build upon itself add features as
+needed. For example the basic tree API is immutable and it must be extended to provide a mutable interface.
+
+Utilities should be generic implementations provided outside of a tree. They should not be implemented within specific
+tree implementations.
+
 Tree implementations
 ====================
 
