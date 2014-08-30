@@ -23,22 +23,34 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
-
-import java.util.Iterator;
+package com.mattunderscore.trees.selection;
 
 /**
- * Selects a subtree.
- * @author matt on 08/08/14.
+ * Factory for node selectors.
+ * @author matt on 16/08/14.
  */
-public interface TreeSelector {
+public interface NodeSelectorFactory {
+    /**
+     * Create a node selector for the root node.
+     * @param matcher
+     * @param <E>
+     * @return
+     */
+    <E> NodeSelector newSelector(NodeMatcher matcher);
 
     /**
-     * @param tree The tree to select from
-     * @param <E> The type of elements in the nodes
-     * @param <N> The type of nodes in the tree
-     * @param <T> The type of the tree
-     * @return An {@link java.util.Iterator} over the selected subtrees
+     * Create a node selector for the children of another node selector.
+     * @param selector
+     * @param matcher
+     * @return
      */
-    <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree);
+    <E> NodeSelector newSelector(NodeSelector selector, NodeMatcher matcher);
+
+    /**
+     * Create a node selector from the union of two selectors.
+     * @param selector0
+     * @param selector1
+     * @return
+     */
+    <E> NodeSelector newSelector(NodeSelector selector0, NodeSelector selector1);
 }

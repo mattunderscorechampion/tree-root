@@ -27,8 +27,8 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.TreeWalker;
-import com.mattunderscore.trees.TreeWalkers;
+import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.TreeWalkers;
 import com.mattunderscore.trees.common.walkers.BreadthFirstWalker;
 import com.mattunderscore.trees.common.walkers.InOrderWalker;
 import com.mattunderscore.trees.common.walkers.PostOrderWalker;

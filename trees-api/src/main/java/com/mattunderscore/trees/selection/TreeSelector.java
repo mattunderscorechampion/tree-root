@@ -23,21 +23,25 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.selection;
+
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
 
 import java.util.Iterator;
 
 /**
- * Selects a node of the tree.
+ * Selects a subtree.
  * @author matt on 08/08/14.
  */
-public interface NodeSelector {
+public interface TreeSelector {
 
     /**
      * @param tree The tree to select from
-     * @param <E> The type of the elements in the node
-     * @param <T> The type of the nodes in the tree
-     * @return An {@link java.util.Iterator} over the selected nodes
+     * @param <E> The type of elements in the nodes
+     * @param <N> The type of nodes in the tree
+     * @param <T> The type of the tree
+     * @return An {@link java.util.Iterator} over the selected subtrees
      */
-    <E, T extends Node<E>> Iterator<T> select(Tree<E, T> tree);
+    <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree);
 }

@@ -23,20 +23,19 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.selection;
 
 /**
- * Factory for node selectors.
  * @author matt on 16/08/14.
  */
-public interface NodeSelectorFactory {
+public interface TreeSelectorFactory {
     /**
-     * Create a node selector for the root node.
+     * Create a tree selector for the root node (entire tree).
      * @param matcher
      * @param <E>
      * @return
      */
-    <E> NodeSelector newSelector(NodeMatcher matcher);
+    <E> TreeSelector newSelector(NodeMatcher matcher);
 
     /**
      * Create a node selector for the children of another node selector.
@@ -44,13 +43,5 @@ public interface NodeSelectorFactory {
      * @param matcher
      * @return
      */
-    <E> NodeSelector newSelector(NodeSelector selector, NodeMatcher matcher);
-
-    /**
-     * Create a node selector from the union of two selectors.
-     * @param selector0
-     * @param selector1
-     * @return
-     */
-    <E> NodeSelector newSelector(NodeSelector selector0, NodeSelector selector1);
+    <E> TreeSelector newSelector(TreeSelector selector, NodeMatcher matcher);
 }

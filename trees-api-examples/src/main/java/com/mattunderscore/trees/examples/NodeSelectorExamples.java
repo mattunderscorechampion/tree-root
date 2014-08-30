@@ -27,7 +27,7 @@ package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.MutableNode;
 import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.NodeSelector;
+import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.Tree;
 
 import java.util.Iterator;

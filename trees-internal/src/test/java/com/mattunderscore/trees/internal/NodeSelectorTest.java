@@ -29,7 +29,9 @@ import static org.junit.Assert.*;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.*;
-import com.mattunderscore.trees.NodeSelectorFactory;
+import com.mattunderscore.trees.selection.NodeMatcher;
+import com.mattunderscore.trees.selection.NodeSelector;
+import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import org.junit.Test;
 

@@ -27,7 +27,7 @@ package com.mattunderscore.trees.common.walkers;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.TreeWalker;
+import com.mattunderscore.trees.traversal.TreeWalker;
 import net.jcip.annotations.Immutable;
 
 import java.util.Iterator;

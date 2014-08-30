@@ -23,50 +23,30 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.traversal;
+
+import com.mattunderscore.trees.Node;
 
 /**
- * @author matt on 23/08/14.
+ * Interface for walking over trees.
+ * @author matt on 16/08/14.
  */
-public interface TreeWalkers {
+public interface TreeWalker<E, N extends Node<E>> {
 
     /**
-     * Traverse the tree in preorder.
-     * @param tree The tree
-     * @param walker
-     * @param <E> Element type
-     * @param <N> Node type
-     * @param <T> Tree type
+     * Invoked if the tree is empty.
      */
-    <E, N extends Node<E>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<E, N> walker);
+    void onEmpty();
 
     /**
-     * Traverse the tree in order.
-     * @param tree The tree
-     * @param walker
-     * @param <E> Element type
-     * @param <N> Node type
-     * @param <T> Tree type
+     * Invoked for each node.
+     * @param node The node
+     * @return {@code true} if the walker should continue to the next node
      */
-    <E, N extends Node<E>, T extends Tree<E, N>> void walkInOrder(T tree, TreeWalker<E, N> walker);
+    boolean onNext(N node);
 
     /**
-     * Traverse the tree in post order.
-     * @param tree The tree
-     * @param walker
-     * @param <E> Element type
-     * @param <N> Node type
-     * @param <T> Tree type
+     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(Node)}.
      */
-    <E, N extends Node<E>, T extends Tree<E, N>> void walkPostOrder(T tree, TreeWalker<E, N> walker);
-
-    /**
-     * Traverse the tree in breadth first order.
-     * @param tree The tree
-     * @param walker
-     * @param <E> Element type
-     * @param <N> Node type
-     * @param <T> Tree type
-     */
-    <E, N extends Node<E>, T extends Tree<E, N>> void walkBreadthFirst(T tree, TreeWalker<E, N> walker);
+    void onCompleted();
 }

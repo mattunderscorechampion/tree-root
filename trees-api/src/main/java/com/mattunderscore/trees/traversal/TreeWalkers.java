@@ -23,25 +23,53 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.traversal;
+
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
 
 /**
- * @author matt on 16/08/14.
+ * @author matt on 23/08/14.
  */
-public interface TreeSelectorFactory {
-    /**
-     * Create a tree selector for the root node (entire tree).
-     * @param matcher
-     * @param <E>
-     * @return
-     */
-    <E> TreeSelector newSelector(NodeMatcher matcher);
+public interface TreeWalkers {
 
     /**
-     * Create a node selector for the children of another node selector.
-     * @param selector
-     * @param matcher
-     * @return
+     * Traverse the tree in preorder.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
      */
-    <E> TreeSelector newSelector(TreeSelector selector, NodeMatcher matcher);
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<E, N> walker);
+
+    /**
+     * Traverse the tree in order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkInOrder(T tree, TreeWalker<E, N> walker);
+
+    /**
+     * Traverse the tree in post order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkPostOrder(T tree, TreeWalker<E, N> walker);
+
+    /**
+     * Traverse the tree in breadth first order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkBreadthFirst(T tree, TreeWalker<E, N> walker);
 }

@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
+import com.mattunderscore.trees.selection.NodeSelectorFactory;
+import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.traversal.TreeWalkers;
+
 /**
  * Source for tree builders.
  * @author matt on 12/07/14.
@@ -44,19 +48,19 @@ public interface Trees {
     BottomUpTreeBuilder bottomUpBuilder();
 
     /**
-     * Obtain a {@link TreeSelectorFactory}
+     * Obtain a {@link com.mattunderscore.trees.selection.TreeSelectorFactory}
      * @return
      */
     TreeSelectorFactory treeSelectorFactory();
 
     /**
-     * Obtain a {@link NodeSelectorFactory}
+     * Obtain a {@link com.mattunderscore.trees.selection.NodeSelectorFactory}
      * @return
      */
     NodeSelectorFactory nodeSelectorFactory();
 
     /**
-     * Obtain a {@link TreeWalkers}
+     * Obtain a {@link com.mattunderscore.trees.traversal.TreeWalkers}
      * @return
      */
     TreeWalkers treeWalkers();

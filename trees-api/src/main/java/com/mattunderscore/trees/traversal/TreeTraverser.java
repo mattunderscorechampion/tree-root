@@ -23,28 +23,47 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.traversal;
+
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
+
+import java.util.Iterator;
 
 /**
- * Interface for walking over trees.
- * @author matt on 16/08/14.
+ * @author matt on 08/08/14.
  */
-public interface TreeWalker<E, N extends Node<E>> {
+public interface TreeTraverser {
 
     /**
-     * Invoked if the tree is empty.
+     * @param tree
+     * @param <E>
+     * @param <T>
+     * @return An {@link Iterator} that returns nodes in pre-order
      */
-    void onEmpty();
+    <E, T extends Node<E>> Iterator<T> preOrderIterator(Tree<E, T> tree);
 
     /**
-     * Invoked for each node.
-     * @param node The node
-     * @return {@code true} if the walker should continue to the next node
+     * @param tree
+     * @param <E>
+     * @param <T>
+     * @return An {@link Iterator} that returns nodes in in-order
      */
-    boolean onNext(N node);
+    <E, T extends Node<E>> Iterator<T> inOrderIterator(Tree<E, T> tree);
 
     /**
-     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(Node)}.
+     * @param tree
+     * @param <E>
+     * @param <T>
+     * @return An {@link Iterator} that returns nodes in post-order
      */
-    void onCompleted();
+    <E, T extends Node<E>> Iterator<T> postOrderIterator(Tree<E, T> tree);
+
+    /**
+     * @param tree
+     * @param <E>
+     * @param <T>
+     * @return An {@link Iterator} that returns nodes in breadth first order
+     */
+    <E, T extends Node<E>> Iterator<T> breadthFirstIterator(Tree<E, T> tree);
 }
