@@ -63,6 +63,13 @@ For example to rebalance a tree in place, using the methods provided by the API 
 they are based on elements. An SPI implementation can be provided for each concrete mutable tree implementation that
 provides operations on nodes to support more efficient rebalancing.
 
+Definitions
+===========
+
+* Element - a value associated with the node
+* Node - node of the tree, may contain a value, may have child nodes, may not be the child of more than one node
+* Tree - a data structure that may contain nodes and has at most one root node
+
 Tree implementations
 ====================
 
