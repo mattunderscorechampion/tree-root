@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.selection;
 
 import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.Tree;
 
 import java.util.Iterator;
@@ -42,6 +43,7 @@ public interface TreeSelector {
      * @param <N> The type of nodes in the tree
      * @param <T> The type of the tree
      * @return An {@link java.util.Iterator} over the selected subtrees
+     * @throws OperationNotSupportedForType if the type of the tree can not be selected
      */
-    <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree);
+    <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) throws OperationNotSupportedForType;
 }

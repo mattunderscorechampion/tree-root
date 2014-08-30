@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.Tree;
 
@@ -45,7 +46,7 @@ final class TopDownTreeRootBuilderImpl<E> implements TopDownTreeRootBuilder<E> {
     }
 
     @Override
-    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) {
+    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         return helper.emptyTree(klass);
     }
 }

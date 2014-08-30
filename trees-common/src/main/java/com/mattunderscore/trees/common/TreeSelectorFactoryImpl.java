@@ -47,7 +47,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     }
 
     @Override
-    public <E> TreeSelector newSelector(final NodeMatcher matcher) {
+    public <E> TreeSelector newSelector(final NodeMatcher matcher) throws OperationNotSupportedForType {
         return new TreeSelector() {
             @Override
             public <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
@@ -63,7 +63,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     }
 
     @Override
-    public <E> TreeSelector newSelector(final TreeSelector selector, final NodeMatcher matcher) {
+    public <E> TreeSelector newSelector(final TreeSelector selector, final NodeMatcher matcher) throws OperationNotSupportedForType {
         return new TreeSelector() {
             @Override
             public <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {

@@ -35,6 +35,7 @@ public interface BaseTreeBuilder<E> {
      * @param klass The class of the tree to create
      * @param <T> The type of the tree to create
      * @return The new tree
+     * @throws OperationNotSupportedForType if the type of the tree to be built is not supported
      */
-    <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass);
+    <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType;
 }

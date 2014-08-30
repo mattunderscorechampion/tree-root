@@ -80,7 +80,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
             @Override
             public <E, N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
                 final Iterator<N> startingPoints = selector0.select(tree);
-                return new AsTreeIterator<>(startingPoints, selector1, helper);
+                return new AsNodeIterator<>(startingPoints, selector1, helper);
             }
         };
     }
@@ -117,13 +117,13 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
         }
     }
 
-    private static final class AsTreeIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
+    private static final class AsNodeIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
         private final Iterator<N> startingPoints;
         private final NodeSelector selector;
         private final TreeHelper helper;
         private Iterator<N> currentEndPoints;
 
-        public AsTreeIterator(Iterator<N> startingPoints, NodeSelector selector, TreeHelper helper) {
+        public AsNodeIterator(Iterator<N> startingPoints, NodeSelector selector, TreeHelper helper) {
             this.startingPoints = startingPoints;
             this.selector = selector;
             this.helper = helper;

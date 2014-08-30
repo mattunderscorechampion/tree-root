@@ -23,45 +23,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
-
-import com.mattunderscore.trees.*;
-import net.jcip.annotations.NotThreadSafe;
+package com.mattunderscore.trees;
 
 /**
- * @author matt on 15/08/14.
+ * Unchecked exception for when the required SPI component is missing.
+ * @author matt on 30/08/14.
  */
-@NotThreadSafe
-final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E> {
-    private final TreeHelper helper;
-    private final LinkedTree<E> tree;
-
-    public TopDownTreeBuilderImpl(TreeHelper helper, E root) {
-        this.helper = helper;
-        tree = new LinkedTree<E>(root);
-    }
-
-    @Override
-    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        return helper.convertTree(klass, tree);
-    }
-
-    @Override
-    public TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> addChild(E e) {
-        return new Appender<>(tree.addChild(e));
-    }
-
-    @NotThreadSafe
-    private static final class Appender<S> implements TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> {
-        private final MutableNode<S> root;
-
-        public Appender(MutableNode<S> root) {
-            this.root = root;
-        }
-
-        @Override
-        public TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> addChild(S e) {
-            return new Appender<>(root.addChild(e));
-        }
+public final class OperationNotSupportedForType extends RuntimeException {
+    public OperationNotSupportedForType(Class<?> klass, Class<?> spiComponentClass) {
+        super("Operation not supported. Type " + klass.getName() + "not supported for " + spiComponentClass.getName());
     }
 }

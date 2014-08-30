@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.*;
 
@@ -81,23 +82,36 @@ final class TreeHelper {
         }
     }
 
-    public <E, T extends Tree<E, ? extends Node<E>>> T emptyTree(Class<T> klass) {
+    public <E, T extends Tree<E, ? extends Node<E>>> T emptyTree(Class<T> klass) throws OperationNotSupportedForType {
         final EmptyTreeConstructor<E, T> constructor = (EmptyTreeConstructor<E, T>)emptyConstructors.get(klass);
+        if (constructor == null) {
+            throw new OperationNotSupportedForType(klass, EmptyTreeConstructor.class);
+        }
         return constructor.build();
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) {
+    public <E, N extends Node<E>, T extends Tree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
         final TreeConstructor<E, T> constructor = (TreeConstructor<E, T>)treeConstructors.get(klass);
+        if (constructor == null) {
+            throw new OperationNotSupportedForType(klass, TreeConstructor.class);
+        }
         return constructor.build(e, subtrees);
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> T convertTree(Class<T> klass, Tree<E, ? extends Node<E>> sourceTree) {
+    public <E, N extends Node<E>, T extends Tree<E, N>> T convertTree(Class<T> klass, Tree<E, ? extends Node<E>> sourceTree) throws OperationNotSupportedForType {
         final TreeConverter<E, T> converter = (TreeConverter<E, T>)treeConverters.get(klass);
+        if (converter == null) {
+            throw new OperationNotSupportedForType(klass, TreeConverter.class);
+        }
         return converter.build(sourceTree);
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> T nodeToTree(N node) {
-        final NodeToTreeConverter<E, N, T> converter = (NodeToTreeConverter<E, N, T>)converters.get(node.getClass());
+    public <E, N extends Node<E>, T extends Tree<E, N>> T nodeToTree(N node) throws OperationNotSupportedForType {
+        final Class<? extends Node> klass = node.getClass();
+        final NodeToTreeConverter<E, N, T> converter = (NodeToTreeConverter<E, N, T>)converters.get(klass);
+        if (converter == null) {
+            throw new OperationNotSupportedForType(klass, NodeToTreeConverter.class);
+        }
         return converter.treeFromRootNode(node);
     }
 }

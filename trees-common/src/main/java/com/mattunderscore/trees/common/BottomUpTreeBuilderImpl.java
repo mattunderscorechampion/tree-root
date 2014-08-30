@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.BottomUpTreeBuilder;
 import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.Tree;
 import net.jcip.annotations.Immutable;
 
@@ -66,7 +67,7 @@ final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
     }
 
     @Override
-    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) {
+    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         if (root == null) {
             return helper.emptyTree(klass);
         }
