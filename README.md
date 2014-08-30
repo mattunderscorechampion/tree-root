@@ -48,14 +48,30 @@ the [Zkoss framework](http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zul/Tree.
 Design principles
 =================
 
-The intention is to provide an easily extendable, generic tree API. The API should build upon itself add features as
-needed. For example the basic tree API is immutable and it must be extended to provide a mutable interface.
+The intention is to provide an easily extensible, generic tree API. The API should build upon itself, adding features
+as needed. For example the basic tree API is immutable and it must be extended to provide a mutable interface.
 
-Utilities should be generic implementations provided outside of a tree. They should not be implemented within specific
-tree implementations.
+The API should not allow the violation of the constraints of the implementation. An immutable tree should not provide
+any way of attempting to mutate the tree.
+
+Utilities should be generic implementations provided outside of a tree that can be applied to any implementation. They
+should not be implemented within specific tree implementations.
 
 Tree implementations
 ====================
 
 Tree implementations are flexible. Child collection mutability is based on the tree implementation. Likewise the
 ordering of children is based on the tree implementation.
+
+Balanced tree builders and balancing trees
+==========================================
+
+The API supports balanced tree builders and self-balancing trees. A
+[balanced tree](http://xlinux.nist.gov/dads//HTML/balancedtree.html) requires specific placement of nodes. For a tree to
+be balanced no leaf should be farther away from the root than any other. If the nodes can be placed anywhere this
+constraint can be violated. This is where adding features as needed is useful. The BalancedTreeBuilder returns balanced
+trees, it does this by not allowing the specification of the placement of nodes or elements but instead leaving the
+placement up to the builder. It is possible to create a mutable tree using a BalancedTreeBuilder that starts balanced
+and then modify it so that it is not. The BalancingTree is a mutable tree that ensures that trees remain balanced.
+Again this is done by leaving the placement up to the tree. It provides immutable nodes and an API that allows placement
+on the tree instead of the nodes.
