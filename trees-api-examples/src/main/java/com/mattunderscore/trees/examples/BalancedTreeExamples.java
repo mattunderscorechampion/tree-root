@@ -23,22 +23,23 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.balanced;
+package com.mattunderscore.trees.examples;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.balanced.BalancedTreeBuilder;
+import com.mattunderscore.trees.balanced.BalancingTree;
 
 /**
- * A mutable, self-balancing tree. Only supports immutable nodes.
- * @param <E> the type of elements in the tree.
  * @author matt on 30/08/14.
  */
-public interface BalancingTree<E> extends Tree<E, Node<E>> {
-
-    /**
-     * Add an element to the tree at the next balanced position
-     * @param element the element to add
-     * @return the balancing tree
-     */
-    BalancingTree<E> addElement(E element);
+public class BalancedTreeExamples {
+    public void balancedTreeExample(BalancedTreeBuilder<String> builder) {
+        final BalancingTree<String> tree = builder
+            .addElement("a")
+            .addElement("b")
+            .addElement("c")
+            .build(BalancingTree.class);
+        tree
+            .addElement("c")
+            .addElement("d");
+    }
 }
