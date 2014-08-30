@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.balanced;
 
+import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 
 /**
