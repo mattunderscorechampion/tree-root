@@ -57,6 +57,12 @@ any way of attempting to mutate the tree.
 Utilities should be generic implementations provided outside of a tree that can be applied to any implementation. They
 should not be implemented within specific tree implementations.
 
+Where utilities depend on the specific implementations of the tree this should use the SPI and the ServiceLoader
+interface. The ServiceLoader can be used to look up implementation specific support for the task provided by the SPI.
+For example to rebalance a tree in place, using the methods provided by the API may not allow efficient operations as
+they are based on elements. An SPI implementation can be provided for each concrete mutable tree implementation that
+provides operations on nodes to support more efficient rebalancing.
+
 Tree implementations
 ====================
 
@@ -75,3 +81,24 @@ placement up to the builder. It is possible to create a mutable tree using a Bal
 and then modify it so that it is not. The BalancingTree is a mutable tree that ensures that trees remain balanced.
 Again this is done by leaving the placement up to the tree. It provides immutable nodes and an API that allows placement
 on the tree instead of the nodes.
+
+SPI
+===
+
+There is also an SPI that can be used to support specific implementations. The SPI can be used to expose more powerful
+functionality specific to tree implementations. The ServiceLoader is used to allow the implementations of the SPI to be
+discovered at runtime. Each component of the SPI provides a method that returns the class of the tree or node that the
+implementation applies to.
+
+NOTE: handling lookup failure when invoking utilities for types that do not provide SPI implementations still needs to
+be implemented.
+
+When a TreesImpl object is created it looks up all the implementations using the ServiceLoader and registers the SPI
+implementation against the class that is used for. When a utility operation is used it looks up the SPI implementation
+for the tree or node class it has been invoked for and uses the SPI to perform the operation. The SPI implementation
+may use the fact that it registered against the concrete type to cast a Tree or Node to the concrete type safely at
+runtime. This allows for the use of methods not exposed by the API.
+
+This is intended to provide a Python like approach to certain utilities. The Python len() function can be used for any
+object that provides a \__len\__() method. This allows standard functions or utilities to be used with new and extended
+types without exposing behaviour in the API.
