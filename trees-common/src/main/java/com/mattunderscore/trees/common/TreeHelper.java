@@ -59,24 +59,62 @@ final class TreeHelper {
         populateLookupMap(converters, NodeToTreeConverter.class);
     }
 
-    public <E, T extends Tree<E, ? extends Node<E>>> T emptyTree(Class<T> klass) throws OperationNotSupportedForType {
+    /**
+     * Create an empty tree.
+     * @param klass
+     * @param <E>
+     * @param <T>
+     * @return
+     * @throws OperationNotSupportedForType
+     */
+    public <E, T extends Tree<E, ? extends Node<E>>> T createEmptyTree(Class<T> klass) throws OperationNotSupportedForType {
         final EmptyTreeConstructor<E, T> constructor =
                 (EmptyTreeConstructor<E, T>)performLookup(emptyConstructors, EmptyTreeConstructor.class, klass);
         return constructor.build();
     }
 
+    /**
+     * Create a tree containing subtrees.
+     * @param klass
+     * @param e
+     * @param subtrees
+     * @param <E>
+     * @param <N>
+     * @param <T>
+     * @return
+     * @throws OperationNotSupportedForType
+     */
     public <E, N extends Node<E>, T extends Tree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
         final TreeConstructor<E, T> constructor =
                 (TreeConstructor<E, T>)performLookup(treeConstructors, TreeConstructor.class, klass);
         return constructor.build(e, subtrees);
     }
 
+    /**
+     * Convert from one tree to another.
+     * @param klass
+     * @param sourceTree
+     * @param <E>
+     * @param <N>
+     * @param <T>
+     * @return
+     * @throws OperationNotSupportedForType
+     */
     public <E, N extends Node<E>, T extends Tree<E, N>> T convertTree(Class<T> klass, Tree<E, ? extends Node<E>> sourceTree) throws OperationNotSupportedForType {
         final TreeConverter<E, T> converter =
                 (TreeConverter<E, T>)performLookup(treeConverters, TreeConverter.class, klass);
         return converter.build(sourceTree);
     }
 
+    /**
+     * Convert node to tree.
+     * @param node
+     * @param <E>
+     * @param <N>
+     * @param <T>
+     * @return
+     * @throws OperationNotSupportedForType
+     */
     public <E, N extends Node<E>, T extends Tree<E, N>> T nodeToTree(N node) throws OperationNotSupportedForType {
         final Class<? extends Node> klass = node.getClass();
         final NodeToTreeConverter<E, N, T> converter =

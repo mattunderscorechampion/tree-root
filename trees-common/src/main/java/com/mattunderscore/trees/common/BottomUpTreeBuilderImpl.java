@@ -69,7 +69,7 @@ final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
     @Override
     public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         if (root == null) {
-            return helper.emptyTree(klass);
+            return helper.createEmptyTree(klass);
         }
         else {
             final T[] subtrees = (T[])Array.newInstance(klass, children.length);
