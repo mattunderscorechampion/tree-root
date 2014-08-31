@@ -40,78 +40,77 @@ import java.util.ServiceLoader;
  * @author matt on 26/06/14.
  */
 final class TreeHelper {
-    private final Map<Class<?>, EmptyTreeConstructor<?, ?>> emptyConstructors;
-    private final Map<Class<?>, TreeConstructor<?, ?>> treeConstructors;
-    private final Map<Class<?>, TreeConverter<?, ?>> treeConverters;
+    private final Map<Class<?>, EmptyTreeConstructor> emptyConstructors;
+    private final Map<Class<?>, TreeConstructor> treeConstructors;
+    private final Map<Class<?>, TreeConverter> treeConverters;
     private final Map<Class<?>, NodeToTreeConverter> converters;
 
     public TreeHelper() {
-        treeConverters = new HashMap<Class<?>, TreeConverter<?, ?>>();
-        final ServiceLoader<TreeConverter> treeConvertersLoader =
-                ServiceLoader.load(TreeConverter.class);
-        final Iterator<TreeConverter> treeConvertersIterator = treeConvertersLoader.iterator();
-        while (treeConvertersIterator.hasNext()) {
-            final TreeConverter converter = treeConvertersIterator.next();
-            treeConverters.put(converter.forClass(), converter);
-        }
+        treeConverters = new HashMap<Class<?>, TreeConverter>();
+        populateLookupMap(treeConverters, TreeConverter.class);
 
-        emptyConstructors = new HashMap<Class<?>, EmptyTreeConstructor<?, ?>>();
-        final ServiceLoader<EmptyTreeConstructor> emptyConstructorLoader =
-                ServiceLoader.load(EmptyTreeConstructor.class);
-        final Iterator<EmptyTreeConstructor> emptyConstructorIterator = emptyConstructorLoader.iterator();
-        while (emptyConstructorIterator.hasNext()) {
-            final EmptyTreeConstructor constructor = emptyConstructorIterator.next();
-            emptyConstructors.put(constructor.forClass(), constructor);
-        }
+        emptyConstructors = new HashMap<Class<?>, EmptyTreeConstructor>();
+        populateLookupMap(emptyConstructors, EmptyTreeConstructor.class);
 
-        treeConstructors = new HashMap<Class<?>, TreeConstructor<?, ?>>();
-        final ServiceLoader<TreeConstructor> treeConstructorLoader =
-                ServiceLoader.load(TreeConstructor.class);
-        final Iterator<TreeConstructor> treeConstructorIterator = treeConstructorLoader.iterator();
-        while (treeConstructorIterator.hasNext()) {
-            final TreeConstructor constructor = treeConstructorIterator.next();
-            treeConstructors.put(constructor.forClass(), constructor);
-        }
+        treeConstructors = new HashMap<Class<?>, TreeConstructor>();
+        populateLookupMap(treeConstructors, TreeConstructor.class);
 
         converters = new HashMap<Class<?>, NodeToTreeConverter>();
-        final ServiceLoader<NodeToTreeConverter> converterLoader = ServiceLoader.load(NodeToTreeConverter.class);
-        final Iterator<NodeToTreeConverter> converterIterator = converterLoader.iterator();
-        while (converterIterator.hasNext()) {
-            final NodeToTreeConverter converter = converterIterator.next();
-            converters.put(converter.forClass(), converter);
-        }
+        populateLookupMap(converters, NodeToTreeConverter.class);
     }
 
     public <E, T extends Tree<E, ? extends Node<E>>> T emptyTree(Class<T> klass) throws OperationNotSupportedForType {
-        final EmptyTreeConstructor<E, T> constructor = (EmptyTreeConstructor<E, T>)emptyConstructors.get(klass);
-        if (constructor == null) {
-            throw new OperationNotSupportedForType(klass, EmptyTreeConstructor.class);
-        }
+        final EmptyTreeConstructor<E, T> constructor =
+                (EmptyTreeConstructor<E, T>)performLookup(emptyConstructors, EmptyTreeConstructor.class, klass);
         return constructor.build();
     }
 
     public <E, N extends Node<E>, T extends Tree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
-        final TreeConstructor<E, T> constructor = (TreeConstructor<E, T>)treeConstructors.get(klass);
-        if (constructor == null) {
-            throw new OperationNotSupportedForType(klass, TreeConstructor.class);
-        }
+        final TreeConstructor<E, T> constructor =
+                (TreeConstructor<E, T>)performLookup(treeConstructors, TreeConstructor.class, klass);
         return constructor.build(e, subtrees);
     }
 
     public <E, N extends Node<E>, T extends Tree<E, N>> T convertTree(Class<T> klass, Tree<E, ? extends Node<E>> sourceTree) throws OperationNotSupportedForType {
-        final TreeConverter<E, T> converter = (TreeConverter<E, T>)treeConverters.get(klass);
-        if (converter == null) {
-            throw new OperationNotSupportedForType(klass, TreeConverter.class);
-        }
+        final TreeConverter<E, T> converter =
+                (TreeConverter<E, T>)performLookup(treeConverters, TreeConverter.class, klass);
         return converter.build(sourceTree);
     }
 
     public <E, N extends Node<E>, T extends Tree<E, N>> T nodeToTree(N node) throws OperationNotSupportedForType {
         final Class<? extends Node> klass = node.getClass();
-        final NodeToTreeConverter<E, N, T> converter = (NodeToTreeConverter<E, N, T>)converters.get(klass);
-        if (converter == null) {
-            throw new OperationNotSupportedForType(klass, NodeToTreeConverter.class);
-        }
+        final NodeToTreeConverter<E, N, T> converter =
+                (NodeToTreeConverter<E, N, T>)performLookup(converters, NodeToTreeConverter.class, klass);
         return converter.treeFromRootNode(node);
+    }
+
+    /**
+     * Populate a lookup map
+     * @param componentMap lookup map
+     * @param componentClass type of component to be returned by lookup
+     * @param <C> type of component to be returned by lookup
+     */
+    private <C extends SPIComponent> void populateLookupMap(Map<Class<?>, C> componentMap, Class<C> componentClass) {
+        final ServiceLoader<C> loader = ServiceLoader.load(componentClass);
+        final Iterator<C> iterator = loader.iterator();
+        while (iterator.hasNext()) {
+            final C component = iterator.next();
+            componentMap.put(component.forClass(), component);
+        }
+    }
+
+    /**
+     * @param componentMap lookup map
+     * @param componentClass type of component returned by lookup
+     * @param keyClass lookup key
+     * @param <C> type of component returned by lookup
+     * @return instance of SPI component
+     */
+    private <C> C performLookup(Map<Class<?>, C> componentMap, Class<C> componentClass, Class<?> keyClass) {
+        final C result = componentMap.get(keyClass);
+        if (result == null) {
+            throw new OperationNotSupportedForType(keyClass, componentClass);
+        }
+        return result;
     }
 }

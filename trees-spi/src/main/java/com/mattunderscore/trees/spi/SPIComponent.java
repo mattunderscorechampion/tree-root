@@ -25,13 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-
 /**
- * @author matt on 13/08/14.
+ * SPI component that can be looked up from a class.
+ * @author matt on 31/08/14.
  */
-public interface EmptyTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
-
-    T build();
+public interface SPIComponent {
+    /**
+     * @return The key to use for the component lookup
+     */
+    Class<?> forClass();
 }

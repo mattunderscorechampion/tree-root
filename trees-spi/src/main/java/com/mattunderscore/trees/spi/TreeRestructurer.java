@@ -31,7 +31,7 @@ import com.mattunderscore.trees.Node;
  * Support for rearranging and restructuring trees.
  * @author matt on 30/08/14.
  */
-public interface TreeRestructurer {
+public interface TreeRestructurer extends SPIComponent {
 
     /**
      * @param newRoot sets a node as the new root
@@ -45,5 +45,4 @@ public interface TreeRestructurer {
      */
     void moveNode(Node<?> node, Node<?> newParent);
 
-    Class<?> forClass();
 }

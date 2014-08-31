@@ -31,15 +31,10 @@ import com.mattunderscore.trees.Tree;
 /**
  * @author matt on 12/08/14.
  */
-public interface NodeToTreeConverter<E, N extends Node<E>, T extends Tree<E, N>> {
+public interface NodeToTreeConverter<E, N extends Node<E>, T extends Tree<E, N>> extends SPIComponent {
     /**
      * @param node The node to convert
      * @return The tree
      */
     T treeFromRootNode(N node);
-
-    /**
-     * @return The class of node it can convert
-     */
-    Class<?> forClass();
 }

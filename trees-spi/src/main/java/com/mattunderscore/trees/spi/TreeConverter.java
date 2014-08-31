@@ -31,9 +31,8 @@ import com.mattunderscore.trees.Tree;
 /**
  * @author matt on 15/08/14.
  */
-public interface TreeConverter<E, T extends Tree<E, ? extends Node<E>>> {
+public interface TreeConverter<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
 
     T build(Tree<E, ? extends Node<E>> sourceTree);
 
-    Class<?> forClass();
 }
