@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
  * @author matt on 13/08/14.
  */
 public final class BottomUpTreeBuilderImplTest {
-    public static final TreeHelper helper = new TreeHelper();
+    public static final SPISupport helper = new SPISupport();
 
     @Test
     public void buildEmpty() {

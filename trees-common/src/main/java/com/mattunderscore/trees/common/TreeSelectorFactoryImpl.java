@@ -40,9 +40,9 @@ import java.util.Iterator;
  * @author matt on 29/06/14.
  */
 final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
-    private final TreeHelper helper;
+    private final SPISupport helper;
 
-    public TreeSelectorFactoryImpl(TreeHelper helper) {
+    public TreeSelectorFactoryImpl(SPISupport helper) {
         this.helper = helper;
     }
 

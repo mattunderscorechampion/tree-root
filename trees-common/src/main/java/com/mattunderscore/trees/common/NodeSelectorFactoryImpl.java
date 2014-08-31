@@ -41,9 +41,9 @@ import java.util.Iterator;
  * @author matt on 25/06/14.
  */
 final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
-    private final TreeHelper helper;
+    private final SPISupport helper;
 
-    public NodeSelectorFactoryImpl(TreeHelper helper) {
+    public NodeSelectorFactoryImpl(SPISupport helper) {
         this.helper = helper;
     }
 
@@ -120,10 +120,10 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     private static final class AsNodeIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
         private final Iterator<N> startingPoints;
         private final NodeSelector selector;
-        private final TreeHelper helper;
+        private final SPISupport helper;
         private Iterator<N> currentEndPoints;
 
-        public AsNodeIterator(Iterator<N> startingPoints, NodeSelector selector, TreeHelper helper) {
+        public AsNodeIterator(Iterator<N> startingPoints, NodeSelector selector, SPISupport helper) {
             this.startingPoints = startingPoints;
             this.selector = selector;
             this.helper = helper;

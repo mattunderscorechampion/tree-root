@@ -38,19 +38,19 @@ import java.lang.reflect.Array;
  */
 @Immutable
 final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
-    private final TreeHelper helper;
+    private final SPISupport helper;
     private final E root;
     private final BottomUpTreeBuilder<E>[] children;
 
-    public BottomUpTreeBuilderImpl(TreeHelper helper) {
+    public BottomUpTreeBuilderImpl(SPISupport helper) {
         this(helper, null, new BottomUpTreeBuilder[0]);
     }
 
-    private BottomUpTreeBuilderImpl(TreeHelper helper, E e) {
+    private BottomUpTreeBuilderImpl(SPISupport helper, E e) {
         this(helper, e, new BottomUpTreeBuilder[0]);
     }
 
-    private BottomUpTreeBuilderImpl(TreeHelper helper, E e, BottomUpTreeBuilder[] builders) {
+    private BottomUpTreeBuilderImpl(SPISupport helper, E e, BottomUpTreeBuilder[] builders) {
         this.helper = helper;
         root = e;
         children = builders;

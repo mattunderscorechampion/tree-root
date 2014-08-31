@@ -33,10 +33,10 @@ import net.jcip.annotations.NotThreadSafe;
  */
 @NotThreadSafe
 final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E> {
-    private final TreeHelper helper;
+    private final SPISupport helper;
     private final LinkedTree<E> tree;
 
-    public TopDownTreeBuilderImpl(TreeHelper helper, E root) {
+    public TopDownTreeBuilderImpl(SPISupport helper, E root) {
         this.helper = helper;
         tree = new LinkedTree<E>(root);
     }

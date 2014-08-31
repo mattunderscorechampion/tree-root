@@ -35,7 +35,7 @@ import com.mattunderscore.trees.traversal.TreeWalkers;
  * @author matt on 16/08/14.
  */
 public final class TreesImpl implements Trees {
-    public final TreeHelper helper = new TreeHelper();
+    public final SPISupport helper = new SPISupport();
 
     @Override
     public TopDownTreeRootBuilder topDownBuilder() {

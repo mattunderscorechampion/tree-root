@@ -36,16 +36,17 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
- * Helper class for trees. Loads services to provide extensibility.
+ * SPI support class. Loads service implementations to provide extensibility and allows access to the correct
+ * implementation.
  * @author matt on 26/06/14.
  */
-final class TreeHelper {
+final class SPISupport {
     private final Map<Class<?>, EmptyTreeConstructor> emptyConstructors;
     private final Map<Class<?>, TreeConstructor> treeConstructors;
     private final Map<Class<?>, TreeConverter> treeConverters;
     private final Map<Class<?>, NodeToTreeConverter> converters;
 
-    public TreeHelper() {
+    public SPISupport() {
         treeConverters = new HashMap<Class<?>, TreeConverter>();
         populateLookupMap(treeConverters, TreeConverter.class);
 
