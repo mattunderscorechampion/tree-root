@@ -25,10 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.BottomUpTreeBuilder;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.*;
 
 /**
@@ -88,5 +90,15 @@ public final class BottomUpTreeBuilderImplTest {
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(2, tree.getChildren().size());
         assertFalse(tree.isEmpty());
+    }
+
+    @Test(expected = OperationNotSupportedForType.class)
+    public void failToBuild() {
+        final BottomUpTreeBuilderImpl<String> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilder<String> builder0 = builder.create("ROOT");
+        builder0.build(FakeTree.class);
+    }
+
+    public interface FakeTree extends Tree<String, Node<String>> {
     }
 }

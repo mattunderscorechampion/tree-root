@@ -97,8 +97,8 @@ functionality specific to tree implementations. The ServiceLoader is used to all
 discovered at runtime. Each component of the SPI provides a method that returns the class of the tree or node that the
 implementation applies to.
 
-NOTE: handling lookup failure when invoking utilities for types that do not provide SPI implementations still needs to
-be implemented.
+When the SPI component lookup fails ab OperationNotSupportedForType unchecked exception is thrown. This implies that the
+service is not complete or the implementation does not support the action.
 
 When a TreesImpl object is created it looks up all the implementations using the ServiceLoader and registers the SPI
 implementation against the class that is used for. When a utility operation is used it looks up the SPI implementation
