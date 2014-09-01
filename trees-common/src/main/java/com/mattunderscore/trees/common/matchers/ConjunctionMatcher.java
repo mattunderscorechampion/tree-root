@@ -47,4 +47,46 @@ public final class ConjunctionMatcher<E> implements NodeMatcher<E> {
     public <T extends Node<E>> boolean matches(T node) {
         return matcher0.matches(node) && matcher1.matches(node);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            final ConjunctionMatcher<E> matcher = (ConjunctionMatcher<E>)o;
+            return matcher.matcher0.equals(matcher0) && matcher.matcher1.equals(matcher1);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return matcher0.hashCode() * 31 + matcher1.hashCode();
+    }
+
+    /**
+     * Collapses two equal matchers into a single, return a a NeverMatcher if either matcher is an NeverMatcher or
+     * return a matcher for the conjunction of the two.
+     * @param matcher0 A matcher
+     * @param matcher1 A matcher
+     * @param <E> The element type of the nodes it matches
+     * @return A matcher that evaluates to the conjunction of the two matchers passed in
+     */
+    public static final <E> NodeMatcher<E> create(NodeMatcher<E> matcher0, NodeMatcher<E> matcher1) {
+        if (matcher0.getClass().equals(NeverMatcher.class) || matcher1.getClass().equals(NeverMatcher.class)) {
+            return new NeverMatcher<>();
+        }
+        else if (matcher0.equals(matcher1)) {
+            return matcher0;
+        }
+        else {
+            return new ConjunctionMatcher<>(matcher0, matcher1);
+        }
+    }
 }

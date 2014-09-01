@@ -35,8 +35,32 @@ import net.jcip.annotations.Immutable;
  */
 @Immutable
 public final class AlwaysMatcher<E> implements NodeMatcher<E> {
+    private static final NodeMatcher<?> INSTANCE = new AlwaysMatcher<>();
+
     @Override
     public <T extends Node<E>> boolean matches(T node) {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o ==  null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else {
+            return o.getClass().equals(getClass());
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+    public static final <E> NodeMatcher<E> create() {
+        return (NodeMatcher<E>)INSTANCE;
     }
 }

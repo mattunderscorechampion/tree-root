@@ -48,4 +48,26 @@ public final class EqualityMatcher<E> implements NodeMatcher<E> {
     public <T extends Node<E>> boolean matches(T node) {
         return value.equals(node.getElement());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o ==  null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            final EqualityMatcher<E> matcher = (EqualityMatcher<E>)o;
+            return matcher.value.equals(value);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

@@ -35,7 +35,7 @@ import net.jcip.annotations.Immutable;
  */
 @Immutable
 public final class NegatingMatcher<E> implements NodeMatcher<E> {
-    private final NodeMatcher matcher;
+    private final NodeMatcher<E> matcher;
 
     public NegatingMatcher(NodeMatcher<E> matcher) {
         if (matcher == null) {
@@ -47,5 +47,27 @@ public final class NegatingMatcher<E> implements NodeMatcher<E> {
     @Override
     public <T extends Node<E>> boolean matches(T node) {
         return !matcher.matches(node);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o ==  null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            final NegatingMatcher match = (NegatingMatcher)o;
+            return match.matcher.equals(matcher);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return matcher.hashCode();
     }
 }

@@ -45,4 +45,26 @@ public final class IdentityMatcher<E> implements NodeMatcher<E> {
     public <T extends Node<E>> boolean matches(T node) {
         return node.getElement() == value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o ==  null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            final IdentityMatcher<E> matcher = (IdentityMatcher<E>)o;
+            return matcher.value == value;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

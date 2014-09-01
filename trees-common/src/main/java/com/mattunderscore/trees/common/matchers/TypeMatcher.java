@@ -48,4 +48,26 @@ public final class TypeMatcher implements NodeMatcher<Object> {
     public <T extends Node<Object>> boolean matches(T node) {
         return type.equals(node.getElementClass());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o ==  null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            final TypeMatcher matcher = (TypeMatcher)o;
+            return matcher.type.equals(type);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return type.hashCode();
+    }
 }
