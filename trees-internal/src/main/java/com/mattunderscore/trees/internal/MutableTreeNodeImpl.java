@@ -34,6 +34,7 @@ import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
+import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.Collection;
@@ -41,11 +42,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Thread safety is base on copy on mutation. When a child node is added or removed a shallow copy of the children is
+ * made with the modification present and the new child collection replaces the existing one. Any iterators accessing
+ * the old child collection see the previous state.
  * @author matt on 15/07/14.
  */
 @ThreadSafe
 public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
-    private volatile List<MutableNode<E>> elementList;
+    @GuardedBy("this")
+    private List<MutableNode<E>> elementList;
     private final E element;
 
     public MutableTreeNodeImpl(E element) {

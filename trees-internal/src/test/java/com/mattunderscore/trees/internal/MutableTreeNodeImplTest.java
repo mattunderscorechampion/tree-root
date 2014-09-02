@@ -25,11 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.MutableNode;
-import com.mattunderscore.trees.MutableTree;
-import com.mattunderscore.trees.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.common.traversers.PreOrderIterator;
+import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.TreeWalkers;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -77,5 +77,46 @@ public final class MutableTreeNodeImplTest {
         final MutableNode<String> child3 = iterator2.next();
         assertEquals("d", child3.getElement());
         assertFalse(iterator2.hasNext());
+    }
+
+    /**
+     * This tests the copy on modify behavior in a single thread, NOT thread safety.
+     */
+    @Test
+    public void mutationDuringTraversal() {
+        // Create a simple tree
+        final TopDownTreeRootBuilder builder = trees.topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder builder0 = builder.root("a");
+        final NodeAppender appender0 = builder0.addChild("b");
+        builder0.addChild("e");
+        appender0.addChild("c");
+        appender0.addChild("d");
+        final MutableTree<String, MutableNode<String>> tree = (MutableTree<String, MutableNode<String>>)builder0.build(MutableTree.class);
+
+        // Begin iterating over the tree
+        final Iterator<MutableNode<String>> iterator = new PreOrderIterator(tree);
+        final MutableNode<String> root = iterator.next();
+        assertEquals("a", root.getElement());
+        assertEquals("b", iterator.next().getElement());
+
+        // Get the left and right nodes of the root, remove them and add a new child
+        final Iterator<? extends MutableNode<String>> childIterator = root.getChildren().iterator();
+        final MutableNode<String> left = childIterator.next();
+        final MutableNode<String> right = childIterator.next();
+        root.removeChild(right);
+        root.removeChild(left);
+        root.addChild("f");
+
+        // A new preorder iterator sees the new state of the tree
+        final Iterator<MutableNode<String>> newIterator = new PreOrderIterator(tree);
+        assertEquals("a", newIterator.next().getElement());
+        assertEquals("f", newIterator.next().getElement());
+        assertFalse(newIterator.hasNext());
+
+        // The old preorder iterator sees the previous state of the tree
+        assertEquals("c", iterator.next().getElement());
+        assertEquals("d", iterator.next().getElement());
+        assertEquals("e", iterator.next().getElement());
+        assertFalse(iterator.hasNext());
     }
 }
