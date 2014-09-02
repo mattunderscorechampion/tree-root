@@ -35,19 +35,21 @@ import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
 import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Thread safety is base on copy on mutation. When a child node is added or removed a shallow copy of the children is
- * made with the modification present and the new child collection replaces the existing one. Any iterators accessing
- * the old child collection see the previous state.
+ * Initial attempt at thread safety is base on copy on mutation. When a child node is added or removed a shallow copy
+ * of the children is made with the modification present and the new child collection replaces the existing one. Any
+ * iterators accessing the old child collection see the previous state.
+ * <p>
+ * The problem is that modifications to grandchildren can still be seen because of the shallow copy. The problem with
+ * this is the modifications can be observed out of order. The modification to the grandchilden is made after the parent
+ * but seen first.
  * @author matt on 15/07/14.
  */
-@ThreadSafe
 public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")
     private List<MutableNode<E>> elementList;

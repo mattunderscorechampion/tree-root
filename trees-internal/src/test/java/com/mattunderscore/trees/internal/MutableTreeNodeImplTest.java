@@ -30,6 +30,7 @@ import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.common.traversers.PreOrderIterator;
 import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.traversal.TreeWalkers;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -82,15 +83,17 @@ public final class MutableTreeNodeImplTest {
     /**
      * This tests the copy on modify behavior in a single thread, NOT thread safety.
      */
+    @Ignore("Modifications to the grandchildren of node visited even though modifications to the parent are not")
     @Test
     public void mutationDuringTraversal() {
         // Create a simple tree
         final TopDownTreeRootBuilder builder = trees.topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder builder0 = builder.root("a");
         final NodeAppender appender0 = builder0.addChild("b");
-        builder0.addChild("e");
+        final NodeAppender appender1 = builder0.addChild("e");
         appender0.addChild("c");
         appender0.addChild("d");
+        appender1.addChild("f");
         final MutableTree<String, MutableNode<String>> tree = (MutableTree<String, MutableNode<String>>)builder0.build(MutableTree.class);
 
         // Begin iterating over the tree
@@ -105,18 +108,23 @@ public final class MutableTreeNodeImplTest {
         final MutableNode<String> right = childIterator.next();
         root.removeChild(right);
         root.removeChild(left);
-        root.addChild("f");
+        root.addChild("g");
+
+        final Iterator<? extends MutableNode<String>> grandchildIterator = right.getChildren().iterator();
+        final MutableNode<String> grandchild = grandchildIterator.next();
+        right.removeChild(grandchild);
 
         // A new preorder iterator sees the new state of the tree
         final Iterator<MutableNode<String>> newIterator = new PreOrderIterator(tree);
         assertEquals("a", newIterator.next().getElement());
-        assertEquals("f", newIterator.next().getElement());
+        assertEquals("g", newIterator.next().getElement());
         assertFalse(newIterator.hasNext());
 
         // The old preorder iterator sees the previous state of the tree
         assertEquals("c", iterator.next().getElement());
         assertEquals("d", iterator.next().getElement());
         assertEquals("e", iterator.next().getElement());
+        assertEquals("f", iterator.next().getElement());
         assertFalse(iterator.hasNext());
     }
 }
