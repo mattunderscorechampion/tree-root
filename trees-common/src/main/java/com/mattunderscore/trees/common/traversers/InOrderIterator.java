@@ -60,12 +60,12 @@ public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> 
                 }
             }
             else {
-                final State<E, N> state = parents.pop();
+                final State<E, N> state = parents.peek();
                 if (state.iterator.hasNext()) {
                     current = state.iterator.next();
-                    if (state.iterator.hasNext()) {
-                        parents.push(state);
-                    }
+                }
+                if (!state.iterator.hasNext()) {
+                    parents.pop();
                 }
                 return state.node;
             }
