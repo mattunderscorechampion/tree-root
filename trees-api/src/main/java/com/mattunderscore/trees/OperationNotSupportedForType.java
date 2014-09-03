@@ -31,6 +31,6 @@ package com.mattunderscore.trees;
  */
 public final class OperationNotSupportedForType extends RuntimeException {
     public OperationNotSupportedForType(Class<?> klass, Class<?> spiComponentClass) {
-        super("Operation not supported. Type " + klass.getName() + "not supported for " + spiComponentClass.getName());
+        super("Operation not supported. Type " + klass.getName() + " not supported for " + spiComponentClass.getName());
     }
 }
