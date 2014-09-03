@@ -109,3 +109,6 @@ runtime. This allows for the use of methods not exposed by the API.
 This is intended to provide a Python like approach to certain utilities. The Python len() function can be used for any
 object that provides a \__len\__() method. This allows standard functions or utilities to be used with new and extended
 types without exposing behaviour in the API.
+
+A more Java centric way of describing this is that the API provides a library that can be used to work with trees.
+The SPI provides a framework for implementing tree based data structures that can be worked on by the API.
