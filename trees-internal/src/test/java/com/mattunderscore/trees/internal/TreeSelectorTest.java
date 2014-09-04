@@ -47,21 +47,21 @@ public final class TreeSelectorTest {
 
     @Test
     public void test() {
-        final TopDownTreeRootBuilder builder = trees.topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder nodeApp0 = builder.root("A");
+        final TopDownTreeRootBuilder<String> builder = trees.topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
         final Tree<String, Node<String>> tree = nodeApp0.build(Tree.class);
 
         final TreeSelectorFactory selectorFactory = trees.treeSelectorFactory();
-        final NodeMatcher matcher0 = new EqualityMatcher("A");
+        final NodeMatcher<String> matcher0 = new EqualityMatcher("A");
         final TreeSelector selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<Tree<String, Node<String>>> treeIterator0 = selector0.select(tree);
         assertTrue(treeIterator0.hasNext());
         assertEquals("A", treeIterator0.next().getRoot().getElement());
         assertFalse(treeIterator0.hasNext());
 
-        final NodeMatcher matcher1 = new EqualityMatcher("B");
+        final NodeMatcher<String> matcher1 = new EqualityMatcher("B");
         final TreeSelector selector1 = selectorFactory.newSelector(selector0, matcher1);
         final Iterator<Tree<String, Node<String>>> treeIterator1 = selector1.select(tree);
         assertTrue(treeIterator1.hasNext());

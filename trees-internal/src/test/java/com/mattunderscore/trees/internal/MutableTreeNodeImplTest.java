@@ -48,8 +48,8 @@ public final class MutableTreeNodeImplTest {
 
     @Test
     public void mutateTree() {
-        final TopDownTreeRootBuilder builder = trees.topDownBuilder();
-        final MutableTree<String, MutableNode<String>> tree = (MutableTree<String, MutableNode<String>>)builder.root("a").build(MutableTree.class);
+        final TopDownTreeRootBuilder<String> builder = trees.topDownBuilder();
+        final MutableTree<String, MutableNode<String>> tree = builder.root("a").build(MutableTree.class);
         final MutableNode<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
         final MutableNode<String> depth1 = root.addChild("b");
@@ -87,14 +87,14 @@ public final class MutableTreeNodeImplTest {
     @Test
     public void mutationDuringTraversal() {
         // Create a simple tree
-        final TopDownTreeRootBuilder builder = trees.topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder builder0 = builder.root("a");
+        final TopDownTreeRootBuilder<String> builder = trees.topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("a");
         final NodeAppender appender0 = builder0.addChild("b");
         final NodeAppender appender1 = builder0.addChild("e");
         appender0.addChild("c");
         appender0.addChild("d");
         appender1.addChild("f");
-        final MutableTree<String, MutableNode<String>> tree = (MutableTree<String, MutableNode<String>>)builder0.build(MutableTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder0.build(MutableTree.class);
 
         // Begin iterating over the tree
         final Iterator<MutableNode<String>> iterator = new PreOrderIterator(tree);

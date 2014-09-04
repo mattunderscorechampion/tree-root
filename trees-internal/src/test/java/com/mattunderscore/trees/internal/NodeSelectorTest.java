@@ -45,28 +45,28 @@ public final class NodeSelectorTest {
 
     @Test
     public void test() {
-        final TopDownTreeRootBuilder builder = trees.topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder nodeApp0 = builder.root("A");
+        final TopDownTreeRootBuilder<String> builder = trees.topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
         final Tree<String, ?> tree = nodeApp0.build(Tree.class);
 
         final NodeSelectorFactory selectorFactory = trees.nodeSelectorFactory();
-        final NodeMatcher matcher0 = new EqualityMatcher("A");
+        final NodeMatcher<String> matcher0 = new EqualityMatcher("A");
         final NodeSelector selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<? extends Node<String>> nodeIterator0 = selector0.select(tree);
         assertTrue(nodeIterator0.hasNext());
         assertEquals("A", nodeIterator0.next().getElement());
         assertFalse(nodeIterator0.hasNext());
 
-        final NodeMatcher matcher1 = new EqualityMatcher("B");
+        final NodeMatcher<String> matcher1 = new EqualityMatcher("B");
         final NodeSelector selector1 = selectorFactory.newSelector(selector0, matcher1);
         final Iterator<? extends Node<String>> nodeIterator1 = selector1.select(tree);
         assertTrue(nodeIterator1.hasNext());
         assertEquals("B", nodeIterator1.next().getElement());
         assertFalse(nodeIterator1.hasNext());
 
-        final NodeMatcher matcher2 = new EqualityMatcher("C");
+        final NodeMatcher<String> matcher2 = new EqualityMatcher("C");
         final NodeSelector selector2 = selectorFactory.newSelector(selector1, matcher2);
         final Iterator<? extends Node<String>> nodeIterator2 = selector2.select(tree);
         assertFalse(nodeIterator2.hasNext());
