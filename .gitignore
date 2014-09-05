@@ -9,3 +9,6 @@
 /trees-utilities/target
 /trees-api-examples/target
 /trees-spi-examples/target
+.classpath
+.project
+.settings
