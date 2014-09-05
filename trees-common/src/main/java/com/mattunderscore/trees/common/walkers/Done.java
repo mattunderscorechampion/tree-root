@@ -29,4 +29,5 @@ package com.mattunderscore.trees.common.walkers;
  * @author matt on 24/08/14.
  */
 final class Done extends Exception {
+    private static final long serialVersionUID = 2087996958250298205L;
 }

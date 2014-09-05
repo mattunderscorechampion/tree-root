@@ -39,6 +39,7 @@ public final class EmptyIterator<E> implements Iterator<E> {
     /**
      * A single instance can be safely used regardless of type.
      */
+    @SuppressWarnings("rawtypes")
     private static final EmptyIterator instance = new EmptyIterator();
 
     @Override
@@ -60,6 +61,7 @@ public final class EmptyIterator<E> implements Iterator<E> {
      * @param <E> The type of objects that are not there
      * @return An iterator over no objects
      */
+    @SuppressWarnings("unchecked")
     public static <E> Iterator<E> get() {
         return instance;
     }

@@ -32,16 +32,17 @@ public interface TreeSelectorFactory {
     /**
      * Create a tree selector for the root node (entire tree).
      * @param matcher
-     * @param <E>
+     * @param <E> The element type of the tree
      * @return
      */
-    <E> TreeSelector newSelector(NodeMatcher matcher);
+    <E> TreeSelector newSelector(NodeMatcher<E> matcher);
 
     /**
      * Create a node selector for the children of another node selector.
      * @param selector
      * @param matcher
+     * @param <E> The element type of the tree
      * @return
      */
-    <E> TreeSelector newSelector(TreeSelector selector, NodeMatcher matcher);
+    <E> TreeSelector newSelector(TreeSelector selector, NodeMatcher<E> matcher);
 }

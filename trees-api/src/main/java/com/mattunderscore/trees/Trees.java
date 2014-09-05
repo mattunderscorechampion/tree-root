@@ -37,15 +37,17 @@ public interface Trees {
 
     /**
      * Obtain a {@link TopDownTreeRootBuilder}
+     * @param <E> The element type of the tree
      * @return
      */
-    TopDownTreeRootBuilder topDownBuilder();
+    <E> TopDownTreeRootBuilder<E> topDownBuilder();
 
     /**
      * Obtain a {@link BottomUpTreeBuilder}
+     * @param <E> The element type of the tree
      * @return
      */
-    BottomUpTreeBuilder bottomUpBuilder();
+    <E> BottomUpTreeBuilder<E> bottomUpBuilder();
 
     /**
      * Obtain a {@link com.mattunderscore.trees.selection.TreeSelectorFactory}

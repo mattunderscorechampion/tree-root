@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common.matchers;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.selection.NodeMatcher;
+
 import net.jcip.annotations.Immutable;
 
 /**
@@ -60,6 +61,7 @@ public final class NeverMatcher<E> implements NodeMatcher<E> {
         return 31;
     }
 
+    @SuppressWarnings("unchecked")
     public static final <E> NodeMatcher<E> create() {
         return (NodeMatcher<E>)INSTANCE;
     }

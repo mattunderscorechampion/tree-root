@@ -33,7 +33,6 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 /**
  * @author matt on 20/06/14.

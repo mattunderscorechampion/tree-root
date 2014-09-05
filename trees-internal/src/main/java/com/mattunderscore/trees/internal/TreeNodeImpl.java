@@ -32,6 +32,7 @@ import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
+
 import net.jcip.annotations.Immutable;
 
 import java.util.Collection;
@@ -56,6 +57,7 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
         return element;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Class<E> getElementClass() {
         return (Class<E>)element.getClass();
@@ -139,7 +141,8 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
         }
 
         private List<Node<E>> duplicateChildren(Collection<? extends Node<E>> children) {
-            final Node[] newChildren = new Node[children.size()];
+            @SuppressWarnings("unchecked")
+            final Node<E>[] newChildren = new Node[children.size()];
             int i = 0;
             for (final Node<E> sourceChild : children) {
                 final List<Node<E>> newGrandChildren = duplicateChildren(sourceChild.getChildren());

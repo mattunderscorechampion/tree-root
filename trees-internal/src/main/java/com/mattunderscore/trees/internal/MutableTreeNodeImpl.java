@@ -34,6 +34,7 @@ import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
+
 import net.jcip.annotations.GuardedBy;
 
 import java.util.Collection;
@@ -74,7 +75,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
         if (e == null) {
             throw new NullPointerException("You cannot add a child to an empty tree");
         }
-        final MutableTreeNodeImpl child = new MutableTreeNodeImpl(e);
+        final MutableTreeNodeImpl<E> child = new MutableTreeNodeImpl<E>(e);
         synchronized (this) {
             final List<MutableNode<E>> oldList = elementList;
             final int size = oldList.size();
@@ -142,6 +143,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
         return element;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Class<E> getElementClass() {
         return (Class<E>)element.getClass();
@@ -161,7 +163,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
 
         @Override
         public MutableTreeNodeImpl<E> build(E e, MutableTreeNodeImpl<E>... subtrees) {
-            return new MutableTreeNodeImpl(e, new FixedUncheckedList<>(subtrees));
+            return new MutableTreeNodeImpl(e, new FixedUncheckedList<E>(subtrees));
         }
 
         @Override

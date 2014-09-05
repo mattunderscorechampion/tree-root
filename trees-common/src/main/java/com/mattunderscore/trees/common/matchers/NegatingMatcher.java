@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common.matchers;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.selection.NodeMatcher;
+
 import net.jcip.annotations.Immutable;
 
 /**
@@ -58,7 +59,8 @@ public final class NegatingMatcher<E> implements NodeMatcher<E> {
             return true;
         }
         else if (o.getClass().equals(getClass())) {
-            final NegatingMatcher match = (NegatingMatcher)o;
+            @SuppressWarnings("unchecked")
+            final NegatingMatcher<E> match = (NegatingMatcher<E>)o;
             return match.matcher.equals(matcher);
         }
         else {
