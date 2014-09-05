@@ -25,8 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.MutableNode;
+import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.common.TreesImpl;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -41,17 +42,28 @@ public final class PreOrderIteratorTest {
     @Test
     public void test0()
     {
-        final LinkedTree.Constructor constructor = new LinkedTree.Constructor();
-        final LinkedTree<String> tree = constructor.build("a");
-        tree.addChild("b")
-            .addChild("c");
-        tree.addChild("d");
+        final Trees trees = new TreesImpl();
+        final BottomUpTreeBuilder<String> builder = trees.bottomUpBuilder();
+        final Tree<String, Node<String>> tree = builder.create("f",
+            builder.create("b",
+                builder.create("a"),
+                builder.create("d",
+                    builder.create("c"),
+                    builder.create("e"))),
+            builder.create("i",
+                builder.create("h",
+                    builder.create("g")))).build(LinkedTree.class);
 
-        final Iterator<MutableNode<String>> iterator = new PreOrderIterator<>(tree);
-        assertEquals("a", iterator.next().getElement());
+        final Iterator<Node<String>> iterator = new PreOrderIterator<>(tree);
+        assertEquals("f", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
-        assertEquals("c", iterator.next().getElement());
+        assertEquals("a", iterator.next().getElement());
         assertEquals("d", iterator.next().getElement());
+        assertEquals("c", iterator.next().getElement());
+        assertEquals("e", iterator.next().getElement());
+        assertEquals("i", iterator.next().getElement());
+        assertEquals("h", iterator.next().getElement());
+        assertEquals("g", iterator.next().getElement());
         assertFalse(iterator.hasNext());
     }
 }

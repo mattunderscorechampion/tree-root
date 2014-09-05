@@ -28,6 +28,7 @@ package com.mattunderscore.trees.common.traversers;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -36,9 +37,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
- * @author matt on 23/08/14.
+ * @author matt on 03/09/14.
  */
-public final class InOrderIteratorTest {
+public final class PostOrderIteratorTest {
     @Test
     public void test0()
     {
@@ -54,16 +55,16 @@ public final class InOrderIteratorTest {
                 builder.create("h",
                     builder.create("g")))).build(LinkedTree.class);
 
-        final Iterator<Node<String>> iterator = new InOrderIterator<>(tree);
+        final Iterator<Node<String>> iterator = new PostOrderIterator<>(tree);
         assertEquals("a", iterator.next().getElement());
-        assertEquals("b", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
-        assertEquals("d", iterator.next().getElement());
         assertEquals("e", iterator.next().getElement());
-        assertEquals("f", iterator.next().getElement());
+        assertEquals("d", iterator.next().getElement());
+        assertEquals("b", iterator.next().getElement());
         assertEquals("g", iterator.next().getElement());
         assertEquals("h", iterator.next().getElement());
         assertEquals("i", iterator.next().getElement());
+        assertEquals("f", iterator.next().getElement());
         assertFalse(iterator.hasNext());
     }
 }
