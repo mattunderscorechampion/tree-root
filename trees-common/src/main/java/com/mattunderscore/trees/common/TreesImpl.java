@@ -38,13 +38,13 @@ public final class TreesImpl implements Trees {
     public final SPISupport helper = new SPISupport();
 
     @Override
-    public TopDownTreeRootBuilder topDownBuilder() {
-        return new TopDownTreeRootBuilderImpl(helper);
+    public <E> TopDownTreeRootBuilder<E> topDownBuilder() {
+        return new TopDownTreeRootBuilderImpl<E>(helper);
     }
 
     @Override
-    public BottomUpTreeBuilder bottomUpBuilder() {
-        return new BottomUpTreeBuilderImpl(helper);
+    public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
+        return new BottomUpTreeBuilderImpl<E>(helper);
     }
 
     @Override

@@ -36,7 +36,7 @@ public interface NodeSelectorFactory {
      * @param <E> The element type of the tree
      * @return
      */
-    <E> NodeSelector newSelector(NodeMatcher<E> matcher);
+    <E> NodeSelector newSelector(NodeMatcher matcher);
 
     /**
      * Create a node selector for the children of another node selector.
@@ -45,7 +45,7 @@ public interface NodeSelectorFactory {
      * @param <E> The element type of the tree
      * @return
      */
-    <E> NodeSelector newSelector(NodeSelector selector, NodeMatcher<E> matcher);
+    <E> NodeSelector newSelector(NodeSelector selector, NodeMatcher matcher);
 
     /**
      * Create a node selector from the union of two selectors.
