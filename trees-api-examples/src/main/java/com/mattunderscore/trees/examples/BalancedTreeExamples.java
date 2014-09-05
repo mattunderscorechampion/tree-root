@@ -31,7 +31,7 @@ import com.mattunderscore.trees.balanced.BalancingTree;
 /**
  * @author matt on 30/08/14.
  */
-public class BalancedTreeExamples {
+public final class BalancedTreeExamples {
     public void balancedTreeExample(BalancedTreeBuilder<String> builder) {
         final BalancingTree<String> tree = builder
             .addElement("a")

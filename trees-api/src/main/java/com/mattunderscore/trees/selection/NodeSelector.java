@@ -34,15 +34,15 @@ import java.util.Iterator;
 /**
  * Selects a node of the tree.
  * @author matt on 08/08/14.
+ * @param <E> The type of the elements in the node
  */
-public interface NodeSelector {
+public interface NodeSelector<E> {
 
     /**
      * @param tree The tree to select from
-     * @param <E> The type of the elements in the node
      * @param <T> The type of the nodes in the tree
      * @return An {@link java.util.Iterator} over the selected nodes
      * @throws OperationNotSupportedForType if the type of the tree cannot be iterated
      */
-    <E, T extends Node<E>> Iterator<T> select(Tree<E, T> tree) throws OperationNotSupportedForType;
+    <T extends Node<E>> Iterator<T> select(Tree<E, T> tree) throws OperationNotSupportedForType;
 }

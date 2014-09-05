@@ -47,10 +47,10 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     }
 
     @Override
-    public <E> TreeSelector newSelector(final NodeMatcher matcher) throws OperationNotSupportedForType {
-        return new TreeSelector() {
+    public <E> TreeSelector<E> newSelector(final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
+        return new TreeSelector<E>() {
             @Override
-            public <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
+            public <N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
                 final Node<E> root = tree.getRoot();
                 if (matcher.matches(root)) {
                     return new SingletonIterator<>((T)helper.nodeToTree(root));
@@ -63,10 +63,10 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     }
 
     @Override
-    public <E> TreeSelector newSelector(final TreeSelector selector, final NodeMatcher matcher) throws OperationNotSupportedForType {
-        return new TreeSelector() {
+    public <E> TreeSelector<E> newSelector(final TreeSelector<E> selector, final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
+        return new TreeSelector<E>() {
             @Override
-            public <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
+            public <N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
                 final Iterator<T> parents = selector.select(tree);
                 final Iterator<T> end = new TreeIterator<>(parents, matcher);
                 return end;

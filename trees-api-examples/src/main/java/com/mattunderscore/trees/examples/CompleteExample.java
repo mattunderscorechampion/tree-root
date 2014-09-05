@@ -61,13 +61,13 @@ public final class CompleteExample {
 
     public void nodeSelector(Trees trees, Tree<String, Node<String>> tree) {
         final NodeSelectorFactory selectorFactory = trees.nodeSelectorFactory();
-        final NodeSelector selector = selectorFactory.newSelector(new EqualityMatcher("a"));
+        final NodeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
         final Iterator<Node<String>> iterator = selector.select(tree);
     }
 
     public void treeSelector(Trees trees, Tree<String, Node<String>> tree) {
         final TreeSelectorFactory selectorFactory = trees.treeSelectorFactory();
-        final TreeSelector selector = selectorFactory.newSelector(new EqualityMatcher("a"));
+        final TreeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
         final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
     }
 }

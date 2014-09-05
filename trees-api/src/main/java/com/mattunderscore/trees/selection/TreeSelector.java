@@ -34,16 +34,16 @@ import java.util.Iterator;
 /**
  * Selects a subtree.
  * @author matt on 08/08/14.
+ * @param <E> The type of the elements in the node
  */
-public interface TreeSelector {
+public interface TreeSelector<E> {
 
     /**
      * @param tree The tree to select from
-     * @param <E> The type of elements in the nodes
      * @param <N> The type of nodes in the tree
      * @param <T> The type of the tree
      * @return An {@link java.util.Iterator} over the selected subtrees
      * @throws OperationNotSupportedForType if the type of the tree can not be selected
      */
-    <E, N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) throws OperationNotSupportedForType;
+    <N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) throws OperationNotSupportedForType;
 }

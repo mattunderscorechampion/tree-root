@@ -36,7 +36,7 @@ import java.util.Iterator;
  * @author matt on 08/08/14.
  */
 public final class NodeSelectorExamples {
-    public void selectorExample(NodeSelector selector, Tree<String, Node<String>> tree) {
+    public void selectorExample(NodeSelector<String> selector, Tree<String, Node<String>> tree) {
         final Iterator<Node<String>> iterator = selector.select(tree);
         while (iterator.hasNext()) {
             final Node<String> node = iterator.next();
@@ -44,7 +44,7 @@ public final class NodeSelectorExamples {
         }
     }
 
-    public void selectorExampleOnMutableTree(NodeSelector selector, Tree<String, MutableNode<String>> tree) {
+    public void selectorExampleOnMutableTree(NodeSelector<String> selector, Tree<String, MutableNode<String>> tree) {
         final Iterator<MutableNode<String>> iterator = selector.select(tree);
     }
 }

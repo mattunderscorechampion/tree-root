@@ -55,14 +55,14 @@ public final class TreeSelectorTest {
 
         final TreeSelectorFactory selectorFactory = trees.treeSelectorFactory();
         final NodeMatcher<String> matcher0 = new EqualityMatcher("A");
-        final TreeSelector selector0 = selectorFactory.newSelector(matcher0);
+        final TreeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<Tree<String, Node<String>>> treeIterator0 = selector0.select(tree);
         assertTrue(treeIterator0.hasNext());
         assertEquals("A", treeIterator0.next().getRoot().getElement());
         assertFalse(treeIterator0.hasNext());
 
         final NodeMatcher<String> matcher1 = new EqualityMatcher("B");
-        final TreeSelector selector1 = selectorFactory.newSelector(selector0, matcher1);
+        final TreeSelector<String> selector1 = selectorFactory.newSelector(selector0, matcher1);
         final Iterator<Tree<String, Node<String>>> treeIterator1 = selector1.select(tree);
         assertTrue(treeIterator1.hasNext());
         assertEquals("B", treeIterator1.next().getRoot().getElement());

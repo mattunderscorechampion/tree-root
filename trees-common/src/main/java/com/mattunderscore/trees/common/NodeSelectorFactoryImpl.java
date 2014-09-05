@@ -48,10 +48,10 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     }
 
     @Override
-    public <E> NodeSelector newSelector(final NodeMatcher matcher) {
-        return new NodeSelector() {
+    public <E> NodeSelector<E> newSelector(final NodeMatcher<E> matcher) {
+        return new NodeSelector<E>() {
             @Override
-            public <E, T extends Node<E>> Iterator<T> select(Tree<E, T> tree) {
+            public <T extends Node<E>> Iterator<T> select(Tree<E, T> tree) {
                 final T root = tree.getRoot();
                 if (matcher.matches(root)) {
                     return new SingletonIterator<>(root);
@@ -64,10 +64,10 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     }
 
     @Override
-    public <E> NodeSelector newSelector(final NodeSelector selector, final NodeMatcher matcher) {
-        return new NodeSelector() {
+    public <E> NodeSelector<E> newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
+        return new NodeSelector<E>() {
             @Override
-            public <E, T extends Node<E>> Iterator<T> select(Tree<E, T> tree) {
+            public <T extends Node<E>> Iterator<T> select(Tree<E, T> tree) {
                 final Iterator<T> parents = selector.select(tree);
                 return new NodeIterator<>(parents, matcher);
             }
@@ -75,10 +75,10 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     }
 
     @Override
-    public <E> NodeSelector newSelector(final NodeSelector selector0, final NodeSelector selector1) {
-        return new NodeSelector() {
+    public <E> NodeSelector<E> newSelector(final NodeSelector<E> selector0, final NodeSelector<E> selector1) {
+        return new NodeSelector<E>() {
             @Override
-            public <E, N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
+            public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
                 final Iterator<N> startingPoints = selector0.select(tree);
                 return new AsNodeIterator<>(startingPoints, selector1, helper);
             }

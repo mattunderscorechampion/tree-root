@@ -34,11 +34,11 @@ import java.util.Iterator;
  * @author matt on 08/08/14.
  */
 public final class TreeSelectorExamples {
-    public void selectorExample(TreeSelector selector, Tree<String, Node<String>> tree) {
+    public void selectorExample(TreeSelector<String> selector, Tree<String, Node<String>> tree) {
         final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
     }
 
-    public void selectorExampleOnMutableTree(TreeSelector selector, MutableTree<String, MutableNode<String>> tree) {
+    public void selectorExampleOnMutableTree(TreeSelector<String> selector, MutableTree<String, MutableNode<String>> tree) {
         final Iterator<MutableTree<String, MutableNode<String>>> iterator = selector.select(tree);
     }
 }
