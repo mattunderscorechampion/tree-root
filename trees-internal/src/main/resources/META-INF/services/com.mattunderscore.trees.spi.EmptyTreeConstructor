@@ -1,2 +1,3 @@
 com.mattunderscore.trees.internal.TreeNodeImpl$EmptyConstructor
 com.mattunderscore.trees.internal.MutableTreeNodeImpl$EmptyConstructor
+com.mattunderscore.trees.internal.BinaryTreeNodeImpl$EmptyConstructor

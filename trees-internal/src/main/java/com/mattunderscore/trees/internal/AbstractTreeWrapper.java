@@ -23,24 +23,32 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.internal;
 
-import java.util.Collection;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
 
 /**
- * A binary tree node.
  * @author matt on 06/09/14.
  */
-public interface BinaryTreeNode<E> extends Node<E> {
-    /**
-     * @return The left subtree
-     */
-    BinaryTreeNode<E> getLeft();
+public abstract class AbstractTreeWrapper<E, N extends Node<E>> implements Tree<E, N> {
+    protected final N root;
 
-    /**
-     * @return The right subtree
-     */
-    BinaryTreeNode<E> getRight();
+    public AbstractTreeWrapper() {
+        this.root = null;
+    }
 
-    Collection<? extends BinaryTreeNode<E>> getChildren();
+    public AbstractTreeWrapper(N root) {
+        this.root = root;
+    }
+
+    @Override
+    public N getRoot() {
+        return root;
+    }
+
+    @Override
+    public final boolean isEmpty() {
+        return root == null;
+    }
 }

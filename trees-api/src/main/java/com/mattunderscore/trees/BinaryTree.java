@@ -25,22 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
-import java.util.Collection;
-
 /**
- * A binary tree node.
+ * A binary tree.
  * @author matt on 06/09/14.
  */
-public interface BinaryTreeNode<E> extends Node<E> {
-    /**
-     * @return The left subtree
-     */
-    BinaryTreeNode<E> getLeft();
-
-    /**
-     * @return The right subtree
-     */
-    BinaryTreeNode<E> getRight();
-
-    Collection<? extends BinaryTreeNode<E>> getChildren();
+public interface BinaryTree<E, N extends BinaryTreeNode<E>> extends Tree<E, N> {
 }

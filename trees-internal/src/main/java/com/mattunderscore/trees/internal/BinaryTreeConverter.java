@@ -26,22 +26,49 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.BinaryTree;
+import com.mattunderscore.trees.BinaryTreeNode;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.spi.TreeConverter;
+
+import java.util.Iterator;
 
 /**
- * Wrap any node to create a Tree.
  * @author matt on 06/09/14.
  */
-public final class TreeWrapper<E, N extends Node<E>> extends AbstractTreeWrapper<E, N> {
-
-    public TreeWrapper() {
-        super();
+public class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, BinaryTreeNode<E>>> {
+    @Override
+    public BinaryTree<E, BinaryTreeNode<E>> build(Tree<E, ? extends Node<E>> sourceTree) {
+        final Node<E> root = sourceTree.getRoot();
+        final BinaryTree<E, BinaryTreeNode<E>> tree = new BinaryTreeWrapper<E, BinaryTreeNode<E>>(duplicate(root));
+        return tree;
     }
 
-    public TreeWrapper(N root) {
-        super(root);
+    @Override
+    public Class<?> forClass() {
+        return BinaryTree.class;
+    }
+
+    private BinaryTreeNodeImpl<E> duplicate(Node<E> sourceChild) {
+        final Iterator<? extends Node<E>> children = sourceChild.getChildren().iterator();
+        if (children.hasNext()) {
+            final Node<E> left = children.next();
+            Node<E> right = null;
+            if (children.hasNext()) {
+                right = children.next();
+            }
+            if (children.hasNext()) {
+                throw new IllegalStateException("A binary tree can only have two children");
+            }
+            final BinaryTreeNodeImpl newLeft = duplicate(left);
+            BinaryTreeNodeImpl newRight = null;
+            if (right != null) {
+                newRight = duplicate(right);
+            }
+            return new BinaryTreeNodeImpl<E>(sourceChild.getElement(), newLeft, newRight);
+        }
+        else {
+            return new BinaryTreeNodeImpl<E>(sourceChild.getElement());
+        }
     }
 }
