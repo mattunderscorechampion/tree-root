@@ -29,6 +29,6 @@ package com.mattunderscore.trees;
  * Represents a mutable tree.
  * @author matt on 08/08/14.
  */
-public interface MutableTree<E, T extends MutableNode<E>> extends Tree<E, MutableNode<E>>
-{
+public interface MutableTree<E, T extends MutableNode<E>> extends Tree<E, MutableNode<E>> {
+    void setRoot(E root);
 }

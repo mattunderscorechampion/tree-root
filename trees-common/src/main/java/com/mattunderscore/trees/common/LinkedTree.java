@@ -39,7 +39,7 @@ import java.util.List;
  */
 @NotThreadSafe
 public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E> {
-    private final E element;
+    private E element;
     private final List<LinkedTree<E>> children;
 
     LinkedTree(E root) {
@@ -106,6 +106,11 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
     @Override
     public boolean isLeaf() {
         return children.size() == 0;
+    }
+
+    @Override
+    public void setRoot(E root) {
+        element = root;
     }
 
     public final static class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, LinkedTree<E>> {

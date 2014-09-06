@@ -54,7 +54,7 @@ import java.util.List;
 public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")
     private List<MutableNode<E>> elementList;
-    private final E element;
+    private E element;
 
     public MutableTreeNodeImpl(E element) {
         elementList = new FixedUncheckedList<>(new Object[0]);
@@ -157,6 +157,11 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
     @Override
     public synchronized boolean isLeaf() {
         return elementList.size() == 0;
+    }
+
+    @Override
+    public synchronized void setRoot(E root) {
+        element = root;
     }
 
     public final static class Constructor<E> implements TreeConstructor<E, MutableTreeNodeImpl<E>> {
