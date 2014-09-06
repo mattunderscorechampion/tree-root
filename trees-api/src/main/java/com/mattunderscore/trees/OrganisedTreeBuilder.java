@@ -30,11 +30,11 @@ package com.mattunderscore.trees;
  * of elements. Used to created sorted or balanced trees.
  * @author matt on 30/08/14.
  */
-public interface OrganisedTreeBuilder<E> extends BaseTreeBuilder<E> {
+public interface OrganisedTreeBuilder<E, T extends Tree<E, Node<E>>> extends BaseTreeBuilder<E, T> {
 
     /**
      * @param element an element to include in the tree
      * @return a new builder that creates a balanced tree containing the element
      */
-    OrganisedTreeBuilder<E> addElement(E element);
+    OrganisedTreeBuilder<E, T> addElement(E element);
 }

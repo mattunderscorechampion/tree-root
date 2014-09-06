@@ -23,25 +23,34 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.common;
+
+import com.mattunderscore.trees.*;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
- * Builder used to create the an empty tree or a non-empty tree.
- * @author matt on 07/08/14.
+ * @author matt on 06/09/14.
  */
-public interface BottomUpTreeBuilder<E, N extends Node<E>> extends BaseTreeBuilder<E, Tree<E, N>> {
+public class SortedTreeBuilderImpl<E> implements SortedTreeBuilder<E> {
+    private final SPISupport helper;
+    private final Comparator<E> comparator;
+    private final List<E> elements = new ArrayList<>();
 
-    /**
-     * @param e the root node
-     * @return a new builder that creates a tree containing a single node
-     */
-    BottomUpTreeBuilder<E, N> create(E e);
+    public SortedTreeBuilderImpl(SPISupport helper, Comparator<E> comparator) {
+        this.helper = helper;
+        this.comparator = comparator;
+    }
 
-    /**
-     * @param e the root node
-     * @param builders builders for subtrees
-     * @return a new builder that creates a tree containing the element as the root and the trees returned by the
-     * builders as children
-     */
-    BottomUpTreeBuilder<E,N > create(E e, BottomUpTreeBuilder<E, N>... builders);
+    @Override
+    public SortedTreeBuilder<E> addElement(E element) {
+        return this;
+    }
+
+    @Override
+    public <T extends SortedTree<E, Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+        return helper.createEmptyTree(klass, comparator);
+    }
 }

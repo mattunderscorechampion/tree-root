@@ -29,7 +29,7 @@ package com.mattunderscore.trees;
  * Builder used to create the root of a new tree or an empty tree.
  * @author matt on 07/08/14.
  */
-public interface TopDownTreeRootBuilder<E> extends BaseTreeBuilder<E> {
+public interface TopDownTreeRootBuilder<E> extends BaseTreeBuilder<E, Tree<E, Node<E>>> {
 
     /**
      * @param e root element
@@ -41,7 +41,7 @@ public interface TopDownTreeRootBuilder<E> extends BaseTreeBuilder<E> {
      * Builder used to create a non-empty tree.
      * @param <S>
      */
-    public interface TopDownTreeBuilder<S> extends BaseTreeBuilder<S>, NodeAppender<S, TopDownTreeBuilderAppender<S>> {
+    public interface TopDownTreeBuilder<S> extends BaseTreeBuilder<S, Tree<S, Node<S>>>, NodeAppender<S, TopDownTreeBuilderAppender<S>> {
     }
 
     /**

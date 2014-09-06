@@ -29,7 +29,7 @@ package com.mattunderscore.trees;
  * Base implementation of all tree builders.
  * @author matt on 07/08/14.
  */
-public interface BaseTreeBuilder<E> {
+public interface BaseTreeBuilder<E, B extends Tree<E, ? extends Node<E>>> {
     /**
      * Create a new tree of the type provided.
      * @param klass The class of the tree to create
@@ -37,5 +37,5 @@ public interface BaseTreeBuilder<E> {
      * @return The new tree
      * @throws OperationNotSupportedForType if the type of the tree to be built is not supported
      */
-    <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType;
+    <T extends B> T build(Class<T> klass) throws OperationNotSupportedForType;
 }

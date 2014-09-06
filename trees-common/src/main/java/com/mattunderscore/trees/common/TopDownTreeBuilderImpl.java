@@ -42,7 +42,7 @@ final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownT
     }
 
     @Override
-    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends Tree<E, Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
         return helper.convertTree(klass, tree);
     }
 

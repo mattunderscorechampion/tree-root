@@ -37,10 +37,10 @@ import java.lang.reflect.Array;
  * @author matt on 13/08/14.
  */
 @Immutable
-final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
+final class BottomUpTreeBuilderImpl<E, N extends Node<E>> implements BottomUpTreeBuilder<E, N> {
     private final SPISupport helper;
     private final E root;
-    private final BottomUpTreeBuilder<E>[] children;
+    private final BottomUpTreeBuilder<E, N>[] children;
 
     public BottomUpTreeBuilderImpl(SPISupport helper) {
         this(helper, null, new BottomUpTreeBuilder[0]);
@@ -57,17 +57,17 @@ final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
     }
 
     @Override
-    public BottomUpTreeBuilder<E> create(E e) {
+    public BottomUpTreeBuilder<E, N> create(E e) {
         return new BottomUpTreeBuilderImpl<>(helper, e);
     }
 
     @Override
-    public BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders) {
+    public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N>... builders) {
         return new BottomUpTreeBuilderImpl<>(helper, e, builders);
     }
 
     @Override
-    public <N extends Node<E>, T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         if (root == null) {
             return helper.createEmptyTree(klass);
         }

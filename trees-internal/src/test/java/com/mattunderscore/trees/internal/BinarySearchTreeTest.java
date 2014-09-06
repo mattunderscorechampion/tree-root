@@ -23,25 +23,34 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.internal;
+
+import com.mattunderscore.trees.utilities.ComparableComparator;
+import org.junit.Test;
+
+import java.util.Comparator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
- * Builder used to create the an empty tree or a non-empty tree.
- * @author matt on 07/08/14.
+ * @author matt on 06/09/14.
  */
-public interface BottomUpTreeBuilder<E, N extends Node<E>> extends BaseTreeBuilder<E, Tree<E, N>> {
+public final class BinarySearchTreeTest {
+    @Test
+    public void test() {
+        final Comparator<String> comparator = new ComparableComparator<>();
+        final BinarySearchTree<String> tree = new BinarySearchTree<>(comparator);
 
-    /**
-     * @param e the root node
-     * @return a new builder that creates a tree containing a single node
-     */
-    BottomUpTreeBuilder<E, N> create(E e);
+        assertTrue(tree.isEmpty());
+        tree.addElement("b");
+        assertFalse(tree.isEmpty());
+        tree.addElement("a");
+        tree.addElement("c");
 
-    /**
-     * @param e the root node
-     * @param builders builders for subtrees
-     * @return a new builder that creates a tree containing the element as the root and the trees returned by the
-     * builders as children
-     */
-    BottomUpTreeBuilder<E,N > create(E e, BottomUpTreeBuilder<E, N>... builders);
+        assertEquals("b", tree.getRoot().getElement());
+        assertEquals("a", tree.getRoot().getLeft().getElement());
+        assertEquals("c", tree.getRoot().getRight().getElement());
+    }
 }

@@ -27,13 +27,11 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.SortedTree;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.*;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.*;
 
 /**
  * SPI support class. Loads service implementations to provide extensibility and allows access to the correct
@@ -45,19 +43,23 @@ final class SPISupport {
     private final Map<Class<?>, TreeConstructor> treeConstructors;
     private final Map<Class<?>, TreeConverter> treeConverters;
     private final Map<Class<?>, NodeToTreeConverter> converters;
+    private final Map<Class<?>, EmptySortedTreeConstructor> sortedEmptyConverters;
 
     public SPISupport() {
-        treeConverters = new HashMap<Class<?>, TreeConverter>();
+        treeConverters = new HashMap<>();
         populateLookupMap(treeConverters, TreeConverter.class);
 
-        emptyConstructors = new HashMap<Class<?>, EmptyTreeConstructor>();
+        emptyConstructors = new HashMap<>();
         populateLookupMap(emptyConstructors, EmptyTreeConstructor.class);
 
-        treeConstructors = new HashMap<Class<?>, TreeConstructor>();
+        treeConstructors = new HashMap<>();
         populateLookupMap(treeConstructors, TreeConstructor.class);
 
-        converters = new HashMap<Class<?>, NodeToTreeConverter>();
+        converters = new HashMap<>();
         populateLookupMap(converters, NodeToTreeConverter.class);
+
+        sortedEmptyConverters = new HashMap<>();
+        populateLookupMap(sortedEmptyConverters, EmptySortedTreeConstructor.class);
     }
 
     /**
@@ -72,6 +74,20 @@ final class SPISupport {
         final EmptyTreeConstructor<E, T> constructor =
                 (EmptyTreeConstructor<E, T>)performLookup(emptyConstructors, EmptyTreeConstructor.class, klass);
         return constructor.build();
+    }
+
+    /**
+     * Create an empty tree.
+     * @param klass
+     * @param <E>
+     * @param <T>
+     * @return
+     * @throws OperationNotSupportedForType
+     */
+    public <E, T extends SortedTree<E, ? extends Node<E>>> T createEmptyTree(Class<T> klass, Comparator<E> comparator) throws OperationNotSupportedForType {
+        final EmptySortedTreeConstructor<E, T> constructor =
+                (EmptySortedTreeConstructor<E, T>)performLookup(sortedEmptyConverters, EmptySortedTreeConstructor.class, klass);
+        return constructor.build(comparator);
     }
 
     /**

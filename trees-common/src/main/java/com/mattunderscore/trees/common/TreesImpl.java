@@ -30,6 +30,8 @@ import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkers;
 
+import java.util.Comparator;
+
 /**
  * Implementation of {@link com.mattunderscore.trees.Trees}.
  * @author matt on 16/08/14.
@@ -43,8 +45,13 @@ public final class TreesImpl implements Trees {
     }
 
     @Override
-    public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
-        return new BottomUpTreeBuilderImpl<E>(helper);
+    public <E, N extends Node<E>> BottomUpTreeBuilder<E, N> bottomUpBuilder() {
+        return new BottomUpTreeBuilderImpl<E, N>(helper);
+    }
+
+    @Override
+    public <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator) {
+        return new SortedTreeBuilderImpl<>(helper, comparator);
     }
 
     @Override

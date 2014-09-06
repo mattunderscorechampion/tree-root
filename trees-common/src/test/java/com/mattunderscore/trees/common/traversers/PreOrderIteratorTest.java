@@ -43,7 +43,7 @@ public final class PreOrderIteratorTest {
     public void test0()
     {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.bottomUpBuilder();
+        final BottomUpTreeBuilder<String, Node<String>> builder = trees.bottomUpBuilder();
         final Tree<String, Node<String>> tree = builder.create("f",
             builder.create("b",
                 builder.create("a"),

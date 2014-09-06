@@ -34,7 +34,7 @@ import java.util.Iterator;
  * @author matt on 08/08/14.
  */
 public final class ImmutableTreeExamples {
-    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeTraverser traverser)
+    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String, Node<String>> builder, TreeTraverser traverser)
     {
         final Tree<String, Node<String>> tree = builder.create("root",
                 builder.create("a",

@@ -26,15 +26,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.balanced;
 
 import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.MutableOrganisedTree;
 
 /**
  * A mutable, self-balancing tree. Only supports immutable nodes.
  * @param <E> the type of elements in the tree.
  * @author matt on 30/08/14.
  */
-public interface BalancingTree<E> extends Tree<E, Node<E>> {
-
+public interface BalancingTree<E> extends MutableOrganisedTree<E, Node<E>> {
     /**
      * Add an element to the tree at the next balanced position
      * @param element the element to add

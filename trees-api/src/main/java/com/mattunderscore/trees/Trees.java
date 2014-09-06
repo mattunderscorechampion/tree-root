@@ -29,6 +29,8 @@ import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkers;
 
+import java.util.Comparator;
+
 /**
  * Source for tree builders.
  * @author matt on 12/07/14.
@@ -47,7 +49,15 @@ public interface Trees {
      * @param <E> The element type of the tree
      * @return
      */
-    <E> BottomUpTreeBuilder<E> bottomUpBuilder();
+    <E, N extends Node<E>> BottomUpTreeBuilder<E, N> bottomUpBuilder();
+
+    /**
+     * Obtain an {@link OrganisedTreeBuilder} that creates sorted trees.
+     * @param comparator The comparator used to sort the elements
+     * @param <E> The element type of the tree
+     * @return
+     */
+    <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator);
 
     /**
      * Obtain a {@link com.mattunderscore.trees.selection.TreeSelectorFactory}
