@@ -23,19 +23,18 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.balanced;
-
-import com.mattunderscore.trees.BaseTreeBuilder;
+package com.mattunderscore.trees;
 
 /**
- * Builder used to create balanced trees. Does not allow explicit placement of elements.
+ * Builder used to create trees that determine the placement of their own elements. Does not allow explicit placement
+ * of elements. Used to created sorted or balanced trees.
  * @author matt on 30/08/14.
  */
-public interface BalancedTreeBuilder<E> extends BaseTreeBuilder<E> {
+public interface OrganisedTreeBuilder<E> extends BaseTreeBuilder<E> {
 
     /**
      * @param element an element to include in the tree
      * @return a new builder that creates a balanced tree containing the element
      */
-    BalancedTreeBuilder<E> addElement(E element);
+    OrganisedTreeBuilder<E> addElement(E element);
 }

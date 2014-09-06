@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
-import com.mattunderscore.trees.balanced.BalancedTreeBuilder;
+import com.mattunderscore.trees.OrganisedTreeBuilder;
 import com.mattunderscore.trees.balanced.BalancingTree;
 
 /**
  * @author matt on 30/08/14.
  */
 public final class BalancedTreeExamples {
-    public void balancedTreeExample(BalancedTreeBuilder<String> builder) {
+    public void balancedTreeExample(OrganisedTreeBuilder<String> builder) {
         final BalancingTree<String> tree = builder
             .addElement("a")
             .addElement("b")
