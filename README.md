@@ -43,7 +43,8 @@ deciding if one tree dominates another. Placing these methods within the tree im
 There are other tree implementations provided as a part of other libraries. The
 [Prefuse visualisation toolkit](http://prefuse.org/doc/api/index.html?prefuse/data/Tree.html), the
 [Apache POI for Open and Microsoft office documents](https://poi.apache.org/apidocs/org/apache/poi/util/BinaryTree.html),
-the [Zkoss framework](http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zul/Tree.html).
+the [Zkoss framework](http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zul/Tree.html). There are many tree
+implementations that have been created for specific use cases.
 
 Design principles
 =================
@@ -68,7 +69,14 @@ Definitions
 
 * Element - a value associated with the node
 * Node - node of the tree, may contain a value, may have child nodes, may not be the child of more than one node
+* Leaf - a node that has no children
+* Root - a node that has no parent node
 * Tree - a data structure that may contain nodes and has at most one root node
+* Sorted tree - tree that has elements in certain positions based on comparisons between the elements
+* Sorting tree - a mutable sorted tree that adds new elements to the correct positions based on comparisons between the
+elements
+* Balanced tree - tree that has all its leaves at the same distance from the root
+* Balancing tree - a mutable tree that has adds new elements to the correct positions to keep it balanced
 
 Tree implementations
 ====================
@@ -88,6 +96,15 @@ placement up to the builder. It is possible to create a mutable tree using a Bal
 and then modify it so that it is not. The BalancingTree is a mutable tree that ensures that trees remain balanced.
 Again this is done by leaving the placement up to the tree. It provides immutable nodes and an API that allows placement
 on the tree instead of the nodes.
+
+Sorted and sorting tree builders
+================================
+
+The API supports creating sorted trees and trees that maintain a sorted structure. The builders for these nodes share
+the OrganisedTreeBuilder with the balanced tree builders. The sorting tree builders leave the placement of the elements
+up to the sorting trees. The sorting tree builders are constrained to only build SortingTrees. The sorted tree builders
+require a separate sorting algorithm to place the elements. Sorted and sorting tree builders both need a comparator for
+the elements.
 
 SPI
 ===
