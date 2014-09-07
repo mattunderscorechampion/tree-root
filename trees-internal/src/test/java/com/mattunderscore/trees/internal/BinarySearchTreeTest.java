@@ -25,6 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
+import com.mattunderscore.trees.SortingTreeBuilder;
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 import org.junit.Test;
 
@@ -38,6 +41,8 @@ import static org.junit.Assert.assertTrue;
  * @author matt on 06/09/14.
  */
 public final class BinarySearchTreeTest {
+    private final Trees trees = new TreesImpl();
+
     @Test
     public void test() {
         final Comparator<String> comparator = new ComparableComparator<>();
@@ -48,6 +53,20 @@ public final class BinarySearchTreeTest {
         assertFalse(tree.isEmpty());
         tree.addElement("a");
         tree.addElement("c");
+
+        assertEquals("b", tree.getRoot().getElement());
+        assertEquals("a", tree.getRoot().getLeft().getElement());
+        assertEquals("c", tree.getRoot().getRight().getElement());
+    }
+
+    @Test
+    public void complete() {
+        final SortingTreeBuilder<String> builder = trees.sortingTreeBuilder(new ComparableComparator<String>());
+        final BinarySearchTree<String> tree = builder
+            .addElement("b")
+            .addElement("a")
+            .addElement("c")
+            .build(BinarySearchTree.class);
 
         assertEquals("b", tree.getRoot().getElement());
         assertEquals("a", tree.getRoot().getLeft().getElement());

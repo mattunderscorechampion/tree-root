@@ -52,12 +52,22 @@ public interface Trees {
     <E> BottomUpTreeBuilder<E> bottomUpBuilder();
 
     /**
-     * Obtain an {@link OrganisedTreeBuilder} that creates sorted trees.
+     * Obtain an {@link OrganisedTreeBuilder} that creates sorting trees.
      * @param comparator The comparator used to sort the elements
      * @param <E> The element type of the tree
      * @return
      */
-    <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator);
+    <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator);
+
+    /**
+     * Obtain an {@link OrganisedTreeBuilder} that creates sorted trees. The algorithm to place the nodes must be
+     * specified separately.
+     * @param comparator The comparator used to sort the elements
+     * @param algorithm The algorithm to sort the trees.
+     * @param <E> The element type of the tree
+     * @return
+     */
+    <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm);
 
     /**
      * Obtain a {@link com.mattunderscore.trees.selection.TreeSelectorFactory}

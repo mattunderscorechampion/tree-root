@@ -23,34 +23,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
-
-import com.mattunderscore.trees.*;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+package com.mattunderscore.trees;
 
 /**
- * @author matt on 06/09/14.
+ * Builder used to create sorting trees.
+ * @author matt on 07/09/14.
  */
-public class SortedTreeBuilderImpl<E> implements SortedTreeBuilder<E> {
-    private final SPISupport helper;
-    private final Comparator<E> comparator;
-    private final List<E> elements = new ArrayList<>();
-
-    public SortedTreeBuilderImpl(SPISupport helper, Comparator<E> comparator) {
-        this.helper = helper;
-        this.comparator = comparator;
-    }
-
-    @Override
-    public SortedTreeBuilder<E> addElement(E element) {
-        return this;
-    }
-
-    @Override
-    public <T extends Tree<E, Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        return helper.createEmptyTree(klass, comparator);
-    }
+public interface SortingTreeBuilder<E> extends OrganisedTreeBuilder<E, SortingTree<E, Node<E>>> {
 }

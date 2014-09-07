@@ -23,17 +23,39 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.spi;
+package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.*;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
- * @author matt on 07/09/14.
+ * @author matt on 06/09/14.
  */
-public interface SortedTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
-    T build(Collection<E> elements, Comparator<E> comparator);
+public class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
+    private final SPISupport helper;
+    private final Comparator<E> comparator;
+    private final List<E> elements = new ArrayList<>();
+
+    public SortingTreeBuilderImpl(SPISupport helper, Comparator<E> comparator) {
+        this.helper = helper;
+        this.comparator = comparator;
+    }
+
+    @Override
+    public SortingTreeBuilder<E> addElement(E element) {
+        elements.add(element);
+        return this;
+    }
+
+    @Override
+    public <T extends SortingTree<E, Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+        final T tree = helper.createEmptyTree(klass, comparator);
+        for (final E element : elements) {
+            tree.addElement(element);
+        }
+        return tree;
+    }
 }

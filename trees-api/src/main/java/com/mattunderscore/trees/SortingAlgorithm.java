@@ -23,54 +23,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
-
-import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.selection.NodeSelectorFactory;
-import com.mattunderscore.trees.selection.TreeSelectorFactory;
-import com.mattunderscore.trees.traversal.TreeWalkers;
-
-import java.util.Comparator;
+package com.mattunderscore.trees;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.Trees}.
- * @author matt on 16/08/14.
+ * An algorithm used to sort trees.
+ * @author matt on 07/09/14.
  */
-public final class TreesImpl implements Trees {
-    public final SPISupport helper = new SPISupport();
-
-    @Override
-    public <E> TopDownTreeRootBuilder<E> topDownBuilder() {
-        return new TopDownTreeRootBuilderImpl<E>(helper);
-    }
-
-    @Override
-    public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
-        return new BottomUpTreeBuilderImpl<E>(helper);
-    }
-
-    @Override
-    public <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator) {
-        return new SortingTreeBuilderImpl<>(helper, comparator);
-    }
-
-    @Override
-    public <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm) {
-        throw new UnsupportedOperationException("Sorting algorithms not yet implemented");
-    }
-
-    @Override
-    public TreeSelectorFactory treeSelectorFactory() {
-        return new TreeSelectorFactoryImpl(helper);
-    }
-
-    @Override
-    public NodeSelectorFactory nodeSelectorFactory() {
-        return new NodeSelectorFactoryImpl(helper);
-    }
-
-    @Override
-    public TreeWalkers treeWalkers() {
-        return new TreeWalkersImpl();
-    }
+public interface SortingAlgorithm {
 }
