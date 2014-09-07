@@ -29,13 +29,13 @@ package com.mattunderscore.trees;
  * Builder used to create the an empty tree or a non-empty tree.
  * @author matt on 07/08/14.
  */
-public interface BottomUpTreeBuilder<E, N extends Node<E>> extends BaseTreeBuilder<E, Tree<E, N>> {
+public interface BottomUpTreeBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? extends Node<E>>> {
 
     /**
      * @param e the root node
      * @return a new builder that creates a tree containing a single node
      */
-    BottomUpTreeBuilder<E, N> create(E e);
+    BottomUpTreeBuilder<E> create(E e);
 
     /**
      * @param e the root node
@@ -43,5 +43,5 @@ public interface BottomUpTreeBuilder<E, N extends Node<E>> extends BaseTreeBuild
      * @return a new builder that creates a tree containing the element as the root and the trees returned by the
      * builders as children
      */
-    BottomUpTreeBuilder<E,N > create(E e, BottomUpTreeBuilder<E, N>... builders);
+    BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders);
 }

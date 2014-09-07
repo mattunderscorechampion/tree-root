@@ -26,7 +26,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
+ * Builder use to create sorted trees. If the tree is a sorting tree the {@link java.util.Comparator} will be passed to
+ * the sorting tree.
  * @author matt on 06/09/14.
  */
-public interface SortedTreeBuilder<E> extends OrganisedTreeBuilder<E, SortedTree<E, Node<E>>> {
+public interface SortedTreeBuilder<E> extends OrganisedTreeBuilder<E, Tree<E, Node<E>>> {
 }

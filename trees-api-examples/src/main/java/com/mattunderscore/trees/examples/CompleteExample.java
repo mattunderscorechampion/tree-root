@@ -49,7 +49,7 @@ public final class CompleteExample {
     }
 
     public void createTree(Trees trees) {
-        final BottomUpTreeBuilder<String, Node<String>> builder = trees.bottomUpBuilder();
+        final BottomUpTreeBuilder<String> builder = trees.bottomUpBuilder();
         final Tree<String, Node<String>> tree = builder.create("a",
                 builder.create("b"),
                 builder.create("c"))

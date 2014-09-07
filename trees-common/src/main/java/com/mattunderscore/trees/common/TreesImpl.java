@@ -45,8 +45,8 @@ public final class TreesImpl implements Trees {
     }
 
     @Override
-    public <E, N extends Node<E>> BottomUpTreeBuilder<E, N> bottomUpBuilder() {
-        return new BottomUpTreeBuilderImpl<E, N>(helper);
+    public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
+        return new BottomUpTreeBuilderImpl<E>(helper);
     }
 
     @Override

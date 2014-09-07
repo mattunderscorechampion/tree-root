@@ -26,15 +26,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.spi;
 
 import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.SortingTree;
 import com.mattunderscore.trees.Tree;
 
+import java.util.Collection;
 import java.util.Comparator;
 
 /**
- * @author matt on 06/09/14.
+ * @author matt on 07/09/14.
  */
-public interface EmptySortedTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
-
-    T build(Comparator<E> comparator);
+public interface SortedTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
+    T build(Collection<E> elements, Comparator<E> comparator);
 }

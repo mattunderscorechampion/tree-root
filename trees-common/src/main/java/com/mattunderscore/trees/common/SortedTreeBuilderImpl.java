@@ -50,7 +50,7 @@ public class SortedTreeBuilderImpl<E> implements SortedTreeBuilder<E> {
     }
 
     @Override
-    public <T extends SortedTree<E, Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends Tree<E, Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
         return helper.createEmptyTree(klass, comparator);
     }
 }

@@ -49,7 +49,7 @@ public interface Trees {
      * @param <E> The element type of the tree
      * @return
      */
-    <E, N extends Node<E>> BottomUpTreeBuilder<E, N> bottomUpBuilder();
+    <E> BottomUpTreeBuilder<E> bottomUpBuilder();
 
     /**
      * Obtain an {@link OrganisedTreeBuilder} that creates sorted trees.

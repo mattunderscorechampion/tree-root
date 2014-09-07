@@ -27,14 +27,14 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.BinaryTree;
 import com.mattunderscore.trees.BinaryTreeNode;
-import com.mattunderscore.trees.SortedTree;
+import com.mattunderscore.trees.SortingTree;
 
 import java.util.Comparator;
 
 /**
  * @author matt on 06/09/14.
  */
-public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E>>, SortedTree<E, BinaryTreeNode<E>> {
+public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E>>, SortingTree<E, BinaryTreeNode<E>> {
     private final Comparator<E> comparator;
     private MutableBinaryTreeNode root;
 

@@ -34,7 +34,7 @@ import java.util.Iterator;
  * @author matt on 08/08/14.
  */
 public final class MutableTreeExamples {
-    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String, Node<String>> builder, TreeTraverser traverser)
+    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeTraverser traverser)
     {
         final MutableTree<String, MutableNode<String>> tree = builder.create("root",
                 builder.create("a",
@@ -50,7 +50,7 @@ public final class MutableTreeExamples {
         final MutableNode<String> newNode = mutableNode.addChild("more");
     }
 
-    public void createTreeFromRoot(BottomUpTreeBuilder<String, Node<String>> builder, TreeTraverser traverser)
+    public void createTreeFromRoot(BottomUpTreeBuilder<String> builder, TreeTraverser traverser)
     {
         final MutableTree<String, MutableNode<String>> tree = builder.create("root").build(MutableTree.class);
         final MutableNode<String> root = tree.getRoot();

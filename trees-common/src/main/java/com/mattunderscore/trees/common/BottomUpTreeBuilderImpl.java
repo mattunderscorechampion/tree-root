@@ -37,10 +37,10 @@ import java.lang.reflect.Array;
  * @author matt on 13/08/14.
  */
 @Immutable
-final class BottomUpTreeBuilderImpl<E, N extends Node<E>> implements BottomUpTreeBuilder<E, N> {
+final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
     private final SPISupport helper;
     private final E root;
-    private final BottomUpTreeBuilder<E, N>[] children;
+    private final BottomUpTreeBuilder<E>[] children;
 
     public BottomUpTreeBuilderImpl(SPISupport helper) {
         this(helper, null, new BottomUpTreeBuilder[0]);
@@ -57,17 +57,17 @@ final class BottomUpTreeBuilderImpl<E, N extends Node<E>> implements BottomUpTre
     }
 
     @Override
-    public BottomUpTreeBuilder<E, N> create(E e) {
+    public BottomUpTreeBuilder<E> create(E e) {
         return new BottomUpTreeBuilderImpl<>(helper, e);
     }
 
     @Override
-    public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N>... builders) {
+    public BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders) {
         return new BottomUpTreeBuilderImpl<>(helper, e, builders);
     }
 
     @Override
-    public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends Tree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
         if (root == null) {
             return helper.createEmptyTree(klass);
         }
@@ -76,7 +76,7 @@ final class BottomUpTreeBuilderImpl<E, N extends Node<E>> implements BottomUpTre
             for (int i = 0; i < children.length; i++) {
                 subtrees[i] = children[i].build(klass);
             }
-            return helper.<E, N, T>newTreeFrom(klass, root, subtrees);
+            return helper.<E, T>newTreeFrom(klass, root, subtrees);
         }
     }
 }

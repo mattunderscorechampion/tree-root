@@ -27,7 +27,7 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.SortedTree;
+import com.mattunderscore.trees.SortingTree;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.*;
 
@@ -84,7 +84,7 @@ final class SPISupport {
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, T extends SortedTree<E, ? extends Node<E>>> T createEmptyTree(Class<T> klass, Comparator<E> comparator) throws OperationNotSupportedForType {
+    public <E, T extends Tree<E, ? extends Node<E>>> T createEmptyTree(Class<T> klass, Comparator<E> comparator) throws OperationNotSupportedForType {
         final EmptySortedTreeConstructor<E, T> constructor =
                 (EmptySortedTreeConstructor<E, T>)performLookup(sortedEmptyConverters, EmptySortedTreeConstructor.class, klass);
         return constructor.build(comparator);
@@ -96,12 +96,11 @@ final class SPISupport {
      * @param e
      * @param subtrees
      * @param <E>
-     * @param <N>
      * @param <T>
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, N extends Node<E>, T extends Tree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
+    public <E, T extends Tree<E, ? extends Node<E>>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
         final TreeConstructor<E, T> constructor =
                 (TreeConstructor<E, T>)performLookup(treeConstructors, TreeConstructor.class, klass);
         return constructor.build(e, subtrees);

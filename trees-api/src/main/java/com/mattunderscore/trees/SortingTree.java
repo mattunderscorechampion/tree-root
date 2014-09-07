@@ -23,18 +23,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.spi;
-
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.SortingTree;
-import com.mattunderscore.trees.Tree;
-
-import java.util.Comparator;
+package com.mattunderscore.trees;
 
 /**
+ * A mutable, organised tree that sorts the elements passed to it.
  * @author matt on 06/09/14.
  */
-public interface EmptySortedTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
-
-    T build(Comparator<E> comparator);
+public interface SortingTree<E, N extends Node<E>> extends MutableOrganisedTree<E, N> {
 }
