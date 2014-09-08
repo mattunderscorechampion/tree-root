@@ -34,12 +34,24 @@ public interface MutableBinaryTreeNode<E> extends BinaryTreeNode<E> {
     /**
      * Set the left subtree. Replaces the existing value
      * @param left The new element
+     * @return The newly added node
      */
-    void setLeft(E left);
+    MutableBinaryTreeNode<E> setLeft(E left);
 
     /**
      * Set the left subtree. Replaces the existing value
      * @param right The new element
+     * @return The newly added node
      */
-    void setRight(E right);
+    MutableBinaryTreeNode<E> setRight(E right);
+
+    /**
+     * @return The left subtree
+     */
+    MutableBinaryTreeNode<E> getLeft();
+
+    /**
+     * @return The right subtree
+     */
+    MutableBinaryTreeNode<E> getRight();
 }

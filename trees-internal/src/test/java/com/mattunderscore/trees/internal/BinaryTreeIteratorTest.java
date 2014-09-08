@@ -25,23 +25,36 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.BinaryTree;
+import com.mattunderscore.trees.MutableBinaryTreeNode;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.common.TreesImpl;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
- * Wrap any node to create a Tree.
- * @author matt on 06/09/14.
+ * @author matt on 08/09/14.
  */
-public class TreeWrapper<E, N extends Node<E>> extends AbstractTreeWrapper<E, N> {
-
-    public TreeWrapper() {
-        super();
+public final class BinaryTreeIteratorTest {
+    @Test
+    public void test() {
+        final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
     }
 
-    public TreeWrapper(N root) {
-        super(root);
+
+    public static Tree<String, MutableBinaryTreeNode<String>> createTree() {
+        final Trees trees = new TreesImpl();
+        final Tree<String, MutableBinaryTreeNode<String>> tree = trees.topDownBuilder().root("f").build(MutableBinaryTreeImpl.class);
+        final MutableBinaryTreeNode<String> f = tree.getRoot();
+        final MutableBinaryTreeNode<String> b = f.setLeft("b");
+        b.setLeft("a");
+        final MutableBinaryTreeNode<String> d = b.setRight("d");
+        d.setLeft("c");
+        d.setRight("e");
+        final MutableBinaryTreeNode<String> g = f.setRight("g");
+        final MutableBinaryTreeNode<String> h = f.setRight("h");
+        f.setRight("i");
+        return tree;
     }
 }

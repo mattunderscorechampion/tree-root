@@ -37,8 +37,8 @@ import java.util.Collection;
  */
 public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode<E> {
     private final E element;
-    private MutableBinaryTreeNodeImpl<E> left;
-    private MutableBinaryTreeNodeImpl<E> right;
+    private MutableBinaryTreeNode<E> left;
+    private MutableBinaryTreeNode<E> right;
     private final Object[] children = new Object[2];
 
     public MutableBinaryTreeNodeImpl(E element) {
@@ -47,39 +47,41 @@ public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode
         right = null;
     }
 
-    public MutableBinaryTreeNodeImpl(E element, MutableBinaryTreeNodeImpl<E> left, MutableBinaryTreeNodeImpl<E> right) {
+    public MutableBinaryTreeNodeImpl(E element, MutableBinaryTreeNode<E> left, MutableBinaryTreeNode<E> right) {
         this.element = element;
         setInternalLeft(left);
         setInternalRight(right);
     }
 
     @Override
-    public void setLeft(E element) {
-        setInternalLeft(new MutableBinaryTreeNodeImpl<E>(element));
+    public MutableBinaryTreeNode<E> setLeft(E element) {
+        return setInternalLeft(new MutableBinaryTreeNodeImpl<E>(element));
     }
 
     @Override
-    public void setRight(E element) {
-        setInternalRight(new MutableBinaryTreeNodeImpl<E>(element));
+    public MutableBinaryTreeNode<E> setRight(E element) {
+        return setInternalRight(new MutableBinaryTreeNodeImpl<E>(element));
     }
 
-    private synchronized void setInternalRight(MutableBinaryTreeNodeImpl<E> right) {
+    private synchronized MutableBinaryTreeNode<E> setInternalRight(MutableBinaryTreeNode<E> right) {
         this.right = right;
         children[1] = right;
+        return right;
     }
 
-    private synchronized void setInternalLeft(MutableBinaryTreeNodeImpl<E> left) {
+    private synchronized MutableBinaryTreeNode<E> setInternalLeft(MutableBinaryTreeNode<E> left) {
         this.left = left;
         children[0] = left;
-    }
-
-    @Override
-    public synchronized MutableBinaryTreeNodeImpl<E> getLeft() {
         return left;
     }
 
     @Override
-    public synchronized MutableBinaryTreeNodeImpl<E> getRight() {
+    public synchronized MutableBinaryTreeNode<E> getLeft() {
+        return left;
+    }
+
+    @Override
+    public synchronized MutableBinaryTreeNode<E> getRight() {
         return right;
     }
 
