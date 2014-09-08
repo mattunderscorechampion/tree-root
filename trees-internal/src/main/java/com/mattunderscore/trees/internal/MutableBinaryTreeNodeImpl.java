@@ -26,56 +26,60 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.BinaryTreeNode;
+import com.mattunderscore.trees.MutableBinaryTreeNode;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
 
 import java.util.Collection;
 
 /**
+ * Mutable binary tree node implementation.
  * @author matt on 06/09/14.
  */
-public final class MutableBinaryTreeNode<E> implements BinaryTreeNode<E> {
+public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode<E> {
     private final E element;
-    private MutableBinaryTreeNode<E> left;
-    private MutableBinaryTreeNode<E> right;
+    private MutableBinaryTreeNodeImpl<E> left;
+    private MutableBinaryTreeNodeImpl<E> right;
     private final Object[] children = new Object[2];
 
-    public MutableBinaryTreeNode(E element) {
+    public MutableBinaryTreeNodeImpl(E element) {
         this.element = element;
         left = null;
         right = null;
     }
 
-    public MutableBinaryTreeNode(E element, MutableBinaryTreeNode<E> left, MutableBinaryTreeNode<E> right) {
+    public MutableBinaryTreeNodeImpl(E element, MutableBinaryTreeNodeImpl<E> left, MutableBinaryTreeNodeImpl<E> right) {
         this.element = element;
         setInternalLeft(left);
         setInternalRight(right);
     }
 
+    @Override
     public void setLeft(E element) {
-        setInternalLeft(new MutableBinaryTreeNode<E>(element));
+        setInternalLeft(new MutableBinaryTreeNodeImpl<E>(element));
     }
 
+    @Override
     public void setRight(E element) {
-        setInternalRight(new MutableBinaryTreeNode<E>(element));
+        setInternalRight(new MutableBinaryTreeNodeImpl<E>(element));
     }
 
-    private synchronized void setInternalRight(MutableBinaryTreeNode<E> right) {
+    private synchronized void setInternalRight(MutableBinaryTreeNodeImpl<E> right) {
         this.right = right;
         children[1] = right;
     }
 
-    private synchronized void setInternalLeft(MutableBinaryTreeNode<E> left) {
+    private synchronized void setInternalLeft(MutableBinaryTreeNodeImpl<E> left) {
         this.left = left;
         children[0] = left;
     }
 
     @Override
-    public synchronized MutableBinaryTreeNode<E> getLeft() {
+    public synchronized MutableBinaryTreeNodeImpl<E> getLeft() {
         return left;
     }
 
     @Override
-    public synchronized MutableBinaryTreeNode<E> getRight() {
+    public synchronized MutableBinaryTreeNodeImpl<E> getRight() {
         return right;
     }
 
@@ -90,7 +94,7 @@ public final class MutableBinaryTreeNode<E> implements BinaryTreeNode<E> {
     }
 
     @Override
-    public synchronized Collection<? extends MutableBinaryTreeNode<E>> getChildren() {
+    public synchronized Collection<? extends MutableBinaryTreeNodeImpl<E>> getChildren() {
         return new FixedUncheckedList<>(children);
     }
 

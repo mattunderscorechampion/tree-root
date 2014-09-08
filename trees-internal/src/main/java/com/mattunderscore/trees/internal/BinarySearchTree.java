@@ -36,7 +36,7 @@ import java.util.Comparator;
  */
 public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E>>, SortingTree<E, BinaryTreeNode<E>> {
     private final Comparator<E> comparator;
-    private MutableBinaryTreeNode root;
+    private MutableBinaryTreeNodeImpl root;
 
     public BinarySearchTree(Comparator<E> comparator) {
         this.comparator = comparator;
@@ -45,7 +45,7 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
     @Override
     public synchronized BinarySearchTree<E> addElement(E element) {
         if (isEmpty()) {
-            root = new MutableBinaryTreeNode(element);
+            root = new MutableBinaryTreeNodeImpl(element);
         }
         else {
             addTo(root, element);
@@ -53,10 +53,10 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
         return this;
     }
 
-    private void addTo(MutableBinaryTreeNode<E> node, E element) {
+    private void addTo(MutableBinaryTreeNodeImpl<E> node, E element) {
         final int comparison = comparator.compare(node.getElement(), element);
         if (comparison < 0) {
-            final MutableBinaryTreeNode<E> left = node.getLeft();
+            final MutableBinaryTreeNodeImpl<E> left = node.getLeft();
             if (left == null) {
                 node.setLeft(element);
             }
@@ -65,7 +65,7 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
             }
         }
         else {
-            final MutableBinaryTreeNode<E> right = node.getRight();
+            final MutableBinaryTreeNodeImpl<E> right = node.getRight();
             if (right == null) {
                 node.setRight(element);
             }
