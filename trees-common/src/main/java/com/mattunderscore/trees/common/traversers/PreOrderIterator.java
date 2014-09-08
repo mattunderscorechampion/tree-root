@@ -50,10 +50,10 @@ public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>>
     protected N calculateNext() throws NoSuchElementException {
         if (!parents.isEmpty()) {
             final N n = current;
-            final Collection<N> children = (Collection<N>)n.getChildren();
-            final N[] reversed = (N[])Array.newInstance(n.getClass(), children.size());
+            final Collection<N> children = (Collection<N>) n.getChildren();
+            final N[] reversed = (N[]) Array.newInstance(n.getClass(), children.size());
             final Iterator<N> childIterator = children.iterator();
-            for (int i = children.size() - 1; i >=0; i--) {
+            for (int i = children.size() - 1; i >= 0; i--) {
                 reversed[i] = childIterator.next();
             }
             for (N child : reversed) {
