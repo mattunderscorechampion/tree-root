@@ -27,14 +27,32 @@ package com.mattunderscore.trees;
 
 /**
  * A Iterable object that contains the children of each node.
+ * <p>Introduced to allow two ways of iterating over the children. A tree might specify positions for its children. If
+ * these positions are ordered it may be necessary to know when a position is empty. For example when iterating over a
+ * binary tree, the left branch may be empty and for correct iteration order whether or not the root or right node
+ * should be returned depends on knowing the left branch is empty.</p>
  * @author matt on 09/09/14.
  */
 public interface Children<N> extends Iterable<N> {
+
+    /**
+     * @return The number of children
+     */
     int size();
 
+    /**
+     * @return {@code true} if there are no children
+     */
     boolean isEmpty();
 
+    /**
+     * @param i the position
+     * @return the element at the position
+     */
     N get(int i);
 
+    /**
+     * @return an enumeration that may return null
+     */
     OptionalEnumeration<N> optionalEnumeration();
 }
