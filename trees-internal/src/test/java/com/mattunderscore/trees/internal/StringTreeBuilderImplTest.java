@@ -39,7 +39,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author matt on 21/06/14.
  */
-public class StringTreeBuilderImplTest {
+public final class StringTreeBuilderImplTest {
     private static final Trees trees = new TreesImpl();
 
     @Test
