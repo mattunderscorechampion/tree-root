@@ -56,10 +56,12 @@ public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>>
             for (int i = children.size() - 1; i >= 0; i--) {
                 reversed[i] = childIterator.next();
             }
-            for (N child : reversed) {
+            for (final N child : reversed) {
                 parents.push(child);
             }
-            current = parents.pop();
+            do {
+                current = parents.pop();
+            } while (current == null);
             return n;
         }
         throw new NoSuchElementException();

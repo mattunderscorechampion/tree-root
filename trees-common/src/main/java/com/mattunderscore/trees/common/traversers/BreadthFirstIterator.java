@@ -49,7 +49,11 @@ public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E,
     @Override
     protected N calculateNext() throws NoSuchElementException {
         if (currentLayer.hasNext()) {
-            final N next = currentLayer.next();
+            N next;
+            do {
+                next = currentLayer.next();
+            } while (next == null);
+
             final Collection<N> children = (Collection<N>)next.getChildren();
             nextLayer.addAll(children);
             return next;
@@ -57,7 +61,12 @@ public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E,
         else {
             currentLayer = nextLayer.iterator();
             nextLayer = new ArrayList<>();
-            final N next = currentLayer.next();
+                
+            N next;
+            do {
+                next = currentLayer.next();
+            } while (next == null);
+
             final Collection<N> children = (Collection<N>)next.getChildren();
             nextLayer.addAll(children);
             return next;

@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.MutableBinaryTreeNode;
-import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.TreesImpl;
@@ -34,7 +33,6 @@ import com.mattunderscore.trees.common.traversers.BreadthFirstIterator;
 import com.mattunderscore.trees.common.traversers.InOrderIterator;
 import com.mattunderscore.trees.common.traversers.PostOrderIterator;
 import com.mattunderscore.trees.common.traversers.PreOrderIterator;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -48,7 +46,6 @@ import static org.junit.Assert.assertFalse;
 public final class BinaryTreeIteratorTest {
     private static final Trees trees = new TreesImpl();
 
-    @Ignore(value="Broken")
     @Test
     public void preorder() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
@@ -65,7 +62,6 @@ public final class BinaryTreeIteratorTest {
         assertFalse(iterator.hasNext());
     }
 
-    @Ignore(value="Broken")
     @Test
     public void inorder() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
@@ -82,7 +78,6 @@ public final class BinaryTreeIteratorTest {
         assertFalse(iterator.hasNext());
     }
 
-    @Ignore(value="Broken")
     @Test
     public void postorder() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
@@ -99,7 +94,6 @@ public final class BinaryTreeIteratorTest {
         assertFalse(iterator.hasNext());
     }
 
-    @Ignore(value="Broken")
     @Test
     public void breadthfirst() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
@@ -116,7 +110,7 @@ public final class BinaryTreeIteratorTest {
         assertFalse(iterator.hasNext());
     }
 
-    public static Tree<String, MutableBinaryTreeNode<String>> createTree() {
+    private static Tree<String, MutableBinaryTreeNode<String>> createTree() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = trees.topDownBuilder().root("f").build(MutableBinaryTreeImpl.class);
         final MutableBinaryTreeNode<String> f = tree.getRoot();
         final MutableBinaryTreeNode<String> b = f.setLeft("b");
@@ -125,8 +119,8 @@ public final class BinaryTreeIteratorTest {
         d.setLeft("c");
         d.setRight("e");
         final MutableBinaryTreeNode<String> g = f.setRight("g");
-        final MutableBinaryTreeNode<String> h = g.setRight("h");
-        h.setRight("i");
+        final MutableBinaryTreeNode<String> h = g.setRight("i");
+        h.setLeft("h");
         return tree;
     }
 }
