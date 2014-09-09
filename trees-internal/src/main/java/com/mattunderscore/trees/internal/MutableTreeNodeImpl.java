@@ -25,14 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.MutableNode;
-import com.mattunderscore.trees.MutableTree;
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.utilities.ArrayListChildren;
+import com.mattunderscore.trees.utilities.FixedUncheckedChildren;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
 
 import net.jcip.annotations.GuardedBy;
@@ -53,17 +52,17 @@ import java.util.List;
  */
 public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")
-    private List<MutableNode<E>> elementList;
+    private Children<MutableNode<E>> elementList;
     private E element;
 
     public MutableTreeNodeImpl(E element) {
-        elementList = new FixedUncheckedList<>(new Object[0]);
+        elementList = new FixedUncheckedChildren<>(new Object[0]);
         synchronized (this) {
             this.element = element;
         }
     }
 
-    private MutableTreeNodeImpl(E element, List<MutableNode<E>> childList) {
+    private MutableTreeNodeImpl(E element, Children<MutableNode<E>> childList) {
         this.element = element;
         synchronized (this) {
             elementList = childList;
@@ -77,14 +76,14 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
         }
         final MutableTreeNodeImpl<E> child = new MutableTreeNodeImpl<E>(e);
         synchronized (this) {
-            final List<MutableNode<E>> oldList = elementList;
+            final Children<MutableNode<E>> oldList = elementList;
             final int size = oldList.size();
             final Object[] newArray = new Object[size + 1];
             for (int i = 0; i < size; i++) {
                 newArray[i] = oldList.get(i);
             }
             newArray[size] = child;
-            elementList = new FixedUncheckedList<MutableNode<E>>(newArray);
+            elementList = new FixedUncheckedChildren<>(newArray);
         }
         return child;
     }
@@ -95,7 +94,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
             return false;
         }
         synchronized (this) {
-            final List<MutableNode<E>> oldList = elementList;
+            final Children<MutableNode<E>> oldList = elementList;
             final int size = oldList.size();
             final Object[] searchArray = new Object[size];
             int i = 0;
@@ -117,7 +116,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
                 for (int k = 0; k < newSize; k++) {
                     newArray[k] = searchArray[k];
                 }
-                elementList = new FixedUncheckedList<>(newArray);
+                elementList = new FixedUncheckedChildren<>(newArray);
                 return true;
             }
         }
@@ -150,8 +149,8 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
     }
 
     @Override
-    public synchronized Collection<MutableNode<E>> getChildren() {
-        return Collections.unmodifiableList(elementList);
+    public synchronized Children<MutableNode<E>> getChildren() {
+        return elementList;
     }
 
     @Override
@@ -168,7 +167,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
 
         @Override
         public MutableTreeNodeImpl<E> build(E e, MutableTreeNodeImpl<E>... subtrees) {
-            return new MutableTreeNodeImpl(e, new FixedUncheckedList<E>(subtrees));
+            return new MutableTreeNodeImpl(e, new FixedUncheckedChildren<E>(subtrees));
         }
 
         @Override
@@ -181,7 +180,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
 
         @Override
         public MutableTree<E, MutableNode<E>> build() {
-            return new MutableTreeNodeImpl(null, Collections.<Node<E>>emptyList());
+            return new MutableTreeNodeImpl(null, new FixedUncheckedChildren<>(new Object[0]));
         }
 
         @Override

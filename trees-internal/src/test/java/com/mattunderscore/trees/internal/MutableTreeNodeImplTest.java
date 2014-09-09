@@ -56,7 +56,7 @@ public final class MutableTreeNodeImplTest {
         assertFalse(root.isLeaf());
         depth1.addChild("c");
 
-        final Collection<? extends MutableNode<String>> children = root.getChildren();
+        final Children<? extends MutableNode<String>> children = root.getChildren();
         assertEquals(1, children.size());
         final Iterator<? extends MutableNode<String>> iterator0 = children.iterator();
         assertTrue(iterator0.hasNext());

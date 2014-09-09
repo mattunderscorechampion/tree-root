@@ -27,9 +27,11 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.BinaryTree;
 import com.mattunderscore.trees.BinaryTreeNode;
+import com.mattunderscore.trees.Children;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
+import com.mattunderscore.trees.utilities.FixedUncheckedChildren;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
 
 import java.util.Collection;
@@ -95,8 +97,8 @@ public final class BinaryTreeNodeImpl<E> implements BinaryTreeNode<E> {
     }
 
     @Override
-    public Collection<? extends BinaryTreeNodeImpl<E>> getChildren() {
-        return new FixedUncheckedList<>(children);
+    public Children<? extends BinaryTreeNodeImpl<E>> getChildren() {
+        return new FixedUncheckedChildren<>(children);
     }
 
     @Override

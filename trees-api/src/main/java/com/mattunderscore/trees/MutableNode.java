@@ -36,7 +36,7 @@ public interface MutableNode<E> extends Node<E>, NodeAppender<E, MutableNode<E>>
     /**
      * @return the children of the node
      */
-    Collection<? extends MutableNode<E>> getChildren();
+    Children<? extends MutableNode<E>> getChildren();
 
     /**
      * Remove the node if it is a child of the recipient

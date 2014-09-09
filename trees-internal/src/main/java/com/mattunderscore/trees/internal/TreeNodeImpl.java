@@ -25,16 +25,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
+import com.mattunderscore.trees.Children;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.utilities.FixedUncheckedChildren;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
 
 import net.jcip.annotations.Immutable;
 
+import java.nio.channels.Channel;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -45,9 +48,9 @@ import java.util.List;
 @Immutable
 public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
     private final E element;
-    private final List<Node<E>> children;
+    private final Children<Node<E>> children;
 
-    public TreeNodeImpl(E element, List<Node<E>> children) {
+    public TreeNodeImpl(E element, Children<Node<E>> children) {
         this.element = element;
         this.children = children;
     }
@@ -64,7 +67,7 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
     }
 
     @Override
-    public Collection<Node<E>> getChildren() {
+    public Children<Node<E>> getChildren() {
         return children;
     }
 
@@ -92,7 +95,7 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
 
         @Override
         public TreeNodeImpl<E> build(E e, TreeNodeImpl<E>... subtrees) {
-            return new TreeNodeImpl(e, new FixedUncheckedList<>(subtrees));
+            return new TreeNodeImpl(e, new FixedUncheckedChildren<>(subtrees));
         }
 
         @Override
@@ -105,7 +108,7 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
 
         @Override
         public TreeNodeImpl<E> build() {
-            return new TreeNodeImpl(null, Collections.<Node<E>>emptyList());
+            return new TreeNodeImpl(null, new FixedUncheckedChildren<>(new Object[0]));
         }
 
         @Override
@@ -140,16 +143,16 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
             return Tree.class;
         }
 
-        private List<Node<E>> duplicateChildren(Collection<? extends Node<E>> children) {
+        private Children<Node<E>> duplicateChildren(Children<? extends Node<E>> children) {
             @SuppressWarnings("unchecked")
             final Node<E>[] newChildren = new Node[children.size()];
             int i = 0;
             for (final Node<E> sourceChild : children) {
-                final List<Node<E>> newGrandChildren = duplicateChildren(sourceChild.getChildren());
+                final Children<Node<E>> newGrandChildren = duplicateChildren(sourceChild.getChildren());
                 newChildren[i] = new TreeNodeImpl<>(sourceChild.getElement(), newGrandChildren);
                 i++;
             }
-            return new FixedUncheckedList<>(newChildren);
+            return new FixedUncheckedChildren<>(newChildren);
         }
     }
 }

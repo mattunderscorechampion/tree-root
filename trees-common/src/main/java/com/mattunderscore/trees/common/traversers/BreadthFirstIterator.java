@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
+import com.mattunderscore.trees.Children;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
@@ -54,21 +55,25 @@ public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E,
                 next = currentLayer.next();
             } while (next == null);
 
-            final Collection<N> children = (Collection<N>)next.getChildren();
-            nextLayer.addAll(children);
+            final Children<N> children = (Children<N>)next.getChildren();
+            for (final N child : children) {
+                nextLayer.add(child);
+            }
             return next;
         }
         else {
             currentLayer = nextLayer.iterator();
             nextLayer = new ArrayList<>();
-                
+
             N next;
             do {
                 next = currentLayer.next();
             } while (next == null);
 
-            final Collection<N> children = (Collection<N>)next.getChildren();
-            nextLayer.addAll(children);
+            final Children<N> children = (Children<N>)next.getChildren();
+            for (final N child : children) {
+                nextLayer.add(child);
+            }
             return next;
         }
     }

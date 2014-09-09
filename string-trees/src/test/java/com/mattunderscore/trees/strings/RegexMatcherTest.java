@@ -28,6 +28,7 @@ package com.mattunderscore.trees.strings;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.internal.TreeNodeImpl;
+import com.mattunderscore.trees.utilities.FixedUncheckedChildren;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -44,31 +45,31 @@ public final class RegexMatcherTest {
 
     @Test
     public void nodeMatches0() {
-        final Node<String> node = new TreeNodeImpl("A", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("A", new FixedUncheckedChildren<>(new Object[0]));
         assertTrue(aMatcher.matches(node));
     }
 
     @Test
     public void nodeMatches1() {
-        final Node<String> node = new TreeNodeImpl("A", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("A", new FixedUncheckedChildren<>(new Object[0]));
         assertTrue(aMatcherAlt.matches(node));
     }
 
     @Test
     public void nodeMatches2() {
-        final Node<String> nodeA = new TreeNodeImpl("A", Collections.emptyList());
-        final Node<String> nodeB = new TreeNodeImpl("B", Collections.emptyList());
+        final Node<String> nodeA = new TreeNodeImpl("A", new FixedUncheckedChildren<>(new Object[0]));
+        final Node<String> nodeB = new TreeNodeImpl("B", new FixedUncheckedChildren<>(new Object[0]));
     }
 
     @Test
     public void nodeNoMatch0() {
-        final Node<String> node = new TreeNodeImpl("B", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("B", new FixedUncheckedChildren<>(new Object[0]));
         assertFalse(aMatcher.matches(node));
     }
 
     @Test
     public void nodeNoMatch1() {
-        final Node<String> node = new TreeNodeImpl("B", Collections.emptyList());
+        final Node<String> node = new TreeNodeImpl("B", new FixedUncheckedChildren<>(new Object[0]));
         assertFalse(aMatcherAlt.matches(node));
     }
 }

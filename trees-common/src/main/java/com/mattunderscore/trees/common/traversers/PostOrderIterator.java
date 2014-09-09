@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.traversers;
 
 import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.OptionalEnumeration;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
@@ -50,8 +51,8 @@ public final class PostOrderIterator<E , N extends Node<E>, T extends Tree<E, N>
             if (current != null) {
                 final State<E, N> state = new State<>(current);
                 parents.push(state);
-                if (state.iterator.hasNext()) {
-                    current = state.iterator.next();
+                if (state.iterator.hasMoreElements()) {
+                    current = state.iterator.nextElement();
                 }
                 else {
                     // Leaf
@@ -60,12 +61,12 @@ public final class PostOrderIterator<E , N extends Node<E>, T extends Tree<E, N>
             }
             else {
                 final State<E, N> state = parents.peek();
-                if (state.iterator.hasNext()) {
-                    current = state.iterator.next();
+                if (state.iterator.hasMoreElements()) {
+                    current = state.iterator.nextElement();
                     continue;
                 }
 
-                if (!state.iterator.hasNext()) {
+                if (!state.iterator.hasMoreElements()) {
                     parents.pop();
                 }
 
@@ -77,11 +78,11 @@ public final class PostOrderIterator<E , N extends Node<E>, T extends Tree<E, N>
 
     private static final class State<E, N extends Node<E>> {
         private final N node;
-        private final Iterator<N> iterator;
+        private final OptionalEnumeration<N> iterator;
 
         public State(N node) {
             this.node = node;
-            this.iterator = (Iterator<N>)node.getChildren().iterator();
+            this.iterator = (OptionalEnumeration<N>)node.getChildren().optionalEnumeration();
         }
     }
 }

@@ -23,49 +23,74 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.utilities;
 
 import com.mattunderscore.trees.Children;
-import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.OptionalEnumeration;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * @author matt on 17/08/14.
+ * @author matt on 09/09/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public final class ArrayListChildren<E> implements Children<E> {
+    private final List<E> list;
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
+    public ArrayListChildren() {
+        list = new ArrayList<>();
+    }
+
+    public ArrayListChildren(Collection<E> initial) {
+        list = new ArrayList<>(initial);
+    }
+
+    public void add(E element) {
+        list.add(element);
+    }
+
+    public boolean remove(Object element) {
+        return list.remove(element);
     }
 
     @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Children<N> children = (Children<N>) n.getChildren();
-            final N[] reversed = (N[]) Array.newInstance(n.getClass(), children.size());
-            final OptionalEnumeration<N> childIterator = children.optionalEnumeration();
-            for (int i = children.size() - 1; i >= 0; i--) {
-                reversed[i] = childIterator.nextElement();
-            }
-            for (final N child : reversed) {
-                parents.push(child);
-            }
-            do {
-                current = parents.pop();
-            } while (current == null);
-            return n;
+    public int size() {
+        return list.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return list.size() == 0;
+    }
+
+    @Override
+    public E get(int i) {
+        return list.get(i);
+    }
+
+    @Override
+    public OptionalEnumeration<E> optionalEnumeration() {
+        return new OEnum();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return list.iterator();
+    }
+
+    private final class OEnum implements OptionalEnumeration<E> {
+        final Iterator<E> iterator = list.iterator();
+
+        @Override
+        public boolean hasMoreElements() {
+            return iterator.hasNext();
         }
-        throw new NoSuchElementException();
+
+        @Override
+        public E nextElement() {
+            return iterator.next();
+        }
     }
 }

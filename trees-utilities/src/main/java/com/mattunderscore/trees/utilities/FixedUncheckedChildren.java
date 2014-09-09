@@ -23,49 +23,86 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.utilities;
 
 import com.mattunderscore.trees.Children;
-import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.OptionalEnumeration;
-import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
 
 import java.lang.reflect.Array;
 import java.util.*;
 
 /**
- * @author matt on 17/08/14.
+ * Array backed, not typed checked, Children implementation for immutable Children from a trusted source.
+ * <p>This is immutable assuming the ownership of the backing array is exclusive.</p>
+ * @author matt on 20/06/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public final class FixedUncheckedChildren<E> implements Children<E> {
+    private final Object[] array;
 
-    public PreOrderIterator(T tree) {
-        current = tree.getRoot();
-        parents.push(current);
+    public FixedUncheckedChildren(Object[] array) {
+        this.array = array;
     }
 
     @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final Children<N> children = (Children<N>) n.getChildren();
-            final N[] reversed = (N[]) Array.newInstance(n.getClass(), children.size());
-            final OptionalEnumeration<N> childIterator = children.optionalEnumeration();
-            for (int i = children.size() - 1; i >= 0; i--) {
-                reversed[i] = childIterator.nextElement();
-            }
-            for (final N child : reversed) {
-                parents.push(child);
-            }
-            do {
-                current = parents.pop();
-            } while (current == null);
-            return n;
+    public int size() {
+        return array.length;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return array.length == 0;
+    }
+
+    @Override
+    public E get(int i) {
+        return (E) array[i];
+    }
+
+    @Override
+    public OptionalEnumeration<E> optionalEnumeration() {
+        return new FUCOptionalEnumeration();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new FUCIterator();
+    }
+
+    private final class FUCIterator extends PrefetchingIterator<E> {
+        private int pos;
+
+        public FUCIterator() {
+            pos = 0;
         }
-        throw new NoSuchElementException();
+
+        @Override
+        protected E calculateNext() throws NoSuchElementException {
+            while (pos < array.length) {
+                final E next = (E) array[pos++];
+                if (next != null) {
+                    return next;
+                }
+            }
+            throw new NoSuchElementException();
+        }
+    }
+
+    private final class FUCOptionalEnumeration implements OptionalEnumeration<E> {
+        private int pos;
+
+        public FUCOptionalEnumeration() {
+            pos = 0;
+        }
+
+        @Override
+        public boolean hasMoreElements() {
+            return pos < array.length;
+        }
+
+        @Override
+        public E nextElement() {
+            return (E) array[pos++];
+        }
     }
 }

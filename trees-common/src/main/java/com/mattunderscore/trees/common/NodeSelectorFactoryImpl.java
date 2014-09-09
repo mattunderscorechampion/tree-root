@@ -98,7 +98,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
         protected N calculateNext() {
             if (possibles == null) {
                 final N next = parents.next();
-                final Collection<N> children = (Collection<N>)next.getChildren();
+                final Children<N> children = (Children<N>)next.getChildren();
                 possibles = children.iterator();
             }
 

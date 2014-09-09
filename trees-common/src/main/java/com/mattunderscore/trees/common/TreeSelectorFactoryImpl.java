@@ -87,7 +87,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
         protected T calculateNext() {
             if (possibles == null) {
                 final N next = parents.next().getRoot();
-                final Collection<N> children = (Collection<N>)next.getChildren();
+                final Children<N> children = (Children<N>)next.getChildren();
                 possibles = children.iterator();
             }
 

@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.spi.*;
+import com.mattunderscore.trees.utilities.ArrayListChildren;
 import net.jcip.annotations.NotThreadSafe;
 
 import java.util.ArrayList;
@@ -40,16 +41,16 @@ import java.util.List;
 @NotThreadSafe
 public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E> {
     private E element;
-    private final List<LinkedTree<E>> children;
+    private final ArrayListChildren<LinkedTree<E>> children;
 
     LinkedTree(E root) {
         this.element = root;
-        children = new ArrayList<>();
+        children = new ArrayListChildren<>();
     }
 
     private LinkedTree(E root, LinkedTree[] subtrees) {
         this.element = root;
-        children = new ArrayList<>();
+        children = new ArrayListChildren<>();
         for (int i = 0; i < subtrees.length; i++) {
             children.add(subtrees[i]);
         }
@@ -81,8 +82,8 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
     }
 
     @Override
-    public Collection<? extends MutableNode<E>> getChildren() {
-        return Collections.unmodifiableList(children);
+    public Children<? extends MutableNode<E>> getChildren() {
+        return children;
     }
 
     @Override

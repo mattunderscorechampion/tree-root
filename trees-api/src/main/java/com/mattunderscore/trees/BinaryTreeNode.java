@@ -42,5 +42,5 @@ public interface BinaryTreeNode<E> extends Node<E> {
      */
     BinaryTreeNode<E> getRight();
 
-    Collection<? extends BinaryTreeNode<E>> getChildren();
+    Children<? extends BinaryTreeNode<E>> getChildren();
 }
