@@ -54,11 +54,6 @@ public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection
     }
 
     @Override
-    public E get(int i) {
-        return (E) array[i];
-    }
-
-    @Override
     public Iterator<E> structuralIterator() {
         return new FUSCStructuralIterator();
     }

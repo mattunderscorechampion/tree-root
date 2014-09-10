@@ -30,7 +30,7 @@ import java.util.Iterator;
 /**
  * A simplified collection that implements {@link java.lang.Iterable}. It exposes two iterators, one which returns only
  * elements (returned by {@link #iterator()}) and another which may return null ({@link #structuralIterator()}).
- * Implementations of this collection may either permit or allow nulls.
+ * Implementations of this collection may either permit or reject nulls.
  * @author matt on 09/09/14.
  */
 public interface SimpleCollection<N> extends Iterable<N> {
@@ -44,12 +44,6 @@ public interface SimpleCollection<N> extends Iterable<N> {
      * @return {@code true} if there are no children
      */
     boolean isEmpty();
-
-    /**
-     * @param i the position
-     * @return the element at the position
-     */
-    N get(int i);
 
     /**
      * @return a iterator that may return null

@@ -65,11 +65,6 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
     }
 
     @Override
-    public E get(int i) {
-        return list.get(i);
-    }
-
-    @Override
     public Iterator<E> structuralIterator() {
         return Collections.unmodifiableList(list).iterator();
     }

@@ -34,6 +34,8 @@ import com.mattunderscore.trees.utilities.FixedUncheckedSimpleCollection;
 
 import net.jcip.annotations.GuardedBy;
 
+import java.util.Iterator;
+
 /**
  * Initial attempt at thread safety is base on copy on mutation. When a child node is added or removed a shallow copy
  * of the children is made with the modification present and the new child collection replaces the existing one. Any
@@ -73,8 +75,11 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
             final SimpleCollection<MutableNode<E>> oldList = elementList;
             final int size = oldList.size();
             final Object[] newArray = new Object[size + 1];
-            for (int i = 0; i < size; i++) {
-                newArray[i] = oldList.get(i);
+            int i = 0;
+            final Iterator<MutableNode<E>> iterator = oldList.structuralIterator();
+            while (iterator.hasNext()) {
+                newArray[i] = iterator.next();
+                i++;
             }
             newArray[size] = child;
             elementList = new FixedUncheckedSimpleCollection<>(newArray);
@@ -93,12 +98,14 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
             final Object[] searchArray = new Object[size];
             int i = 0;
             int j = 0;
-            for (; i < size; i++) {
-                final MutableNode<E> currentNode = oldList.get(i);
+            final Iterator<MutableNode<E>> iterator = oldList.structuralIterator();
+            while (iterator.hasNext()) {
+                final MutableNode<E> currentNode = iterator.next();
                 if (child != currentNode) {
                     searchArray[j] = currentNode;
                     j++;
                 }
+                i++;
             }
             if (j == i) {
                 // Nothing removed
