@@ -30,12 +30,14 @@ import java.util.Iterator;
 /**
  * A simplified collection that implements {@link java.lang.Iterable}. It exposes two iterators, one which returns only
  * elements (returned by {@link #iterator()}) and another which may return null ({@link #structuralIterator()}).
- * Implementations of this collection may either permit or reject nulls.
+ * Implementations of this collection may either permit or reject nulls. Nulls represent an empty place where a element
+ * might be. It should only permit nulls if there is an iteration order.
  * @author matt on 09/09/14.
  */
 public interface SimpleCollection<N> extends Iterable<N> {
 
     /**
+     * Returns an estimate of the number of elements in the collection. It may count nulls in the collection.
      * @return The number of children
      */
     int size();
@@ -46,7 +48,17 @@ public interface SimpleCollection<N> extends Iterable<N> {
     boolean isEmpty();
 
     /**
-     * @return a iterator that may return null
+     * Returns an iterator over the elements in this collection. Only some implementations may guarantee an iteration
+     * order. It is guaranteed not to return null.
+     */
+    @Override
+    Iterator<N> iterator();
+
+    /**
+     * An iterator over the structure of the collection. If there is an empty place in the collection where an element
+     * might be but is not then the iterator will not return null. It will only return null if there is an iteration
+     * order.
+     * @return an Iterator over the elements in this collection
      */
     Iterator<N> structuralIterator();
 }
