@@ -23,36 +23,74 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.utilities;
+
+import com.mattunderscore.trees.SimpleCollection;
+import com.mattunderscore.trees.OptionalEnumeration;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * A Iterable object that contains the children of each node.
- * <p>Introduced to allow two ways of iterating over the children. A tree might specify positions for its children. If
- * these positions are ordered it may be necessary to know when a position is empty. For example when iterating over a
- * binary tree, the left branch may be empty and for correct iteration order whether or not the root or right node
- * should be returned depends on knowing the left branch is empty.</p>
  * @author matt on 09/09/14.
  */
-public interface Children<N> extends Iterable<N> {
+public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
+    private final List<E> list;
 
-    /**
-     * @return The number of children
-     */
-    int size();
+    public ArrayListSimpleCollection() {
+        list = new ArrayList<>();
+    }
 
-    /**
-     * @return {@code true} if there are no children
-     */
-    boolean isEmpty();
+    public ArrayListSimpleCollection(Collection<E> initial) {
+        list = new ArrayList<>(initial);
+    }
 
-    /**
-     * @param i the position
-     * @return the element at the position
-     */
-    N get(int i);
+    public void add(E element) {
+        list.add(element);
+    }
 
-    /**
-     * @return an enumeration that may return null
-     */
-    OptionalEnumeration<N> optionalEnumeration();
+    public boolean remove(Object element) {
+        return list.remove(element);
+    }
+
+    @Override
+    public int size() {
+        return list.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return list.size() == 0;
+    }
+
+    @Override
+    public E get(int i) {
+        return list.get(i);
+    }
+
+    @Override
+    public OptionalEnumeration<E> optionalEnumeration() {
+        return new OEnum();
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return list.iterator();
+    }
+
+    private final class OEnum implements OptionalEnumeration<E> {
+        final Iterator<E> iterator = list.iterator();
+
+        @Override
+        public boolean hasMoreElements() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public E nextElement() {
+            return iterator.next();
+        }
+    }
 }

@@ -25,72 +25,83 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities;
 
-import com.mattunderscore.trees.Children;
+import com.mattunderscore.trees.SimpleCollection;
 import com.mattunderscore.trees.OptionalEnumeration;
+import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
- * @author matt on 09/09/14.
+ * Array backed, not typed checked, Children implementation for immutable Children from a trusted source.
+ * <p>This is immutable assuming the ownership of the backing array is exclusive.</p>
+ * @author matt on 20/06/14.
  */
-public final class ArrayListChildren<E> implements Children<E> {
-    private final List<E> list;
+public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection<E> {
+    private final Object[] array;
 
-    public ArrayListChildren() {
-        list = new ArrayList<>();
-    }
-
-    public ArrayListChildren(Collection<E> initial) {
-        list = new ArrayList<>(initial);
-    }
-
-    public void add(E element) {
-        list.add(element);
-    }
-
-    public boolean remove(Object element) {
-        return list.remove(element);
+    public FixedUncheckedSimpleCollection(Object[] array) {
+        this.array = array;
     }
 
     @Override
     public int size() {
-        return list.size();
+        return array.length;
     }
 
     @Override
     public boolean isEmpty() {
-        return list.size() == 0;
+        return array.length == 0;
     }
 
     @Override
     public E get(int i) {
-        return list.get(i);
+        return (E) array[i];
     }
 
     @Override
     public OptionalEnumeration<E> optionalEnumeration() {
-        return new OEnum();
+        return new FUCOptionalEnumeration();
     }
 
     @Override
     public Iterator<E> iterator() {
-        return list.iterator();
+        return new FUCIterator();
     }
 
-    private final class OEnum implements OptionalEnumeration<E> {
-        final Iterator<E> iterator = list.iterator();
+    private final class FUCIterator extends PrefetchingIterator<E> {
+        private int pos;
+
+        public FUCIterator() {
+            pos = 0;
+        }
+
+        @Override
+        protected E calculateNext() throws NoSuchElementException {
+            while (pos < array.length) {
+                final E next = (E) array[pos++];
+                if (next != null) {
+                    return next;
+                }
+            }
+            throw new NoSuchElementException();
+        }
+    }
+
+    private final class FUCOptionalEnumeration implements OptionalEnumeration<E> {
+        private int pos;
+
+        public FUCOptionalEnumeration() {
+            pos = 0;
+        }
 
         @Override
         public boolean hasMoreElements() {
-            return iterator.hasNext();
+            return pos < array.length;
         }
 
         @Override
         public E nextElement() {
-            return iterator.next();
+            return (E) array[pos++];
         }
     }
 }

@@ -25,13 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.BinaryTreeNode;
-import com.mattunderscore.trees.Children;
+import com.mattunderscore.trees.SimpleCollection;
 import com.mattunderscore.trees.MutableBinaryTreeNode;
-import com.mattunderscore.trees.utilities.FixedUncheckedChildren;
-import com.mattunderscore.trees.utilities.FixedUncheckedList;
-
-import java.util.Collection;
+import com.mattunderscore.trees.utilities.FixedUncheckedSimpleCollection;
 
 /**
  * Mutable binary tree node implementation.
@@ -98,8 +94,8 @@ public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode
     }
 
     @Override
-    public synchronized Children<? extends MutableBinaryTreeNodeImpl<E>> getChildren() {
-        return new FixedUncheckedChildren<>(children);
+    public synchronized SimpleCollection<? extends MutableBinaryTreeNodeImpl<E>> getChildren() {
+        return new FixedUncheckedSimpleCollection<>(children);
     }
 
     @Override

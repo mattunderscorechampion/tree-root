@@ -28,12 +28,9 @@ package com.mattunderscore.trees.internal;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.common.traversers.PreOrderIterator;
-import com.mattunderscore.trees.traversal.TreeWalker;
-import com.mattunderscore.trees.traversal.TreeWalkers;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
@@ -56,7 +53,7 @@ public final class MutableTreeNodeImplTest {
         assertFalse(root.isLeaf());
         depth1.addChild("c");
 
-        final Children<? extends MutableNode<String>> children = root.getChildren();
+        final SimpleCollection<? extends MutableNode<String>> children = root.getChildren();
         assertEquals(1, children.size());
         final Iterator<? extends MutableNode<String>> iterator0 = children.iterator();
         assertTrue(iterator0.hasNext());

@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.Children;
+import com.mattunderscore.trees.SimpleCollection;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.OptionalEnumeration;
 import com.mattunderscore.trees.Tree;
@@ -52,7 +52,7 @@ public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>>
     protected N calculateNext() throws NoSuchElementException {
         if (!parents.isEmpty()) {
             final N n = current;
-            final Children<N> children = (Children<N>) n.getChildren();
+            final SimpleCollection<N> children = (SimpleCollection<N>) n.getChildren();
             final N[] reversed = (N[]) Array.newInstance(n.getClass(), children.size());
             final OptionalEnumeration<N> childIterator = children.optionalEnumeration();
             for (int i = children.size() - 1; i >= 0; i--) {

@@ -29,7 +29,6 @@ import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.TreesImpl;
 import org.junit.Test;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
@@ -53,7 +52,7 @@ public final class StringTreeFactoryTest {
         final Node<String> root = tree.getRoot();
         assertEquals(String.class, root.getElementClass());
         assertEquals("a", root.getElement());
-        final Children<? extends Node<String>> children0 = root.getChildren();
+        final SimpleCollection<? extends Node<String>> children0 = root.getChildren();
         final Iterator<? extends Node<String>> iterator0 = children0.iterator();
         assertEquals(2, children0.size());
         assertEquals("a", root.getElement());
@@ -64,7 +63,7 @@ public final class StringTreeFactoryTest {
         assertFalse(iterator0.hasNext());
         assertEquals("b", bNode.getElement());
         assertEquals("d", dNode.getElement());
-        final Children<? extends Node<String>> children1 = bNode.getChildren();
+        final SimpleCollection<? extends Node<String>> children1 = bNode.getChildren();
         final Iterator<? extends Node<String>> iterator1 = children1.iterator();
         assertTrue(iterator1.hasNext());
         final Node<String> cNode = iterator1.next();

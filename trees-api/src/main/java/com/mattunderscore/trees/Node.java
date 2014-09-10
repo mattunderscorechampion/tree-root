@@ -25,8 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
-import java.util.Collection;
-
 /**
  * Represents a node of the tree.
  * @author matt on 08/08/14.
@@ -46,7 +44,7 @@ public interface Node<E> {
     /**
      * @return The children of the node
      */
-    Children<? extends Node<E>> getChildren();
+    SimpleCollection<? extends Node<E>> getChildren();
 
     /**
      * @return {@code true} if the node is a leaf node

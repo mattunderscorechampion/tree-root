@@ -33,7 +33,6 @@ import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 /**
@@ -98,7 +97,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
         protected N calculateNext() {
             if (possibles == null) {
                 final N next = parents.next();
-                final Children<N> children = (Children<N>)next.getChildren();
+                final SimpleCollection<N> children = (SimpleCollection<N>)next.getChildren();
                 possibles = children.iterator();
             }
 

@@ -25,8 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
-import java.util.Collection;
-
 /**
  * Represents a mutable node of a tree.
  * @author matt on 08/08/14.
@@ -36,7 +34,7 @@ public interface MutableNode<E> extends Node<E>, NodeAppender<E, MutableNode<E>>
     /**
      * @return the children of the node
      */
-    Children<? extends MutableNode<E>> getChildren();
+    SimpleCollection<? extends MutableNode<E>> getChildren();
 
     /**
      * Remove the node if it is a child of the recipient

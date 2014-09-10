@@ -33,7 +33,6 @@ import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 /**
@@ -87,7 +86,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
         protected T calculateNext() {
             if (possibles == null) {
                 final N next = parents.next().getRoot();
-                final Children<N> children = (Children<N>)next.getChildren();
+                final SimpleCollection<N> children = (SimpleCollection<N>)next.getChildren();
                 possibles = children.iterator();
             }
 

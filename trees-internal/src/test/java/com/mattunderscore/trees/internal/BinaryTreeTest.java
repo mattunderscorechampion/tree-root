@@ -30,7 +30,6 @@ import com.mattunderscore.trees.common.TreesImpl;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
@@ -74,7 +73,7 @@ public final class BinaryTreeTest {
         assertEquals("b", tree.getRoot().getLeft().getElement());
         assertEquals("c", tree.getRoot().getRight().getElement());
 
-        final Children<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
+        final SimpleCollection<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
         final Iterator<? extends BinaryTreeNode<String>> iterator = children.iterator();
         final BinaryTreeNode<String> left = iterator.next();
         assertTrue(left.isLeaf());
@@ -99,7 +98,7 @@ public final class BinaryTreeTest {
         assertEquals("b", tree.getRoot().getLeft().getElement());
         assertNull(tree.getRoot().getRight());
 
-        final Children<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
+        final SimpleCollection<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
         final Iterator<? extends BinaryTreeNode<String>> iterator = children.iterator();
         final BinaryTreeNode<String> left = iterator.next();
         assertTrue(left.isLeaf());
@@ -123,7 +122,7 @@ public final class BinaryTreeTest {
         assertNull(tree.getRoot().getLeft());
         assertEquals("c", tree.getRoot().getRight().getElement());
 
-        final Children<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
+        final SimpleCollection<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
         final Iterator<? extends BinaryTreeNode<String>> iterator = children.iterator();
         final BinaryTreeNode<String> left = iterator.next();
         assertNull(left);
