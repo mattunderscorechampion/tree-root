@@ -33,7 +33,7 @@ import java.util.Iterator;
 /**
  * @author matt on 08/08/14.
  */
-public interface TreeTraverser {
+public interface TreeIterators {
 
     /**
      * @param tree The tree to iterate over
