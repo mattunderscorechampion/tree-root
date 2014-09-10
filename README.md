@@ -129,3 +129,26 @@ types without exposing behaviour in the API.
 
 A more Java centric way of describing this is that the API provides a library that can be used to work with trees.
 The SPI provides a framework for implementing tree based data structures that can be worked on by the API.
+
+Simple Collection
+=================
+
+I have created a SimpleCollection extending Iterable. I had intended to reply on the Collections API for this and for a
+time considered returning an Iterable to represent the children. However I found that I wanted to iterate over the 
+children without nulls and occasionally with nulls to represent the empty branches.
+
+The SimpleCollection provides a pair of methods for getting iterators and a pair of methods for getting some idea of
+the size of the collection. It does not provide indexed access to its elements or methods for modifying the collection,
+excepting the remove method in the iterator.
+
+The SimpleCollection might be ordered. If it is ordered it should also have some structure, an upper and lower bound on
+the number elements of the collection, for example a binary tree node may have 0 to 2 child nodes, one node for each
+branch. One iterator would return only the nodes present, the structural iterator must return two values, in order left
+to right returning null if the branch is not present.
+
+Targeted Language
+=================
+
+The current target is Java 7. I know Java 8 is the latest version and the Streams API may be helpful for tree
+traversals. I maybe able to add some Java 8 specific extensions and I will move the target over to Java 8 towards EOL of
+Java 7.
