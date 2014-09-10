@@ -26,53 +26,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.traversers;
 
 import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.traversal.TreeIterators;
 
 import java.util.Iterator;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.traversal.TreeIterators}.
+ * An element iterator that delegates to a Node iterator and unwraps the return to an element.
  * @author matt on 10/09/14.
  */
-public final class TreeIteratorsImpl implements TreeIterators {
-    @Override
-    public <E, N extends Node<E>> Iterator<N> preOrderIterator(Tree<E, N> tree) {
-        return new PreOrderIterator<>(tree);
+public class NodeToElementIterators<E, N extends Node<E>> implements Iterator<E> {
+    private final Iterator<N> delegatedIterator;
+
+    public NodeToElementIterators(Iterator<N> delegatedIterator) {
+        this.delegatedIterator = delegatedIterator;
     }
 
     @Override
-    public <E, N extends Node<E>> Iterator<N> inOrderIterator(Tree<E, N> tree) {
-        return new InOrderIterator<>(tree);
+    public boolean hasNext() {
+        return delegatedIterator.hasNext();
     }
 
     @Override
-    public <E, N extends Node<E>> Iterator<N> postOrderIterator(Tree<E, N> tree) {
-        return new PostOrderIterator<>(tree);
+    public E next() {
+        return delegatedIterator.next().getElement();
     }
 
     @Override
-    public <E, N extends Node<E>> Iterator<N> breadthFirstIterator(Tree<E, N> tree) {
-        return new BreadthFirstIterator<>(tree);
-    }
-
-    @Override
-    public <E, N extends Node<E>> Iterator<E> preOrderElementsIterator(Tree<E, N> tree) {
-        return new NodeToElementIterators<>(new PreOrderIterator<>(tree));
-    }
-
-    @Override
-    public <E, N extends Node<E>> Iterator<E> inOrderElementsIterator(Tree<E, N> tree) {
-        return new NodeToElementIterators<>(new InOrderIterator<>(tree));
-    }
-
-    @Override
-    public <E, N extends Node<E>> Iterator<E> postOrderElementsIterator(Tree<E, N> tree) {
-        return new NodeToElementIterators<>(new PostOrderIterator<>(tree));
-    }
-
-    @Override
-    public <E, N extends Node<E>> Iterator<E> breadthFirstElementsIterator(Tree<E, N> tree) {
-        return new NodeToElementIterators<>(new BreadthFirstIterator<>(tree));
+    public void remove() {
+        delegatedIterator.remove();
     }
 }
