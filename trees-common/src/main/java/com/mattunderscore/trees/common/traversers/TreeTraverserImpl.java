@@ -23,61 +23,36 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.traversers.TreeTraverserImpl;
-import com.mattunderscore.trees.selection.NodeSelectorFactory;
-import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.traversal.TreeTraverser;
-import com.mattunderscore.trees.traversal.TreeWalkers;
 
-import java.util.Comparator;
+import java.util.Iterator;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.Trees}.
- * @author matt on 16/08/14.
+ * Implementation of {@link com.mattunderscore.trees.traversal.TreeTraverser}.
+ * @author matt on 10/09/14.
  */
-public final class TreesImpl implements Trees {
-    public final SPISupport helper = new SPISupport();
-
+public final class TreeTraverserImpl implements TreeTraverser {
     @Override
-    public <E> TopDownTreeRootBuilder<E> topDownBuilder() {
-        return new TopDownTreeRootBuilderImpl<E>(helper);
+    public <E, T extends Node<E>> Iterator<T> preOrderIterator(Tree<E, T> tree) {
+        return new PreOrderIterator<>(tree);
     }
 
     @Override
-    public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
-        return new BottomUpTreeBuilderImpl<E>(helper);
+    public <E, T extends Node<E>> Iterator<T> inOrderIterator(Tree<E, T> tree) {
+        return new InOrderIterator<>(tree);
     }
 
     @Override
-    public <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator) {
-        return new SortingTreeBuilderImpl<>(helper, comparator);
+    public <E, T extends Node<E>> Iterator<T> postOrderIterator(Tree<E, T> tree) {
+        return new PostOrderIterator<>(tree);
     }
 
     @Override
-    public <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm) {
-        throw new UnsupportedOperationException("Sorting algorithms not yet implemented");
-    }
-
-    @Override
-    public TreeSelectorFactory treeSelectorFactory() {
-        return new TreeSelectorFactoryImpl(helper);
-    }
-
-    @Override
-    public NodeSelectorFactory nodeSelectorFactory() {
-        return new NodeSelectorFactoryImpl(helper);
-    }
-
-    @Override
-    public TreeWalkers treeWalkers() {
-        return new TreeWalkersImpl();
-    }
-
-    @Override
-    public TreeTraverser treeTraversers() {
-        return new TreeTraverserImpl();
+    public <E, T extends Node<E>> Iterator<T> breadthFirstIterator(Tree<E, T> tree) {
+        return new BreadthFirstIterator<>(tree);
     }
 }

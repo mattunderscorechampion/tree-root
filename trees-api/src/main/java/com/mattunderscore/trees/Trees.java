@@ -27,6 +27,7 @@ package com.mattunderscore.trees;
 
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.traversal.TreeTraverser;
 import com.mattunderscore.trees.traversal.TreeWalkers;
 
 import java.util.Comparator;
@@ -86,4 +87,10 @@ public interface Trees {
      * @return
      */
     TreeWalkers treeWalkers();
+
+    /**
+     * Obtain a {@link com.mattunderscore.trees.traversal.TreeTraverser}
+     * @return
+     */
+    TreeTraverser treeTraversers();
 }
