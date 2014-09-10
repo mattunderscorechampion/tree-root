@@ -32,8 +32,9 @@ import java.util.*;
 
 /**
  * Array backed, not typed checked, {@link com.mattunderscore.trees.SimpleCollection} implementation for an immutable
- * collection from a trusted source.
- * <p>This is immutable assuming the ownership of the backing array is exclusive.</p>
+ * collection from a trusted source. It provides an iteration order and permits nulls.
+ * <p>This is immutable assuming the ownership of the backing array is exclusive. Hence the need to be created by a
+ * trusted source.</p>
  * @author matt on 20/06/14.
  */
 public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection<E> {

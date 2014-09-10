@@ -31,7 +31,8 @@ import net.jcip.annotations.NotThreadSafe;
 import java.util.*;
 
 /**
- * ArrayList backed {@link com.mattunderscore.trees.SimpleCollection}. Not thread-safe. Mutable.
+ * A {@link com.mattunderscore.trees.SimpleCollection} backed by {@link java.util.ArrayList}. Not thread-safe. Mutable.
+ * Does not provide an iteration order or permit nulls.
  * @author matt on 09/09/14.
  */
 @NotThreadSafe
@@ -47,7 +48,12 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
     }
 
     public void add(E element) {
-        list.add(element);
+        if (element == null) {
+            throw new NullPointerException("Nulls are not permitted in this collection");
+        }
+        else {
+            list.add(element);
+        }
     }
 
     public boolean remove(Object element) {
