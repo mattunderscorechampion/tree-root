@@ -27,7 +27,7 @@ package com.mattunderscore.trees.common.walkers;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.utilities.FixedUncheckedList;
 import net.jcip.annotations.Immutable;
 
@@ -44,7 +44,7 @@ public final class BreadthFirstWalker {
     public BreadthFirstWalker() {
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, TreeWalker<E, N> walker) {
+    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
@@ -62,7 +62,7 @@ public final class BreadthFirstWalker {
         }
     }
 
-    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(List<N> currentLevel, TreeWalker<E,N> walker) throws Done {
+    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(List<N> currentLevel, Walker<N> walker) throws Done {
         final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
         for (final N node : currentLevel) {
             if (!walker.onNext(node)) {

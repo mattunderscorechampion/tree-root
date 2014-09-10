@@ -28,25 +28,26 @@ package com.mattunderscore.trees.traversal;
 import com.mattunderscore.trees.Node;
 
 /**
- * Interface for walking over trees.
+ * Interface for walking over a collection.
+ * @param <E> The type of the collection
  * @author matt on 16/08/14.
  */
-public interface TreeWalker<E, N extends Node<E>> {
+public interface Walker<E> {
 
     /**
-     * Invoked if the tree is empty.
+     * Invoked if the collection is empty.
      */
     void onEmpty();
 
     /**
-     * Invoked for each node.
-     * @param node The node
-     * @return {@code true} if the walker should continue to the next node
+     * Invoked for each element.
+     * @param node The element
+     * @return {@code true} if the walker should continue to the next element
      */
-    boolean onNext(N node);
+    boolean onNext(E node);
 
     /**
-     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(Node)}.
+     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(E)}.
      */
     void onCompleted();
 }

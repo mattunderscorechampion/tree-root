@@ -27,7 +27,7 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.traversal.TreeWalkers;
 import com.mattunderscore.trees.common.walkers.BreadthFirstWalker;
 import com.mattunderscore.trees.common.walkers.InOrderWalker;
@@ -53,22 +53,22 @@ public final class TreeWalkersImpl implements TreeWalkers {
     }
 
     @Override
-    public <E, N extends Node<E>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<E, N> walker) {
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkPreOrder(T tree, Walker<N> walker) {
         preOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public <E, N extends Node<E>, T extends Tree<E, N>> void walkInOrder(T tree, TreeWalker<E, N> walker) {
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkInOrder(T tree, Walker<N> walker) {
         inOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public <E, N extends Node<E>, T extends Tree<E, N>> void walkPostOrder(T tree, TreeWalker<E, N> walker) {
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkPostOrder(T tree, Walker<N> walker) {
         postOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public <E, N extends Node<E>, T extends Tree<E, N>> void walkBreadthFirst(T tree, TreeWalker<E, N> walker) {
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker) {
         breadthFirstWalker.accept(tree, walker);
     }
 }
