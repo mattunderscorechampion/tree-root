@@ -26,16 +26,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.utilities;
 
 import com.mattunderscore.trees.SimpleCollection;
-import com.mattunderscore.trees.OptionalEnumeration;
+import net.jcip.annotations.NotThreadSafe;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
+ * ArrayList backed {@link com.mattunderscore.trees.SimpleCollection}. Not thread-safe. Mutable.
  * @author matt on 09/09/14.
  */
+@NotThreadSafe
 public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
     private final List<E> list;
 
@@ -71,26 +70,13 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
     }
 
     @Override
-    public OptionalEnumeration<E> optionalEnumeration() {
-        return new OEnum();
+    public Iterator<E> structuralIterator() {
+        return Collections.unmodifiableList(list).iterator();
     }
 
     @Override
     public Iterator<E> iterator() {
-        return list.iterator();
+        return Collections.unmodifiableList(list).iterator();
     }
 
-    private final class OEnum implements OptionalEnumeration<E> {
-        final Iterator<E> iterator = list.iterator();
-
-        @Override
-        public boolean hasMoreElements() {
-            return iterator.hasNext();
-        }
-
-        @Override
-        public E nextElement() {
-            return iterator.next();
-        }
-    }
 }

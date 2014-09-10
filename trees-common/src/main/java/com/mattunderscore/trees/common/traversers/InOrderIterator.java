@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.traversers;
 
 import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.OptionalEnumeration;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import net.jcip.annotations.NotThreadSafe;
@@ -53,8 +52,8 @@ public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> 
             if (current != null) {
                 final State<E, N> state = new State<>(current);
                 parents.push(state);
-                if (state.iterator.hasMoreElements()) {
-                    current = state.iterator.nextElement();
+                if (state.iterator.hasNext()) {
+                    current = state.iterator.next();
                 }
                 else {
                     current = null;
@@ -62,10 +61,10 @@ public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> 
             }
             else {
                 final State<E, N> state = parents.peek();
-                if (state.iterator.hasMoreElements()) {
-                    current = state.iterator.nextElement();
+                if (state.iterator.hasNext()) {
+                    current = state.iterator.next();
                 }
-                if (!state.iterator.hasMoreElements()) {
+                if (!state.iterator.hasNext()) {
                     parents.pop();
                 }
                 return state.node;
@@ -76,11 +75,11 @@ public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> 
 
     private static final class State<E, N extends Node<E>> {
         private final N node;
-        private final OptionalEnumeration<N> iterator;
+        private final Iterator<N> iterator;
 
         public State(N node) {
             this.node = node;
-            this.iterator = (OptionalEnumeration<N>)node.getChildren().optionalEnumeration();
+            this.iterator = (Iterator<N>)node.getChildren().structuralIterator();
         }
     }
 }

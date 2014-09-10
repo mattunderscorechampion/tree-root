@@ -26,13 +26,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.utilities;
 
 import com.mattunderscore.trees.SimpleCollection;
-import com.mattunderscore.trees.OptionalEnumeration;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 import java.util.*;
 
 /**
- * Array backed, not typed checked, Children implementation for immutable Children from a trusted source.
+ * Array backed, not typed checked, {@link com.mattunderscore.trees.SimpleCollection} implementation for an immutable
+ * collection from a trusted source.
  * <p>This is immutable assuming the ownership of the backing array is exclusive.</p>
  * @author matt on 20/06/14.
  */
@@ -59,19 +59,19 @@ public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection
     }
 
     @Override
-    public OptionalEnumeration<E> optionalEnumeration() {
-        return new FUCOptionalEnumeration();
+    public Iterator<E> structuralIterator() {
+        return new FUSCStructuralIterator();
     }
 
     @Override
     public Iterator<E> iterator() {
-        return new FUCIterator();
+        return new FUSCIterator();
     }
 
-    private final class FUCIterator extends PrefetchingIterator<E> {
+    private final class FUSCIterator extends PrefetchingIterator<E> {
         private int pos;
 
-        public FUCIterator() {
+        public FUSCIterator() {
             pos = 0;
         }
 
@@ -87,21 +87,26 @@ public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection
         }
     }
 
-    private final class FUCOptionalEnumeration implements OptionalEnumeration<E> {
+    private final class FUSCStructuralIterator implements Iterator<E> {
         private int pos;
 
-        public FUCOptionalEnumeration() {
+        public FUSCStructuralIterator() {
             pos = 0;
         }
 
         @Override
-        public boolean hasMoreElements() {
+        public boolean hasNext() {
             return pos < array.length;
         }
 
         @Override
-        public E nextElement() {
+        public E next() {
             return (E) array[pos++];
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
     }
 }

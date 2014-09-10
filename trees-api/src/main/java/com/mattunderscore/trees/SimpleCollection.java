@@ -25,9 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
+import java.util.Iterator;
+
 /**
  * A simplified collection that implements {@link java.lang.Iterable}. It exposes two iterators, one which returns only
- * elements (returned by {@link #iterator()}) and another which may return null ({@link #optionalEnumeration()}).
+ * elements (returned by {@link #iterator()}) and another which may return null ({@link #structuralIterator()}).
  * Implementations of this collection may either permit or allow nulls.
  * @author matt on 09/09/14.
  */
@@ -50,7 +52,7 @@ public interface SimpleCollection<N> extends Iterable<N> {
     N get(int i);
 
     /**
-     * @return an enumeration that may return null
+     * @return a iterator that may return null
      */
-    OptionalEnumeration<N> optionalEnumeration();
+    Iterator<N> structuralIterator();
 }

@@ -27,7 +27,6 @@ package com.mattunderscore.trees.common.traversers;
 
 import com.mattunderscore.trees.SimpleCollection;
 import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.OptionalEnumeration;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import net.jcip.annotations.NotThreadSafe;
@@ -54,9 +53,9 @@ public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>>
             final N n = current;
             final SimpleCollection<N> children = (SimpleCollection<N>) n.getChildren();
             final N[] reversed = (N[]) Array.newInstance(n.getClass(), children.size());
-            final OptionalEnumeration<N> childIterator = children.optionalEnumeration();
+            final Iterator<N> childIterator = children.structuralIterator();
             for (int i = children.size() - 1; i >= 0; i--) {
-                reversed[i] = childIterator.nextElement();
+                reversed[i] = childIterator.next();
             }
             for (final N child : reversed) {
                 parents.push(child);
