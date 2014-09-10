@@ -27,12 +27,9 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.common.walkers.*;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.traversal.TreeWalkers;
-import com.mattunderscore.trees.common.walkers.BreadthFirstWalker;
-import com.mattunderscore.trees.common.walkers.InOrderWalker;
-import com.mattunderscore.trees.common.walkers.PostOrderWalker;
-import com.mattunderscore.trees.common.walkers.PreOrderWalker;
 import net.jcip.annotations.Immutable;
 
 /**
@@ -70,5 +67,29 @@ public final class TreeWalkersImpl implements TreeWalkers {
     @Override
     public <E, N extends Node<E>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker) {
         breadthFirstWalker.accept(tree, walker);
+    }
+
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, Walker<E> walker) {
+        final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
+        preOrderWalker.accept(tree, nodeWalker);
+    }
+
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsInOrder(T tree, Walker<E> walker) {
+        final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
+        inOrderWalker.accept(tree, nodeWalker);
+    }
+
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsPostOrder(T tree, Walker<E> walker) {
+        final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
+        postOrderWalker.accept(tree, nodeWalker);
+    }
+
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker) {
+        final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
+        breadthFirstWalker.accept(tree, nodeWalker);
     }
 }

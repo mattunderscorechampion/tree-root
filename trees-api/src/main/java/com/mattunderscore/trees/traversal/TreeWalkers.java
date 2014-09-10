@@ -72,4 +72,44 @@ public interface TreeWalkers {
      * @param <T> Tree type
      */
     <E, N extends Node<E>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker);
+
+    /**
+     * Traverse the tree elements in preorder.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, Walker<E> walker);
+
+    /**
+     * Traverse the tree elements in order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsInOrder(T tree, Walker<E> walker);
+
+    /**
+     * Traverse the tree elements in post order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsPostOrder(T tree, Walker<E> walker);
+
+    /**
+     * Traverse the tree elements in breadth first order.
+     * @param tree The tree
+     * @param walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker);
 }
