@@ -32,7 +32,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Iterator over no objects.
- * @author matt on 25/06/14.
+ * @author Matt Champion on 25/06/14.
  */
 @Immutable
 public final class EmptyIterator<E> implements Iterator<E> {

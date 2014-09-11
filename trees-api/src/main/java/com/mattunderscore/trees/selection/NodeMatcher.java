@@ -29,7 +29,7 @@ import com.mattunderscore.trees.Node;
 
 /**
  * Matches a node.
- * @author matt on 11/08/14.
+ * @author Matt Champion on 11/08/14.
  */
 public interface NodeMatcher<E> {
 

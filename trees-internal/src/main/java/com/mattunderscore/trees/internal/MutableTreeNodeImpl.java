@@ -44,7 +44,7 @@ import java.util.Iterator;
  * The problem is that modifications to grandchildren can still be seen because of the shallow copy. The problem with
  * this is the modifications can be observed out of order. The modification to the grandchilden is made after the parent
  * but seen first.
- * @author matt on 15/07/14.
+ * @author Matt Champion on 15/07/14.
  */
 public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")

@@ -32,7 +32,7 @@ import net.jcip.annotations.Immutable;
 
 /**
  * Matches the negation of the matcher passed to it.
- * @author matt on 25/06/14.
+ * @author Matt Champion on 25/06/14.
  */
 @Immutable
 public final class NegatingMatcher<E> implements NodeMatcher<E> {

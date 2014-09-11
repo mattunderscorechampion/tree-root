@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * Unchecked exception for when the required SPI component is missing.
- * @author matt on 30/08/14.
+ * @author Matt Champion on 30/08/14.
  */
 public final class OperationNotSupportedForType extends RuntimeException {
     private static final long serialVersionUID = 7271042140816367734L;

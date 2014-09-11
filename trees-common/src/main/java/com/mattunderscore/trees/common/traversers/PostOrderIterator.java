@@ -34,7 +34,7 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 
 /**
- * @author matt on 03/09/14.
+ * @author Matt Champion on 03/09/14.
  */
 public final class PostOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
     private final Stack<State<E, N>> parents = new Stack<>();

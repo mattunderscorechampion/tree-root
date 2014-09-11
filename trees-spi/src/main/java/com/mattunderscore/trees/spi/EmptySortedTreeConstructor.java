@@ -32,7 +32,7 @@ import com.mattunderscore.trees.Tree;
 import java.util.Comparator;
 
 /**
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public interface EmptySortedTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
 

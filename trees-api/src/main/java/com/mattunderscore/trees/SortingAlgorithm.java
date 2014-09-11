@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * An algorithm used to sort trees.
- * @author matt on 07/09/14.
+ * @author Matt Champion on 07/09/14.
  */
 public interface SortingAlgorithm {
 }

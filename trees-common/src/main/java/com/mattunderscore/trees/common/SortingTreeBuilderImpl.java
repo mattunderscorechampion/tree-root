@@ -32,7 +32,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
     private final SPISupport helper;

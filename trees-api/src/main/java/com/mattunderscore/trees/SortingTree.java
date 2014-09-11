@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * A mutable, organised tree that sorts the elements passed to it.
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public interface SortingTree<E, N extends Node<E>> extends MutableOrganisedTree<E, N> {
 }

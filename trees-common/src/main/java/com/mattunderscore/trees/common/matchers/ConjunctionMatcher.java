@@ -32,7 +32,7 @@ import net.jcip.annotations.Immutable;
 
 /**
  * Matches a node if the both two matchers passed in match the node.
- * @author matt on 26/06/14.
+ * @author Matt Champion on 26/06/14.
  */
 @Immutable
 public final class ConjunctionMatcher<E> implements NodeMatcher<E> {

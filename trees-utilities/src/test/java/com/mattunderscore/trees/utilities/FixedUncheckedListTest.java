@@ -35,7 +35,7 @@ import java.util.NoSuchElementException;
 import static org.junit.Assert.*;
 
 /**
- * @author matt on 20/06/14.
+ * @author Matt Champion on 20/06/14.
  */
 public final class FixedUncheckedListTest {
 

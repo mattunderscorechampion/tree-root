@@ -35,7 +35,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author matt on 09/06/14.
+ * @author Matt Champion on 09/06/14.
  */
 public final class RegexMatcherTest {
     private static final NodeMatcher<String> aMatcher = new RegexMatcher("^A$");

@@ -32,7 +32,7 @@ import net.jcip.annotations.Immutable;
 
 /**
  * Matches any node.
- * @author matt on 25/06/14.
+ * @author Matt Champion on 25/06/14.
  */
 @Immutable
 public final class AlwaysMatcher<E> implements NodeMatcher<E> {

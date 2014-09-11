@@ -35,7 +35,7 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import java.util.*;
 
 /**
- * @author matt on 05/09/14.
+ * @author Matt Champion on 05/09/14.
  */
 public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
     private Iterator<N> currentLayer;

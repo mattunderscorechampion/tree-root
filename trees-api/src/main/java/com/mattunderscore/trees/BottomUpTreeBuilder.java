@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * Builder used to create the an empty tree or a non-empty tree.
- * @author matt on 07/08/14.
+ * @author Matt Champion on 07/08/14.
  */
 public interface BottomUpTreeBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? extends Node<E>>> {
 

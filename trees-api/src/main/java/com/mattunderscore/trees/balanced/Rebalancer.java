@@ -32,7 +32,7 @@ import com.mattunderscore.trees.Tree;
 
 /**
  * Allows trees to be rebalanced.
- * @author matt on 30/08/14.
+ * @author Matt Champion on 30/08/14.
  */
 public interface Rebalancer {
     /**

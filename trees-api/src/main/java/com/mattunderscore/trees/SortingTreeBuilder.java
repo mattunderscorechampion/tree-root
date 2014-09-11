@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * Builder used to create sorting trees.
- * @author matt on 07/09/14.
+ * @author Matt Champion on 07/09/14.
  */
 public interface SortingTreeBuilder<E> extends OrganisedTreeBuilder<E, SortingTree<E, Node<E>>> {
 }

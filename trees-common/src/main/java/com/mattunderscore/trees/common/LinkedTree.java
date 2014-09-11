@@ -31,7 +31,7 @@ import com.mattunderscore.trees.utilities.ArrayListSimpleCollection;
 import net.jcip.annotations.NotThreadSafe;
 
 /**
- * @author matt on 07/08/14.
+ * @author Matt Champion on 07/08/14.
  */
 @NotThreadSafe
 public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E> {

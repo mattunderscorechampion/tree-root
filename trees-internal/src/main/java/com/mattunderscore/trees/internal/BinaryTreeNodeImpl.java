@@ -35,7 +35,7 @@ import com.mattunderscore.trees.utilities.FixedUncheckedSimpleCollection;
 
 /**
  * Binary tree node implementation.
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public final class BinaryTreeNodeImpl<E> implements BinaryTreeNode<E> {
     private final E element;

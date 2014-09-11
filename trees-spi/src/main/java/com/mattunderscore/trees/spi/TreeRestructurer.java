@@ -29,7 +29,7 @@ import com.mattunderscore.trees.Node;
 
 /**
  * Support for rearranging and restructuring trees.
- * @author matt on 30/08/14.
+ * @author Matt Champion on 30/08/14.
  */
 public interface TreeRestructurer extends SPIComponent {
 

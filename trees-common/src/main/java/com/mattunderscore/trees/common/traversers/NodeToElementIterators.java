@@ -31,7 +31,7 @@ import java.util.Iterator;
 
 /**
  * An element iterator that delegates to a Node iterator and unwraps the return to an element.
- * @author matt on 10/09/14.
+ * @author Matt Champion on 10/09/14.
  */
 public class NodeToElementIterators<E, N extends Node<E>> implements Iterator<E> {
     private final Iterator<N> delegatedIterator;

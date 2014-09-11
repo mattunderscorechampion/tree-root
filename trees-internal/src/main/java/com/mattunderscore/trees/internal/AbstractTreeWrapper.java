@@ -29,7 +29,7 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 
 /**
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public abstract class AbstractTreeWrapper<E, N extends Node<E>> implements Tree<E, N> {
     protected final N root;

@@ -34,7 +34,7 @@ import net.jcip.annotations.Immutable;
 import java.lang.reflect.Array;
 
 /**
- * @author matt on 13/08/14.
+ * @author Matt Champion on 13/08/14.
  */
 @Immutable
 final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {

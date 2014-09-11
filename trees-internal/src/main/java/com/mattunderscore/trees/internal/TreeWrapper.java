@@ -33,7 +33,7 @@ import com.mattunderscore.trees.spi.NodeToTreeConverter;
 
 /**
  * Wrap any node to create a Tree.
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public class TreeWrapper<E, N extends Node<E>> extends AbstractTreeWrapper<E, N> {
 

@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.selection;
 
 /**
- * @author matt on 16/08/14.
+ * @author Matt Champion on 16/08/14.
  */
 public interface TreeSelectorFactory {
     /**

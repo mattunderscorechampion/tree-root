@@ -28,7 +28,7 @@ package com.mattunderscore.trees;
 /**
  * A tree that determines the placement of its elements. Does not allow explicit placement
  * of elements. Used to created sorted or balancing trees.
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public interface MutableOrganisedTree<E, N extends Node<E>> extends Tree<E, N> {
     /**

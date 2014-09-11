@@ -27,7 +27,7 @@ package com.mattunderscore.trees.spi;
 
 /**
  * SPI component that can be looked up from a class.
- * @author matt on 31/08/14.
+ * @author Matt Champion on 31/08/14.
  */
 public interface SPIComponent {
     /**

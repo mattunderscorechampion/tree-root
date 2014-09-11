@@ -31,7 +31,7 @@ import com.mattunderscore.trees.MutableOrganisedTree;
 /**
  * A mutable, self-balancing tree. Only supports immutable nodes.
  * @param <E> the type of elements in the tree.
- * @author matt on 30/08/14.
+ * @author Matt Champion on 30/08/14.
  */
 public interface BalancingTree<E> extends MutableOrganisedTree<E, Node<E>> {
     /**

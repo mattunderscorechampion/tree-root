@@ -29,7 +29,7 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 
 /**
-* @author matt on 06/09/14.
+* @author Matt Champion on 06/09/14.
 */
 public final class NodeToWrappedTreeConverter<E, N extends Node<E>> implements NodeToTreeConverter<E, N, TreeWrapper<E, N>> {
     private final Class<?> forClass;

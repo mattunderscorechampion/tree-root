@@ -38,7 +38,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author matt on 15/07/14.
+ * @author Matt Champion on 15/07/14.
  */
 public final class MutableTreeNodeImplTest {
     private static final Trees trees = new TreesImpl();

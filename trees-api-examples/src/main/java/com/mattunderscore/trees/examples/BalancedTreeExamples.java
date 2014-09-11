@@ -31,7 +31,7 @@ import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.balanced.BalancingTree;
 
 /**
- * @author matt on 30/08/14.
+ * @author Matt Champion on 30/08/14.
  */
 public final class BalancedTreeExamples {
     public void balancedTreeExample(OrganisedTreeBuilder<String, Tree<String, Node<String>>> builder) {

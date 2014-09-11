@@ -33,7 +33,7 @@ import java.util.*;
 /**
  * A {@link com.mattunderscore.trees.SimpleCollection} backed by {@link java.util.ArrayList}. Not thread-safe. Mutable.
  * Does not provide an iteration order or permit nulls.
- * @author matt on 09/09/14.
+ * @author Matt Champion on 09/09/14.
  */
 @NotThreadSafe
 public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {

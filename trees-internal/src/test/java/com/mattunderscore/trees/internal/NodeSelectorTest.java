@@ -38,7 +38,7 @@ import org.junit.Test;
 import java.util.Iterator;
 
 /**
- * @author matt on 25/06/14.
+ * @author Matt Champion on 25/06/14.
  */
 public final class NodeSelectorTest {
     private static final Trees trees = new TreesImpl();

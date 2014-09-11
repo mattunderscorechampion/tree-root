@@ -32,7 +32,7 @@ import java.util.NoSuchElementException;
 
 /**
  * Iterator for a single object.
- * @author matt on 25/06/14.
+ * @author Matt Champion on 25/06/14.
  */
 @NotThreadSafe
 public final class SingletonIterator<E> implements Iterator<E> {

@@ -31,7 +31,7 @@ import java.util.NoSuchElementException;
 /**
  * Abstract iterator implementation.
  * Iterator that may prefetch the element to return next on hasNext.
- * @author matt on 25/06/14.
+ * @author Matt Champion on 25/06/14.
  */
 public abstract class PrefetchingIterator<E> implements Iterator<E> {
     private E prefetched;

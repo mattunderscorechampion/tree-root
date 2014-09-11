@@ -35,7 +35,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertSame;
 
 /**
- * @author matt on 28/06/14.
+ * @author Matt Champion on 28/06/14.
  */
 public final class SPISupportWithServiceTest {
     private static final Trees trees = new TreesImpl();

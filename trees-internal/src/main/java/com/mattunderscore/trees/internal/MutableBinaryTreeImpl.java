@@ -35,7 +35,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * @author matt on 08/09/14.
+ * @author Matt Champion on 08/09/14.
  */
 public final class MutableBinaryTreeImpl<E> extends TreeWrapper<E, MutableBinaryTreeNode<E>> {
     public MutableBinaryTreeImpl() {

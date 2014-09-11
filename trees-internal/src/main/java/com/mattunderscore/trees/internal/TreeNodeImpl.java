@@ -37,7 +37,7 @@ import com.mattunderscore.trees.utilities.FixedUncheckedSimpleCollection;
 import net.jcip.annotations.Immutable;
 
 /**
- * @author matt on 10/06/14.
+ * @author Matt Champion on 10/06/14.
  */
 @Immutable
 public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {

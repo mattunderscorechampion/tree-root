@@ -34,7 +34,7 @@ import com.mattunderscore.trees.spi.TreeConverter;
 import java.util.Iterator;
 
 /**
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, BinaryTreeNode<E>>> {
     @Override

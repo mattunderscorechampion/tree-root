@@ -37,7 +37,7 @@ import java.util.Iterator;
 
 /**
  * Factory for node selectors.
- * @author matt on 25/06/14.
+ * @author Matt Champion on 25/06/14.
  */
 final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     private final SPISupport helper;

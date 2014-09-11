@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * A binary tree node.
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public interface BinaryTreeNode<E> extends Node<E> {
     /**

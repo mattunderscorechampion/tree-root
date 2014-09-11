@@ -30,7 +30,7 @@ import com.mattunderscore.trees.Node;
 /**
  * Interface for walking over a collection.
  * @param <E> The type of the collection
- * @author matt on 16/08/14.
+ * @author Matt Champion on 16/08/14.
  */
 public interface Walker<E> {
 

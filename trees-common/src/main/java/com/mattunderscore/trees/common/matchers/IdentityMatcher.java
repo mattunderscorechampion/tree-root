@@ -32,7 +32,7 @@ import net.jcip.annotations.Immutable;
 
 /**
  * Matches nodes to the same element passed to it.
- * @author matt on 16/08/14.
+ * @author Matt Champion on 16/08/14.
  */
 @Immutable
 public final class IdentityMatcher<E> implements NodeMatcher<E> {

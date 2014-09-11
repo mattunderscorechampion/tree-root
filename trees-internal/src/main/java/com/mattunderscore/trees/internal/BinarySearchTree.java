@@ -33,7 +33,7 @@ import com.mattunderscore.trees.SortingTree;
 import java.util.Comparator;
 
 /**
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E>>, SortingTree<E, BinaryTreeNode<E>> {
     private final Comparator<E> comparator;

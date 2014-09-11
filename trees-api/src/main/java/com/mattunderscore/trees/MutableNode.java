@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * Represents a mutable node of a tree.
- * @author matt on 08/08/14.
+ * @author Matt Champion on 08/08/14.
  */
 public interface MutableNode<E> extends Node<E>, NodeAppender<E, MutableNode<E>>
 {

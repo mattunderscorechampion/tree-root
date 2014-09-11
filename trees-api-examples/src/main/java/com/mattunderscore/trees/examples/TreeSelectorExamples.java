@@ -31,7 +31,7 @@ import com.mattunderscore.trees.selection.TreeSelector;
 import java.util.Iterator;
 
 /**
- * @author matt on 08/08/14.
+ * @author Matt Champion on 08/08/14.
  */
 public final class TreeSelectorExamples {
     public void selectorExample(TreeSelector<String> selector, Tree<String, Node<String>> tree) {

@@ -32,7 +32,7 @@ import net.jcip.annotations.Immutable;
 
 /**
  * Matches nodes with the element equal to the value passed to it.
- * @author matt on 09/06/14.
+ * @author Matt Champion on 09/06/14.
  */
 @Immutable
 public final class EqualityMatcher<E> implements NodeMatcher<E> {

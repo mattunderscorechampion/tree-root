@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees;
 
 /**
- * @author matt on 08/08/14.
+ * @author Matt Champion on 08/08/14.
  */
 public interface NodeAppender<E, T extends NodeAppender<E, T>> {
 

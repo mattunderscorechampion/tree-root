@@ -29,7 +29,7 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 
 /**
- * @author matt on 06/08/14.
+ * @author Matt Champion on 06/08/14.
  */
 public interface TreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
 

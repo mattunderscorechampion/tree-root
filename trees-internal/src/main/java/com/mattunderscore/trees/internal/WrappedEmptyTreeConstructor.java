@@ -29,7 +29,7 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 
 /**
-* @author matt on 06/09/14.
+* @author Matt Champion on 06/09/14.
 */
 public final class WrappedEmptyTreeConstructor<E, N extends Node<E>> implements EmptyTreeConstructor<E, TreeWrapper<E, N>> {
     private final Class<?> forClass;

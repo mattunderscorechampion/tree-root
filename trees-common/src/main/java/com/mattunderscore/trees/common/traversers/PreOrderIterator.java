@@ -35,7 +35,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 /**
- * @author matt on 17/08/14.
+ * @author Matt Champion on 17/08/14.
  */
 @NotThreadSafe
 public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {

@@ -29,7 +29,7 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 
 /**
- * @author matt on 23/08/14.
+ * @author Matt Champion on 23/08/14.
  */
 public interface TreeWalkers {
 

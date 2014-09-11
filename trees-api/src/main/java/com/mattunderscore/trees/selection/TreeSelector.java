@@ -33,7 +33,7 @@ import java.util.Iterator;
 
 /**
  * Selects a subtree.
- * @author matt on 08/08/14.
+ * @author Matt Champion on 08/08/14.
  * @param <E> The type of the elements in the node
  */
 public interface TreeSelector<E> {

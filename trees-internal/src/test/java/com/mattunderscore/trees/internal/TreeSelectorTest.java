@@ -40,7 +40,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author matt on 29/06/14.
+ * @author Matt Champion on 29/06/14.
  */
 public final class TreeSelectorTest {
     private static final Trees trees = new TreesImpl();

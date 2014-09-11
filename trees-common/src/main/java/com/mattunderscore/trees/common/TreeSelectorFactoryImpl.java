@@ -36,7 +36,7 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 import java.util.Iterator;
 
 /**
- * @author matt on 29/06/14.
+ * @author Matt Champion on 29/06/14.
  */
 final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     private final SPISupport helper;

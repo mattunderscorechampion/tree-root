@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * Represents a node of the tree.
- * @author matt on 08/08/14.
+ * @author Matt Champion on 08/08/14.
  */
 public interface Node<E> {
 

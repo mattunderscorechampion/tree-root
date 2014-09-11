@@ -36,7 +36,7 @@ import java.util.Comparator;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.Trees}.
- * @author matt on 16/08/14.
+ * @author Matt Champion on 16/08/14.
  */
 public final class TreesImpl implements Trees {
     public final SPISupport helper = new SPISupport();

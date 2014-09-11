@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * A mutable binary tree
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public interface MutableBinaryTreeNode<E> extends BinaryTreeNode<E> {
 

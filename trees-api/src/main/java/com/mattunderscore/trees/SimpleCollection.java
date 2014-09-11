@@ -32,7 +32,7 @@ import java.util.Iterator;
  * elements (returned by {@link #iterator()}) and another which may return null ({@link #structuralIterator()}).
  * Implementations of this collection may either permit or reject nulls. Nulls represent an empty place where a element
  * might be. It should only permit nulls if there is an iteration order.
- * @author matt on 09/09/14.
+ * @author Matt Champion on 09/09/14.
  */
 public interface SimpleCollection<N> extends Iterable<N> {
 

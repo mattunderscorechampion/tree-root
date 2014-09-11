@@ -34,7 +34,7 @@ import java.util.Comparator;
 
 /**
  * Source for tree builders.
- * @author matt on 12/07/14.
+ * @author Matt Champion on 12/07/14.
  */
 public interface Trees {
 

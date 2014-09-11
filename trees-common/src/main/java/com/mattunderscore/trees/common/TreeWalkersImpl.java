@@ -33,7 +33,7 @@ import com.mattunderscore.trees.traversal.TreeWalkers;
 import net.jcip.annotations.Immutable;
 
 /**
- * @author matt on 23/08/14.
+ * @author Matt Champion on 23/08/14.
  */
 @Immutable
 public final class TreeWalkersImpl implements TreeWalkers {

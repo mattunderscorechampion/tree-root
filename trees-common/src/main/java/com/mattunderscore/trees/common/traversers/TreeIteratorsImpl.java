@@ -33,7 +33,7 @@ import java.util.Iterator;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.traversal.TreeIterators}.
- * @author matt on 10/09/14.
+ * @author Matt Champion on 10/09/14.
  */
 public final class TreeIteratorsImpl implements TreeIterators {
     @Override

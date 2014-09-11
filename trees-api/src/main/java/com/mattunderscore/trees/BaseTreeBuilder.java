@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * Base implementation of all tree builders.
- * @author matt on 07/08/14.
+ * @author Matt Champion on 07/08/14.
  */
 public interface BaseTreeBuilder<E, B extends Tree<E, ? extends Node<E>>> {
     /**

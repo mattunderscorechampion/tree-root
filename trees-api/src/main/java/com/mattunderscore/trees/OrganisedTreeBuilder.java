@@ -28,7 +28,7 @@ package com.mattunderscore.trees;
 /**
  * Builder used to create trees that determine the placement of their own elements. Does not allow explicit placement
  * of elements. Used to created sorted or balanced trees.
- * @author matt on 30/08/14.
+ * @author Matt Champion on 30/08/14.
  */
 public interface OrganisedTreeBuilder<E, T extends Tree<E, Node<E>>> extends BaseTreeBuilder<E, T> {
 

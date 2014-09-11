@@ -35,7 +35,7 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 
 /**
- * @author matt on 22/08/14.
+ * @author Matt Champion on 22/08/14.
  */
 @NotThreadSafe
 public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {

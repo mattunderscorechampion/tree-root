@@ -29,7 +29,7 @@ import java.util.Comparator;
 
 /**
  * A comparator for all comparable objects.
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public final class ComparableComparator<C extends Comparable> implements Comparator<C> {
     @Override

@@ -33,7 +33,7 @@ import net.jcip.annotations.Immutable;
 import java.util.Iterator;
 
 /**
- * @author matt on 17/08/14.
+ * @author Matt Champion on 17/08/14.
  */
 @Immutable
 public final class PreOrderWalker {

@@ -36,7 +36,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author matt on 21/06/14.
+ * @author Matt Champion on 21/06/14.
  */
 public final class StringTreeBuilderImplTest {
     private static final Trees trees = new TreesImpl();

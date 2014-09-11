@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 /**
  * Regular expression matcher for strings.
- * @author matt on 09/06/14.
+ * @author Matt Champion on 09/06/14.
  */
 @Immutable
 public final class RegexMatcher implements NodeMatcher<String> {

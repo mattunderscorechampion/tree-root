@@ -36,7 +36,7 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 /**
- * @author matt on 16/08/14.
+ * @author Matt Champion on 16/08/14.
  */
 public final class CompleteExample {
 

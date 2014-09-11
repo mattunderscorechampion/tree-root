@@ -31,7 +31,7 @@ import com.mattunderscore.trees.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.Tree;
 
 /**
- * @author matt on 15/08/14.
+ * @author Matt Champion on 15/08/14.
  */
 final class TopDownTreeRootBuilderImpl<E> implements TopDownTreeRootBuilder<E> {
     private final SPISupport helper;

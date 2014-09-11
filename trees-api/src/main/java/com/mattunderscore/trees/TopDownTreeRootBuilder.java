@@ -27,7 +27,7 @@ package com.mattunderscore.trees;
 
 /**
  * Builder used to create the root of a new tree or an empty tree.
- * @author matt on 07/08/14.
+ * @author Matt Champion on 07/08/14.
  */
 public interface TopDownTreeRootBuilder<E> extends BaseTreeBuilder<E, Tree<E, Node<E>>> {
 

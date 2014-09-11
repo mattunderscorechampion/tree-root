@@ -27,7 +27,7 @@ package com.mattunderscore.trees.selection;
 
 /**
  * Factory for node selectors.
- * @author matt on 16/08/14.
+ * @author Matt Champion on 16/08/14.
  */
 public interface NodeSelectorFactory {
     /**

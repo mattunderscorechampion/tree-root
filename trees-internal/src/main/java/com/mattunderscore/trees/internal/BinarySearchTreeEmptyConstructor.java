@@ -30,7 +30,7 @@ import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
 import java.util.Comparator;
 
 /**
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public class BinarySearchTreeEmptyConstructor<E> implements EmptySortedTreeConstructor<E, BinarySearchTree<E>> {
     @Override

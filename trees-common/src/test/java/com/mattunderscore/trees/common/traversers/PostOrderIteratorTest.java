@@ -37,7 +37,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
- * @author matt on 03/09/14.
+ * @author Matt Champion on 03/09/14.
  */
 public final class PostOrderIteratorTest {
     @Test

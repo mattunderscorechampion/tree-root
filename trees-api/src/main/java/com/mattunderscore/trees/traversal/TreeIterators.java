@@ -31,7 +31,7 @@ import com.mattunderscore.trees.Tree;
 import java.util.Iterator;
 
 /**
- * @author matt on 08/08/14.
+ * @author Matt Champion on 08/08/14.
  */
 public interface TreeIterators {
 

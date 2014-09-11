@@ -36,7 +36,7 @@ import java.util.*;
 /**
  * SPI support class. Loads service implementations to provide extensibility and allows access to the correct
  * implementation.
- * @author matt on 26/06/14.
+ * @author Matt Champion on 26/06/14.
  */
 final class SPISupport {
     private final Map<Class<?>, EmptyTreeConstructor> emptyConstructors;

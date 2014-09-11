@@ -35,7 +35,7 @@ import java.util.Iterator;
 import static org.junit.Assert.*;
 
 /**
- * @author matt on 06/09/14.
+ * @author Matt Champion on 06/09/14.
  */
 public final class BinaryTreeTest {
 
