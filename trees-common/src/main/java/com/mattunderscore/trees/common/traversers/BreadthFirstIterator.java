@@ -28,11 +28,13 @@ package com.mattunderscore.trees.common.traversers;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.FixedUncheckedList;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * @author Matt Champion on 05/09/14.
@@ -44,7 +46,8 @@ public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E,
 
     public BreadthFirstIterator(T tree) {
         currentLayer = new EmptyIterator<>();
-        nextLayer = new FixedUncheckedList<>(new Object[] {tree.getRoot()});
+        nextLayer = new ArrayList<>(1);
+        nextLayer.add(tree.getRoot());
     }
 
     @Override

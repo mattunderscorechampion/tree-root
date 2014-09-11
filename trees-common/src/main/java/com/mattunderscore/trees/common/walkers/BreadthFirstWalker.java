@@ -28,7 +28,6 @@ package com.mattunderscore.trees.common.walkers;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.utilities.FixedUncheckedList;
 import net.jcip.annotations.Immutable;
 
 import java.util.ArrayList;
@@ -51,7 +50,8 @@ public final class BreadthFirstWalker {
         }
         else {
             final N node = tree.getRoot();
-            final List<N> rootLevel = new FixedUncheckedList<>(new Object[]{node});
+            final List<N> rootLevel = new ArrayList<>(1);
+            rootLevel.add(node);
             try {
                 accept(rootLevel, walker);
                 walker.onCompleted();
