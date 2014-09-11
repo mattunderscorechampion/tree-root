@@ -31,11 +31,12 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.SimpleCollection;
 import com.mattunderscore.trees.utilities.ArrayListSimpleCollection;
 import com.mattunderscore.trees.utilities.CopyOnWriteSimpleCollection;
+import com.mattunderscore.trees.utilities.DuplicateOnWriteSimpleCollection;
 
 /**
  * @author matt on 11/09/14.
  */
-public class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
+public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     private PathCopyTreeNode<E> root;
 
     public PathCopyTree() {
@@ -52,7 +53,7 @@ public class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     }
 
     @Override
-    public synchronized MutableNode<E> getRoot() {
+    public synchronized PathCopyTreeNode<E> getRoot() {
         return root;
     }
 
@@ -64,18 +65,25 @@ public class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     private final static class PathCopyTreeNode<E> implements MutableNode<E> {
         private final PathCopyTreeNode<E> parent;
         private final E element;
-        private CopyOnWriteSimpleCollection<MutableNode<E>> elementList;
+        private final DuplicateOnWriteSimpleCollection<PathCopyTreeNode<E>> elementList;
 
         private PathCopyTreeNode(E element) {
             this.element = element;
             parent = null;
-            elementList = new CopyOnWriteSimpleCollection<>();
+            elementList = new DuplicateOnWriteSimpleCollection<>();
         }
 
         private PathCopyTreeNode(PathCopyTreeNode<E> parent, E element) {
             this.element = element;
             this.parent = parent;
-            elementList = new CopyOnWriteSimpleCollection<>();
+            elementList = new DuplicateOnWriteSimpleCollection<>();
+        }
+
+        private PathCopyTreeNode(PathCopyTreeNode<E> oldNode,
+                 DuplicateOnWriteSimpleCollection<PathCopyTreeNode<E>> children) {
+            element = oldNode.element;
+            parent = oldNode.parent;
+            elementList = children;
         }
 
         @Override
@@ -100,14 +108,29 @@ public class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
         @Override
         public boolean removeChild(MutableNode<E> child) {
-            return elementList.remove(child);
+            final DuplicateOnWriteSimpleCollection newCollection = elementList.remove(child);
+            return newCollection.size() != elementList.size();
         }
 
         @Override
-        public MutableNode<E> addChild(E e) {
-            final MutableNode<E> node = new PathCopyTreeNode<E>(e);
+        public PathCopyTreeNode<E> addChild(E e) {
+            final PathCopyTreeNode<E> node = new PathCopyTreeNode<E>(e);
             elementList.add(node);
             return node;
+        }
+
+        private void propagateUp(PathCopyTreeNode<E> newNode, PathCopyTreeNode<E> oldNode) {
+            // Wrong parent
+            final PathCopyTreeNode<E> parent = newNode.parent;
+            if (parent != null) {
+                final DuplicateOnWriteSimpleCollection<PathCopyTreeNode<E>> newParentChildren =
+                        parent.elementList.replace(newNode, oldNode);
+                final PathCopyTreeNode<E> newParent = new PathCopyTreeNode<E>(parent, newParentChildren);
+                propagateUp(newParent, parent);
+            }
+            else {
+                // TODO: update root
+            }
         }
     }
 }

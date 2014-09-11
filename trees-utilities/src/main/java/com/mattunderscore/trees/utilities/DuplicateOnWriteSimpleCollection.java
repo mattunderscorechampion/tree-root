@@ -114,4 +114,32 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
             return this;
         }
     }
+
+    /**
+     * Replace an element in a new collection. If the old element is not present the collection is not changed.
+     * @param newElement the element to add
+     * @param oldElement the element to remove
+     * @return the modified collection
+     */
+    public DuplicateOnWriteSimpleCollection<E> replace(E newElement, E oldElement) {
+        final Object[] oldElements = elements;
+        final List<Object> tmpElements = new ArrayList<>(oldElements.length);
+        boolean removed = false;
+        for (Object o : oldElements) {
+            if (!removed && o.equals(oldElement)) {
+                removed = true;
+                tmpElements.add(newElement);
+            }
+            else {
+                tmpElements.add(o);
+            }
+        }
+
+        if (removed) {
+            return new DuplicateOnWriteSimpleCollection<>(tmpElements.toArray());
+        }
+        else {
+            return this;
+        }
+    }
 }
