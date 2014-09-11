@@ -50,6 +50,7 @@ public interface SimpleCollection<N> extends Iterable<N> {
     /**
      * Returns an iterator over the elements in this collection. Only some implementations may guarantee an iteration
      * order. It is guaranteed not to return null.
+     * @return an Iterator over the elements in this collection
      */
     @Override
     Iterator<N> iterator();

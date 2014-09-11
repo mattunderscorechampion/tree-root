@@ -74,12 +74,12 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     }
 
     @Override
-    public <E> NodeSelector<E> newSelector(final NodeSelector<E> selector0, final NodeSelector<E> selector1) {
+    public <E> NodeSelector<E> newSelector(final NodeSelector<E> baseSelector, final NodeSelector<E> extensionSelector) {
         return new NodeSelector<E>() {
             @Override
             public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
-                final Iterator<N> startingPoints = selector0.select(tree);
-                return new AsNodeIterator<>(startingPoints, selector1, helper);
+                final Iterator<N> startingPoints = baseSelector.select(tree);
+                return new AsNodeIterator<>(startingPoints, extensionSelector, helper);
             }
         };
     }

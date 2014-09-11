@@ -31,18 +31,18 @@ package com.mattunderscore.trees.selection;
 public interface TreeSelectorFactory {
     /**
      * Create a tree selector for the root node (entire tree).
-     * @param matcher
-     * @param <E> The element type of the tree
-     * @return
+     * @param matcher a matcher
+     * @param <E> the element type of the tree
+     * @return a new tree selector
      */
     <E> TreeSelector<E> newSelector(NodeMatcher<E> matcher);
 
     /**
-     * Create a node selector for the children of another node selector.
-     * @param selector
-     * @param matcher
-     * @param <E> The element type of the tree
-     * @return
+     * Create a tree selector for the children of another tree selector.
+     * @param selector a base selector
+     * @param matcher a matcher
+     * @param <E> the element type of the tree
+     * @return a new tree selector
      */
     <E> TreeSelector<E> newSelector(TreeSelector<E> selector, NodeMatcher<E> matcher);
 }

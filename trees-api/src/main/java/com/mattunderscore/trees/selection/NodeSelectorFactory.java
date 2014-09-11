@@ -32,27 +32,28 @@ package com.mattunderscore.trees.selection;
 public interface NodeSelectorFactory {
     /**
      * Create a node selector for the root node.
-     * @param matcher
-     * @param <E> The element type of the tree
-     * @return
+     * @param matcher a matcher
+     * @param <E> the element type of the tree
+     * @return a new selector
      */
     <E> NodeSelector<E> newSelector(NodeMatcher<E> matcher);
 
     /**
      * Create a node selector for the children of another node selector.
-     * @param selector
-     * @param matcher
-     * @param <E> The element type of the tree
-     * @return
+     * @param selector a base selector
+     * @param matcher a matcher
+     * @param <E> the element type of the tree
+     * @return a new selector
      */
     <E> NodeSelector<E> newSelector(NodeSelector<E> selector, NodeMatcher<E> matcher);
 
     /**
-     * Create a node selector from the union of two selectors.
-     * @param selector0
-     * @param selector1
-     * @param <E> The element type of the tree
-     * @return
+     * Create a node selector that extends another selector. The extension selector selects from the selected nodes of
+     * the base selector.
+     * @param baseSelector a base selector
+     * @param extensionSelector a selector
+     * @param <E> the element type of the tree
+     * @return a new selector
      */
-    <E> NodeSelector newSelector(NodeSelector<E> selector0, NodeSelector<E> selector1);
+    <E> NodeSelector newSelector(NodeSelector<E> baseSelector, NodeSelector<E> extensionSelector);
 }
