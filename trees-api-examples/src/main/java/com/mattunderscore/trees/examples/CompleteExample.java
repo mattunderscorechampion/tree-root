@@ -49,7 +49,7 @@ public final class CompleteExample {
     }
 
     public void createTree(Trees trees) {
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilderFactory().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final Tree<String, Node<String>> tree = builder.create("a",
                 builder.create("b"),
                 builder.create("c"))
@@ -60,13 +60,13 @@ public final class CompleteExample {
     }
 
     public void nodeSelector(Trees trees, Tree<String, Node<String>> tree) {
-        final NodeSelectorFactory selectorFactory = trees.nodeSelectorFactory();
+        final NodeSelectorFactory selectorFactory = trees.nodeSelectors();
         final NodeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
         final Iterator<Node<String>> iterator = selector.select(tree);
     }
 
     public void treeSelector(Trees trees, Tree<String, Node<String>> tree) {
-        final TreeSelectorFactory selectorFactory = trees.treeSelectorFactory();
+        final TreeSelectorFactory selectorFactory = trees.treeSelectors();
         final TreeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
         final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
     }

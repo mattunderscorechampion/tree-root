@@ -28,7 +28,6 @@ package com.mattunderscore.trees.common.traversers;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -44,7 +43,7 @@ public final class PostOrderIteratorTest {
     public void test0()
     {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilderFactory().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final Tree<String, Node<String>> tree = builder.create("f",
             builder.create("b",
                 builder.create("a"),

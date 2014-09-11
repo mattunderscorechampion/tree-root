@@ -42,12 +42,12 @@ public final class TreesImpl implements Trees {
     public final SPISupport helper = new SPISupport();
 
     @Override
-    public TreeSelectorFactory treeSelectorFactory() {
+    public TreeSelectorFactory treeSelectors() {
         return new TreeSelectorFactoryImpl(helper);
     }
 
     @Override
-    public NodeSelectorFactory nodeSelectorFactory() {
+    public NodeSelectorFactory nodeSelectors() {
         return new NodeSelectorFactoryImpl(helper);
     }
 
@@ -62,7 +62,7 @@ public final class TreesImpl implements Trees {
     }
 
     @Override
-    public TreeBuilderFactory treeBuilderFactory() {
+    public TreeBuilderFactory treeBuilders() {
         return new TreeBuilderFactoryImpl(helper);
     }
 }

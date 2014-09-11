@@ -45,13 +45,13 @@ public final class NodeSelectorTest {
 
     @Test
     public void test() {
-        final TopDownTreeRootBuilder<String> builder = trees.treeBuilderFactory().topDownBuilder();
+        final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
         final Tree<String, ?> tree = nodeApp0.build(Tree.class);
 
-        final NodeSelectorFactory selectorFactory = trees.nodeSelectorFactory();
+        final NodeSelectorFactory selectorFactory = trees.nodeSelectors();
         final NodeMatcher<String> matcher0 = new EqualityMatcher("A");
         final NodeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<? extends Node<String>> nodeIterator0 = selector0.select(tree);

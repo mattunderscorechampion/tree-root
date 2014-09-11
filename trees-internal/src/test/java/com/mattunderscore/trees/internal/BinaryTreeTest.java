@@ -42,7 +42,7 @@ public final class BinaryTreeTest {
     @Test
     public void empty() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilderFactory().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree = builder.build(BinaryTree.class);
         assertTrue(tree.isEmpty());
     }
@@ -50,7 +50,7 @@ public final class BinaryTreeTest {
     @Test(expected = IllegalStateException.class)
     public void lessThanTwo() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilderFactory().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         builder.create("a",
             builder.create("b"),
             builder.create("c"),
@@ -61,7 +61,7 @@ public final class BinaryTreeTest {
     @Test
     public void twoChildren() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilderFactory().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
                 builder.create("b"),
@@ -87,7 +87,7 @@ public final class BinaryTreeTest {
     @Test
     public void leftOnly() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilderFactory().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
                 builder.create("a",
                         builder.create("b")).build(BinaryTree.class);
@@ -110,7 +110,7 @@ public final class BinaryTreeTest {
     @Test
     public void rightOnly() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilderFactory().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
                 builder.create("a",
                         null,

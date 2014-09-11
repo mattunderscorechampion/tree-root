@@ -42,13 +42,13 @@ public interface Trees {
      * Obtain a {@link com.mattunderscore.trees.selection.TreeSelectorFactory}.
      * @return
      */
-    TreeSelectorFactory treeSelectorFactory();
+    TreeSelectorFactory treeSelectors();
 
     /**
      * Obtain a {@link com.mattunderscore.trees.selection.NodeSelectorFactory}.
      * @return
      */
-    NodeSelectorFactory nodeSelectorFactory();
+    NodeSelectorFactory nodeSelectors();
 
     /**
      * Obtain a {@link com.mattunderscore.trees.traversal.TreeWalkerFactory}.
@@ -66,5 +66,5 @@ public interface Trees {
      * Obtain a {@link com.mattunderscore.trees.TreeBuilderFactory}.
      * @return
      */
-    TreeBuilderFactory treeBuilderFactory();
+    TreeBuilderFactory treeBuilders();
 }
