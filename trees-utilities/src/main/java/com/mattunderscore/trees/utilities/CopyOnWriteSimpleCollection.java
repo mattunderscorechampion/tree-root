@@ -42,6 +42,13 @@ public final class CopyOnWriteSimpleCollection<E> implements SimpleCollection<E>
         elements = new Object[0];
     }
 
+    public CopyOnWriteSimpleCollection(E[] collection) {
+        elements = new Object[collection.length];
+        for (int i = 0; i < collection.length; i++) {
+            elements[i] = collection[i];
+        }
+    }
+
     public CopyOnWriteSimpleCollection(Collection<E> collection) {
         elements = new Object[collection.size()];
         final Iterator<E> iterator = collection.iterator();
@@ -71,12 +78,21 @@ public final class CopyOnWriteSimpleCollection<E> implements SimpleCollection<E>
         return new CastingArrayIterator<>(elements);
     }
 
+    /**
+     * Add a new element to the collection
+     * @param element the element to add
+     */
     public synchronized void add(E element) {
         final Object[] oldElements = elements;
         elements = Arrays.copyOf(oldElements, oldElements.length + 1);
         elements[oldElements.length] = element;
     }
 
+    /**
+     * Remove an element from the collection
+     * @param element the element to remove
+     * @return {@code true} if the element was removed
+     */
     public synchronized boolean remove(E element) {
         final Object[] oldElements = elements;
         final List<Object> tmpElements = new ArrayList<>(oldElements.length);
