@@ -30,6 +30,7 @@ import com.mattunderscore.trees.MutableTree;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.SimpleCollection;
 import com.mattunderscore.trees.utilities.ArrayListSimpleCollection;
+import com.mattunderscore.trees.utilities.CopyOnWriteSimpleCollection;
 
 /**
  * @author matt on 11/09/14.
@@ -61,12 +62,20 @@ public class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     }
 
     private final static class PathCopyTreeNode<E> implements MutableNode<E> {
+        private final PathCopyTreeNode<E> parent;
         private final E element;
-        private SimpleCollection<MutableNode<E>> elementList;
+        private CopyOnWriteSimpleCollection<MutableNode<E>> elementList;
 
         private PathCopyTreeNode(E element) {
             this.element = element;
-            elementList = new ArrayListSimpleCollection<>();
+            parent = null;
+            elementList = new CopyOnWriteSimpleCollection<>();
+        }
+
+        private PathCopyTreeNode(PathCopyTreeNode<E> parent, E element) {
+            this.element = element;
+            this.parent = parent;
+            elementList = new CopyOnWriteSimpleCollection<>();
         }
 
         @Override
@@ -81,22 +90,24 @@ public class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
         @Override
         public SimpleCollection<? extends MutableNode<E>> getChildren() {
-            return null;
+            return elementList;
         }
 
         @Override
         public boolean isLeaf() {
-            return false;
+            return elementList.isEmpty();
         }
 
         @Override
         public boolean removeChild(MutableNode<E> child) {
-            return false;
+            return elementList.remove(child);
         }
 
         @Override
         public MutableNode<E> addChild(E e) {
-            return null;
+            final MutableNode<E> node = new PathCopyTreeNode<E>(e);
+            elementList.add(node);
+            return node;
         }
     }
 }
