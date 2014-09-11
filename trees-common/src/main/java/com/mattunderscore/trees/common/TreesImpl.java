@@ -26,11 +26,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.traversers.TreeIteratorsImpl;
+import com.mattunderscore.trees.common.traversers.TreeIteratorFactoryImpl;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
-import com.mattunderscore.trees.traversal.TreeIterators;
-import com.mattunderscore.trees.traversal.TreeWalkers;
+import com.mattunderscore.trees.traversal.TreeIteratorFactory;
+import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 
 import java.util.Comparator;
 
@@ -72,12 +72,12 @@ public final class TreesImpl implements Trees {
     }
 
     @Override
-    public TreeWalkers treeWalkers() {
-        return new TreeWalkersImpl();
+    public TreeWalkerFactory treeWalkers() {
+        return new TreeWalkerFactoryImpl();
     }
 
     @Override
-    public TreeIterators treeIterators() {
-        return new TreeIteratorsImpl();
+    public TreeIteratorFactory treeIterators() {
+        return new TreeIteratorFactoryImpl();
     }
 }

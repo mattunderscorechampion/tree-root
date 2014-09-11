@@ -29,20 +29,20 @@ import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.common.walkers.*;
 import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.traversal.TreeWalkers;
+import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import net.jcip.annotations.Immutable;
 
 /**
  * @author Matt Champion on 23/08/14.
  */
 @Immutable
-public final class TreeWalkersImpl implements TreeWalkers {
+public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
     private final BreadthFirstWalker breadthFirstWalker;
     private final InOrderWalker inOrderWalker;
     private final PostOrderWalker postOrderWalker;
     private final PreOrderWalker preOrderWalker;
 
-    public TreeWalkersImpl() {
+    public TreeWalkerFactoryImpl() {
         breadthFirstWalker = new BreadthFirstWalker();
         inOrderWalker = new InOrderWalker();
         postOrderWalker = new PostOrderWalker();

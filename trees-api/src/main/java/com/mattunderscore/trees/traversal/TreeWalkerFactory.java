@@ -31,7 +31,7 @@ import com.mattunderscore.trees.Tree;
 /**
  * @author Matt Champion on 23/08/14.
  */
-public interface TreeWalkers {
+public interface TreeWalkerFactory {
 
     /**
      * Traverse the tree in preorder.

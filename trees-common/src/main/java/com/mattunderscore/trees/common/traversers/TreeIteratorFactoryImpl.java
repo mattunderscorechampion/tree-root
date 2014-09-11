@@ -27,15 +27,15 @@ package com.mattunderscore.trees.common.traversers;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.traversal.TreeIterators;
+import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 
 import java.util.Iterator;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.traversal.TreeIterators}.
+ * Implementation of {@link com.mattunderscore.trees.traversal.TreeIteratorFactory}.
  * @author Matt Champion on 10/09/14.
  */
-public final class TreeIteratorsImpl implements TreeIterators {
+public final class TreeIteratorFactoryImpl implements TreeIteratorFactory {
     @Override
     public <E, N extends Node<E>> Iterator<N> preOrderIterator(Tree<E, N> tree) {
         return new PreOrderIterator<>(tree);

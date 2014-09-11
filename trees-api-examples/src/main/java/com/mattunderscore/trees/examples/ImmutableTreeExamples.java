@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.traversal.TreeIterators;
+import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 
 import java.util.Iterator;
 
@@ -34,7 +34,7 @@ import java.util.Iterator;
  * @author Matt Champion on 08/08/14.
  */
 public final class ImmutableTreeExamples {
-    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeIterators traverser)
+    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeIteratorFactory traverser)
     {
         final Tree<String, Node<String>> tree = builder.create("root",
                 builder.create("a",
@@ -48,7 +48,7 @@ public final class ImmutableTreeExamples {
         final Iterator<Node<String>> iterator = traverser.preOrderIterator(tree);
     }
 
-    public void createTreeFromTopDown(TopDownTreeRootBuilder<String> builder, TreeIterators traverser)
+    public void createTreeFromTopDown(TopDownTreeRootBuilder<String> builder, TreeIteratorFactory traverser)
     {
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> b0 = builder.root("root");
         final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> left = b0.addChild("a");
