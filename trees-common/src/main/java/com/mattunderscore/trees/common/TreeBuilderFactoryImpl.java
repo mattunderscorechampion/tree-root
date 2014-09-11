@@ -34,19 +34,23 @@ import java.util.Comparator;
  */
 public class TreeBuilderFactoryImpl implements TreeBuilderFactory {
     private final SPISupport support;
+    private final TopDownTreeRootBuilder topDownTreeRootBuilder;
+    private final BottomUpTreeBuilder bottomUpTreeBuilder;
 
     public TreeBuilderFactoryImpl(SPISupport support) {
         this.support = support;
+        topDownTreeRootBuilder = new TopDownTreeRootBuilderImpl(support);
+        bottomUpTreeBuilder = new BottomUpTreeBuilderImpl(support);
     }
 
     @Override
     public <E> TopDownTreeRootBuilder<E> topDownBuilder() {
-        return new TopDownTreeRootBuilderImpl<E>(support);
+        return topDownTreeRootBuilder;
     }
 
     @Override
     public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
-        return new BottomUpTreeBuilderImpl<E>(support);
+        return bottomUpTreeBuilder;
     }
 
     @Override

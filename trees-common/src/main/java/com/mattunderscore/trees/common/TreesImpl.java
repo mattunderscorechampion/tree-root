@@ -39,30 +39,43 @@ import java.util.Comparator;
  * @author Matt Champion on 16/08/14.
  */
 public final class TreesImpl implements Trees {
-    public final SPISupport helper = new SPISupport();
+    private final TreeSelectorFactory treeSelectorFactory;
+    private final NodeSelectorFactory nodeSelectorFactory;
+    private final TreeWalkerFactory treeWalkerFactory;
+    private final TreeIteratorFactory treeIteratorFactory;
+    private final TreeBuilderFactory treeBuilderFactory;
+
+    public TreesImpl() {
+        final SPISupport helper = new SPISupport();
+        treeSelectorFactory = new TreeSelectorFactoryImpl(helper);
+        nodeSelectorFactory = new NodeSelectorFactoryImpl(helper);
+        treeWalkerFactory = new TreeWalkerFactoryImpl();
+        treeIteratorFactory = new TreeIteratorFactoryImpl();
+        treeBuilderFactory = new TreeBuilderFactoryImpl(helper);
+    }
 
     @Override
     public TreeSelectorFactory treeSelectors() {
-        return new TreeSelectorFactoryImpl(helper);
+        return treeSelectorFactory;
     }
 
     @Override
     public NodeSelectorFactory nodeSelectors() {
-        return new NodeSelectorFactoryImpl(helper);
+        return nodeSelectorFactory;
     }
 
     @Override
     public TreeWalkerFactory treeWalkers() {
-        return new TreeWalkerFactoryImpl();
+        return treeWalkerFactory;
     }
 
     @Override
     public TreeIteratorFactory treeIterators() {
-        return new TreeIteratorFactoryImpl();
+        return treeIteratorFactory;
     }
 
     @Override
     public TreeBuilderFactory treeBuilders() {
-        return new TreeBuilderFactoryImpl(helper);
+        return treeBuilderFactory;
     }
 }
