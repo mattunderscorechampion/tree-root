@@ -32,7 +32,7 @@ import net.jcip.annotations.GuardedBy;
 import java.util.*;
 
 /**
- * @author matt on 11/09/14.
+ * @author Matt Champion on 11/09/14.
  */
 public final class CopyOnWriteSimpleCollection<E> implements SimpleCollection<E> {
     @GuardedBy("this")

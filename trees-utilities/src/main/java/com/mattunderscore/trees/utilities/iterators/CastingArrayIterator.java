@@ -28,9 +28,10 @@ package com.mattunderscore.trees.utilities.iterators;
 import java.util.Iterator;
 
 /**
- * @author matt on 11/09/14.
+ * An iterator over object arrays that casts the objects to another class.
+ * @author Matt Champion on 11/09/14.
  */
-public class CastingArrayIterator<E> implements Iterator<E> {
+public final class CastingArrayIterator<E> implements Iterator<E> {
     private final Object[] array;
     private int pos;
 
