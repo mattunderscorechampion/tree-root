@@ -23,48 +23,39 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.selection.NodeSelectorFactory;
-import com.mattunderscore.trees.selection.TreeSelectorFactory;
-import com.mattunderscore.trees.traversal.TreeIteratorFactory;
-import com.mattunderscore.trees.traversal.TreeWalkerFactory;
+import com.mattunderscore.trees.*;
 
 import java.util.Comparator;
 
 /**
- * Source for tree builders.
- * @author Matt Champion on 12/07/14.
+ * @author matt on 11/09/14.
  */
-public interface Trees {
+public class TreeBuilderFactoryImpl implements TreeBuilderFactory {
+    private final SPISupport support;
 
-    /**
-     * Obtain a {@link com.mattunderscore.trees.selection.TreeSelectorFactory}.
-     * @return
-     */
-    TreeSelectorFactory treeSelectorFactory();
+    public TreeBuilderFactoryImpl(SPISupport support) {
+        this.support = support;
+    }
 
-    /**
-     * Obtain a {@link com.mattunderscore.trees.selection.NodeSelectorFactory}.
-     * @return
-     */
-    NodeSelectorFactory nodeSelectorFactory();
+    @Override
+    public <E> TopDownTreeRootBuilder<E> topDownBuilder() {
+        return new TopDownTreeRootBuilderImpl<E>(support);
+    }
 
-    /**
-     * Obtain a {@link com.mattunderscore.trees.traversal.TreeWalkerFactory}.
-     * @return
-     */
-    TreeWalkerFactory treeWalkers();
+    @Override
+    public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
+        return new BottomUpTreeBuilderImpl<E>(support);
+    }
 
-    /**
-     * Obtain a {@link com.mattunderscore.trees.traversal.TreeIteratorFactory}.
-     * @return
-     */
-    TreeIteratorFactory treeIterators();
+    @Override
+    public <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator) {
+        return new SortingTreeBuilderImpl<>(support, comparator);
+    }
 
-    /**
-     * Obtain a {@link com.mattunderscore.trees.TreeBuilderFactory}.
-     * @return
-     */
-    TreeBuilderFactory treeBuilderFactory();
+    @Override
+    public <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm) {
+        throw new UnsupportedOperationException("Sorting algorithms not yet implemented");
+    }
 }

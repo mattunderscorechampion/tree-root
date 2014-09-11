@@ -43,7 +43,7 @@ public final class StringTreeBuilderImplTest {
 
     @Test
     public void build0() {
-        final TopDownTreeRootBuilder<String> builder = trees.topDownBuilder();
+        final TopDownTreeRootBuilder<String> builder = trees.treeBuilderFactory().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("a");
         final NodeAppender nodeApp1 = nodeApp0.addChild("b");
         nodeApp1.addChild("c");

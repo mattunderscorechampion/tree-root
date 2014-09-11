@@ -47,7 +47,7 @@ public final class TreeSelectorTest {
 
     @Test
     public void test() {
-        final TopDownTreeRootBuilder<String> builder = trees.topDownBuilder();
+        final TopDownTreeRootBuilder<String> builder = trees.treeBuilderFactory().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");

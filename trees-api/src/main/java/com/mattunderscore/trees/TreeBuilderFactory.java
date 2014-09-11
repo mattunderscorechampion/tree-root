@@ -25,46 +25,41 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
-import com.mattunderscore.trees.selection.NodeSelectorFactory;
-import com.mattunderscore.trees.selection.TreeSelectorFactory;
-import com.mattunderscore.trees.traversal.TreeIteratorFactory;
-import com.mattunderscore.trees.traversal.TreeWalkerFactory;
-
 import java.util.Comparator;
 
 /**
- * Source for tree builders.
- * @author Matt Champion on 12/07/14.
+ * @author matt on 11/09/14.
  */
-public interface Trees {
-
+public interface TreeBuilderFactory {
     /**
-     * Obtain a {@link com.mattunderscore.trees.selection.TreeSelectorFactory}.
+     * Obtain a {@link TopDownTreeRootBuilder}.
+     * @param <E> The element type of the tree
      * @return
      */
-    TreeSelectorFactory treeSelectorFactory();
+    <E> TopDownTreeRootBuilder<E> topDownBuilder();
 
     /**
-     * Obtain a {@link com.mattunderscore.trees.selection.NodeSelectorFactory}.
+     * Obtain a {@link BottomUpTreeBuilder}.
+     * @param <E> The element type of the tree
      * @return
      */
-    NodeSelectorFactory nodeSelectorFactory();
+    <E> BottomUpTreeBuilder<E> bottomUpBuilder();
 
     /**
-     * Obtain a {@link com.mattunderscore.trees.traversal.TreeWalkerFactory}.
+     * Obtain an {@link OrganisedTreeBuilder} that creates sorting trees.
+     * @param comparator The comparator used to sort the elements
+     * @param <E> The element type of the tree
      * @return
      */
-    TreeWalkerFactory treeWalkers();
+    <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator);
 
     /**
-     * Obtain a {@link com.mattunderscore.trees.traversal.TreeIteratorFactory}.
+     * Obtain an {@link OrganisedTreeBuilder} that creates sorted trees. The algorithm to place the nodes must be
+     * specified separately.
+     * @param comparator The comparator used to sort the elements
+     * @param algorithm The algorithm to sort the trees.
+     * @param <E> The element type of the tree
      * @return
      */
-    TreeIteratorFactory treeIterators();
-
-    /**
-     * Obtain a {@link com.mattunderscore.trees.TreeBuilderFactory}.
-     * @return
-     */
-    TreeBuilderFactory treeBuilderFactory();
+    <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm);
 }

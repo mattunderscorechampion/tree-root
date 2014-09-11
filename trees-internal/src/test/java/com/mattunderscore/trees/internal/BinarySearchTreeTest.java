@@ -61,7 +61,7 @@ public final class BinarySearchTreeTest {
 
     @Test
     public void complete() {
-        final SortingTreeBuilder<String> builder = trees.sortingTreeBuilder(new ComparableComparator<String>());
+        final SortingTreeBuilder<String> builder = trees.treeBuilderFactory().sortingTreeBuilder(new ComparableComparator<String>());
         final BinarySearchTree<String> tree = builder
             .addElement("b")
             .addElement("a")

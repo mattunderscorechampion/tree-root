@@ -42,26 +42,6 @@ public final class TreesImpl implements Trees {
     public final SPISupport helper = new SPISupport();
 
     @Override
-    public <E> TopDownTreeRootBuilder<E> topDownBuilder() {
-        return new TopDownTreeRootBuilderImpl<E>(helper);
-    }
-
-    @Override
-    public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
-        return new BottomUpTreeBuilderImpl<E>(helper);
-    }
-
-    @Override
-    public <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator) {
-        return new SortingTreeBuilderImpl<>(helper, comparator);
-    }
-
-    @Override
-    public <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm) {
-        throw new UnsupportedOperationException("Sorting algorithms not yet implemented");
-    }
-
-    @Override
     public TreeSelectorFactory treeSelectorFactory() {
         return new TreeSelectorFactoryImpl(helper);
     }
@@ -79,5 +59,10 @@ public final class TreesImpl implements Trees {
     @Override
     public TreeIteratorFactory treeIterators() {
         return new TreeIteratorFactoryImpl();
+    }
+
+    @Override
+    public TreeBuilderFactory treeBuilderFactory() {
+        return new TreeBuilderFactoryImpl(helper);
     }
 }
