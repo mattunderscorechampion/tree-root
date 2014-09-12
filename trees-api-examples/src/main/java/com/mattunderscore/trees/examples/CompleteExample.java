@@ -32,9 +32,12 @@ import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.Walker;
+import junit.framework.Assert;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Matt Champion on 16/08/14.
@@ -59,11 +62,12 @@ public final class CompleteExample {
         nodeSelector(trees, tree);
         treeSelector(trees, tree);
 
-        final Tree<Integer, Node<Integer>> intTree = builder.create("a",
-                builder.create(7),
-                builder.create(9))
+        final BottomUpTreeBuilder<Integer> intBuilder = trees.treeBuilders().bottomUpBuilder();
+        final Tree<Integer, Node<Integer>> intTree = intBuilder.create(new Integer(3),
+                intBuilder.create(new Integer(7)),
+                intBuilder.create(new Integer(9)))
             .build(Tree.class);
-        a(trees, intTree);
+        sum(trees, intTree);
     }
 
     public void nodeSelector(Trees trees, Tree<String, Node<String>> tree) {
@@ -78,24 +82,26 @@ public final class CompleteExample {
         final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
     }
 
-    public void a(Trees trees, Tree<Integer, Node<Integer>> tree) {
-        trees.treeWalkers().walkInOrder(tree, new Walker<Node<Integer>>() {
-            private volatile int sum = 0;
-            @Override
-            public void onEmpty() {
-            }
-
-            @Override
-            public boolean onNext(Node<Integer> node) {
-                sum += node.getElement();
-                return false;
-            }
-
-            @Override
-            public void onCompleted() {
-
-            }
-        });
-
+    public void sum(Trees trees, Tree<Integer, Node<Integer>> tree) {
+        final SumWalker walker = new SumWalker();
+        trees.treeWalkers().walkElementsInOrder(tree, walker);
     }
+
+    private static final class SumWalker implements Walker<Integer> {
+        int sum = 0;
+        @Override
+        public void onEmpty() {
+        }
+
+        @Override
+        public boolean onNext(Integer integer) {
+            sum += integer;
+            return false;
+        }
+
+        @Override
+        public void onCompleted() {
+        }
+    };
 }
+    
