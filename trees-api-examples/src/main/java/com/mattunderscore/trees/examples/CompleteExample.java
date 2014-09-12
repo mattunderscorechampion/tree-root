@@ -31,6 +31,7 @@ import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.traversal.Walker;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
@@ -57,6 +58,12 @@ public final class CompleteExample {
 
         nodeSelector(trees, tree);
         treeSelector(trees, tree);
+
+        final Tree<Integer, Node<Integer>> intTree = builder.create("a",
+                builder.create(7),
+                builder.create(9))
+            .build(Tree.class);
+        a(trees, intTree);
     }
 
     public void nodeSelector(Trees trees, Tree<String, Node<String>> tree) {
@@ -69,5 +76,26 @@ public final class CompleteExample {
         final TreeSelectorFactory selectorFactory = trees.treeSelectors();
         final TreeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
         final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
+    }
+
+    public void a(Trees trees, Tree<Integer, Node<Integer>> tree) {
+        trees.treeWalkers().walkInOrder(tree, new Walker<Node<Integer>>() {
+            private volatile int sum = 0;
+            @Override
+            public void onEmpty() {
+            }
+
+            @Override
+            public boolean onNext(Node<Integer> node) {
+                sum += node.getElement();
+                return false;
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+        });
+
     }
 }
