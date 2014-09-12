@@ -31,6 +31,7 @@ import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.traversal.DefaultElementWalker;
 import com.mattunderscore.trees.traversal.Walker;
 import junit.framework.Assert;
 
@@ -87,7 +88,7 @@ public final class CompleteExample {
         trees.treeWalkers().walkElementsInOrder(tree, walker);
     }
 
-    private static final class SumWalker implements Walker<Integer> {
+    private static final class SumWalker extends DefaultElementWalker<Integer> {
         int sum = 0;
         @Override
         public void onEmpty() {

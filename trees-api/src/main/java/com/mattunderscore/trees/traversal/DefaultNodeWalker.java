@@ -28,6 +28,7 @@ package com.mattunderscore.trees.traversal;
 import com.mattunderscore.trees.Node;
 
 /**
+ * Default node walker.
  * @author matt on 13/09/14.
  */
 public abstract class DefaultNodeWalker<E, N extends Node<E>> implements Walker<N> {

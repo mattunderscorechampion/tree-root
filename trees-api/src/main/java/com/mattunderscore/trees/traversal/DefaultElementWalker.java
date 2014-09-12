@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.traversal;
 
 /**
+ * Default element walker.
  * @author matt on 13/09/14.
  */
 public abstract class DefaultElementWalker<E> implements Walker<E> {
