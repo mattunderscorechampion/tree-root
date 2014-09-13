@@ -26,6 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.sorted;
 
 import com.mattunderscore.trees.organised.OrganisedTreeBuilder;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Builder use to create sorted trees. If the tree is a sorting tree the {@link java.util.Comparator} will be passed to
