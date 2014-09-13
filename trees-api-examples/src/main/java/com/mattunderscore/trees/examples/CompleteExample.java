@@ -90,18 +90,11 @@ public final class CompleteExample {
 
     private static final class SumWalker extends DefaultElementWalker<Integer> {
         int sum = 0;
-        @Override
-        public void onEmpty() {
-        }
 
         @Override
         public boolean onNext(Integer integer) {
             sum += integer;
-            return false;
-        }
-
-        @Override
-        public void onCompleted() {
+            return true;
         }
     };
 }

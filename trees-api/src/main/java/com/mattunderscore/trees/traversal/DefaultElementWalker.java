@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.traversal;
 
 /**
- * Default element walker.
+ * Default element walker implementation.
  * @author matt on 13/09/14.
  */
 public abstract class DefaultElementWalker<E> implements Walker<E> {
@@ -36,7 +36,7 @@ public abstract class DefaultElementWalker<E> implements Walker<E> {
 
     @Override
     public boolean onNext(E node) {
-        return false;
+        return true;
     }
 
     @Override

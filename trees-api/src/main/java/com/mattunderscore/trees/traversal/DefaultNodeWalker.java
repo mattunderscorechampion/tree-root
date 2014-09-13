@@ -28,7 +28,7 @@ package com.mattunderscore.trees.traversal;
 import com.mattunderscore.trees.Node;
 
 /**
- * Default node walker.
+ * Default node walker implementation.
  * @author matt on 13/09/14.
  */
 public abstract class DefaultNodeWalker<E, N extends Node<E>> implements Walker<N> {
@@ -38,7 +38,7 @@ public abstract class DefaultNodeWalker<E, N extends Node<E>> implements Walker<
 
     @Override
     public boolean onNext(N node) {
-        return false;
+        return true;
     }
 
     @Override
