@@ -25,13 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities;
 
-import com.mattunderscore.trees.SimpleCollection;
+import com.mattunderscore.trees.collection.SimpleCollection;
 import net.jcip.annotations.NotThreadSafe;
 
 import java.util.*;
 
 /**
- * A {@link com.mattunderscore.trees.SimpleCollection} backed by {@link java.util.ArrayList}. Not thread-safe. Mutable.
+ * A {@link com.mattunderscore.trees.collection.SimpleCollection} backed by {@link java.util.ArrayList}. Not thread-safe. Mutable.
  * Does not provide an iteration order or permit nulls.
  * @author Matt Champion on 09/09/14.
  */

@@ -23,25 +23,34 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.construction;
+
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Builder used to create the an empty tree or a non-empty tree.
+ * Builder used to create the root of a new tree or an empty tree.
  * @author Matt Champion on 07/08/14.
  */
-public interface BottomUpTreeBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? extends Node<E>>> {
+public interface TopDownTreeRootBuilder<E> extends BaseTreeBuilder<E, Tree<E, Node<E>>> {
 
     /**
-     * @param e the root node
-     * @return a new builder that creates a tree containing a single node
+     * @param e root element
+     * @return Builder for a non-empty tree
      */
-    BottomUpTreeBuilder<E> create(E e);
+    TopDownTreeBuilder<E> root(E e);
 
     /**
-     * @param e the root node
-     * @param builders builders for subtrees
-     * @return a new builder that creates a tree containing the element as the root and the trees returned by the
-     * builders as children
+     * Builder used to create a non-empty tree.
+     * @param <S>
      */
-    BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders);
+    public interface TopDownTreeBuilder<S> extends BaseTreeBuilder<S, Tree<S, Node<S>>>, NodeAppender<S, TopDownTreeBuilderAppender<S>> {
+    }
+
+    /**
+     * Appended to add a new child to the tree.
+     * @param <S>
+     */
+    public interface TopDownTreeBuilderAppender<S> extends NodeAppender<S, TopDownTreeBuilderAppender<S>> {
+    }
 }

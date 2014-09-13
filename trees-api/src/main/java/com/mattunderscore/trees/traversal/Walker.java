@@ -25,8 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.traversal;
 
-import com.mattunderscore.trees.Node;
-
 /**
  * Interface for walking over a collection.
  * @param <E> The type of the collection

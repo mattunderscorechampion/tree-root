@@ -25,13 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities;
 
-import com.mattunderscore.trees.SimpleCollection;
+import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 import java.util.*;
 
 /**
- * Array backed, not typed checked, {@link com.mattunderscore.trees.SimpleCollection} implementation for an immutable
+ * Array backed, not typed checked, {@link com.mattunderscore.trees.collection.SimpleCollection} implementation for an immutable
  * collection from a trusted source. It provides an iteration order and permits nulls.
  * <p>This is immutable assuming the ownership of the backing array is exclusive. Hence the need to be created by a
  * trusted source.</p>

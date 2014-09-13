@@ -23,12 +23,22 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.organised;
+
+import com.mattunderscore.trees.construction.BaseTreeBuilder;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Represents a mutable tree.
- * @author Matt Champion on 08/08/14.
+ * Builder used to create trees that determine the placement of their own elements. Does not allow explicit placement
+ * of elements. Used to created sorted or balanced trees.
+ * @author Matt Champion on 30/08/14.
  */
-public interface MutableTree<E, T extends MutableNode<E>> extends Tree<E, MutableNode<E>> {
-    void setRoot(E root);
+public interface OrganisedTreeBuilder<E, T extends Tree<E, Node<E>>> extends BaseTreeBuilder<E, T> {
+
+    /**
+     * @param element an element to include in the tree
+     * @return a new builder that creates a balanced tree containing the element
+     */
+    OrganisedTreeBuilder<E, T> addElement(E element);
 }

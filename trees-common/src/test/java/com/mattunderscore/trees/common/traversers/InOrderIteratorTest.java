@@ -28,6 +28,9 @@ package com.mattunderscore.trees.common.traversers;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
 
 import java.util.Iterator;

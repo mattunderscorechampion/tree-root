@@ -27,12 +27,11 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.traversers.TreeIteratorFactoryImpl;
+import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
-
-import java.util.Comparator;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.Trees}.

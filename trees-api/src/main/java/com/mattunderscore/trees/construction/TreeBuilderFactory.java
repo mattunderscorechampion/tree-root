@@ -23,18 +23,48 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.construction;
+
+import com.mattunderscore.trees.sorted.SortedTreeBuilder;
+import com.mattunderscore.trees.sorted.SortingAlgorithm;
+import com.mattunderscore.trees.sorted.SortingTreeBuilder;
+
+import java.util.Comparator;
 
 /**
- * Builder used to create trees that determine the placement of their own elements. Does not allow explicit placement
- * of elements. Used to created sorted or balanced trees.
- * @author Matt Champion on 30/08/14.
+ * Factory for tree builders.
+ * @author Matt Champion on 11/09/14.
  */
-public interface OrganisedTreeBuilder<E, T extends Tree<E, Node<E>>> extends BaseTreeBuilder<E, T> {
+public interface TreeBuilderFactory {
+    /**
+     * Obtain a {@link TopDownTreeRootBuilder}.
+     * @param <E> The element type of the tree
+     * @return
+     */
+    <E> TopDownTreeRootBuilder<E> topDownBuilder();
 
     /**
-     * @param element an element to include in the tree
-     * @return a new builder that creates a balanced tree containing the element
+     * Obtain a {@link BottomUpTreeBuilder}.
+     * @param <E> The element type of the tree
+     * @return
      */
-    OrganisedTreeBuilder<E, T> addElement(E element);
+    <E> BottomUpTreeBuilder<E> bottomUpBuilder();
+
+    /**
+     * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorting trees.
+     * @param comparator The comparator used to sort the elements
+     * @param <E> The element type of the tree
+     * @return
+     */
+    <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator);
+
+    /**
+     * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorted trees. The algorithm to place the nodes must be
+     * specified separately.
+     * @param comparator The comparator used to sort the elements
+     * @param algorithm The algorithm to sort the trees.
+     * @param <E> The element type of the tree
+     * @return
+     */
+    <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm);
 }

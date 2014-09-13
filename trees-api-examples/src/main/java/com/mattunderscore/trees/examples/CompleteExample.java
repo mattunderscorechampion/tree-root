@@ -27,13 +27,14 @@ package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
+import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.DefaultElementWalker;
-import com.mattunderscore.trees.traversal.Walker;
-import junit.framework.Assert;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;

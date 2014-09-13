@@ -23,18 +23,21 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.tree;
 
 /**
- * A tree that determines the placement of its elements. Does not allow explicit placement
- * of elements. Used to created sorted or balancing trees.
- * @author Matt Champion on 06/09/14.
+ * Represents a tree.
+ * @author Matt Champion on 08/08/14.
  */
-public interface MutableOrganisedTree<E, N extends Node<E>> extends Tree<E, N> {
+public interface Tree<E, T extends Node<E>> {
+
     /**
-     * Add an element to the tree at the next position
-     * @param element the element to add
-     * @return the tree
+     * @return the root node of the tree or null if the tree is empty
      */
-    MutableOrganisedTree<E, N> addElement(E element);
+    T getRoot();
+
+    /**
+     * @return {@code true} if the tree is empty
+     */
+    boolean isEmpty();
 }

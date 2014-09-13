@@ -25,9 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selection;
 
-import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.tree.Tree;
 
 import java.util.Iterator;
 

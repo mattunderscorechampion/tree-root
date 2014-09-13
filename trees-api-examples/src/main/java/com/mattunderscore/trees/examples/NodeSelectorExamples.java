@@ -25,10 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
-import com.mattunderscore.trees.MutableNode;
-import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.selection.NodeSelector;
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.tree.Tree;
 
 import java.util.Iterator;
 

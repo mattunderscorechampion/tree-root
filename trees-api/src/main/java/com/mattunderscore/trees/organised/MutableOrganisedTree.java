@@ -23,19 +23,21 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.organised;
+
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Base implementation of all tree builders.
- * @author Matt Champion on 07/08/14.
+ * A tree that determines the placement of its elements. Does not allow explicit placement
+ * of elements. Used to created sorted or balancing trees.
+ * @author Matt Champion on 06/09/14.
  */
-public interface BaseTreeBuilder<E, B extends Tree<E, ? extends Node<E>>> {
+public interface MutableOrganisedTree<E, N extends Node<E>> extends Tree<E, N> {
     /**
-     * Create a new tree of the type provided.
-     * @param klass The class of the tree to create
-     * @param <T> The type of the tree to create
-     * @return The new tree
-     * @throws OperationNotSupportedForType if the type of the tree to be built is not supported
+     * Add an element to the tree at the next position
+     * @param element the element to add
+     * @return the tree
      */
-    <T extends B> T build(Class<T> klass) throws OperationNotSupportedForType;
+    MutableOrganisedTree<E, N> addElement(E element);
 }

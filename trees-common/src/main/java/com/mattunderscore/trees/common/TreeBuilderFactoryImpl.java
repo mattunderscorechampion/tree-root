@@ -25,7 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
@@ -33,7 +35,7 @@ import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import java.util.Comparator;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.TreeBuilderFactory}.
+ * Implementation of {@link com.mattunderscore.trees.construction.TreeBuilderFactory}.
  * @author Matt Champion on 11/09/14.
  */
 public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {

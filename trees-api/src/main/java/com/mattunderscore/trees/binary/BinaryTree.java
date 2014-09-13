@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
-import com.mattunderscore.trees.Tree;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * A binary tree.

@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.SimpleCollection;
+import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.utilities.FixedUncheckedSimpleCollection;
 

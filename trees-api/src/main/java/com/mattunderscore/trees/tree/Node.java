@@ -23,43 +23,33 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.tree;
 
-import java.util.Iterator;
+import com.mattunderscore.trees.collection.SimpleCollection;
 
 /**
- * A simplified collection that implements {@link java.lang.Iterable}. It exposes two iterators, one which returns only
- * elements (returned by {@link #iterator()}) and another which may return null ({@link #structuralIterator()}).
- * Implementations of this collection may either permit or reject nulls. Nulls represent an empty place where a element
- * might be. It should only permit nulls if there is an iteration order.
- * @author Matt Champion on 09/09/14.
+ * Represents a node of the tree.
+ * @author Matt Champion on 08/08/14.
  */
-public interface SimpleCollection<N> extends Iterable<N> {
+public interface Node<E> {
 
     /**
-     * Returns an estimate of the number of elements in the collection. It may count nulls in the collection.
-     * @return The number of children
+     * @return The element stored in the node
      */
-    int size();
+    E getElement();
 
     /**
-     * @return {@code true} if there are no children
+     * @return The class of the element stored in the node
      */
-    boolean isEmpty();
+    Class<E> getElementClass();
 
     /**
-     * Returns an iterator over the elements in this collection. Only some implementations may guarantee an iteration
-     * order. It is guaranteed not to return null.
-     * @return an Iterator over the elements in this collection
+     * @return The children of the node
      */
-    @Override
-    Iterator<N> iterator();
+    SimpleCollection<? extends Node<E>> getChildren();
 
     /**
-     * An iterator over the structure of the collection. If there is an empty place in the collection where an element
-     * might be but is not then the iterator will not return null. It will only return null if there is an iteration
-     * order.
-     * @return an Iterator over the elements in this collection
+     * @return {@code true} if the node is a leaf node
      */
-    Iterator<N> structuralIterator();
+    boolean isLeaf();
 }

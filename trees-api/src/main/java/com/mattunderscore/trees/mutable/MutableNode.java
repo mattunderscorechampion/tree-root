@@ -23,48 +23,27 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.sorted.SortedTreeBuilder;
-import com.mattunderscore.trees.sorted.SortingAlgorithm;
-import com.mattunderscore.trees.sorted.SortingTreeBuilder;
-
-import java.util.Comparator;
+import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.construction.NodeAppender;
+import com.mattunderscore.trees.tree.Node;
 
 /**
- * Factory for tree builders.
- * @author Matt Champion on 11/09/14.
+ * Represents a mutable node of a tree.
+ * @author Matt Champion on 08/08/14.
  */
-public interface TreeBuilderFactory {
+public interface MutableNode<E> extends Node<E>, NodeAppender<E, MutableNode<E>>
+{
     /**
-     * Obtain a {@link TopDownTreeRootBuilder}.
-     * @param <E> The element type of the tree
-     * @return
+     * @return the children of the node
      */
-    <E> TopDownTreeRootBuilder<E> topDownBuilder();
+    SimpleCollection<? extends MutableNode<E>> getChildren();
 
     /**
-     * Obtain a {@link BottomUpTreeBuilder}.
-     * @param <E> The element type of the tree
-     * @return
+     * Remove the node if it is a child of the recipient
+     * @param child the node to remove
+     * @return {@code true} if the node was removed
      */
-    <E> BottomUpTreeBuilder<E> bottomUpBuilder();
-
-    /**
-     * Obtain an {@link OrganisedTreeBuilder} that creates sorting trees.
-     * @param comparator The comparator used to sort the elements
-     * @param <E> The element type of the tree
-     * @return
-     */
-    <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator);
-
-    /**
-     * Obtain an {@link OrganisedTreeBuilder} that creates sorted trees. The algorithm to place the nodes must be
-     * specified separately.
-     * @param comparator The comparator used to sort the elements
-     * @param algorithm The algorithm to sort the trees.
-     * @param <E> The element type of the tree
-     * @return
-     */
-    <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm);
+    boolean removeChild(MutableNode<E> child);
 }

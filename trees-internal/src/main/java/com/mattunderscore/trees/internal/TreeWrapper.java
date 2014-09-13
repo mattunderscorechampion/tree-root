@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * Wrap any node to create a Tree.

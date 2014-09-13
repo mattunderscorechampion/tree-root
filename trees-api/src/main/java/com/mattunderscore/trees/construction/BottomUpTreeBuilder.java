@@ -23,31 +23,28 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.construction;
+
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Represents a node of the tree.
- * @author Matt Champion on 08/08/14.
+ * Builder used to create the an empty tree or a non-empty tree.
+ * @author Matt Champion on 07/08/14.
  */
-public interface Node<E> {
+public interface BottomUpTreeBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? extends Node<E>>> {
 
     /**
-     * @return The element stored in the node
+     * @param e the root node
+     * @return a new builder that creates a tree containing a single node
      */
-    E getElement();
+    BottomUpTreeBuilder<E> create(E e);
 
     /**
-     * @return The class of the element stored in the node
+     * @param e the root node
+     * @param builders builders for subtrees
+     * @return a new builder that creates a tree containing the element as the root and the trees returned by the
+     * builders as children
      */
-    Class<E> getElementClass();
-
-    /**
-     * @return The children of the node
-     */
-    SimpleCollection<? extends Node<E>> getChildren();
-
-    /**
-     * @return {@code true} if the node is a leaf node
-     */
-    boolean isLeaf();
+    BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders);
 }

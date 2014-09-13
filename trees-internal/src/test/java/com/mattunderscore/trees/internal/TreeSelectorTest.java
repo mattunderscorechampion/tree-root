@@ -28,9 +28,12 @@ package com.mattunderscore.trees.internal;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.*;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
 
 import java.util.Iterator;

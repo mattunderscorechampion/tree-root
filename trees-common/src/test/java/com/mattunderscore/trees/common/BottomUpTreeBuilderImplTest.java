@@ -25,10 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.Tree;
-import com.mattunderscore.trees.BottomUpTreeBuilder;
+import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

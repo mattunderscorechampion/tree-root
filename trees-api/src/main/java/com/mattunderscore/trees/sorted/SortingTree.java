@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.sorted;
 
-import com.mattunderscore.trees.MutableOrganisedTree;
-import com.mattunderscore.trees.Node;
+import com.mattunderscore.trees.organised.MutableOrganisedTree;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * A mutable, organised tree that sorts the elements passed to it.

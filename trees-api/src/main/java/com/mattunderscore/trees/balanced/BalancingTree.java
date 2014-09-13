@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.balanced;
 
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.MutableOrganisedTree;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.organised.MutableOrganisedTree;
 
 /**
  * A mutable, self-balancing tree. Only supports immutable nodes.

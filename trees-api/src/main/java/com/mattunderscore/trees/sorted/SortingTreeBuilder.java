@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.sorted;
 
-import com.mattunderscore.trees.OrganisedTreeBuilder;
+import com.mattunderscore.trees.organised.OrganisedTreeBuilder;
 
 /**
  * Builder used to create sorting trees.

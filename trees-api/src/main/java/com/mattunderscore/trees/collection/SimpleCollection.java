@@ -23,17 +23,43 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.collection;
+
+import java.util.Iterator;
 
 /**
- * @author Matt Champion on 08/08/14.
+ * A simplified collection that implements {@link java.lang.Iterable}. It exposes two iterators, one which returns only
+ * elements (returned by {@link #iterator()}) and another which may return null ({@link #structuralIterator()}).
+ * Implementations of this collection may either permit or reject nulls. Nulls represent an empty place where a element
+ * might be. It should only permit nulls if there is an iteration order.
+ * @author Matt Champion on 09/09/14.
  */
-public interface NodeAppender<E, T extends NodeAppender<E, T>> {
+public interface SimpleCollection<N> extends Iterable<N> {
 
     /**
-     * Add a child
-     * @param e The element of the child to add
-     * @return A node appender for the child
+     * Returns an estimate of the number of elements in the collection. It may count nulls in the collection.
+     * @return The number of children
      */
-    T addChild(E e);
+    int size();
+
+    /**
+     * @return {@code true} if there are no children
+     */
+    boolean isEmpty();
+
+    /**
+     * Returns an iterator over the elements in this collection. Only some implementations may guarantee an iteration
+     * order. It is guaranteed not to return null.
+     * @return an Iterator over the elements in this collection
+     */
+    @Override
+    Iterator<N> iterator();
+
+    /**
+     * An iterator over the structure of the collection. If there is an empty place in the collection where an element
+     * might be but is not then the iterator will not return null. It will only return null if there is an iteration
+     * order.
+     * @return an Iterator over the elements in this collection
+     */
+    Iterator<N> structuralIterator();
 }

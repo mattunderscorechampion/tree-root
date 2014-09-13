@@ -25,12 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
+import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
-
-import java.util.Comparator;
 
 /**
  * Source for tree builders.
@@ -63,7 +62,7 @@ public interface Trees {
     TreeIteratorFactory treeIterators();
 
     /**
-     * Obtain a {@link com.mattunderscore.trees.TreeBuilderFactory}.
+     * Obtain a {@link com.mattunderscore.trees.construction.TreeBuilderFactory}.
      * @return
      */
     TreeBuilderFactory treeBuilders();

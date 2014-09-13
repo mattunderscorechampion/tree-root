@@ -23,23 +23,17 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.construction;
 
 /**
- * Represents a mutable node of a tree.
  * @author Matt Champion on 08/08/14.
  */
-public interface MutableNode<E> extends Node<E>, NodeAppender<E, MutableNode<E>>
-{
-    /**
-     * @return the children of the node
-     */
-    SimpleCollection<? extends MutableNode<E>> getChildren();
+public interface NodeAppender<E, T extends NodeAppender<E, T>> {
 
     /**
-     * Remove the node if it is a child of the recipient
-     * @param child the node to remove
-     * @return {@code true} if the node was removed
+     * Add a child
+     * @param e The element of the child to add
+     * @return A node appender for the child
      */
-    boolean removeChild(MutableNode<E> child);
+    T addChild(E e);
 }

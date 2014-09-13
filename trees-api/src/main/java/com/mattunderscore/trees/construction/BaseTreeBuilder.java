@@ -23,21 +23,23 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.construction;
+
+import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Represents a tree.
- * @author Matt Champion on 08/08/14.
+ * Base implementation of all tree builders.
+ * @author Matt Champion on 07/08/14.
  */
-public interface Tree<E, T extends Node<E>> {
-
+public interface BaseTreeBuilder<E, B extends Tree<E, ? extends Node<E>>> {
     /**
-     * @return the root node of the tree or null if the tree is empty
+     * Create a new tree of the type provided.
+     * @param klass The class of the tree to create
+     * @param <T> The type of the tree to create
+     * @return The new tree
+     * @throws com.mattunderscore.trees.OperationNotSupportedForType if the type of the tree to be built is not supported
      */
-    T getRoot();
-
-    /**
-     * @return {@code true} if the tree is empty
-     */
-    boolean isEmpty();
+    <T extends B> T build(Class<T> klass) throws OperationNotSupportedForType;
 }

@@ -29,10 +29,13 @@ import static org.junit.Assert.*;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.*;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
 
 import java.util.Iterator;

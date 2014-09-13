@@ -28,6 +28,7 @@ package com.mattunderscore.trees.common;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
+import com.mattunderscore.trees.tree.Node;
 
 import java.util.ArrayList;
 import java.util.Comparator;

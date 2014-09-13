@@ -23,31 +23,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.mutable;
+
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Builder used to create the root of a new tree or an empty tree.
- * @author Matt Champion on 07/08/14.
+ * Represents a mutable tree.
+ * @author Matt Champion on 08/08/14.
  */
-public interface TopDownTreeRootBuilder<E> extends BaseTreeBuilder<E, Tree<E, Node<E>>> {
-
-    /**
-     * @param e root element
-     * @return Builder for a non-empty tree
-     */
-    TopDownTreeBuilder<E> root(E e);
-
-    /**
-     * Builder used to create a non-empty tree.
-     * @param <S>
-     */
-    public interface TopDownTreeBuilder<S> extends BaseTreeBuilder<S, Tree<S, Node<S>>>, NodeAppender<S, TopDownTreeBuilderAppender<S>> {
-    }
-
-    /**
-     * Appended to add a new child to the tree.
-     * @param <S>
-     */
-    public interface TopDownTreeBuilderAppender<S> extends NodeAppender<S, TopDownTreeBuilderAppender<S>> {
-    }
+public interface MutableTree<E, T extends MutableNode<E>> extends Tree<E, MutableNode<E>> {
+    void setRoot(E root);
 }

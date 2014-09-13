@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
