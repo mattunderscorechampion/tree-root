@@ -64,9 +64,9 @@ public final class CompleteExample {
         treeSelector(trees, tree);
 
         final BottomUpTreeBuilder<Integer> intBuilder = trees.treeBuilders().bottomUpBuilder();
-        final Tree<Integer, Node<Integer>> intTree = intBuilder.create(new Integer(3),
-                intBuilder.create(new Integer(7)),
-                intBuilder.create(new Integer(9)))
+        final Tree<Integer, Node<Integer>> intTree = intBuilder.create(3,
+                intBuilder.create(7),
+                intBuilder.create(9))
             .build(Tree.class);
         sum(trees, intTree);
     }
