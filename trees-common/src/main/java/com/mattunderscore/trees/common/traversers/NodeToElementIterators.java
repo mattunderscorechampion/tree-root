@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.traversers;
 
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 
 import java.util.Iterator;
 
@@ -33,25 +34,15 @@ import java.util.Iterator;
  * An element iterator that delegates to a Node iterator and unwraps the return to an element.
  * @author Matt Champion on 10/09/14.
  */
-public class NodeToElementIterators<E, N extends Node<E>> implements Iterator<E> {
-    private final Iterator<N> delegatedIterator;
+public final class NodeToElementIterators<E, N extends Node<E>> extends ConvertingIterator<E, N> {
 
     public NodeToElementIterators(Iterator<N> delegatedIterator) {
-        this.delegatedIterator = delegatedIterator;
+        super(delegatedIterator);
     }
 
     @Override
-    public boolean hasNext() {
-        return delegatedIterator.hasNext();
+    protected E convert(N n) {
+        return n.getElement();
     }
 
-    @Override
-    public E next() {
-        return delegatedIterator.next().getElement();
-    }
-
-    @Override
-    public void remove() {
-        delegatedIterator.remove();
-    }
 }

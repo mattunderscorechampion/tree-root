@@ -28,7 +28,7 @@ package com.mattunderscore.trees.internal.pathcopy;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.utilities.DuplicateOnWriteSimpleCollection;
-import com.mattunderscore.trees.utilities.iterators.DelegatingIterator;
+import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 
 import java.util.Iterator;
 
@@ -175,7 +175,7 @@ final class PathCopyTreeNode<E> implements MutableNode<E> {
 
         @Override
         public Iterator<PathCopyTreeNode<E>> iterator() {
-            return new DelegatingIterator<PathCopyTreeNode<E>, ChildWrapper<E>>(delegate.iterator()) {
+            return new ConvertingIterator<PathCopyTreeNode<E>, ChildWrapper<E>>(delegate.iterator()) {
                 @Override
                 protected PathCopyTreeNode<E> convert(ChildWrapper<E> wrapped) {
                     return wrapped.child;
@@ -185,7 +185,7 @@ final class PathCopyTreeNode<E> implements MutableNode<E> {
 
         @Override
         public Iterator<PathCopyTreeNode<E>> structuralIterator() {
-            return new DelegatingIterator<PathCopyTreeNode<E>, ChildWrapper<E>>(delegate.structuralIterator()) {
+            return new ConvertingIterator<PathCopyTreeNode<E>, ChildWrapper<E>>(delegate.structuralIterator()) {
                 @Override
                 protected PathCopyTreeNode<E> convert(ChildWrapper<E> wrapped) {
                     return wrapped.child;

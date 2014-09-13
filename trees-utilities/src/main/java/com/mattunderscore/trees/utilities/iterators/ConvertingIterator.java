@@ -28,12 +28,13 @@ package com.mattunderscore.trees.utilities.iterators;
 import java.util.Iterator;
 
 /**
+ * Iterator that converts from an iteraor over one type to another. The converter must be implemented.
  * @author matt on 13/09/14.
  */
-public abstract class DelegatingIterator<E, T> implements Iterator<E> {
+public abstract class ConvertingIterator<E, T> implements Iterator<E> {
     private final Iterator<T> delegate;
 
-    protected DelegatingIterator(Iterator<T> delegate) {
+    protected ConvertingIterator(Iterator<T> delegate) {
         this.delegate = delegate;
     }
 
