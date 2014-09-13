@@ -32,7 +32,7 @@ import net.jcip.annotations.Immutable;
 import java.util.*;
 
 /**
- * @author matt on 11/09/14.
+ * @author Matt Champion on 11/09/14.
  */
 @Immutable
 public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollection<E> {

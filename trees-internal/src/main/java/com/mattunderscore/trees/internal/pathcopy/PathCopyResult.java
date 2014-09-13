@@ -27,7 +27,7 @@ package com.mattunderscore.trees.internal.pathcopy;
 
 /**
  * Result of copying path.
-* @author matt on 13/09/14.
+* @author Matt Champion on 13/09/14.
 */
 final class PathCopyResult<E> {
     final PathCopyTreeNode<E> newRoot;

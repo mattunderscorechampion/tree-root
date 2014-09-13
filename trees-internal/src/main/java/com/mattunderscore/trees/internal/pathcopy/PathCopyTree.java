@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Tree based on path copy mutation.
- * @author matt on 11/09/14.
+ * @author Matt Champion on 11/09/14.
  */
 public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     private final AtomicReference<PathCopyTreeNode<E>> root;

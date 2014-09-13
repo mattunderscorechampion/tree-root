@@ -34,7 +34,7 @@ import java.util.Iterator;
 
 /**
  * Nodes of trees based on path copy.
-* @author matt on 13/09/14.
+* @author Matt Champion on 13/09/14.
 */
 final class PathCopyTreeNode<E> implements MutableNode<E> {
     private final PathCopyTree<E> tree;

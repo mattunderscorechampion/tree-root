@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 /**
  * Iterator that converts from an iteraor over one type to another. The converter must be implemented.
- * @author matt on 13/09/14.
+ * @author Matt Champion on 13/09/14.
  */
 public abstract class ConvertingIterator<E, T> implements Iterator<E> {
     private final Iterator<T> delegate;
