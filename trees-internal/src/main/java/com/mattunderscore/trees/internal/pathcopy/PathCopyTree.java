@@ -31,6 +31,7 @@ import com.mattunderscore.trees.mutable.MutableTree;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * Tree based on path copy mutation.
  * @author matt on 11/09/14.
  */
 public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
@@ -43,7 +44,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     @Override
     public MutableNode<E> setRoot(E root) {
         final PathCopyTreeNode<E> newRoot = new PathCopyTreeNode<>(this, root);
-        setRootNode(newRoot);
+        this.root.set(newRoot);
         return newRoot;
     }
 
@@ -57,7 +58,12 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
         return root.get() == null;
     }
 
-    void setRootNode(PathCopyTreeNode<E> newRoot) {
-        root.set(newRoot);
+    /**
+     * Change the root only if it was the expected node.
+     * @param newRoot
+     * @param oldRoot
+     */
+    void checkAndSetRootNode(PathCopyTreeNode<E> newRoot, PathCopyTreeNode<E> oldRoot) {
+        root.compareAndSet(oldRoot, newRoot);
     }
 }

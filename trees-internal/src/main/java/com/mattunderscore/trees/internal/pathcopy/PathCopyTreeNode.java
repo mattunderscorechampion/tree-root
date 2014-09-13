@@ -33,11 +33,12 @@ import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 import java.util.Iterator;
 
 /**
+ * Nodes of trees based on path copy.
 * @author matt on 13/09/14.
 */
 final class PathCopyTreeNode<E> implements MutableNode<E> {
     private final PathCopyTree<E> tree;
-    private PathCopyTreeNode<E> parent;
+    private final PathCopyTreeNode<E> parent;
     private final E element;
     private DuplicateOnWriteSimpleCollection<ChildWrapper<E>> elementList;
 
@@ -85,7 +86,7 @@ final class PathCopyTreeNode<E> implements MutableNode<E> {
         if (newCollection.size() != elementList.size()) {
             newNode.elementList = newCollection;
             final PathCopyTree<E> tree = result.newRoot.tree;
-            tree.setRootNode(result.newRoot);
+            tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
             return true;
         }
         else {
@@ -100,7 +101,7 @@ final class PathCopyTreeNode<E> implements MutableNode<E> {
         final PathCopyTreeNode<E> newChild = new PathCopyTreeNode<E>(newNode, e);
         newNode.elementList = elementList.add(new ChildWrapper<>(newChild));
         final PathCopyTree<E> tree = result.newRoot.tree;
-        tree.setRootNode(result.newRoot);
+        tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
         return newChild;
     }
 
@@ -112,10 +113,10 @@ final class PathCopyTreeNode<E> implements MutableNode<E> {
             final DuplicateOnWriteSimpleCollection<ChildWrapper<E>> oldChildren = oldNode.parent.elementList;
             newParent.elementList =
                 oldChildren.replace(new ChildWrapper<>(newNode), new ChildWrapper<>(oldNode));
-            return new PathCopyResult<>(result.newRoot, newNode);
+            return new PathCopyResult<>(result.newRoot, result.oldRoot, newNode);
         }
         final PathCopyTreeNode<E> newNode = new PathCopyTreeNode(tree, oldNode.element);
-        return new PathCopyResult<>(newNode, newNode);
+        return new PathCopyResult<>(newNode, oldNode, newNode);
     }
 
     /**

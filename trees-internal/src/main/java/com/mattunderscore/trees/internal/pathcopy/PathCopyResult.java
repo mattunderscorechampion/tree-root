@@ -26,14 +26,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.pathcopy;
 
 /**
+ * Result of copying path.
 * @author matt on 13/09/14.
 */
-public final class PathCopyResult<E> {
+final class PathCopyResult<E> {
     final PathCopyTreeNode<E> newRoot;
+    final PathCopyTreeNode<E> oldRoot;
     final PathCopyTreeNode<E> newNode;
 
-    PathCopyResult(PathCopyTreeNode<E> newRoot, PathCopyTreeNode<E> newNode) {
+    PathCopyResult(PathCopyTreeNode<E> newRoot, PathCopyTreeNode<E> oldRoot, PathCopyTreeNode<E> newNode) {
         this.newRoot = newRoot;
+        this.oldRoot = oldRoot;
         this.newNode = newNode;
     }
 }
