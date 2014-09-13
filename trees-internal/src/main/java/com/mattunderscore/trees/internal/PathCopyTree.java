@@ -25,10 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.MutableNode;
-import com.mattunderscore.trees.MutableTree;
-import com.mattunderscore.trees.Node;
-import com.mattunderscore.trees.SimpleCollection;
+import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.utilities.ArrayListSimpleCollection;
 import com.mattunderscore.trees.utilities.CopyOnWriteSimpleCollection;
 import com.mattunderscore.trees.utilities.DuplicateOnWriteSimpleCollection;
@@ -108,7 +107,8 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
         @Override
         public boolean removeChild(MutableNode<E> child) {
-            final DuplicateOnWriteSimpleCollection newCollection = elementList.remove(child);
+            final DuplicateOnWriteSimpleCollection<PathCopyTreeNode<E>> newCollection =
+                    elementList.remove((PathCopyTreeNode<E>)child);
             return newCollection.size() != elementList.size();
         }
 
