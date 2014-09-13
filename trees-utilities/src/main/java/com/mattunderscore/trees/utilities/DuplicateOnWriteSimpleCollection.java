@@ -86,7 +86,7 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
     public DuplicateOnWriteSimpleCollection<E> add(E element) {
         Object[] newElements = Arrays.copyOf(elements, elements.length + 1);
         newElements[elements.length] = element;
-        return new DuplicateOnWriteSimpleCollection<E>();
+        return new DuplicateOnWriteSimpleCollection<E>(newElements);
     }
 
     /**
@@ -95,10 +95,9 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      * @return the modified collection
      */
     public DuplicateOnWriteSimpleCollection<E> remove(E element) {
-        final Object[] oldElements = elements;
-        final List<Object> tmpElements = new ArrayList<>(oldElements.length);
+        final List<Object> tmpElements = new ArrayList<>(elements.length);
         boolean removed = false;
-        for (Object o : oldElements) {
+        for (Object o : elements) {
             if (!removed && o.equals(element)) {
                 removed = true;
             }

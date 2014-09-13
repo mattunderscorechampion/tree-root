@@ -23,14 +23,41 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
+package com.mattunderscore.trees.internal.pathcopy;
 
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableTree;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Represents a mutable tree.
- * @author Matt Champion on 08/08/14.
+ * @author matt on 11/09/14.
  */
-public interface MutableTree<E, N extends MutableNode<E>> extends Tree<E, N> {
-    N setRoot(E root);
+public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
+    private final AtomicReference<PathCopyTreeNode<E>> root;
+
+    public PathCopyTree() {
+        root = new AtomicReference<>();
+    }
+
+    @Override
+    public MutableNode<E> setRoot(E root) {
+        final PathCopyTreeNode<E> newRoot = new PathCopyTreeNode<>(this, root);
+        setRootNode(newRoot);
+        return newRoot;
+    }
+
+    @Override
+    public PathCopyTreeNode<E> getRoot() {
+        return root.get();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return root.get() == null;
+    }
+
+    void setRootNode(PathCopyTreeNode<E> newRoot) {
+        root.set(newRoot);
+    }
 }

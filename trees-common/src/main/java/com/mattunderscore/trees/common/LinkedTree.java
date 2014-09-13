@@ -56,7 +56,7 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
     }
 
     @Override
-    public MutableNode<E> getRoot() {
+    public LinkedTree<E> getRoot() {
         if (isEmpty()) {
             return null;
         }
@@ -109,14 +109,15 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
     }
 
     @Override
-    public void setRoot(E root) {
+    public LinkedTree<E> setRoot(E root) {
         element = root;
+        return this;
     }
 
-    public final static class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, LinkedTree<E>> {
+    public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>> {
         @Override
-        public LinkedTree<E> treeFromRootNode(MutableNode<E> node) {
-            return (LinkedTree)node;
+        public LinkedTree<E> treeFromRootNode(LinkedTree<E> node) {
+            return node;
         }
 
         @Override

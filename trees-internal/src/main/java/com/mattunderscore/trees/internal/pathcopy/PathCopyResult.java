@@ -23,14 +23,17 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
-
-import com.mattunderscore.trees.tree.Tree;
+package com.mattunderscore.trees.internal.pathcopy;
 
 /**
- * Represents a mutable tree.
- * @author Matt Champion on 08/08/14.
- */
-public interface MutableTree<E, N extends MutableNode<E>> extends Tree<E, N> {
-    N setRoot(E root);
+* @author matt on 13/09/14.
+*/
+public final class PathCopyResult<E> {
+    final PathCopyTreeNode<E> newRoot;
+    final PathCopyTreeNode<E> newNode;
+
+    PathCopyResult(PathCopyTreeNode<E> newRoot, PathCopyTreeNode<E> newNode) {
+        this.newRoot = newRoot;
+        this.newNode = newNode;
+    }
 }

@@ -164,8 +164,9 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
     }
 
     @Override
-    public synchronized void setRoot(E root) {
+    public synchronized MutableNode<E> setRoot(E root) {
         element = root;
+        return this;
     }
 
     public final static class Constructor<E> implements TreeConstructor<E, MutableTreeNodeImpl<E>> {

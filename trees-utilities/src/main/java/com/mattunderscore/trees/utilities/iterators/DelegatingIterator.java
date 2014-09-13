@@ -23,14 +23,34 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
+package com.mattunderscore.trees.utilities.iterators;
 
-import com.mattunderscore.trees.tree.Tree;
+import java.util.Iterator;
 
 /**
- * Represents a mutable tree.
- * @author Matt Champion on 08/08/14.
+ * @author matt on 13/09/14.
  */
-public interface MutableTree<E, N extends MutableNode<E>> extends Tree<E, N> {
-    N setRoot(E root);
+public abstract class DelegatingIterator<E, T> implements Iterator<E> {
+    private final Iterator<T> delegate;
+
+    protected DelegatingIterator(Iterator<T> delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    public final boolean hasNext() {
+        return delegate.hasNext();
+    }
+
+    @Override
+    public final E next() {
+        return convert(delegate.next());
+    }
+
+    @Override
+    public final void remove() {
+        delegate.remove();
+    }
+
+    protected abstract E convert(T t);
 }
