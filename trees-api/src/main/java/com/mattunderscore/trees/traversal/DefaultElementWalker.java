@@ -27,7 +27,7 @@ package com.mattunderscore.trees.traversal;
 
 /**
  * Default element walker implementation.
- * @author matt on 13/09/14.
+ * @author Matt Champion on 13/09/14.
  */
 public abstract class DefaultElementWalker<E> implements Walker<E> {
     @Override

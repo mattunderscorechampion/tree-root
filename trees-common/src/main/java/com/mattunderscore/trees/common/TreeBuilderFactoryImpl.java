@@ -30,7 +30,7 @@ import com.mattunderscore.trees.*;
 import java.util.Comparator;
 
 /**
- * @author matt on 11/09/14.
+ * @author Matt Champion on 11/09/14.
  */
 public class TreeBuilderFactoryImpl implements TreeBuilderFactory {
     private final SPISupport support;
