@@ -13,6 +13,7 @@ Wednesday August 27 22:37:17 2014
 ##0.1.0 - Unreleased (TBD)
 * Added leaf method to nodes
 * Renamed all interfaces to conform to convention
+* Allow mutable trees change the root node 
 * Added balanced tree API
 * Made the handling of unknown SPI implementations explicit
 * Added iterators
@@ -24,3 +25,4 @@ Wednesday August 27 22:37:17 2014
 * Changed the class names of the factories
 * Changed the method names of the Trees interface to get the factories
 * Added element walkers and iterators
+* Added path copy based tree
