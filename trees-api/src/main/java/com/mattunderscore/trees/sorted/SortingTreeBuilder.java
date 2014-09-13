@@ -23,11 +23,13 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.sorted;
+
+import com.mattunderscore.trees.OrganisedTreeBuilder;
 
 /**
- * An algorithm used to sort trees.
+ * Builder used to create sorting trees.
  * @author Matt Champion on 07/09/14.
  */
-public interface SortingAlgorithm {
+public interface SortingTreeBuilder<E> extends OrganisedTreeBuilder<E, SortingTree<E, Node<E>>> {
 }

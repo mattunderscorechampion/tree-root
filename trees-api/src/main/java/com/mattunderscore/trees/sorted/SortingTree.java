@@ -23,12 +23,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.sorted;
+
+import com.mattunderscore.trees.MutableOrganisedTree;
+import com.mattunderscore.trees.Node;
 
 /**
- * Builder use to create sorted trees. If the tree is a sorting tree the {@link java.util.Comparator} will be passed to
- * the sorting tree.
+ * A mutable, organised tree that sorts the elements passed to it.
  * @author Matt Champion on 06/09/14.
  */
-public interface SortedTreeBuilder<E> extends OrganisedTreeBuilder<E, Tree<E, Node<E>>> {
+public interface SortingTree<E, N extends Node<E>> extends MutableOrganisedTree<E, N> {
 }

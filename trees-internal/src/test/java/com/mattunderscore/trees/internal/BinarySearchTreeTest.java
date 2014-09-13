@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.SortingTreeBuilder;
+import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.utilities.ComparableComparator;

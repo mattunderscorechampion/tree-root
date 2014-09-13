@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
+import com.mattunderscore.trees.sorted.SortedTreeBuilder;
+import com.mattunderscore.trees.sorted.SortingAlgorithm;
+import com.mattunderscore.trees.sorted.SortingTreeBuilder;
+
 import java.util.Comparator;
 
 /**

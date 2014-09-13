@@ -27,7 +27,6 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.SortingTree;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.*;
 
