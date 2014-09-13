@@ -28,6 +28,7 @@ package com.mattunderscore.trees;
 import java.util.Comparator;
 
 /**
+ * Factory for tree builders.
  * @author Matt Champion on 11/09/14.
  */
 public interface TreeBuilderFactory {

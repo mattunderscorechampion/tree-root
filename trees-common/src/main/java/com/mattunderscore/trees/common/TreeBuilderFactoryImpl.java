@@ -30,9 +30,10 @@ import com.mattunderscore.trees.*;
 import java.util.Comparator;
 
 /**
+ * Implementation of {@link com.mattunderscore.trees.TreeBuilderFactory}.
  * @author Matt Champion on 11/09/14.
  */
-public class TreeBuilderFactoryImpl implements TreeBuilderFactory {
+public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
     private final SPISupport support;
     private final TopDownTreeRootBuilder topDownTreeRootBuilder;
     private final BottomUpTreeBuilder bottomUpTreeBuilder;
