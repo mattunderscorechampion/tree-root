@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.BinaryTree;
-import com.mattunderscore.trees.BinaryTreeNode;
+import com.mattunderscore.trees.binary.BinaryTree;
+import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.Node;
 import com.mattunderscore.trees.Tree;
 import com.mattunderscore.trees.spi.TreeConverter;

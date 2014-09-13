@@ -23,11 +23,35 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees;
+package com.mattunderscore.trees.binary;
 
 /**
- * A binary tree.
+ * A mutable binary tree
  * @author Matt Champion on 06/09/14.
  */
-public interface BinaryTree<E, N extends BinaryTreeNode<E>> extends Tree<E, N> {
+public interface MutableBinaryTreeNode<E> extends BinaryTreeNode<E> {
+
+    /**
+     * Set the left subtree. Replaces the existing value
+     * @param left The new element
+     * @return The newly added node
+     */
+    MutableBinaryTreeNode<E> setLeft(E left);
+
+    /**
+     * Set the left subtree. Replaces the existing value
+     * @param right The new element
+     * @return The newly added node
+     */
+    MutableBinaryTreeNode<E> setRight(E right);
+
+    /**
+     * @return The left subtree
+     */
+    MutableBinaryTreeNode<E> getLeft();
+
+    /**
+     * @return The right subtree
+     */
+    MutableBinaryTreeNode<E> getRight();
 }

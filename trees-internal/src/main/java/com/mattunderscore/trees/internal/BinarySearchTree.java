@@ -25,9 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.BinaryTree;
-import com.mattunderscore.trees.BinaryTreeNode;
-import com.mattunderscore.trees.MutableBinaryTreeNode;
+import com.mattunderscore.trees.binary.BinaryTree;
+import com.mattunderscore.trees.binary.BinaryTreeNode;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.sorted.SortingTree;
 
 import java.util.Comparator;
