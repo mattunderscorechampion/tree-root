@@ -1,16 +1,13 @@
-Trees
-=====
+#Trees
 
 A tree structure and utility library.
 
-Building trees
-==============
+##Building trees
 
 There are two ways to build trees. From the bottom-up, starting with leaves and attaching them to a parent. From the
 top-down, starting the root and adding children.
 
-Prior art
-=========
+##Prior art
 
 There is a [TreeSet](http://docs.oracle.com/javase/7/docs/api/java/util/TreeSet.html) and a
 [TreeMap](http://docs.oracle.com/javase/7/docs/api/java/util/TreeMap.html) class in the standard
@@ -46,8 +43,7 @@ There are other tree implementations provided as a part of other libraries. The
 the [Zkoss framework](http://www.zkoss.org/javadoc/latest/zk/org/zkoss/zul/Tree.html). There are many tree
 implementations that have been created for specific use cases.
 
-Design principles
-=================
+##Design principles
 
 The intention is to provide an easily extensible, generic tree API. The API should build upon itself, adding features
 as needed. For example the basic tree API is immutable and it must be extended to provide a mutable interface.
@@ -64,8 +60,7 @@ For example to rebalance a tree in place, using the methods provided by the API 
 they are based on elements. An SPI implementation can be provided for each concrete mutable tree implementation that
 provides operations on nodes to support more efficient rebalancing.
 
-Definitions
-===========
+##Definitions
 
 * Element - a value associated with the node
 * Node - node of the tree, may contain a value, may have child nodes, may not be the child of more than one node
@@ -78,14 +73,12 @@ elements
 * Balanced tree - tree that has all its leaves at the same distance from the root
 * Balancing tree - a mutable tree that has adds new elements to the correct positions to keep it balanced
 
-Tree implementations
-====================
+##Tree implementations
 
 Tree implementations are flexible. Child collection mutability is based on the tree implementation. Likewise the
 ordering of children is based on the tree implementation.
 
-Balanced tree builders and balancing trees
-==========================================
+##Balanced tree builders and balancing trees
 
 The API supports balanced tree builders and self-balancing trees. A
 [balanced tree](http://xlinux.nist.gov/dads//HTML/balancedtree.html) requires specific placement of nodes. For a tree to
@@ -97,8 +90,7 @@ and then modify it so that it is not. The BalancingTree is a mutable tree that e
 Again this is done by leaving the placement up to the tree. It provides immutable nodes and an API that allows placement
 on the tree instead of the nodes.
 
-Sorted and sorting tree builders
-================================
+##Sorted and sorting tree builders
 
 The API supports creating sorted trees and trees that maintain a sorted structure. The builders for these nodes share
 the OrganisedTreeBuilder with the balanced tree builders. The sorting tree builders leave the placement of the elements
@@ -106,8 +98,7 @@ up to the sorting trees. The sorting tree builders are constrained to only build
 require a separate sorting algorithm to place the elements. Sorted and sorting tree builders both need a comparator for
 the elements.
 
-SPI
-===
+##SPI
 
 There is also an SPI that can be used to support specific implementations. The SPI can be used to expose more powerful
 functionality specific to tree implementations. The ServiceLoader is used to allow the implementations of the SPI to be
@@ -130,8 +121,7 @@ types without exposing behaviour in the API.
 A more Java centric way of describing this is that the API provides a library that can be used to work with trees.
 The SPI provides a framework for implementing tree based data structures that can be worked on by the API.
 
-Simple Collection
-=================
+##Simple Collection
 
 I have created a SimpleCollection extending Iterable. I had intended to reply on the Collections API for this and for a
 time considered returning an Iterable to represent the children. However I found that I wanted to iterate over the 
@@ -146,8 +136,7 @@ the number elements of the collection, for example a binary tree node may have 0
 branch. One iterator would return only the nodes present, the structural iterator must return two values, in order left
 to right returning null if the branch is not present.
 
-Targeted Language
-=================
+##Targeted Language
 
 The current target is Java 7. I know Java 8 is the latest version and the Streams API may be helpful for tree
 traversals. I maybe able to add some Java 8 specific extensions and I will move the target over to Java 8 towards EOL of
