@@ -26,3 +26,6 @@ Wednesday August 27 22:37:17 2014
 * Changed the method names of the Trees interface to get the factories
 * Added element walkers and iterators
 * Added path copy based tree
+* Moved collections into separate package
+* Moved tree implementations into separate packages
+
