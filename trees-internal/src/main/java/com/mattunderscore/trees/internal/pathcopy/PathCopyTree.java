@@ -27,6 +27,8 @@ package com.mattunderscore.trees.internal.pathcopy;
 
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+import com.mattunderscore.trees.spi.TreeConstructor;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -65,5 +67,18 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
      */
     void checkAndSetRootNode(PathCopyTreeNode<E> newRoot, PathCopyTreeNode<E> oldRoot) {
         root.compareAndSet(oldRoot, newRoot);
+    }
+
+    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, PathCopyTree<E>> {
+
+        @Override
+        public PathCopyTree<E> build() {
+            return new PathCopyTree<>();
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return PathCopyTree.class;
+        }
     }
 }
