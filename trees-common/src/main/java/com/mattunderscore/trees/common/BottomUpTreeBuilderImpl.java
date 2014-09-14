@@ -76,7 +76,7 @@ final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
             for (int i = 0; i < children.length; i++) {
                 subtrees[i] = children[i].build(klass);
             }
-            return helper.<E, T>newTreeFrom(klass, root, subtrees);
+            return helper.newTreeFrom(klass, root, subtrees);
         }
     }
 }

@@ -86,7 +86,7 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
     public DuplicateOnWriteSimpleCollection<E> add(E element) {
         Object[] newElements = Arrays.copyOf(elements, elements.length + 1);
         newElements[elements.length] = element;
-        return new DuplicateOnWriteSimpleCollection<E>(newElements);
+        return new DuplicateOnWriteSimpleCollection<>(newElements);
     }
 
     /**

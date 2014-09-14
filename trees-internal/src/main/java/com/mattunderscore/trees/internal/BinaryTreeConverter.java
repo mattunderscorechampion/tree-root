@@ -40,8 +40,7 @@ public class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, Bi
     @Override
     public BinaryTree<E, BinaryTreeNode<E>> build(Tree<E, ? extends Node<E>> sourceTree) {
         final Node<E> root = sourceTree.getRoot();
-        final BinaryTree<E, BinaryTreeNode<E>> tree = new BinaryTreeWrapper<E, BinaryTreeNode<E>>(duplicate(root));
-        return tree;
+        return new BinaryTreeWrapper<E, BinaryTreeNode<E>>(duplicate(root));
     }
 
     @Override
@@ -60,15 +59,15 @@ public class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, Bi
             if (children.hasNext()) {
                 throw new IllegalStateException("A binary tree can only have two children");
             }
-            final BinaryTreeNodeImpl newLeft = duplicate(left);
-            BinaryTreeNodeImpl newRight = null;
+            final BinaryTreeNodeImpl<E> newLeft = duplicate(left);
+            BinaryTreeNodeImpl<E> newRight = null;
             if (right != null) {
                 newRight = duplicate(right);
             }
-            return new BinaryTreeNodeImpl<E>(sourceChild.getElement(), newLeft, newRight);
+            return new BinaryTreeNodeImpl<>(sourceChild.getElement(), newLeft, newRight);
         }
         else {
-            return new BinaryTreeNodeImpl<E>(sourceChild.getElement());
+            return new BinaryTreeNodeImpl<>(sourceChild.getElement());
         }
     }
 }

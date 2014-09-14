@@ -40,7 +40,7 @@ public final class NodeToWrappedTreeConverter<E, N extends Node<E>> implements N
 
     @Override
     public TreeWrapper<E, N> treeFromRootNode(Node node) {
-        return new TreeWrapper((N)node);
+        return new TreeWrapper<E, N>((N)node);
     }
 
     @Override

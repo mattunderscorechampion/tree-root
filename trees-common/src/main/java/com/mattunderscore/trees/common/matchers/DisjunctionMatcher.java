@@ -80,7 +80,7 @@ public final class DisjunctionMatcher<E> implements NodeMatcher<E> {
      * @param <E> The element type of the nodes it matches
      * @return A matcher that evaluates to the disjunction of the two matchers passed in
      */
-    public static final <E> NodeMatcher<E> create(NodeMatcher<E> matcher0, NodeMatcher<E> matcher1) {
+    public static <E> NodeMatcher<E> create(NodeMatcher<E> matcher0, NodeMatcher<E> matcher1) {
         final Class<? extends NodeMatcher> matcher0Class = matcher0.getClass();
         final Class<? extends NodeMatcher> matcher1Class = matcher1.getClass();
         if (matcher0Class.equals(AlwaysMatcher.class) || matcher1Class.equals(AlwaysMatcher.class)) {

@@ -50,8 +50,8 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
     private LinkedTree(E root, LinkedTree[] subtrees) {
         this.element = root;
         children = new ArrayListSimpleCollection<>();
-        for (int i = 0; i < subtrees.length; i++) {
-            children.add(subtrees[i]);
+        for (final LinkedTree subtree : subtrees) {
+            children.add(subtree);
         }
     }
 
@@ -130,7 +130,7 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
 
         @Override
         public LinkedTree<E> build(E e, LinkedTree<E>... subtrees) {
-            return new LinkedTree<E>(e, subtrees);
+            return new LinkedTree<>(e, subtrees);
         }
 
         @Override
@@ -143,7 +143,7 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
 
         @Override
         public LinkedTree<E> build() {
-            return new LinkedTree<E>(null);
+            return new LinkedTree<>(null);
         }
 
         @Override

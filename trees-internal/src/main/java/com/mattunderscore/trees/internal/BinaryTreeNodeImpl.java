@@ -124,8 +124,8 @@ public final class BinaryTreeNodeImpl<E> implements BinaryTreeNode<E> {
                 throw new IllegalStateException("A binary tree cannot have more than two children");
             }
 
-            BinaryTreeNodeImpl left = null;
-            BinaryTreeNodeImpl right = null;
+            BinaryTreeNodeImpl<E> left = null;
+            BinaryTreeNodeImpl<E> right = null;
 
             if (subtrees.length > 0) {
                 left = subtrees[0].getRoot();
@@ -134,8 +134,8 @@ public final class BinaryTreeNodeImpl<E> implements BinaryTreeNode<E> {
                 right = subtrees[1].getRoot();
             }
 
-            final BinaryTreeNodeImpl<E> root = new BinaryTreeNodeImpl<E>(e, left, right);
-            return new BinaryTreeWrapper<E, BinaryTreeNodeImpl<E>>(root);
+            final BinaryTreeNodeImpl<E> root = new BinaryTreeNodeImpl<>(e, left, right);
+            return new BinaryTreeWrapper<>(root);
         }
 
         @Override

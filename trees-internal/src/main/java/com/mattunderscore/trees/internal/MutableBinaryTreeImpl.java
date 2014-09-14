@@ -108,8 +108,7 @@ public final class MutableBinaryTreeImpl<E> extends TreeWrapper<E, MutableBinary
         @Override
         public MutableBinaryTreeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
             final Node<E> root = sourceTree.getRoot();
-            final MutableBinaryTreeImpl<E> tree = new MutableBinaryTreeImpl<E>(duplicate(root));
-            return tree;
+            return new MutableBinaryTreeImpl<E>(duplicate(root));
         }
 
         @Override

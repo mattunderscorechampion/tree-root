@@ -53,12 +53,12 @@ public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode
 
     @Override
     public MutableBinaryTreeNode<E> setLeft(E element) {
-        return setInternalLeft(new MutableBinaryTreeNodeImpl<E>(element));
+        return setInternalLeft(new MutableBinaryTreeNodeImpl<>(element));
     }
 
     @Override
     public MutableBinaryTreeNode<E> setRight(E element) {
-        return setInternalRight(new MutableBinaryTreeNodeImpl<E>(element));
+        return setInternalRight(new MutableBinaryTreeNodeImpl<>(element));
     }
 
     private synchronized MutableBinaryTreeNode<E> setInternalRight(MutableBinaryTreeNode<E> right) {

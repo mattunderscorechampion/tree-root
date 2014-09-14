@@ -42,7 +42,7 @@ final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownT
 
     public TopDownTreeBuilderImpl(SPISupport helper, E root) {
         this.helper = helper;
-        tree = new LinkedTree<E>(root);
+        tree = new LinkedTree<>(root);
     }
 
     @Override

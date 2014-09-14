@@ -80,7 +80,7 @@ public final class ConjunctionMatcher<E> implements NodeMatcher<E> {
      * @param <E> The element type of the nodes it matches
      * @return A matcher that evaluates to the conjunction of the two matchers passed in
      */
-    public static final <E> NodeMatcher<E> create(NodeMatcher<E> matcher0, NodeMatcher<E> matcher1) {
+    public static <E> NodeMatcher<E> create(NodeMatcher<E> matcher0, NodeMatcher<E> matcher1) {
         if (matcher0.getClass().equals(NeverMatcher.class) || matcher1.getClass().equals(NeverMatcher.class)) {
             return new NeverMatcher<>();
         }

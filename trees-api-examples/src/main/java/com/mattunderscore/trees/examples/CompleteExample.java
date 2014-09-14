@@ -39,8 +39,6 @@ import com.mattunderscore.trees.tree.Tree;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * @author Matt Champion on 16/08/14.
  */
@@ -97,5 +95,5 @@ public final class CompleteExample {
             sum += integer;
             return true;
         }
-    };
+    }
 }

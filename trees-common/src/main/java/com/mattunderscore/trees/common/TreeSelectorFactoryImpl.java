@@ -70,8 +70,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
             @Override
             public <N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
                 final Iterator<T> parents = selector.select(tree);
-                final Iterator<T> end = new TreeIterator<>(parents, matcher);
-                return end;
+                return new TreeIterator<>(parents, matcher);
             }
         };
     }

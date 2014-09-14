@@ -62,7 +62,7 @@ public final class NeverMatcher<E> implements NodeMatcher<E> {
     }
 
     @SuppressWarnings("unchecked")
-    public static final <E> NodeMatcher<E> create() {
+    public final <E> NodeMatcher<E> create() {
         return (NodeMatcher<E>)INSTANCE;
     }
 }

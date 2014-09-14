@@ -39,7 +39,7 @@ public final class WrappedEmptyTreeConstructor<E, N extends Node<E>> implements 
 
     @Override
     public TreeWrapper<E, N> build() {
-        return new TreeWrapper<E, N>();
+        return new TreeWrapper<>();
     }
 
     @Override

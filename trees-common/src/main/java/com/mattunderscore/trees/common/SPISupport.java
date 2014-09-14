@@ -145,9 +145,7 @@ final class SPISupport {
      */
     private <C extends SPIComponent> void populateLookupMap(Map<Class<?>, C> componentMap, Class<C> componentClass) {
         final ServiceLoader<C> loader = ServiceLoader.load(componentClass);
-        final Iterator<C> iterator = loader.iterator();
-        while (iterator.hasNext()) {
-            final C component = iterator.next();
+        for (final C component : loader) {
             componentMap.put(component.forClass(), component);
         }
     }
