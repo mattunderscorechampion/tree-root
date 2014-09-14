@@ -84,10 +84,10 @@ public final class ConjunctionMatcher<E> implements NodeMatcher<E> {
         if (matcher0.getClass().equals(NeverMatcher.class) || matcher1.getClass().equals(NeverMatcher.class)) {
             return new NeverMatcher<>();
         }
-        else if (matcher0.equals(AlwaysMatcher.class)) {
+        else if (matcher0.getClass().equals(AlwaysMatcher.class)) {
             return matcher1;
         }
-        else if (matcher1.equals(AlwaysMatcher.class)) {
+        else if (matcher1.getClass().equals(AlwaysMatcher.class)) {
             return matcher0;
         }
         else if (matcher0.equals(matcher1)) {

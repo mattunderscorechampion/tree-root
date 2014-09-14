@@ -51,7 +51,7 @@ public final class ImmutableTreeExamples {
         final Iterator<Node<String>> iterator = traverser.preOrderIterator(tree);
     }
 
-    public void createTreeFromTopDown(TopDownTreeRootBuilder<String> builder, TreeIteratorFactory traverser)
+    public void createTreeFromTopDown(TopDownTreeRootBuilder<String> builder)
     {
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> b0 = builder.root("root");
         final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> left = b0.addChild("a");

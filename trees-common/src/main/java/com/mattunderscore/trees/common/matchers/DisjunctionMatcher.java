@@ -86,10 +86,10 @@ public final class DisjunctionMatcher<E> implements NodeMatcher<E> {
         if (matcher0Class.equals(AlwaysMatcher.class) || matcher1Class.equals(AlwaysMatcher.class)) {
             return new AlwaysMatcher<>();
         }
-        else if (matcher0.equals(NeverMatcher.class)) {
+        else if (matcher0.getClass().equals(NeverMatcher.class)) {
             return matcher1;
         }
-        else if (matcher1.equals(NeverMatcher.class)) {
+        else if (matcher1.getClass().equals(NeverMatcher.class)) {
             return matcher0;
         }
         else if (matcher0.equals(matcher1)) {

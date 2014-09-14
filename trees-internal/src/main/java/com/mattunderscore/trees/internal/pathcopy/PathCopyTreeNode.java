@@ -124,7 +124,7 @@ final class PathCopyTreeNode<E> implements MutableNode<E> {
      * @param <E>
      */
     private static final class ChildWrapper<E> {
-        private PathCopyTreeNode<E> child;
+        private final PathCopyTreeNode<E> child;
 
         private ChildWrapper(PathCopyTreeNode<E> child) {
             this.child = child;
