@@ -23,32 +23,21 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.internal.common;
 
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Wrap any node to create a Tree.
  * @author Matt Champion on 06/09/14.
  */
-public abstract class AbstractTreeWrapper<E, N extends Node<E>> implements Tree<E, N> {
-    protected final N root;
+public class TreeWrapper<E, N extends Node<E>> extends AbstractTreeWrapper<E, N> {
 
-    public AbstractTreeWrapper() {
-        this.root = null;
+    public TreeWrapper() {
+        super();
     }
 
-    public AbstractTreeWrapper(N root) {
-        this.root = root;
-    }
-
-    @Override
-    public N getRoot() {
-        return root;
-    }
-
-    @Override
-    public final boolean isEmpty() {
-        return root == null;
+    public TreeWrapper(N root) {
+        super(root);
     }
 }

@@ -23,23 +23,32 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.internal.common;
 
-import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
-
-import java.util.Comparator;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * @author Matt Champion on 06/09/14.
  */
-public class BinarySearchTreeEmptyConstructor<E> implements EmptySortedTreeConstructor<E, BinarySearchTree<E>> {
-    @Override
-    public BinarySearchTree<E> build(Comparator<E> comparator) {
-        return new BinarySearchTree<>(comparator);
+public abstract class AbstractTreeWrapper<E, N extends Node<E>> implements Tree<E, N> {
+    protected final N root;
+
+    public AbstractTreeWrapper() {
+        this.root = null;
+    }
+
+    public AbstractTreeWrapper(N root) {
+        this.root = root;
     }
 
     @Override
-    public Class<?> forClass() {
-        return BinarySearchTree.class;
+    public N getRoot() {
+        return root;
+    }
+
+    @Override
+    public final boolean isEmpty() {
+        return root == null;
     }
 }

@@ -23,36 +23,23 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.internal.binary.search;
 
-import com.mattunderscore.trees.binary.BinaryTree;
-import com.mattunderscore.trees.binary.BinaryTreeNode;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
+
+import java.util.Comparator;
 
 /**
- * Wrap and binary node to create a binary tree.
  * @author Matt Champion on 06/09/14.
  */
-public class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
-
-    public BinaryTreeWrapper() {
-        super();
+public class BinarySearchTreeEmptyConstructor<E> implements EmptySortedTreeConstructor<E, BinarySearchTree<E>> {
+    @Override
+    public BinarySearchTree<E> build(Comparator<E> comparator) {
+        return new BinarySearchTree<>(comparator);
     }
 
-    public BinaryTreeWrapper(N root) {
-        super(root);
-    }
-
-    public static final class NodeConverter<E, N extends BinaryTreeNode<E>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>> {
-
-        @Override
-        public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {
-            return new BinaryTreeWrapper<>(node);
-        }
-
-        @Override
-        public Class<?> forClass() {
-            return BinaryTree.class;
-        }
+    @Override
+    public Class<?> forClass() {
+        return BinarySearchTree.class;
     }
 }

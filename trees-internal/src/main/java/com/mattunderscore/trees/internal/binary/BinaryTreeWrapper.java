@@ -23,21 +23,37 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.internal.binary;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.binary.BinaryTree;
+import com.mattunderscore.trees.binary.BinaryTreeNode;
+import com.mattunderscore.trees.internal.common.AbstractTreeWrapper;
+import com.mattunderscore.trees.spi.NodeToTreeConverter;
 
 /**
- * Wrap any node to create a Tree.
+ * Wrap and binary node to create a binary tree.
  * @author Matt Champion on 06/09/14.
  */
-public class TreeWrapper<E, N extends Node<E>> extends AbstractTreeWrapper<E, N> {
+public class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
 
-    public TreeWrapper() {
+    public BinaryTreeWrapper() {
         super();
     }
 
-    public TreeWrapper(N root) {
+    public BinaryTreeWrapper(N root) {
         super(root);
+    }
+
+    public static final class NodeConverter<E, N extends BinaryTreeNode<E>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>> {
+
+        @Override
+        public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {
+            return new BinaryTreeWrapper<>(node);
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return BinaryTree.class;
+        }
     }
 }

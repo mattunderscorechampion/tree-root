@@ -23,66 +23,51 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.internal.binary;
 
 import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.sorted.SortingTree;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.spi.TreeConverter;
 
-import java.util.Comparator;
+import java.util.Iterator;
 
 /**
  * @author Matt Champion on 06/09/14.
  */
-public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E>>, SortingTree<E, BinaryTreeNode<E>> {
-    private final Comparator<E> comparator;
-    private MutableBinaryTreeNodeImpl root;
-
-    public BinarySearchTree(Comparator<E> comparator) {
-        this.comparator = comparator;
+public class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, BinaryTreeNode<E>>> {
+    @Override
+    public BinaryTree<E, BinaryTreeNode<E>> build(Tree<E, ? extends Node<E>> sourceTree) {
+        final Node<E> root = sourceTree.getRoot();
+        return new BinaryTreeWrapper<E, BinaryTreeNode<E>>(duplicate(root));
     }
 
     @Override
-    public synchronized BinarySearchTree<E> addElement(E element) {
-        if (isEmpty()) {
-            root = new MutableBinaryTreeNodeImpl(element);
+    public Class<?> forClass() {
+        return BinaryTree.class;
+    }
+
+    private BinaryTreeNodeImpl<E> duplicate(Node<E> sourceChild) {
+        final Iterator<? extends Node<E>> children = sourceChild.getChildren().iterator();
+        if (children.hasNext()) {
+            final Node<E> left = children.next();
+            Node<E> right = null;
+            if (children.hasNext()) {
+                right = children.next();
+            }
+            if (children.hasNext()) {
+                throw new IllegalStateException("A binary tree can only have two children");
+            }
+            final BinaryTreeNodeImpl<E> newLeft = duplicate(left);
+            BinaryTreeNodeImpl<E> newRight = null;
+            if (right != null) {
+                newRight = duplicate(right);
+            }
+            return new BinaryTreeNodeImpl<>(sourceChild.getElement(), newLeft, newRight);
         }
         else {
-            addTo(root, element);
+            return new BinaryTreeNodeImpl<>(sourceChild.getElement());
         }
-        return this;
-    }
-
-    private void addTo(MutableBinaryTreeNode<E> node, E element) {
-        final int comparison = comparator.compare(node.getElement(), element);
-        if (comparison < 0) {
-            final MutableBinaryTreeNode<E> left = node.getLeft();
-            if (left == null) {
-                node.setLeft(element);
-            }
-            else {
-                addTo(left, element);
-            }
-        }
-        else {
-            final MutableBinaryTreeNode<E> right = node.getRight();
-            if (right == null) {
-                node.setRight(element);
-            }
-            else {
-                addTo(right, element);
-            }
-        }
-    }
-
-    @Override
-    public synchronized BinaryTreeNode<E> getRoot() {
-        return root;
-    }
-
-    @Override
-    public synchronized boolean isEmpty() {
-        return root == null;
     }
 }
