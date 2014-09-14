@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.internal.common.TreeWrapper;
+import com.mattunderscore.trees.internal.common.AbstractTreeWrapper;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -39,7 +39,7 @@ import java.util.Iterator;
 /**
  * @author Matt Champion on 08/09/14.
  */
-public final class MutableBinaryTreeImpl<E> extends TreeWrapper<E, MutableBinaryTreeNode<E>> {
+public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, MutableBinaryTreeNode<E>> {
     public MutableBinaryTreeImpl() {
         super();
     }
