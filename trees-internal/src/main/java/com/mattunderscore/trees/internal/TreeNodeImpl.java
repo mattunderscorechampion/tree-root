@@ -32,7 +32,7 @@ import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.utilities.FixedUncheckedSimpleCollection;
+import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 import net.jcip.annotations.Immutable;
 

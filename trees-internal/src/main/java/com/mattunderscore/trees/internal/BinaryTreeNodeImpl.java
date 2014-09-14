@@ -31,7 +31,7 @@ import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.utilities.FixedUncheckedSimpleCollection;
+import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 /**
  * Binary tree node implementation.

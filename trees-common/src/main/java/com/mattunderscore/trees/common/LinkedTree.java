@@ -31,7 +31,7 @@ import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.*;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.ArrayListSimpleCollection;
+import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
 import net.jcip.annotations.NotThreadSafe;
 
 /**

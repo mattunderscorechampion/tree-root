@@ -34,7 +34,7 @@ import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.FixedUncheckedSimpleCollection;
+import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 import net.jcip.annotations.GuardedBy;
 

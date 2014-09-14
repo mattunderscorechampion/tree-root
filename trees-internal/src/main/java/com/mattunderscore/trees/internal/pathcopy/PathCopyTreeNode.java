@@ -27,7 +27,7 @@ package com.mattunderscore.trees.internal.pathcopy;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.utilities.DuplicateOnWriteSimpleCollection;
+import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 
 import java.util.Iterator;
