@@ -34,7 +34,7 @@ import com.mattunderscore.trees.spi.NodeToTreeConverter;
  * Wrap and binary node to create a binary tree.
  * @author Matt Champion on 06/09/14.
  */
-public class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
+public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
 
     public BinaryTreeWrapper() {
         super();

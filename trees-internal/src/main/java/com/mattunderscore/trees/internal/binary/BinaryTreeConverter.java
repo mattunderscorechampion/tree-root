@@ -36,7 +36,7 @@ import java.util.Iterator;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, BinaryTreeNode<E>>> {
+public final class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, BinaryTreeNode<E>>> {
     @Override
     public BinaryTree<E, BinaryTreeNode<E>> build(Tree<E, ? extends Node<E>> sourceTree) {
         final Node<E> root = sourceTree.getRoot();
