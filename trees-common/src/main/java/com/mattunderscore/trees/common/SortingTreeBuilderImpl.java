@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
+public final class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
     private final SPISupport helper;
     private final Comparator<E> comparator;
     private final List<E> elements = new ArrayList<>();

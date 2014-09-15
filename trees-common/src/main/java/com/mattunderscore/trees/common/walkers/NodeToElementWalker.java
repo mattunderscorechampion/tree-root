@@ -32,7 +32,7 @@ import com.mattunderscore.trees.traversal.Walker;
  * A Node walker that unwraps the elements and passes them to a delegated element walker.
  * @author Matt Champion on 10/09/14.
  */
-public class NodeToElementWalker<E, N extends Node<E>> implements Walker<N> {
+public final class NodeToElementWalker<E, N extends Node<E>> implements Walker<N> {
     private final Walker<E> delegateWalker;
 
     public NodeToElementWalker(Walker<E> delegateWalker) {
