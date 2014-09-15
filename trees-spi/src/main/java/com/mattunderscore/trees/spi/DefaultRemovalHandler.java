@@ -23,50 +23,30 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import net.jcip.annotations.NotThreadSafe;
-
-import java.lang.reflect.Array;
-import java.util.*;
 
 /**
- * @author Matt Champion on 17/08/14.
+ * Default handler for removal operations through an iterator. This is not registered against a class it is used if no
+ * class is registered.
+ * @author Matt Champion on 15/09/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
-
-    public PreOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
-        super(tree, handler);
-        current = tree.getRoot();
-        parents.push(current);
+public final class DefaultRemovalHandler<E, N extends Node<E>, T extends Tree<E, N>> implements IteratorRemoveHandler<E, N, T> {
+    @Override
+    public boolean isSupported() {
+        return false;
     }
 
     @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final SimpleCollection<N> children = (SimpleCollection<N>) n.getChildren();
-            final N[] reversed = (N[]) Array.newInstance(n.getClass(), children.size());
-            final Iterator<N> childIterator = children.structuralIterator();
-            for (int i = children.size() - 1; i >= 0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (final N child : reversed) {
-                parents.push(child);
-            }
-            do {
-                current = parents.pop();
-            } while (current == null);
-            return n;
-        }
-        throw new NoSuchElementException();
+    public void remove(T tree, N node) {
+        // Never called
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Class<?> forClass() {
+        return null;
     }
 }

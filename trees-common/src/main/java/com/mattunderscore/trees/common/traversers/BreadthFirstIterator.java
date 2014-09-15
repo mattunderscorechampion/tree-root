@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.traversers;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
@@ -39,12 +40,13 @@ import java.util.NoSuchElementException;
 /**
  * @author Matt Champion on 05/09/14.
  */
-public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
+public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private Iterator<N> currentLayer;
     private List<N> nextLayer;
 
 
-    public BreadthFirstIterator(T tree) {
+    public BreadthFirstIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
+        super(tree, handler);
         currentLayer = new EmptyIterator<>();
         nextLayer = new ArrayList<>(1);
         nextLayer.add(tree.getRoot());

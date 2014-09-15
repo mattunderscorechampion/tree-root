@@ -27,6 +27,8 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.internal.binary.mutable.MutableBinaryTreeImpl;
+import com.mattunderscore.trees.spi.DefaultRemovalHandler;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.TreesImpl;
@@ -50,7 +52,7 @@ public final class BinaryTreeIteratorTest {
     @Test
     public void preorder() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
-        final Iterator<MutableBinaryTreeNode<String>> iterator = new PreOrderIterator<>(tree);
+        final Iterator<MutableBinaryTreeNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);
         assertEquals("f", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("a", iterator.next().getElement());
@@ -66,7 +68,7 @@ public final class BinaryTreeIteratorTest {
     @Test
     public void inorder() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
-        final Iterator<MutableBinaryTreeNode<String>> iterator = new InOrderIterator<>(tree);
+        final Iterator<MutableBinaryTreeNode<String>> iterator = trees.treeIterators().inOrderIterator(tree);
         assertEquals("a", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
@@ -82,7 +84,7 @@ public final class BinaryTreeIteratorTest {
     @Test
     public void postorder() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
-        final Iterator<MutableBinaryTreeNode<String>> iterator = new PostOrderIterator<>(tree);
+        final Iterator<MutableBinaryTreeNode<String>> iterator = trees.treeIterators().postOrderIterator(tree);
         assertEquals("a", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
         assertEquals("e", iterator.next().getElement());
@@ -98,7 +100,7 @@ public final class BinaryTreeIteratorTest {
     @Test
     public void breadthfirst() {
         final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
-        final Iterator<MutableBinaryTreeNode<String>> iterator = new BreadthFirstIterator<>(tree);
+        final Iterator<MutableBinaryTreeNode<String>> iterator = trees.treeIterators().breadthFirstIterator(tree);
         assertEquals("f", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("g", iterator.next().getElement());

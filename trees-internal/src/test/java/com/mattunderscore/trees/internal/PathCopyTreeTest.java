@@ -25,7 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.common.traversers.TreeIteratorFactoryImpl;
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.common.TreeIteratorFactoryImpl;
+import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.internal.pathcopy.PathCopyTree;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
@@ -45,7 +47,8 @@ public final class PathCopyTreeTest {
 
     @BeforeClass
     public static void setUp() {
-        iterators = new TreeIteratorFactoryImpl();
+        final Trees trees = new TreesImpl();
+        iterators = trees.treeIterators();
     }
 
     @Test

@@ -99,7 +99,7 @@ public final class MutableTreeNodeImplTest {
         final MutableTree<String, MutableNode<String>> tree = builder0.build(MutableTree.class);
 
         // Begin iterating over the tree
-        final Iterator<MutableNode<String>> iterator = new PreOrderIterator(tree);
+        final Iterator<MutableNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);
         final MutableNode<String> root = iterator.next();
         assertEquals("a", root.getElement());
         assertEquals("b", iterator.next().getElement());
@@ -117,7 +117,7 @@ public final class MutableTreeNodeImplTest {
         right.removeChild(grandchild);
 
         // A new preorder iterator sees the new state of the tree
-        final Iterator<MutableNode<String>> newIterator = new PreOrderIterator(tree);
+        final Iterator<MutableNode<String>> newIterator = trees.treeIterators().preOrderIterator(tree);
         assertEquals("a", newIterator.next().getElement());
         assertEquals("g", newIterator.next().getElement());
         assertFalse(newIterator.hasNext());

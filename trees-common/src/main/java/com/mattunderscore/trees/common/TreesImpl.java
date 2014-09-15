@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.traversers.TreeIteratorFactoryImpl;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
@@ -49,7 +48,7 @@ public final class TreesImpl implements Trees {
         treeSelectorFactory = new TreeSelectorFactoryImpl(helper);
         nodeSelectorFactory = new NodeSelectorFactoryImpl(helper);
         treeWalkerFactory = new TreeWalkerFactoryImpl();
-        treeIteratorFactory = new TreeIteratorFactoryImpl();
+        treeIteratorFactory = new TreeIteratorFactoryImpl(helper);
         treeBuilderFactory = new TreeBuilderFactoryImpl(helper);
     }
 

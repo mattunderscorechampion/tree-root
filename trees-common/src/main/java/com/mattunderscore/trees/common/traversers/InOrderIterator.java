@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
@@ -38,11 +39,12 @@ import java.util.Stack;
  * @author Matt Champion on 22/08/14.
  */
 @NotThreadSafe
-public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
+public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private final Stack<State<E, N>> parents = new Stack<>();
     private N current;
 
-    public InOrderIterator(T tree) {
+    public InOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
+        super(tree, handler);
         current = tree.getRoot();
     }
 

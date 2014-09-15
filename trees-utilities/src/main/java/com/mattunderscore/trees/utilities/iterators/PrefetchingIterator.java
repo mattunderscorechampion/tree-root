@@ -34,6 +34,7 @@ import java.util.NoSuchElementException;
  * @author Matt Champion on 25/06/14.
  */
 public abstract class PrefetchingIterator<E> implements Iterator<E> {
+    private E current;
     private E prefetched;
 
     @Override
@@ -60,13 +61,23 @@ public abstract class PrefetchingIterator<E> implements Iterator<E> {
             return next;
         }
         else {
-            return calculateNext();
+            current = calculateNext();
+            return current;
         }
     }
 
     @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
+    public final void remove() {
+        if (!isRemoveSupported()) {
+            throw new UnsupportedOperationException("Remove not supported");
+        }
+        else if (current != null) {
+            remove(current);
+            current = null;
+        }
+        else {
+            throw new IllegalStateException("No current value to remove");
+        }
     }
 
     /**
@@ -74,4 +85,18 @@ public abstract class PrefetchingIterator<E> implements Iterator<E> {
      * @throws NoSuchElementException If no more elements
      */
     protected abstract E calculateNext() throws NoSuchElementException;
+
+    /**
+     * @return @{code true} if removal is supported
+     */
+    protected boolean isRemoveSupported() {
+        return false;
+    }
+
+    /**
+     * Perform the removal
+     * @param current
+     */
+    protected void remove(E current) {
+    }
 }

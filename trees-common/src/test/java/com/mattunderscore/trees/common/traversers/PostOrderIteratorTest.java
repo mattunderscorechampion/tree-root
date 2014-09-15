@@ -29,6 +29,7 @@ import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.spi.DefaultRemovalHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
@@ -57,7 +58,7 @@ public final class PostOrderIteratorTest {
                 builder.create("h",
                     builder.create("g")))).build(LinkedTree.class);
 
-        final Iterator<Node<String>> iterator = new PostOrderIterator<>(tree);
+        final Iterator<Node<String>> iterator = new PostOrderIterator<>(tree, new DefaultRemovalHandler<String, Node<String>, Tree<String, Node<String>>>());
         assertEquals("a", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
         assertEquals("e", iterator.next().getElement());

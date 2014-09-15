@@ -31,59 +31,27 @@ import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Stack;
 
 /**
- * @author Matt Champion on 03/09/14.
+ * Iterator that provides support for removing elements from trees.
+ * @author Matt Champion on 15/09/14.
  */
-public final class PostOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
-    private final Stack<State<E, N>> parents = new Stack<>();
-    private N current;
+public abstract class RemoveHandlerIterator<E, N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
+    private final T tree;
+    private final IteratorRemoveHandler<E, N, T> handler;
 
-    public PostOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
-        super(tree, handler);
-        current = tree.getRoot();
+    public RemoveHandlerIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
+        this.tree = tree;
+        this.handler = handler;
     }
 
     @Override
-    protected N calculateNext() throws NoSuchElementException {
-        while (!parents.isEmpty() || current != null) {
-            if (current != null) {
-                final State<E, N> state = new State<>(current);
-                parents.push(state);
-                if (state.iterator.hasNext()) {
-                    current = state.iterator.next();
-                }
-                else {
-                    // Leaf
-                    current = null;
-                }
-            }
-            else {
-                final State<E, N> state = parents.peek();
-                if (state.iterator.hasNext()) {
-                    current = state.iterator.next();
-                    continue;
-                }
-
-                if (!state.iterator.hasNext()) {
-                    parents.pop();
-                }
-
-                return state.node;
-            }
-        }
-        throw new NoSuchElementException();
+    protected boolean isRemoveSupported() {
+        return handler.isSupported();
     }
 
-    private static final class State<E, N extends Node<E>> {
-        private final N node;
-        private final Iterator<N> iterator;
-
-        public State(N node) {
-            this.node = node;
-            this.iterator = (Iterator<N>)node.getChildren().structuralIterator();
-        }
+    @Override
+    protected void remove(N node) {
+        handler.remove(tree, node);
     }
 }

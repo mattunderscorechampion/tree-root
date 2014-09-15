@@ -43,6 +43,7 @@ final class SPISupport {
     private final Map<Class<?>, TreeConverter> treeConverters;
     private final Map<Class<?>, NodeToTreeConverter> converters;
     private final Map<Class<?>, EmptySortedTreeConstructor> sortedEmptyConverters;
+    private final Map<Class<?>, IteratorRemoveHandler> iteratorRemoveHandlers;
 
     public SPISupport() {
         treeConverters = new HashMap<>();
@@ -59,6 +60,9 @@ final class SPISupport {
 
         sortedEmptyConverters = new HashMap<>();
         populateLookupMap(sortedEmptyConverters, EmptySortedTreeConstructor.class);
+
+        iteratorRemoveHandlers = new HashMap<>();
+        populateLookupMap(iteratorRemoveHandlers, IteratorRemoveHandler.class);
     }
 
     /**
@@ -135,6 +139,17 @@ final class SPISupport {
         final NodeToTreeConverter<E, N, T> converter =
                 (NodeToTreeConverter<E, N, T>)performLookup(converters, NodeToTreeConverter.class, klass);
         return converter.treeFromRootNode(node);
+    }
+
+    public <E, N extends Node<E>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> lookupHandler(T tree) {
+        final Class<? extends Tree> keyClass = tree.getClass();
+        final IteratorRemoveHandler<E, N, T> handler = iteratorRemoveHandlers.get(keyClass);
+        if (handler == null) {
+            return new DefaultRemovalHandler<>();
+        }
+        else {
+            return handler;
+        }
     }
 
     /**
