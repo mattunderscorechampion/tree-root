@@ -25,67 +25,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.selectors;
 
-import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Selector for the children of the nodes of another selector.
  * @param <E> The element type of the nodes
  * @author Matt Champion on 17/09/14.
  */
-public final class ChildSelector<E> implements NodeSelector<E> {
-    private final NodeSelector<E> selector;
+public final class ChildSelector<E> extends ExtendingNodeSelector<E> {
 
     public ChildSelector(NodeSelector<E> selector) {
-        this.selector = selector;
+        super(selector);
     }
 
     @Override
-    public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) throws OperationNotSupportedForType {
-        final Iterator<N> nodes = selector.select(tree);
-        return new ChildIterator<>(nodes);
-    }
-
-    /**
-     * Iterate over the children of an iteration of nodes
-     * @param <E> The element type of the nodes
-     * @param <N> The type of the nodes
-     */
-    private static final class ChildIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
-        private final Iterator<N> nodeIterator;
-        private Iterator<? extends Node<E>> childIterator;
-
-        private ChildIterator(Iterator<N> iterator) {
-            this.nodeIterator = iterator;
-            childIterator = new EmptyIterator<>();
-        }
-
-        @Override
-        protected N calculateNext() throws NoSuchElementException {
-            if (childIterator.hasNext()) {
-                return (N) childIterator.next();
-            }
-            else {
-                N nextChild = null;
-                do {
-                    final Node<E> nextNode = nodeIterator.next();
-                    final SimpleCollection<? extends Node<E>> children = nextNode.getChildren();
-                    childIterator = children.iterator();
-                    if (childIterator.hasNext()) {
-                        nextChild = (N) childIterator.next();
-                    }
-                }
-                while (nextChild == null);
-                return nextChild;
-            }
-        }
+    protected final <N extends Node<E>> Iterator<N> getExtendingIterator(N nodeToExtendFrom) {
+        final SimpleCollection<N> children = (SimpleCollection<N>)nodeToExtendFrom.getChildren();
+        return children.iterator();
     }
 }
