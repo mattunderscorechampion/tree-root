@@ -37,7 +37,7 @@ import static org.junit.Assert.assertTrue;
  * Unit tests for {@link com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection}.
  * @author matt on 19/09/14.
  */
-public class DuplicateOnWriteSimpleCollectionTest {
+public final class DuplicateOnWriteSimpleCollectionTest {
     @Test
     public void add() {
         final DuplicateOnWriteSimpleCollection<String> collection = new DuplicateOnWriteSimpleCollection<>();
