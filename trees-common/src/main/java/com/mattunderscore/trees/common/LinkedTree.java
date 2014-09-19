@@ -100,7 +100,12 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
         if (child == null) {
             return false;
         }
-        return children.remove(child);
+        else if (child.getClass().equals(getClass())) {
+            return children.remove((LinkedTree<E>)child);
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

@@ -56,7 +56,7 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
         }
     }
 
-    public boolean remove(Object element) {
+    public boolean remove(E element) {
         return list.remove(element);
     }
 
