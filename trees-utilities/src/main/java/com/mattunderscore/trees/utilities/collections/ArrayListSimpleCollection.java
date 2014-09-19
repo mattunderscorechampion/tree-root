@@ -72,12 +72,12 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
 
     @Override
     public Iterator<E> structuralIterator() {
-        return Collections.unmodifiableList(list).iterator();
+        return list.iterator();
     }
 
     @Override
     public Iterator<E> iterator() {
-        return Collections.unmodifiableList(list).iterator();
+        return list.iterator();
     }
 
 }

@@ -27,6 +27,8 @@ package com.mattunderscore.trees.utilities.collections;
 
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -63,5 +65,27 @@ public final class ArrayListSimpleCollectionTest {
         assertEquals(1, collection.size());
         assertEquals("a", collection.iterator().next());
         assertEquals("a", collection.structuralIterator().next());
+    }
+
+    @Test
+    public void removeIterator() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.add("a");
+        final Iterator<String> iterator = collection.iterator();
+        iterator.next();
+        iterator.remove();
+
+        assertEquals(0, collection.size());
+    }
+
+    @Test
+    public void removeStructuralIterator() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.add("a");
+        final Iterator<String> iterator = collection.structuralIterator();
+        iterator.next();
+        iterator.remove();
+
+        assertEquals(0, collection.size());
     }
 }
