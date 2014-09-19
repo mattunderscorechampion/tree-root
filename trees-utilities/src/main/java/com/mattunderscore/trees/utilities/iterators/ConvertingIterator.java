@@ -28,7 +28,7 @@ package com.mattunderscore.trees.utilities.iterators;
 import java.util.Iterator;
 
 /**
- * Iterator that converts from an iteraor over one type to another. The converter must be implemented.
+ * Iterator that converts from an iterator over one type to another. The converter must be implemented.
  * @author Matt Champion on 13/09/14.
  */
 public abstract class ConvertingIterator<E, T> implements Iterator<E> {
