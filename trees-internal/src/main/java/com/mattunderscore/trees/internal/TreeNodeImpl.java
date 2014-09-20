@@ -44,9 +44,9 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
     private final E element;
     private final SimpleCollection<Node<E>> children;
 
-    public TreeNodeImpl(E element, SimpleCollection<Node<E>> children) {
+    TreeNodeImpl(E element, Object[] children) {
         this.element = element;
-        this.children = children;
+        this.children = new FixedUncheckedSimpleCollection<>(children);
     }
 
     @Override
@@ -85,11 +85,11 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
         return children.size() == 0;
     }
 
-    public final static class Constructor<E> implements TreeConstructor<E, TreeNodeImpl<E>> {
+    public final static class Constructor<E> implements TreeConstructor<E, Tree<E, Node<E>>> {
 
         @Override
-        public TreeNodeImpl<E> build(E e, TreeNodeImpl<E>... subtrees) {
-            return new TreeNodeImpl(e, new FixedUncheckedSimpleCollection<>(subtrees));
+        public Tree<E, Node<E>> build(E e, Tree<E, Node<E>>... subtrees) {
+            return new TreeNodeImpl(e, subtrees);
         }
 
         @Override
@@ -102,7 +102,7 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
 
         @Override
         public TreeNodeImpl<E> build() {
-            return new TreeNodeImpl(null, new FixedUncheckedSimpleCollection<>(new Object[0]));
+            return new TreeNodeImpl(null, new Object[0]);
         }
 
         @Override
@@ -137,16 +137,16 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
             return Tree.class;
         }
 
-        private SimpleCollection<Node<E>> duplicateChildren(SimpleCollection<? extends Node<E>> children) {
+        private Object[] duplicateChildren(SimpleCollection<? extends Node<E>> children) {
             @SuppressWarnings("unchecked")
-            final Node<E>[] newChildren = new Node[children.size()];
+            final Object[] newChildren = new Object[children.size()];
             int i = 0;
             for (final Node<E> sourceChild : children) {
-                final SimpleCollection<Node<E>> newGrandChildren = duplicateChildren(sourceChild.getChildren());
+                final Object[] newGrandChildren = duplicateChildren(sourceChild.getChildren());
                 newChildren[i] = new TreeNodeImpl<>(sourceChild.getElement(), newGrandChildren);
                 i++;
             }
-            return new FixedUncheckedSimpleCollection<>(newChildren);
+            return newChildren;
         }
     }
 }

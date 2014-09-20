@@ -168,10 +168,10 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
         return this;
     }
 
-    public final static class Constructor<E> implements TreeConstructor<E, MutableTreeNodeImpl<E>> {
+    public final static class Constructor<E> implements TreeConstructor<E, MutableTree<E, MutableNode<E>>> {
 
         @Override
-        public MutableTreeNodeImpl<E> build(E e, MutableTreeNodeImpl<E>... subtrees) {
+        public MutableTree<E, MutableNode<E>> build(E e, MutableTree<E, MutableNode<E>>... subtrees) {
             return new MutableTreeNodeImpl(e, new FixedUncheckedSimpleCollection<E>(subtrees));
         }
 
