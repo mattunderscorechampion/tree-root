@@ -44,10 +44,9 @@ import java.util.Iterator;
  * Initial attempt at thread safety is base on copy on mutation. When a child node is added or removed a shallow copy
  * of the children is made with the modification present and the new child collection replaces the existing one. Any
  * iterators accessing the old child collection see the previous state.
- * <p>
- * The problem is that modifications to grandchildren can still be seen because of the shallow copy. The problem with
- * this is the modifications can be observed out of order. The modification to the grandchilden is made after the parent
- * but seen first.
+ * <p>The problem is that modifications to grandchildren can still be seen because of the shallow copy. The problem with
+ * this is the modifications can be observed out of order. The modification to the grandchildren is made after the
+ * parent but seen first.</p>
  * @author Matt Champion on 15/07/14.
  */
 public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {

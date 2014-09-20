@@ -32,6 +32,10 @@ import net.jcip.annotations.Immutable;
 import java.util.*;
 
 /**
+ * A collection that when modified returns a duplicate of the collection. The collection is backed by an array. The
+ * duplicate collection does not share the array. If an attempt is made to remove an element that is not present the
+ * original array is returned. The array passed into the constructor is not type checked so it must come from a trusted
+ * source.
  * @author Matt Champion on 11/09/14.
  */
 @Immutable
