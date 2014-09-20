@@ -141,3 +141,28 @@ to right returning null if the branch is not present.
 The current target is Java 7. I know Java 8 is the latest version and the Streams API may be helpful for tree
 traversals. I maybe able to add some Java 8 specific extensions and I will move the target over to Java 8 towards EOL of
 Java 7.
+
+##Simple collection implementations
+
+_FixedUncheckedSimpleCollection_ - a simple immutable collection, it is not checked and the array it is created from is
+not copied. The creator of the collection must not modify or keep a reference to the array passed to it.
+
+_ArrayListSimpleCollection_ - a simple mutable collection that is not thread safe.
+
+_DuplicateOnWriteSimpleCollection_ - simple collection that returns a modified duplicate on mutation.
+
+##Tree Implementations
+
+_LinkedTree_ - a mutable, not thread safe tree
+
+_TreeNodeImpl_ - an immutable tree
+
+_MutableTreeNodeImpl_ - a mutable tree that does not preserve modification order
+
+_BinaryTreeWrapper_ - an immutable binary tree
+
+_MutableBinaryTreeImpl_ - a mutable binary tree
+
+_BinarySearchTree_ - a mutable binary search tree
+
+_PathCopyTree_ - a path copy tree
