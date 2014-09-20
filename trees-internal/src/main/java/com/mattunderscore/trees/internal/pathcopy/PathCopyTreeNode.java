@@ -46,14 +46,14 @@ final class PathCopyTreeNode<E> implements MutableNode<E> {
         this.tree = tree;
         this.element = element;
         parent = null;
-        elementList = new DuplicateOnWriteSimpleCollection<>();
+        elementList = DuplicateOnWriteSimpleCollection.create();
     }
 
     public PathCopyTreeNode(PathCopyTreeNode<E> parent, E element) {
         tree = null;
         this.element = element;
         this.parent = parent;
-        elementList = new DuplicateOnWriteSimpleCollection<>();
+        elementList = DuplicateOnWriteSimpleCollection.create();
     }
 
     @Override

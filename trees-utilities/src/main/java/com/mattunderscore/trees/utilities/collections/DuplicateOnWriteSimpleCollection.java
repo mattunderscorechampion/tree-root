@@ -34,32 +34,19 @@ import java.util.*;
 /**
  * A collection that when modified returns a duplicate of the collection. The collection is backed by an array. The
  * duplicate collection does not share the array. If an attempt is made to remove an element that is not present the
- * original array is returned. The array passed into the constructor is not type checked so it must come from a trusted
- * source.
+ * original array is returned.
  * @author Matt Champion on 11/09/14.
  */
 @Immutable
 public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollection<E> {
     private final Object[] elements;
 
-    public DuplicateOnWriteSimpleCollection() {
+    private DuplicateOnWriteSimpleCollection() {
         elements = new Object[0];
     }
 
-    public DuplicateOnWriteSimpleCollection(Object[] collection) {
-        elements = new Object[collection.length];
-        for (int i = 0; i < collection.length; i++) {
-            elements[i] = collection[i];
-        }
-    }
-
-    public DuplicateOnWriteSimpleCollection(Collection<E> collection) {
-        elements = new Object[collection.size()];
-        final Iterator<E> iterator = collection.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            elements[i++] = iterator.next();
-        }
+    private DuplicateOnWriteSimpleCollection(Object[] collection) {
+        elements = collection;
     }
 
     @Override
@@ -99,19 +86,19 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      * @return the modified collection
      */
     public DuplicateOnWriteSimpleCollection<E> remove(E element) {
-        final List<Object> tmpElements = new ArrayList<>(elements.length);
+        final List<E> tmpElements = new ArrayList<>(elements.length);
         boolean removed = false;
         for (Object o : elements) {
             if (!removed && o.equals(element)) {
                 removed = true;
             }
             else {
-                tmpElements.add(o);
+                tmpElements.add((E)o);
             }
         }
 
         if (removed) {
-            return new DuplicateOnWriteSimpleCollection<>(tmpElements.toArray());
+            return create(tmpElements);
         }
         else {
             return this;
@@ -126,7 +113,7 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      */
     public DuplicateOnWriteSimpleCollection<E> replace(E newElement, E oldElement) {
         final Object[] oldElements = elements;
-        final List<Object> tmpElements = new ArrayList<>(oldElements.length);
+        final List<E> tmpElements = new ArrayList<>(oldElements.length);
         boolean removed = false;
         for (Object o : oldElements) {
             if (!removed && o.equals(oldElement)) {
@@ -134,15 +121,45 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
                 tmpElements.add(newElement);
             }
             else {
-                tmpElements.add(o);
+                tmpElements.add((E)o);
             }
         }
 
         if (removed) {
-            return new DuplicateOnWriteSimpleCollection<>(tmpElements.toArray());
+            return create(tmpElements);
         }
         else {
             return this;
         }
+    }
+
+    /**
+     * Create an empty collection.
+     * @param <E> The type of elements in the collection
+     * @return The new collection
+     */
+    public static <E> DuplicateOnWriteSimpleCollection<E> create() {
+        return new DuplicateOnWriteSimpleCollection<>();
+    }
+
+    /**
+     * Create a collection from an array. The elements are copied from the array and no references to the array are
+     * kept.
+     * @param array The array
+     * @param <E> The type of elements in the collection
+     * @return The new collection
+     */
+    public static <E> DuplicateOnWriteSimpleCollection<E> create(E[] array) {
+        return new DuplicateOnWriteSimpleCollection<>(Arrays.copyOf(array, array.length));
+    }
+
+    /**
+     * Create a collection from a list. The elements are copied from the list and no references to the list are kept.
+     * @param list The list
+     * @param <E> The type of elements in the collection
+     * @return The new collection
+     */
+    public static <E> DuplicateOnWriteSimpleCollection<E> create(List<E> list) {
+        return new DuplicateOnWriteSimpleCollection<>(list.toArray());
     }
 }

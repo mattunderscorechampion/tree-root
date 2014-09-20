@@ -40,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 public final class DuplicateOnWriteSimpleCollectionTest {
     @Test
     public void add() {
-        final DuplicateOnWriteSimpleCollection<String> collection = new DuplicateOnWriteSimpleCollection<>();
+        final DuplicateOnWriteSimpleCollection<String> collection = DuplicateOnWriteSimpleCollection.create();
         assertTrue(collection.isEmpty());
 
         final DuplicateOnWriteSimpleCollection<String> modifiedCollection = collection.add("a");
@@ -57,7 +57,7 @@ public final class DuplicateOnWriteSimpleCollectionTest {
 
     @Test
     public void remove() {
-        final DuplicateOnWriteSimpleCollection<String> collection = new DuplicateOnWriteSimpleCollection<>();
+        final DuplicateOnWriteSimpleCollection<String> collection = DuplicateOnWriteSimpleCollection.create();
         final DuplicateOnWriteSimpleCollection<String> modifiedCollection0 = collection.add("a");
         final DuplicateOnWriteSimpleCollection<String> modifiedCollection1 = modifiedCollection0.remove("a");
         assertEquals(1, modifiedCollection0.size());
@@ -70,7 +70,7 @@ public final class DuplicateOnWriteSimpleCollectionTest {
 
     @Test
     public void removeNotPresent() {
-        final DuplicateOnWriteSimpleCollection<String> collection = new DuplicateOnWriteSimpleCollection<>();
+        final DuplicateOnWriteSimpleCollection<String> collection = DuplicateOnWriteSimpleCollection.create();
         final DuplicateOnWriteSimpleCollection<String> modifiedCollection0 = collection.add("a");
         final DuplicateOnWriteSimpleCollection<String> modifiedCollection1 = modifiedCollection0.remove("b");
         assertEquals(1, modifiedCollection1.size());
@@ -80,7 +80,7 @@ public final class DuplicateOnWriteSimpleCollectionTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void removeIterator() {
-        final DuplicateOnWriteSimpleCollection<String> collection = new DuplicateOnWriteSimpleCollection<>();
+        final DuplicateOnWriteSimpleCollection<String> collection = DuplicateOnWriteSimpleCollection.create();
         final DuplicateOnWriteSimpleCollection<String> modifiedCollection = collection.add("a");
         final Iterator<String> iterator = modifiedCollection.iterator();
         iterator.next();

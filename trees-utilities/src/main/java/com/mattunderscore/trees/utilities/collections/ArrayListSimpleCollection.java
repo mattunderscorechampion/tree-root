@@ -31,18 +31,26 @@ import net.jcip.annotations.NotThreadSafe;
 import java.util.*;
 
 /**
- * A {@link com.mattunderscore.trees.collection.SimpleCollection} backed by {@link java.util.ArrayList}. Not thread-safe. Mutable.
- * Does not provide an iteration order or permit nulls.
+ * A {@link com.mattunderscore.trees.collection.SimpleCollection} backed by {@link java.util.ArrayList}. Not
+ * thread-safe. Mutable. Does not provide an iteration order or permit nulls.
  * @author Matt Champion on 09/09/14.
  */
 @NotThreadSafe
 public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
     private final List<E> list;
 
+    /**
+     * Create an empty collection.
+     */
     public ArrayListSimpleCollection() {
         list = new ArrayList<>();
     }
 
+    /**
+     * Create a collection from a collection. The elements are copied from the collection and no references to the
+     * collection are kept.
+     * @param initial The initial collection
+     */
     public ArrayListSimpleCollection(Collection<E> initial) {
         list = new ArrayList<>(initial);
     }
