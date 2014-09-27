@@ -61,6 +61,11 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
                     return EmptyIterator.get();
                 }
             }
+
+            @Override
+            public <N extends Node<E>, T extends Tree<E, N>, O extends Node<E>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
+                throw new UnsupportedOperationException("Not yet implemented");
+            }
         };
     }
 
@@ -71,6 +76,11 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
             public <N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
                 final Iterator<T> parents = selector.select(tree);
                 return new TreeIterator<>(parents, matcher);
+            }
+
+            @Override
+            public <N extends Node<E>, T extends Tree<E, N>, O extends Node<E>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
+                throw new UnsupportedOperationException("Not yet implemented");
             }
         };
     }

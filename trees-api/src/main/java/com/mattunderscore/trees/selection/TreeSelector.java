@@ -46,4 +46,15 @@ public interface TreeSelector<E> {
      * @throws OperationNotSupportedForType if the type of the tree can not be selected
      */
     <N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) throws OperationNotSupportedForType;
+
+    /**
+     * @param tree The tree to select from
+     * @param <N> The type of nodes in the tree
+     * @param <T> The type of the tree
+     * @param <O> The type of nodes in the subtree
+     * @param <O> The type of the subtree
+     * @return An {@link java.util.Iterator} over the selected subtrees
+     * @throws OperationNotSupportedForType if the type of the tree can not be selected
+     */
+    <N extends Node<E>, T extends Tree<E, N>, O extends Node<E>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType;
 }
