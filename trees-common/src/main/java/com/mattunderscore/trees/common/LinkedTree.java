@@ -119,7 +119,9 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
         return this;
     }
 
-    public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>> {
+    public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>>, SPISupportAwareComponent {
+        private CopyingNodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>> delegateConverter;
+
         @Override
         public LinkedTree<E> treeFromRootNode(LinkedTree<E> node) {
             return node;
@@ -128,6 +130,11 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
         @Override
         public Class<?> forClass() {
             return LinkedTree.class;
+        }
+
+        @Override
+        public void setSupport(SPISupport support) {
+            delegateConverter = new CopyingNodeToTreeConverter(LinkedTree.class, LinkedTree.class, new TreeBuilderFactoryImpl(support));
         }
     }
 

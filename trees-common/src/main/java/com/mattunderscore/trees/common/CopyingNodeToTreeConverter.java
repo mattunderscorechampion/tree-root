@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.common;
+package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
@@ -44,7 +44,7 @@ public final class CopyingNodeToTreeConverter<E, N extends Node<E>, T extends Tr
     private final Class<T> targetClass;
     private final TreeBuilderFactory treeBuilderFactory;
 
-    protected CopyingNodeToTreeConverter(Class<? extends Tree<E, S>> sourceClass, Class<T> targetClass, TreeBuilderFactory treeBuilderFactory) {
+    public CopyingNodeToTreeConverter(Class<? extends Tree<E, S>> sourceClass, Class<T> targetClass, TreeBuilderFactory treeBuilderFactory) {
         this.sourceClass = sourceClass;
         this.targetClass = targetClass;
         this.treeBuilderFactory = treeBuilderFactory;

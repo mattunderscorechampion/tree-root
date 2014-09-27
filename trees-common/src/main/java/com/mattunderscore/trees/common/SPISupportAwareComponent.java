@@ -23,16 +23,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.spi;
+package com.mattunderscore.trees.common;
+
+import com.mattunderscore.trees.spi.SPIComponent;
 
 /**
- * SPI component that can be looked up from a class.
- * @author Matt Champion on 31/08/14.
+ * Interface used to inject SPISupport into SPIComponents that need it.
+ * @author Matt Champion on 27/09/14.
  */
-public interface SPIComponent {
-    /**
-     * @return The key to use for the component lookup
-     */
-    Class<?> forClass();
-
+public interface SPISupportAwareComponent extends SPIComponent {
+    void setSupport(SPISupport support);
 }

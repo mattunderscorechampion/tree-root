@@ -37,7 +37,7 @@ import java.util.*;
  * implementation.
  * @author Matt Champion on 26/06/14.
  */
-final class SPISupport {
+public final class SPISupport {
     private final Map<Class<?>, EmptyTreeConstructor> emptyConstructors;
     private final Map<Class<?>, TreeConstructor> treeConstructors;
     private final Map<Class<?>, TreeConverter> treeConverters;
@@ -160,6 +160,9 @@ final class SPISupport {
     private <C extends SPIComponent> void populateLookupMap(Map<Class<?>, C> componentMap, Class<C> componentClass) {
         final ServiceLoader<C> loader = ServiceLoader.load(componentClass);
         for (final C component : loader) {
+            if (component instanceof SPISupportAwareComponent) {
+                ((SPISupportAwareComponent) component).setSupport(this);
+            }
             componentMap.put(component.forClass(), component);
         }
     }
