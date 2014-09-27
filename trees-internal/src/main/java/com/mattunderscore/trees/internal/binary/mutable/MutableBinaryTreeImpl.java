@@ -48,7 +48,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         super(root);
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>, MutableBinaryTreeNode<E>> {
 
         @Override
         public MutableBinaryTreeImpl<E> treeFromRootNode(MutableBinaryTreeNode<E> node) {

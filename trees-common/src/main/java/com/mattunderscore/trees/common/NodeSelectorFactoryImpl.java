@@ -52,8 +52,8 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     public <E> NodeSelector<E> newSelector(final NodeMatcher<E> matcher) {
         return new NodeSelector<E>() {
             @Override
-            public <T extends Node<E>> Iterator<T> select(Tree<E, T> tree) {
-                final T root = tree.getRoot();
+            public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
+                final N root = tree.getRoot();
                 if (matcher.matches(root)) {
                     return new SingletonIterator<>(root);
                 }
@@ -68,8 +68,8 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     public <E> NodeSelector<E> newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
         return new NodeSelector<E>() {
             @Override
-            public <T extends Node<E>> Iterator<T> select(Tree<E, T> tree) {
-                final Iterator<T> parents = selector.select(tree);
+            public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
+                final Iterator<N> parents = selector.select(tree);
                 return new NodeIterator<>(parents, matcher);
             }
         };
@@ -88,7 +88,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
 
     private static final class NodeIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
         private final Iterator<N> parents;
-        private final NodeMatcher matcher;
+        private final NodeMatcher<E> matcher;
         private Iterator<N> possibles;
 
         public NodeIterator(Iterator<N> parents, NodeMatcher matcher) {
@@ -120,11 +120,11 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
 
     private static final class AsNodeIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
         private final Iterator<N> startingPoints;
-        private final NodeSelector selector;
+        private final NodeSelector<E> selector;
         private final SPISupport helper;
         private Iterator<N> currentEndPoints;
 
-        public AsNodeIterator(Iterator<N> startingPoints, NodeSelector selector, SPISupport helper) {
+        public AsNodeIterator(Iterator<N> startingPoints, NodeSelector<E> selector, SPISupport helper) {
             this.startingPoints = startingPoints;
             this.selector = selector;
             this.helper = helper;
@@ -132,7 +132,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
 
         protected N calculateNext() {
             if (currentEndPoints == null) {
-                final Tree<E, N> tree = helper.nodeToTree(startingPoints.next());
+                final Tree<E, N> tree = helper.<E, N, Tree<E, N>, N>nodeToTree(startingPoints.next());
                 currentEndPoints = selector.select(tree);
             }
 

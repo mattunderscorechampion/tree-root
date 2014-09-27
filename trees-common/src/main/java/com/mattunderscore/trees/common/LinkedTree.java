@@ -119,7 +119,7 @@ public final class LinkedTree<E> implements MutableTree<E, LinkedTree<E>>, Mutab
         return this;
     }
 
-    public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>> {
+    public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>> {
         @Override
         public LinkedTree<E> treeFromRootNode(LinkedTree<E> node) {
             return node;

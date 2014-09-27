@@ -114,12 +114,11 @@ final class SPISupport {
      * @param klass
      * @param sourceTree
      * @param <E>
-     * @param <N>
      * @param <T>
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, N extends Node<E>, T extends Tree<E, N>> T convertTree(Class<T> klass, Tree<E, ? extends Node<E>> sourceTree) throws OperationNotSupportedForType {
+    public <E, T extends Tree<E, ? extends Node<E>>> T convertTree(Class<T> klass, Tree<E, ? extends Node<E>> sourceTree) throws OperationNotSupportedForType {
         final TreeConverter<E, T> converter =
                 (TreeConverter<E, T>)performLookup(treeConverters, TreeConverter.class, klass);
         return converter.build(sourceTree);
@@ -134,10 +133,10 @@ final class SPISupport {
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, N extends Node<E>, T extends Tree<E, N>> T nodeToTree(N node) throws OperationNotSupportedForType {
+    public <E, N extends Node<E>, T extends Tree<E, N>, S extends Node<E>> T nodeToTree(S node) throws OperationNotSupportedForType {
         final Class<? extends Node> klass = node.getClass();
-        final NodeToTreeConverter<E, N, T> converter =
-                (NodeToTreeConverter<E, N, T>)performLookup(converters, NodeToTreeConverter.class, klass);
+        final NodeToTreeConverter<E, N, T, S> converter =
+                (NodeToTreeConverter<E, N, T, S>)performLookup(converters, NodeToTreeConverter.class, klass);
         return converter.treeFromRootNode(node);
     }
 

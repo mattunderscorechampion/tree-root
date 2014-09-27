@@ -44,7 +44,7 @@ public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends Abs
         super(root);
     }
 
-    public static final class NodeConverter<E, N extends BinaryTreeNode<E>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>> {
+    public static final class NodeConverter<E, N extends BinaryTreeNode<E>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>, N> {
 
         @Override
         public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {

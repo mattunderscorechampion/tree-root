@@ -111,7 +111,7 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
         }
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, Node<E>, Tree<E, Node<E>>> {
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, Node<E>, Tree<E, Node<E>>, Node<E>> {
 
         @Override
         public Tree<E, Node<E>> treeFromRootNode(Node<E> node) {

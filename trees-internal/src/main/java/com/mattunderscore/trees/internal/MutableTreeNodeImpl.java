@@ -219,7 +219,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
         }
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, MutableTree<E, MutableNode<E>>> {
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, MutableTree<E, MutableNode<E>>, MutableNode<E>> {
 
         @Override
         public MutableTree<E, MutableNode<E>> treeFromRootNode(MutableNode<E> node) {
