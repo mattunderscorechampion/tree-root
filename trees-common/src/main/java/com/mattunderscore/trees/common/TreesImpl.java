@@ -46,7 +46,7 @@ public final class TreesImpl implements Trees {
     public TreesImpl() {
         final SPISupport helper = new SPISupport();
         treeSelectorFactory = new TreeSelectorFactoryImpl(helper);
-        nodeSelectorFactory = new NodeSelectorFactoryImpl(helper);
+        nodeSelectorFactory = new NodeSelectorFactoryImpl();
         treeWalkerFactory = new TreeWalkerFactoryImpl();
         treeIteratorFactory = new TreeIteratorFactoryImpl(helper);
         treeBuilderFactory = new TreeBuilderFactoryImpl(helper);

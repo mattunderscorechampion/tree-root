@@ -42,10 +42,8 @@ import java.util.Iterator;
  * @author Matt Champion on 25/06/14.
  */
 final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
-    private final SPISupport helper;
 
-    public NodeSelectorFactoryImpl(SPISupport helper) {
-        this.helper = helper;
+    public NodeSelectorFactoryImpl() {
     }
 
     @Override
@@ -81,7 +79,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
             @Override
             public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
                 final Iterator<N> startingPoints = baseSelector.select(tree);
-                return new AsNodeIterator<>(startingPoints, extensionSelector, helper);
+                return new AsNodeIterator<>(startingPoints, extensionSelector);
             }
         };
     }
@@ -121,18 +119,20 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     private static final class AsNodeIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
         private final Iterator<N> startingPoints;
         private final NodeSelector<E> selector;
-        private final SPISupport helper;
         private Iterator<N> currentEndPoints;
 
-        public AsNodeIterator(Iterator<N> startingPoints, NodeSelector<E> selector, SPISupport helper) {
+        public AsNodeIterator(Iterator<N> startingPoints, NodeSelector<E> selector) {
             this.startingPoints = startingPoints;
             this.selector = selector;
-            this.helper = helper;
         }
 
         protected N calculateNext() {
             if (currentEndPoints == null) {
-                final Tree<E, N> tree = helper.<E, N, Tree<E, N>, N>nodeToTree(startingPoints.next());
+                // Creating a tree using the simple tree wrapper does not correctly preserve the properties of the tree
+                // but as this is a read only selection/traversal operation no properties should be violated.
+                // Additionally it should not be permitted to return copies of the nodes you are selecting as they are
+                // not found in the tree you are selecting from violating the principle of least surprise..
+                final Tree<E, N> tree = new SimpleTreeWrapper<E, N>(startingPoints.next());
                 currentEndPoints = selector.select(tree);
             }
 

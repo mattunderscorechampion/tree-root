@@ -29,7 +29,7 @@ import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.common.SPISupport;
 import com.mattunderscore.trees.common.SPISupportAwareComponent;
 import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.internal.common.AbstractTreeWrapper;
+import com.mattunderscore.trees.common.AbstractTreeWrapper;
 import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
