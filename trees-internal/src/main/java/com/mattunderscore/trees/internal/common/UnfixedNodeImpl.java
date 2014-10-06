@@ -31,18 +31,18 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Matt Champion on 21/09/14.
  */
 public abstract class UnfixedNodeImpl<E> extends AbstractNodeImpl<E> {
-    private final AtomicReference<E> element = new AtomicReference<>();
+    protected final AtomicReference<E> elementReference = new AtomicReference<>();
 
     public UnfixedNodeImpl(E element) {
-        this.element.set(element);
+        elementReference.set(element);
     }
 
     @Override
     public E getElement() {
-        return element.get();
+        return elementReference.get();
     }
 
     public void setElement(E element) {
-        this.element.set(element);
+        elementReference.set(element);
     }
 }

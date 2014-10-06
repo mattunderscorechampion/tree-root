@@ -28,6 +28,7 @@ package com.mattunderscore.trees.internal.binary;
 import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.internal.common.FixedNodeImpl;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -37,21 +38,20 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
  * Binary tree node implementation.
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeNodeImpl<E> implements BinaryTreeNode<E> {
-    private final E element;
+public final class BinaryTreeNodeImpl<E> extends FixedNodeImpl<E> implements BinaryTreeNode<E> {
     private final BinaryTreeNodeImpl<E> left;
     private final BinaryTreeNodeImpl<E> right;
     private final Object[] children;
 
     public BinaryTreeNodeImpl(E element) {
-        this.element = element;
+        super(element);
         left = null;
         right = null;
         children = new Object[0];
     }
 
     public BinaryTreeNodeImpl(E element, BinaryTreeNodeImpl<E> left, BinaryTreeNodeImpl<E> right) {
-        this.element = element;
+        super(element);
         this.left = left;
         this.right = right;
         if (left != null && right != null) {
@@ -81,16 +81,6 @@ public final class BinaryTreeNodeImpl<E> implements BinaryTreeNode<E> {
     @Override
     public BinaryTreeNode<E> getRight() {
         return right;
-    }
-
-    @Override
-    public E getElement() {
-        return element;
-    }
-
-    @Override
-    public Class<E> getElementClass() {
-        return (Class<E>)element.getClass();
     }
 
     @Override

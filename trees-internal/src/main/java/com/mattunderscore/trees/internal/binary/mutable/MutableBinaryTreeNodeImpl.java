@@ -27,26 +27,26 @@ package com.mattunderscore.trees.internal.binary.mutable;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.internal.common.FixedNodeImpl;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 /**
  * Mutable binary tree node implementation.
  * @author Matt Champion on 06/09/14.
  */
-public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode<E> {
-    private final E element;
+public final class MutableBinaryTreeNodeImpl<E> extends FixedNodeImpl<E> implements MutableBinaryTreeNode<E> {
     private MutableBinaryTreeNode<E> left;
     private MutableBinaryTreeNode<E> right;
     private final Object[] children = new Object[2];
 
     public MutableBinaryTreeNodeImpl(E element) {
-        this.element = element;
+        super(element);
         left = null;
         right = null;
     }
 
     public MutableBinaryTreeNodeImpl(E element, MutableBinaryTreeNode<E> left, MutableBinaryTreeNode<E> right) {
-        this.element = element;
+        super(element);
         setInternalLeft(left);
         setInternalRight(right);
     }
@@ -81,16 +81,6 @@ public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode
     @Override
     public synchronized MutableBinaryTreeNode<E> getRight() {
         return right;
-    }
-
-    @Override
-    public E getElement() {
-        return element;
-    }
-
-    @Override
-    public Class<E> getElementClass() {
-        return (Class<E>)element.getClass();
     }
 
     @Override

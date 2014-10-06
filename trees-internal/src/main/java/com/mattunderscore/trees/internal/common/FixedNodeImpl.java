@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.common;
 
 /**
+ * Abstract implementation of fixed element node.
  * @author Matt Champion on 21/09/14.
  */
 public abstract class FixedNodeImpl<E> extends AbstractNodeImpl<E> {
@@ -36,7 +37,7 @@ public abstract class FixedNodeImpl<E> extends AbstractNodeImpl<E> {
     }
 
     @Override
-    public E getElement() {
+    public final E getElement() {
         return element;
     }
 }

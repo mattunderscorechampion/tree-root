@@ -30,6 +30,8 @@ import com.mattunderscore.trees.common.SPISupport;
 import com.mattunderscore.trees.common.SPISupportAwareComponent;
 import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
+import com.mattunderscore.trees.internal.common.FixedNodeImpl;
+import com.mattunderscore.trees.internal.common.UnfixedNodeImpl;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
@@ -53,23 +55,18 @@ import java.util.Iterator;
  * parent but seen first.</p>
  * @author Matt Champion on 15/07/14.
  */
-public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
+public final class MutableTreeNodeImpl<E> extends UnfixedNodeImpl<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")
     private SimpleCollection<MutableNode<E>> elementList;
-    private E element;
 
     public MutableTreeNodeImpl(E element) {
+        super(element);
         elementList = new FixedUncheckedSimpleCollection<>(new Object[0]);
-        synchronized (this) {
-            this.element = element;
-        }
     }
 
     private MutableTreeNodeImpl(E element, SimpleCollection<MutableNode<E>> childList) {
-        this.element = element;
-        synchronized (this) {
-            elementList = childList;
-        }
+        super(element);
+        elementList = childList;
     }
 
     @Override
@@ -142,18 +139,7 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
 
     @Override
     public boolean isEmpty() {
-        return element == null;
-    }
-
-    @Override
-    public E getElement() {
-        return element;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Class<E> getElementClass() {
-        return (Class<E>)element.getClass();
+        return elementReference.get() == null;
     }
 
     @Override
@@ -162,13 +148,8 @@ public final class MutableTreeNodeImpl<E> implements MutableTree<E, MutableNode<
     }
 
     @Override
-    public synchronized boolean isLeaf() {
-        return elementList.size() == 0;
-    }
-
-    @Override
     public synchronized MutableNode<E> setRoot(E root) {
-        element = root;
+        elementReference.set(root);
         return this;
     }
 

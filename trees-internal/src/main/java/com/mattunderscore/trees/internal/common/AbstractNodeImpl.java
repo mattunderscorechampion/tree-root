@@ -28,12 +28,13 @@ package com.mattunderscore.trees.internal.common;
 import com.mattunderscore.trees.tree.Node;
 
 /**
+ * Abstract implementation of nodes.
  * @author Matt Champion on 21/09/14.
  */
 public abstract class AbstractNodeImpl<E> implements Node<E> {
 
     @Override
-    public Class<E> getElementClass() {
+    public final Class<E> getElementClass() {
         return (Class<E>)getElement().getClass();
     }
 

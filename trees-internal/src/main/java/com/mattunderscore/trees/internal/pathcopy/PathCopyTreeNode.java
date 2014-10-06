@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.pathcopy;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.internal.common.FixedNodeImpl;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
@@ -36,44 +37,28 @@ import java.util.Iterator;
  * Nodes of trees based on path copy.
  * @author Matt Champion on 13/09/14.
 */
-final class PathCopyTreeNode<E> implements MutableNode<E> {
+final class PathCopyTreeNode<E> extends FixedNodeImpl<E> implements MutableNode<E> {
     private final PathCopyTree<E> tree;
     private final PathCopyTreeNode<E> parent;
-    private final E element;
     private DuplicateOnWriteSimpleCollection<ChildWrapper<E>> elementList;
 
     public PathCopyTreeNode(PathCopyTree<E> tree, E element) {
+        super(element);
         this.tree = tree;
-        this.element = element;
         parent = null;
         elementList = DuplicateOnWriteSimpleCollection.create();
     }
 
     public PathCopyTreeNode(PathCopyTreeNode<E> parent, E element) {
+        super(element);
         tree = null;
-        this.element = element;
         this.parent = parent;
         elementList = DuplicateOnWriteSimpleCollection.create();
     }
 
     @Override
-    public E getElement() {
-        return element;
-    }
-
-    @Override
-    public Class<E> getElementClass() {
-        return (Class<E>)element.getClass();
-    }
-
-    @Override
     public SimpleCollection<? extends MutableNode<E>> getChildren() {
         return new CollectionProxy<>(elementList);
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return elementList.isEmpty();
     }
 
     @Override

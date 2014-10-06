@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.internal.common.FixedNodeImpl;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
@@ -40,24 +41,12 @@ import net.jcip.annotations.Immutable;
  * @author Matt Champion on 10/06/14.
  */
 @Immutable
-public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
-    private final E element;
+public final class TreeNodeImpl<E> extends FixedNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
     private final SimpleCollection<Node<E>> children;
 
     TreeNodeImpl(E element, Object[] children) {
-        this.element = element;
+        super(element);
         this.children = new FixedUncheckedSimpleCollection<>(children);
-    }
-
-    @Override
-    public E getElement() {
-        return element;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Class<E> getElementClass() {
-        return (Class<E>)element.getClass();
     }
 
     @Override
@@ -78,11 +67,6 @@ public final class TreeNodeImpl<E> implements Tree<E, Node<E>>, Node<E> {
     @Override
     public boolean isEmpty() {
         return element == null;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return children.size() == 0;
     }
 
     public final static class Constructor<E> implements TreeConstructor<E, Tree<E, Node<E>>> {
