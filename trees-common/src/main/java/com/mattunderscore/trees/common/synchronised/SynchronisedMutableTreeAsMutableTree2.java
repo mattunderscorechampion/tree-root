@@ -23,30 +23,43 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
+package com.mattunderscore.trees.common.synchronised;
 
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.MutableTree2;
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Represents a mutable tree.
- * <p>A mutable tree where mutation operations are applied to the tree not to individual nodes.</p>
- * @author Matt Champion on 07/10/14.
+ * Synchronises a {@link MutableTree} as a {@link MutableTree2}.
+ * @author Matt Champion on 09/10/14.
  */
-public interface MutableTree2<E> extends Tree<E, Node<E>> {
+final class SynchronisedMutableTreeAsMutableTree2<E> implements MutableTree2<E> {
+    private final MutableTree<E, ? extends MutableNode<E>> delegateTree;
 
-    /**
-     * Add a node to the tree.
-     * @param parent The parent to add the element to.
-     * @param newElement The element to add.
-     * @return The added node.
-     */
-    Node<E> addChild(Node<E> parent, E newElement);
+    public SynchronisedMutableTreeAsMutableTree2(MutableTree<E, ? extends MutableNode<E>> delegateTree) {
+        this.delegateTree = delegateTree;
+    }
 
-    /**
-     * @param parent The parent to remove the node from.
-     * @param node The node to remove from the tree.
-     * @return {@code true} if removed.
-     */
-    boolean removeChild(Node<E> parent, Node<E> node);
+    @Override
+    public synchronized Node<E> addChild(Node<E> parent, E newElement) {
+        final MutableNode<E> mutableParent = (MutableNode<E>)parent;
+        return mutableParent.addChild(newElement);
+    }
+
+    @Override
+    public synchronized boolean removeChild(Node<E> parent, Node<E> node) {
+        final MutableNode<E> mutableParent = (MutableNode<E>)parent;
+        return mutableParent.removeChild((MutableNode<E>)node);
+    }
+
+    @Override
+    public synchronized Node<E> getRoot() {
+        return delegateTree.getRoot();
+    }
+
+    @Override
+    public synchronized boolean isEmpty() {
+        return delegateTree.isEmpty();
+    }
 }

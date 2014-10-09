@@ -23,30 +23,44 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
+package com.mattunderscore.trees.common.synchronised;
 
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.mutable.MutableNode;
+
+import java.util.Iterator;
 
 /**
- * Represents a mutable tree.
- * <p>A mutable tree where mutation operations are applied to the tree not to individual nodes.</p>
- * @author Matt Champion on 07/10/14.
- */
-public interface MutableTree2<E> extends Tree<E, Node<E>> {
+ * Synchronised iterator for mutable nodes.
+* @author Matt Champion on 09/10/14.
+*/
+final class SynchronisedIterator<E> implements Iterator<MutableNode<E>> {
+    private final Object lock;
+    private final Iterator<? extends MutableNode<E>> delegateIterator;
 
-    /**
-     * Add a node to the tree.
-     * @param parent The parent to add the element to.
-     * @param newElement The element to add.
-     * @return The added node.
-     */
-    Node<E> addChild(Node<E> parent, E newElement);
 
-    /**
-     * @param parent The parent to remove the node from.
-     * @param node The node to remove from the tree.
-     * @return {@code true} if removed.
-     */
-    boolean removeChild(Node<E> parent, Node<E> node);
+    SynchronisedIterator(Object lock, Iterator<? extends MutableNode<E>> delegateIterator) {
+        this.lock = lock;
+        this.delegateIterator = delegateIterator;
+    }
+
+    @Override
+    public boolean hasNext() {
+        synchronized (lock) {
+            return delegateIterator.hasNext();
+        }
+    }
+
+    @Override
+    public MutableNode<E> next() {
+        synchronized (lock) {
+            return new SynchronisedMutableNode<>(lock, delegateIterator.next());
+        }
+    }
+
+    @Override
+    public void remove() {
+        synchronized (lock) {
+            delegateIterator.remove();
+        }
+    }
 }
