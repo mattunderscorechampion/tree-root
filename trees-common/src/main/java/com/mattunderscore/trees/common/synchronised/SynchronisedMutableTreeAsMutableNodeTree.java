@@ -38,10 +38,10 @@ import java.util.Iterator;
 /**
  * @author Matt Champion on 09/10/14.
  */
-public final class SynchronisedMutableTree2AsMutableNodeTree<E> implements MutableNodeTree<E, MutableNode<E>> {
+public final class SynchronisedMutableTreeAsMutableNodeTree<E> implements MutableNodeTree<E, MutableNode<E>> {
     private final MutableTree<E> delegateTree;
 
-    public SynchronisedMutableTree2AsMutableNodeTree(MutableTree<E> delegateTree) {
+    public SynchronisedMutableTreeAsMutableNodeTree(MutableTree<E> delegateTree) {
         this.delegateTree = delegateTree;
     }
 
@@ -61,10 +61,10 @@ public final class SynchronisedMutableTree2AsMutableNodeTree<E> implements Mutab
     }
 
     private static final class NodeToMutableNode<E> implements MutableNode<E> {
-        private final SynchronisedMutableTree2AsMutableNodeTree<E> tree;
+        private final SynchronisedMutableTreeAsMutableNodeTree<E> tree;
         private final Node<E> delegateNode;
 
-        private NodeToMutableNode(SynchronisedMutableTree2AsMutableNodeTree<E> tree, Node<E> delegateNode) {
+        private NodeToMutableNode(SynchronisedMutableTreeAsMutableNodeTree<E> tree, Node<E> delegateNode) {
             this.tree = tree;
             this.delegateNode = delegateNode;
         }
@@ -114,9 +114,9 @@ public final class SynchronisedMutableTree2AsMutableNodeTree<E> implements Mutab
     }
 
     private static final class Collection<E> extends ConvertingSimpleCollection<MutableNode<E>, Node<E>> {
-        private final SynchronisedMutableTree2AsMutableNodeTree<E> tree;
+        private final SynchronisedMutableTreeAsMutableNodeTree<E> tree;
 
-        protected Collection(SimpleCollection<Node<E>> collection, SynchronisedMutableTree2AsMutableNodeTree<E> tree) {
+        protected Collection(SimpleCollection<Node<E>> collection, SynchronisedMutableTreeAsMutableNodeTree<E> tree) {
             super(collection);
             this.tree = tree;
         }
@@ -128,9 +128,9 @@ public final class SynchronisedMutableTree2AsMutableNodeTree<E> implements Mutab
     }
 
     private static final class CIterator<E> extends ConvertingIterator<MutableNode<E>, Node<E>> {
-        private final SynchronisedMutableTree2AsMutableNodeTree<E> tree;
+        private final SynchronisedMutableTreeAsMutableNodeTree<E> tree;
 
-        protected CIterator(Iterator<Node<E>> delegate, SynchronisedMutableTree2AsMutableNodeTree<E> tree) {
+        protected CIterator(Iterator<Node<E>> delegate, SynchronisedMutableTreeAsMutableNodeTree<E> tree) {
             super(delegate);
             this.tree = tree;
         }
