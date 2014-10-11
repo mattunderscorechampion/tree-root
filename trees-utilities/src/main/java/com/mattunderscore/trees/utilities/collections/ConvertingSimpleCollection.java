@@ -52,18 +52,18 @@ public abstract class ConvertingSimpleCollection<E, D> implements SimpleCollecti
 
     @Override
     public Iterator<E> iterator() {
-        return createConvertingIterator(delegateCollection.iterator());
+        return convert(delegateCollection.iterator());
     }
 
     @Override
     public Iterator<E> structuralIterator() {
-        return createConvertingIterator(delegateCollection.structuralIterator());
+        return convert(delegateCollection.structuralIterator());
     }
 
     /**
-     * Create a converting iterator.
+     * Convert between two iterators over different types.
      * @param delegateIterator The delegate iterator.
      * @return The converting iterator.
      */
-    protected abstract Iterator<E> createConvertingIterator(Iterator<D> delegateIterator);
+    protected abstract Iterator<E> convert(Iterator<D> delegateIterator);
 }
