@@ -25,41 +25,75 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.synchronised;
 
+import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableNodeTree;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.mutable.MutableTree2;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * Synchronises a {@link MutableTree} as a {@link MutableTree2}.
  * @author Matt Champion on 09/10/14.
  */
-final class SynchronisedMutableTreeAsMutableTree2<E> implements MutableTree2<E> {
-    private final MutableTree<E, ? extends MutableNode<E>> delegateTree;
+public final class SynchronisedMutableTree2AsMutableNodeTree<E> implements MutableNodeTree<E, MutableNode<E>> {
+    private final MutableTree<E> delegateTree;
 
-    public SynchronisedMutableTreeAsMutableTree2(MutableTree<E, ? extends MutableNode<E>> delegateTree) {
+    public SynchronisedMutableTree2AsMutableNodeTree(MutableTree<E> delegateTree) {
         this.delegateTree = delegateTree;
     }
 
     @Override
-    public synchronized Node<E> addChild(Node<E> parent, E newElement) {
-        final MutableNode<E> mutableParent = (MutableNode<E>)parent;
-        return mutableParent.addChild(newElement);
+    public synchronized MutableNode<E> setRoot(E root) {
+        return null;
     }
 
     @Override
-    public synchronized boolean removeChild(Node<E> parent, Node<E> node) {
-        final MutableNode<E> mutableParent = (MutableNode<E>)parent;
-        return mutableParent.removeChild((MutableNode<E>)node);
-    }
-
-    @Override
-    public synchronized Node<E> getRoot() {
-        return delegateTree.getRoot();
+    public synchronized MutableNode<E> getRoot() {
+        return new NodeToMutableNode<>(this, delegateTree.getRoot());
     }
 
     @Override
     public synchronized boolean isEmpty() {
         return delegateTree.isEmpty();
+    }
+
+    private static final class NodeToMutableNode<E> implements MutableNode<E> {
+        private final SynchronisedMutableTree2AsMutableNodeTree<E> tree;
+        private final Node<E> delegateNode;
+
+        private NodeToMutableNode(SynchronisedMutableTree2AsMutableNodeTree<E> tree, Node<E> delegateNode) {
+            this.tree = tree;
+            this.delegateNode = delegateNode;
+        }
+
+        @Override
+        public E getElement() {
+            return delegateNode.getElement();
+        }
+
+        @Override
+        public Class<E> getElementClass() {
+            return delegateNode.getElementClass();
+        }
+
+        @Override
+        public SimpleCollection<? extends MutableNode<E>> getChildren() {
+            return null;
+        }
+
+        @Override
+        public boolean isLeaf() {
+            return delegateNode.isLeaf();
+        }
+
+        @Override
+        public boolean removeChild(MutableNode<E> child) {
+            final NodeToMutableNode<E> wrappedNode = (NodeToMutableNode<E>)child;
+            return tree.delegateTree.removeChild(delegateNode, wrappedNode.delegateNode);
+        }
+
+        @Override
+        public MutableNode<E> addChild(E e) {
+            return new NodeToMutableNode<>(tree, tree.delegateTree.addChild(delegateNode, e));
+        }
     }
 }

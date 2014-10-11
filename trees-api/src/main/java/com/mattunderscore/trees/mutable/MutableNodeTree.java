@@ -23,39 +23,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.synchronised;
+package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Synchronises a {@link com.mattunderscore.trees.mutable.MutableTree} as a {@link com.mattunderscore.trees.mutable.MutableTree}.
- * @author Matt Champion on 09/10/14.
+ * Represents a mutable tree.
+ * @author Matt Champion on 08/08/14.
  */
-final class SynchronisedMutableTree<E> implements MutableTree<E> {
-    private final MutableTree<E> delegateTree;
-
-    public SynchronisedMutableTree(MutableTree<E> tree) {
-        delegateTree = tree;
-    }
-
-    @Override
-    public synchronized Node<E> addChild(Node<E> parent, E newElement) {
-        return delegateTree.addChild(parent, newElement);
-    }
-
-    @Override
-    public synchronized boolean removeChild(Node<E> parent, Node<E> node) {
-        return delegateTree.removeChild(parent, node);
-    }
-
-    @Override
-    public synchronized Node<E> getRoot() {
-        return delegateTree.getRoot();
-    }
-
-    @Override
-    public synchronized boolean isEmpty() {
-        return delegateTree.isEmpty();
-    }
+public interface MutableNodeTree<E, N extends MutableNode<E>> extends Tree<E, N> {
+    N setRoot(E root);
 }

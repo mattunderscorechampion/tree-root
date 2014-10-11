@@ -25,28 +25,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.synchronised;
 
-import com.mattunderscore.trees.mutable.MutableTree2;
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableNodeTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * Synchronises a {@link MutableTree2} as a {@link MutableTree2}.
+ * Synchronises a {@link com.mattunderscore.trees.mutable.MutableNodeTree} as a {@link com.mattunderscore.trees.mutable.MutableTree}.
  * @author Matt Champion on 09/10/14.
  */
-final class SynchronisedMutableTree2<E> implements MutableTree2<E> {
-    private final MutableTree2<E> delegateTree;
+final class SynchronisedMutableNodeTreeAsMutableTree<E> implements MutableTree<E> {
+    private final MutableNodeTree<E, ? extends MutableNode<E>> delegateTree;
 
-    public SynchronisedMutableTree2(MutableTree2<E> tree) {
-        delegateTree = tree;
+    public SynchronisedMutableNodeTreeAsMutableTree(MutableNodeTree<E, ? extends MutableNode<E>> delegateTree) {
+        this.delegateTree = delegateTree;
     }
 
     @Override
     public synchronized Node<E> addChild(Node<E> parent, E newElement) {
-        return delegateTree.addChild(parent, newElement);
+        final MutableNode<E> mutableParent = (MutableNode<E>)parent;
+        return mutableParent.addChild(newElement);
     }
 
     @Override
     public synchronized boolean removeChild(Node<E> parent, Node<E> node) {
-        return delegateTree.removeChild(parent, node);
+        final MutableNode<E> mutableParent = (MutableNode<E>)parent;
+        return mutableParent.removeChild((MutableNode<E>)node);
     }
 
     @Override

@@ -25,12 +25,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Represents a mutable tree.
- * @author Matt Champion on 08/08/14.
+ * <p>A mutable tree where mutation operations are applied to the tree not to individual nodes.</p>
+ * @author Matt Champion on 07/10/14.
  */
-public interface MutableTree<E, N extends MutableNode<E>> extends Tree<E, N> {
-    N setRoot(E root);
+public interface MutableTree<E> extends Tree<E, Node<E>> {
+
+    /**
+     * Add a node to the tree.
+     * @param parent The parent to add the element to.
+     * @param newElement The element to add.
+     * @return The added node.
+     */
+    Node<E> addChild(Node<E> parent, E newElement);
+
+    /**
+     * @param parent The parent to remove the node from.
+     * @param node The node to remove from the tree.
+     * @return {@code true} if removed.
+     */
+    boolean removeChild(Node<E> parent, Node<E> node);
 }

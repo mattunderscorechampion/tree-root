@@ -28,44 +28,42 @@ package com.mattunderscore.trees.examples;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.mutable.MutableTree2;
+import com.mattunderscore.trees.mutable.MutableNodeTree;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
-import com.mattunderscore.trees.tree.Node;
 
 import java.util.Iterator;
 
 /**
- * @author matt on 11/10/14.
+ * @author Matt Champion on 08/08/14.
  */
-public class MutableTree2Examples {
+public final class MutableTreeNodeExamples {
     public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeIteratorFactory traverser)
     {
-        final MutableTree2<String> tree = builder.create("root",
+        final MutableNodeTree<String, MutableNode<String>> tree = builder.create("root",
                 builder.create("a",
                         builder.create("1"),
                         builder.create("2"),
                         builder.create("3")),
                 builder.create("b",
                         builder.create("+"),
-                        builder.create("-"))).build(MutableTree2.class);
+                        builder.create("-"))).build(MutableNodeTree.class);
 
-        final Iterator<Node<String>> iterator = traverser.preOrderIterator(tree);
-        final Node<String> node = iterator.next();
-        final Node<String> newNode = tree.addChild(node, "more");
+        final Iterator<MutableNode<String>> iterator = traverser.preOrderIterator(tree);
+        final MutableNode<String> mutableNode = iterator.next();
+        final MutableNode<String> newNode = mutableNode.addChild("more");
     }
 
     public void createTreeFromRoot(BottomUpTreeBuilder<String> builder)
     {
-        final MutableTree2<String> tree = builder.create("root").build(MutableTree2.class);
-        final Node<String> root = tree.getRoot();
-        final Node<String> left = tree.addChild(root, "a");
-        final Node<String> right = tree.addChild(root, "b");
-        tree.addChild(left, "1");
-        tree.addChild(left, "2");
-        tree.addChild(left, "3");
-        tree.addChild(right, "+");
-        tree.addChild(right, "-");
+        final MutableNodeTree<String, MutableNode<String>> tree = builder.create("root").build(MutableNodeTree.class);
+        final MutableNode<String> root = tree.getRoot();
+        final MutableNode<String> left = root.addChild("a");
+        final MutableNode<String> right = root.addChild("b");
+        left.addChild("1");
+        left.addChild("2");
+        left.addChild("3");
+        right.addChild("+");
+        right.addChild("-");
     }
 
     public void createTreeFromTopDown(TopDownTreeRootBuilder<String> builder)
@@ -78,6 +76,6 @@ public class MutableTree2Examples {
         left.addChild("3");
         right.addChild("+");
         right.addChild("-");
-        final MutableTree2<String> tree = b0.build(MutableTree2.class);
+        final MutableNodeTree<String, MutableNode<String>> tree = b0.build(MutableNodeTree.class);
     }
 }

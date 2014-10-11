@@ -23,30 +23,35 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
+package com.mattunderscore.trees.common.synchronised;
 
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableNodeTree;
 
 /**
- * Represents a mutable tree.
- * <p>A mutable tree where mutation operations are applied to the tree not to individual nodes.</p>
- * @author Matt Champion on 07/10/14.
+ * Synchronised mutable tree.
+ * @author Matt Champion on 09/10/14.
  */
-public interface MutableTree2<E> extends Tree<E, Node<E>> {
+public final class SynchronisedMutableNodeTree<E> implements MutableNodeTree<E, MutableNode<E>> {
+    private final MutableNodeTree<E, ? extends MutableNode<E>> delegateTree;
 
-    /**
-     * Add a node to the tree.
-     * @param parent The parent to add the element to.
-     * @param newElement The element to add.
-     * @return The added node.
-     */
-    Node<E> addChild(Node<E> parent, E newElement);
+    public SynchronisedMutableNodeTree(MutableNodeTree<E, ? extends MutableNode<E>> delegateTree) {
+        this.delegateTree = delegateTree;
+    }
 
-    /**
-     * @param parent The parent to remove the node from.
-     * @param node The node to remove from the tree.
-     * @return {@code true} if removed.
-     */
-    boolean removeChild(Node<E> parent, Node<E> node);
+    @Override
+    public synchronized MutableNode<E> setRoot(E root) {
+        return new SynchronisedMutableNode<>(this, delegateTree.setRoot(root));
+    }
+
+    @Override
+    public synchronized MutableNode<E> getRoot() {
+        return new SynchronisedMutableNode<>(this, delegateTree.getRoot());
+    }
+
+    @Override
+    public synchronized boolean isEmpty() {
+        return delegateTree.isEmpty();
+    }
+
 }

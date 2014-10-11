@@ -26,13 +26,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.TreeIteratorFactoryImpl;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.internal.pathcopy.PathCopyTree;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.MutableNodeTree;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -57,7 +55,7 @@ public final class PathCopyTreeTest {
 
     @Test
     public void test() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableNodeTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
         final Iterator<String> iterator0 = iterators.inOrderElementsIterator(tree);
         final MutableNode<String> root = tree.setRoot("root");
         assertFalse(iterator0.hasNext());

@@ -28,11 +28,10 @@ package com.mattunderscore.trees.internal;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.common.TreesImpl;
-import com.mattunderscore.trees.common.traversers.PreOrderIterator;
 import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.MutableNodeTree;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -45,13 +44,13 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Matt Champion on 15/07/14.
  */
-public final class MutableTreeNodeImplTest {
+public final class MutableNodeTreeNodeImplTest {
     private static final Trees trees = new TreesImpl();
 
     @Test
     public void mutateTree() {
         final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
-        final MutableTree<String, MutableNode<String>> tree = builder.root("a").build(MutableTree.class);
+        final MutableNodeTree<String, MutableNode<String>> tree = builder.root("a").build(MutableNodeTree.class);
         final MutableNode<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
         final MutableNode<String> depth1 = root.addChild("b");
@@ -96,7 +95,7 @@ public final class MutableTreeNodeImplTest {
         appender0.addChild("c");
         appender0.addChild("d");
         appender1.addChild("f");
-        final MutableTree<String, MutableNode<String>> tree = builder0.build(MutableTree.class);
+        final MutableNodeTree<String, MutableNode<String>> tree = builder0.build(MutableNodeTree.class);
 
         // Begin iterating over the tree
         final Iterator<MutableNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);

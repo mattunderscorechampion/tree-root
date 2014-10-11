@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.balanced;
 
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.MutableNodeTree;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -50,5 +50,5 @@ public interface Rebalancer {
      * @param <N> the type of node
      * @param <T> the type of tree
      */
-    <E, N extends MutableNode<E>, T extends MutableTree<E, N>> void rebalanceInPlace(T tree);
+    <E, N extends MutableNode<E>, T extends MutableNodeTree<E, N>> void rebalanceInPlace(T tree);
 }
