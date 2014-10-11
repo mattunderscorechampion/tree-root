@@ -25,38 +25,57 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.synchronised;
 
-import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * Synchronises a {@link com.mattunderscore.trees.mutable.MutableTree}.
- * @author Matt Champion on 09/10/14.
+ * @author matt on 11/10/14.
  */
-final class SynchronisedMutableTree<E> implements MutableTree<E> {
-    private final MutableTree<E> delegateTree;
+public final class SynchronisedNode<E> implements Node<E> {
+    private final Object lock;
+    final Node<E> delegateNode;
 
-    public SynchronisedMutableTree(MutableTree<E> tree) {
-        delegateTree = tree;
+    public SynchronisedNode(Object lock, Node<E> delegateNode) {
+        this.lock = lock;
+        this.delegateNode = delegateNode;
     }
 
     @Override
-    public synchronized Node<E> addChild(Node<E> parent, E newElement) {
-        return new SynchronisedNode<>(this, delegateTree.addChild(parent, newElement));
+    public E getElement() {
+        synchronized (lock) {
+            return delegateNode.getElement();
+        }
     }
 
     @Override
-    public synchronized boolean removeChild(Node<E> parent, Node<E> node) {
-        final SynchronisedNode<E> syncNode = (SynchronisedNode<E>)node;
-        return delegateTree.removeChild(parent, syncNode.delegateNode);
+    public Class<E> getElementClass() {
+        synchronized (lock) {
+            return delegateNode.getElementClass();
+        }
     }
 
     @Override
-    public synchronized Node<E> getRoot() {
-        return new SynchronisedNode<>(this, delegateTree.getRoot());
+    public SimpleCollection<? extends Node<E>> getChildren() {
+        synchronized (lock) {
+            return new SynchronisedSimpleNodeCollectionImpl<>(lock, (SimpleCollection<Node<E>>)delegateNode.getChildren());
+        }
     }
 
     @Override
-    public synchronized boolean isEmpty() {
-        return delegateTree.isEmpty();
+    public boolean isLeaf() {
+        synchronized (lock) {
+            return delegateNode.isLeaf();
+        }
+    }
+
+    private final static class SynchronisedSimpleNodeCollectionImpl<E> extends SynchronisedSimpleNodeCollection<E, Node<E>> {
+        SynchronisedSimpleNodeCollectionImpl(Object lock, SimpleCollection<Node<E>> delegateCollection) {
+            super(lock, delegateCollection);
+        }
+
+        @Override
+        protected Node<E> synchroniseElement(Object lock, Node<E> element) {
+            return new SynchronisedNode<>(lock, element);
+        }
     }
 }

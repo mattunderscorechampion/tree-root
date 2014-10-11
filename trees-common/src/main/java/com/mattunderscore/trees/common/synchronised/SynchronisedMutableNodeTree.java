@@ -29,7 +29,7 @@ import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableNodeTree;
 
 /**
- * Synchronised mutable tree.
+ * Synchronised mutable node tree.
  * @author Matt Champion on 09/10/14.
  */
 public final class SynchronisedMutableNodeTree<E> implements MutableNodeTree<E, MutableNode<E>> {
