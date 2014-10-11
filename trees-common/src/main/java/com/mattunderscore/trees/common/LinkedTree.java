@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
+import com.mattunderscore.trees.base.UnfixedNodeImpl;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableNodeTree;
@@ -38,21 +39,25 @@ import net.jcip.annotations.NotThreadSafe;
  * @author Matt Champion on 07/08/14.
  */
 @NotThreadSafe
-public final class LinkedTree<E> implements MutableNodeTree<E, LinkedTree<E>>, MutableNode<E> {
-    private E element;
+public final class LinkedTree<E> extends UnfixedNodeImpl<E> implements MutableNodeTree<E, LinkedTree<E>>, MutableNode<E> {
     private final ArrayListSimpleCollection<LinkedTree<E>> children;
 
     LinkedTree(E root) {
-        this.element = root;
+        super(root);
         children = new ArrayListSimpleCollection<>();
     }
 
     private LinkedTree(E root, LinkedTree[] subtrees) {
-        this.element = root;
+        super(root);
         children = new ArrayListSimpleCollection<>();
         for (final LinkedTree subtree : subtrees) {
             children.add(subtree);
         }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return elementReference.get() == null;
     }
 
     @Override
@@ -63,21 +68,6 @@ public final class LinkedTree<E> implements MutableNodeTree<E, LinkedTree<E>>, M
         else {
             return this;
         }
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return element == null;
-    }
-
-    @Override
-    public E getElement() {
-        return element;
-    }
-
-    @Override
-    public Class<E> getElementClass() {
-        return (Class<E>)element.getClass();
     }
 
     @Override
@@ -109,13 +99,8 @@ public final class LinkedTree<E> implements MutableNodeTree<E, LinkedTree<E>>, M
     }
 
     @Override
-    public boolean isLeaf() {
-        return children.size() == 0;
-    }
-
-    @Override
     public LinkedTree<E> setRoot(E root) {
-        element = root;
+        setElement(root);
         return this;
     }
 
