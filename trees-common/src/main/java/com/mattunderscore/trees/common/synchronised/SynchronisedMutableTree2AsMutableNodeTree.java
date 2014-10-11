@@ -30,6 +30,10 @@ import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableNodeTree;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.utilities.collections.ConvertingSimpleCollection;
+import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
+
+import java.util.Iterator;
 
 /**
  * @author Matt Champion on 09/10/14.
@@ -67,33 +71,73 @@ public final class SynchronisedMutableTree2AsMutableNodeTree<E> implements Mutab
 
         @Override
         public E getElement() {
-            return delegateNode.getElement();
+            synchronized (tree) {
+                return delegateNode.getElement();
+            }
         }
 
         @Override
         public Class<E> getElementClass() {
-            return delegateNode.getElementClass();
+            synchronized (tree) {
+                return delegateNode.getElementClass();
+            }
         }
 
         @Override
-        public SimpleCollection<? extends MutableNode<E>> getChildren() {
-            return null;
+        public SimpleCollection<MutableNode<E>> getChildren() {
+            synchronized (tree) {
+                return new Collection<>((SimpleCollection<Node<E>>)delegateNode.getChildren(), tree);
+            }
         }
 
         @Override
         public boolean isLeaf() {
-            return delegateNode.isLeaf();
+            synchronized (tree) {
+                return delegateNode.isLeaf();
+            }
         }
 
         @Override
         public boolean removeChild(MutableNode<E> child) {
-            final NodeToMutableNode<E> wrappedNode = (NodeToMutableNode<E>)child;
-            return tree.delegateTree.removeChild(delegateNode, wrappedNode.delegateNode);
+            synchronized (tree) {
+                final NodeToMutableNode<E> wrappedNode = (NodeToMutableNode<E>) child;
+                return tree.delegateTree.removeChild(delegateNode, wrappedNode.delegateNode);
+            }
         }
 
         @Override
         public MutableNode<E> addChild(E e) {
-            return new NodeToMutableNode<>(tree, tree.delegateTree.addChild(delegateNode, e));
+            synchronized (tree) {
+                return new NodeToMutableNode<>(tree, tree.delegateTree.addChild(delegateNode, e));
+            }
+        }
+    }
+
+    private static final class Collection<E> extends ConvertingSimpleCollection<MutableNode<E>, Node<E>> {
+        private final SynchronisedMutableTree2AsMutableNodeTree<E> tree;
+
+        protected Collection(SimpleCollection<Node<E>> collection, SynchronisedMutableTree2AsMutableNodeTree<E> tree) {
+            super(collection);
+            this.tree = tree;
+        }
+
+        @Override
+        protected Iterator<MutableNode<E>> convert(Iterator<Node<E>> delegateIterator) {
+            return new CIterator<>(delegateIterator, tree);
+        }
+    }
+
+    private static final class CIterator<E> extends ConvertingIterator<MutableNode<E>, Node<E>> {
+        private final SynchronisedMutableTree2AsMutableNodeTree<E> tree;
+
+        protected CIterator(Iterator<Node<E>> delegate, SynchronisedMutableTree2AsMutableNodeTree<E> tree) {
+            super(delegate);
+            this.tree = tree;
+        }
+
+        @Override
+        protected MutableNode<E> convert(Node<E> node) {
+            return new NodeToMutableNode(tree, node);
         }
     }
 }

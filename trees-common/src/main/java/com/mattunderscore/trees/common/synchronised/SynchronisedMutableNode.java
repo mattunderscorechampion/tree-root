@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common.synchronised;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * Synchronised mutable node.
@@ -58,7 +59,7 @@ final class SynchronisedMutableNode<E> implements MutableNode<E> {
     @Override
     public SimpleCollection<MutableNode<E>> getChildren() {
         synchronized (lock) {
-            return new SynchronisedSimpleNodeCollection<E>(lock, delegateNode.getChildren());
+            return new Collection<E>(lock, (SimpleCollection<MutableNode<E>>)delegateNode.getChildren());
         }
     }
 
@@ -81,6 +82,18 @@ final class SynchronisedMutableNode<E> implements MutableNode<E> {
     public MutableNode<E> addChild(E e) {
         synchronized (lock) {
             return new SynchronisedMutableNode<>(lock, delegateNode.addChild(e));
+        }
+    }
+
+    private static final class Collection<E> extends SynchronisedSimpleNodeCollection<E, MutableNode<E>> {
+
+        Collection(Object lock, SimpleCollection<MutableNode<E>> delegateCollection) {
+            super(lock, delegateCollection);
+        }
+
+        @Override
+        protected MutableNode<E> synchroniseElement(Object lock, MutableNode<E> element) {
+            return new SynchronisedMutableNode<>(lock, element);
         }
     }
 }

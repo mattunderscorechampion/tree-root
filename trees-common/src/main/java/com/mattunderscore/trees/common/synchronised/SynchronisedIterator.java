@@ -33,12 +33,12 @@ import java.util.Iterator;
  * Synchronised iterator for mutable nodes.
 * @author Matt Champion on 09/10/14.
 */
-final class SynchronisedIterator<E> implements Iterator<MutableNode<E>> {
+public abstract class SynchronisedIterator<E> implements Iterator<E> {
     private final Object lock;
-    private final Iterator<? extends MutableNode<E>> delegateIterator;
+    private final Iterator<E> delegateIterator;
 
 
-    SynchronisedIterator(Object lock, Iterator<? extends MutableNode<E>> delegateIterator) {
+    SynchronisedIterator(Object lock, Iterator<E> delegateIterator) {
         this.lock = lock;
         this.delegateIterator = delegateIterator;
     }
@@ -51,9 +51,9 @@ final class SynchronisedIterator<E> implements Iterator<MutableNode<E>> {
     }
 
     @Override
-    public MutableNode<E> next() {
+    public E next() {
         synchronized (lock) {
-            return new SynchronisedMutableNode<>(lock, delegateIterator.next());
+            return synchroniseElement(lock, delegateIterator.next());
         }
     }
 
@@ -63,4 +63,6 @@ final class SynchronisedIterator<E> implements Iterator<MutableNode<E>> {
             delegateIterator.remove();
         }
     }
+
+    protected abstract E synchroniseElement(Object lock, E element);
 }

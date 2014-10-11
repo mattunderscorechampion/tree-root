@@ -27,18 +27,19 @@ package com.mattunderscore.trees.common.synchronised;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.tree.Node;
 
 import java.util.Iterator;
 
 /**
- * Synchronised mutable node collection.
+ * Synchronised node collection.
 * @author Matt Champion on 09/10/14.
 */
-final class SynchronisedSimpleNodeCollection<E> implements SimpleCollection<MutableNode<E>> {
+abstract class SynchronisedSimpleNodeCollection<E, N extends Node<E>> implements SimpleCollection<N> {
     private final Object lock;
-    private final SimpleCollection<? extends MutableNode<E>> delegateCollection;
+    private final SimpleCollection<N> delegateCollection;
 
-    SynchronisedSimpleNodeCollection(Object lock, SimpleCollection<? extends MutableNode<E>> delegateCollection) {
+    SynchronisedSimpleNodeCollection(Object lock, SimpleCollection<N> delegateCollection) {
         this.lock = lock;
         this.delegateCollection = delegateCollection;
     }
@@ -58,16 +59,30 @@ final class SynchronisedSimpleNodeCollection<E> implements SimpleCollection<Muta
     }
 
     @Override
-    public Iterator<MutableNode<E>> iterator() {
+    public Iterator<N> iterator() {
         synchronized (lock) {
-            return new SynchronisedIterator<>(lock, delegateCollection.iterator());
+            return new SynchronisedIteratorImpl(lock, delegateCollection.iterator());
         }
     }
 
     @Override
-    public Iterator<MutableNode<E>> structuralIterator() {
+    public Iterator<N> structuralIterator() {
         synchronized (lock) {
-            return new SynchronisedIterator<>(lock, delegateCollection.structuralIterator());
+            return new SynchronisedIteratorImpl(lock, delegateCollection.structuralIterator());
+        }
+    }
+
+    protected abstract N synchroniseElement(Object lock, N element);
+
+    private final class SynchronisedIteratorImpl extends SynchronisedIterator<N> {
+
+        SynchronisedIteratorImpl(Object lock, Iterator<N> delegateIterator) {
+            super(lock, delegateIterator);
+        }
+
+        @Override
+        protected N synchroniseElement(Object lock, N element) {
+            return SynchronisedSimpleNodeCollection.this.synchroniseElement(lock, element);
         }
     }
 }
