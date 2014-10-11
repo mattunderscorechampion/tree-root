@@ -28,7 +28,7 @@ package com.mattunderscore.trees.internal.binary;
 import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.internal.common.FixedNodeImpl;
+import com.mattunderscore.trees.base.FixedNodeImpl;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;

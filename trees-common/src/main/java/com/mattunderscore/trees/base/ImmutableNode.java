@@ -23,21 +23,25 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.common;
+package com.mattunderscore.trees.base;
 
-/**
- * Abstract implementation of fixed element node.
+import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+
+/** 
  * @author Matt Champion on 21/09/14.
  */
-public abstract class FixedNodeImpl<E> extends AbstractNodeImpl<E> {
-    protected final E element;
+public final class ImmutableNode<E> extends FixedNodeImpl<E> {
+    private final SimpleCollection<FixedNodeImpl<E>> children;
 
-    public FixedNodeImpl(E element) {
-        this.element = element;
+    public ImmutableNode(E element, FixedNodeImpl<E>[] childNodes) {
+        super(element);
+        children = new FixedUncheckedSimpleCollection<>(childNodes);
     }
 
     @Override
-    public final E getElement() {
-        return element;
+    public SimpleCollection<? extends Node<E>> getChildren() {
+        return children;
     }
 }

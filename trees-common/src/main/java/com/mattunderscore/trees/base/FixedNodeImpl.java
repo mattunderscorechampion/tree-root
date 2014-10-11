@@ -23,23 +23,21 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.common;
-
-import com.mattunderscore.trees.tree.Node;
+package com.mattunderscore.trees.base;
 
 /**
- * Abstract implementation of nodes.
+ * Abstract implementation of fixed element node.
  * @author Matt Champion on 21/09/14.
  */
-public abstract class AbstractNodeImpl<E> implements Node<E> {
+public abstract class FixedNodeImpl<E> extends AbstractNodeImpl<E> {
+    protected final E element;
 
-    @Override
-    public final Class<E> getElementClass() {
-        return (Class<E>)getElement().getClass();
+    public FixedNodeImpl(E element) {
+        this.element = element;
     }
 
     @Override
-    public boolean isLeaf() {
-        return getChildren().isEmpty();
+    public final E getElement() {
+        return element;
     }
 }

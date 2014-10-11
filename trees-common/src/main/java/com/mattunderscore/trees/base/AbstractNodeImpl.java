@@ -23,26 +23,23 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.common;
+package com.mattunderscore.trees.base;
 
-import java.util.concurrent.atomic.AtomicReference;
+import com.mattunderscore.trees.tree.Node;
 
 /**
+ * Abstract implementation of nodes.
  * @author Matt Champion on 21/09/14.
  */
-public abstract class UnfixedNodeImpl<E> extends AbstractNodeImpl<E> {
-    protected final AtomicReference<E> elementReference = new AtomicReference<>();
+public abstract class AbstractNodeImpl<E> implements Node<E> {
 
-    public UnfixedNodeImpl(E element) {
-        elementReference.set(element);
+    @Override
+    public final Class<E> getElementClass() {
+        return (Class<E>)getElement().getClass();
     }
 
     @Override
-    public E getElement() {
-        return elementReference.get();
-    }
-
-    public void setElement(E element) {
-        elementReference.set(element);
+    public boolean isLeaf() {
+        return getChildren().isEmpty();
     }
 }

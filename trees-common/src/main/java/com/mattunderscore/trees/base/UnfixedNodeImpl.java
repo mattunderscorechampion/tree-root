@@ -23,25 +23,26 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.common;
+package com.mattunderscore.trees.base;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Matt Champion on 21/09/14.
  */
-public final class ImmutableNode<E> extends FixedNodeImpl<E> {
-    private final SimpleCollection<FixedNodeImpl<E>> children;
+public abstract class UnfixedNodeImpl<E> extends AbstractNodeImpl<E> {
+    protected final AtomicReference<E> elementReference = new AtomicReference<>();
 
-    public ImmutableNode(E element, FixedNodeImpl<E>[] childNodes) {
-        super(element);
-        children = new FixedUncheckedSimpleCollection<>(childNodes);
+    public UnfixedNodeImpl(E element) {
+        elementReference.set(element);
     }
 
     @Override
-    public SimpleCollection<? extends Node<E>> getChildren() {
-        return children;
+    public E getElement() {
+        return elementReference.get();
+    }
+
+    public void setElement(E element) {
+        elementReference.set(element);
     }
 }

@@ -30,7 +30,7 @@ import com.mattunderscore.trees.common.SPISupport;
 import com.mattunderscore.trees.common.SPISupportAwareComponent;
 import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
-import com.mattunderscore.trees.internal.common.UnfixedNodeImpl;
+import com.mattunderscore.trees.base.UnfixedNodeImpl;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableNodeTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
