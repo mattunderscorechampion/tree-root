@@ -25,16 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal.binary.mutable;
 
+import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.base.FixedNodeImpl;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 /**
  * Mutable binary tree node implementation.
  * @author Matt Champion on 06/09/14.
  */
-public final class MutableBinaryTreeNodeImpl<E> extends FixedNodeImpl<E> implements MutableBinaryTreeNode<E> {
+public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements MutableBinaryTreeNode<E> {
     private MutableBinaryTreeNode<E> left;
     private MutableBinaryTreeNode<E> right;
     private final Object[] children = new Object[2];

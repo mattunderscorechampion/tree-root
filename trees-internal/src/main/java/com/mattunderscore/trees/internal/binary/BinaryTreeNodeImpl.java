@@ -28,7 +28,7 @@ package com.mattunderscore.trees.internal.binary;
 import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.base.FixedNodeImpl;
+import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -38,7 +38,7 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
  * Binary tree node implementation.
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeNodeImpl<E> extends FixedNodeImpl<E> implements BinaryTreeNode<E> {
+public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryTreeNode<E> {
     private final BinaryTreeNodeImpl<E> left;
     private final BinaryTreeNodeImpl<E> right;
     private final Object[] children;

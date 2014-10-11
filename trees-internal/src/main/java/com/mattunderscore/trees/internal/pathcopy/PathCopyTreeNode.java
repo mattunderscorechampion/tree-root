@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.pathcopy;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.base.FixedNodeImpl;
+import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
@@ -37,7 +37,7 @@ import java.util.Iterator;
  * Nodes of trees based on path copy.
  * @author Matt Champion on 13/09/14.
 */
-final class PathCopyTreeNode<E> extends FixedNodeImpl<E> implements MutableNode<E> {
+final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
     private final PathCopyTree<E> tree;
     private final PathCopyTreeNode<E> parent;
     private DuplicateOnWriteSimpleCollection<ChildWrapper<E>> elementList;

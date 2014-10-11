@@ -30,7 +30,7 @@ import com.mattunderscore.trees.common.SPISupport;
 import com.mattunderscore.trees.common.SPISupportAwareComponent;
 import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
-import com.mattunderscore.trees.base.UnfixedNodeImpl;
+import com.mattunderscore.trees.base.UnfixedNode;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableNodeTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
@@ -54,7 +54,7 @@ import java.util.Iterator;
  * parent but seen first.</p>
  * @author Matt Champion on 15/07/14.
  */
-public final class MutableNodeTreeNodeImpl<E> extends UnfixedNodeImpl<E> implements MutableNodeTree<E, MutableNode<E>>, MutableNode<E> {
+public final class MutableNodeTreeNodeImpl<E> extends UnfixedNode<E> implements MutableNodeTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")
     private SimpleCollection<MutableNode<E>> elementList;
 

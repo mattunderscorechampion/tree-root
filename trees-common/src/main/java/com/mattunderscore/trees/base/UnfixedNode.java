@@ -25,19 +25,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.base;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
- * Abstract implementation of fixed element node.
  * @author Matt Champion on 21/09/14.
  */
-public abstract class FixedNodeImpl<E> extends AbstractNodeImpl<E> {
-    protected final E element;
+public abstract class UnfixedNode<E> extends AbstractNode<E> {
+    protected final AtomicReference<E> elementReference = new AtomicReference<>();
 
-    public FixedNodeImpl(E element) {
-        this.element = element;
+    public UnfixedNode(E element) {
+        elementReference.set(element);
     }
 
     @Override
-    public final E getElement() {
-        return element;
+    public E getElement() {
+        return elementReference.get();
+    }
+
+    public void setElement(E element) {
+        elementReference.set(element);
     }
 }

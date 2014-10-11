@@ -32,10 +32,10 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
 /** 
  * @author Matt Champion on 21/09/14.
  */
-public final class ImmutableNode<E> extends FixedNodeImpl<E> {
-    private final SimpleCollection<FixedNodeImpl<E>> children;
+public final class ImmutableNode<E> extends FixedNode<E> {
+    private final SimpleCollection<FixedNode<E>> children;
 
-    public ImmutableNode(E element, FixedNodeImpl<E>[] childNodes) {
+    public ImmutableNode(E element, FixedNode<E>[] childNodes) {
         super(element);
         children = new FixedUncheckedSimpleCollection<>(childNodes);
     }
