@@ -28,6 +28,7 @@ package com.mattunderscore.trees.internal.pathcopy;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.tree.TreeAware;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 
@@ -51,7 +52,7 @@ final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
 
     public PathCopyTreeNode(PathCopyTreeNode<E> parent, E element) {
         super(element);
-        tree = null;
+        tree = parent.tree;
         this.parent = parent;
         elementList = DuplicateOnWriteSimpleCollection.create();
     }
@@ -63,31 +64,34 @@ final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
 
     @Override
     public boolean removeChild(MutableNode<E> child) {
-        final PathCopyResult<E> result = copyPath(this);
-        final PathCopyTreeNode<E> newNode = result.newNode;
-        final DuplicateOnWriteSimpleCollection<ChildWrapper<E>> newCollection =
-                elementList.remove(new ChildWrapper<>((PathCopyTreeNode<E>) child));
+        synchronized (tree) {
+            final PathCopyResult<E> result = copyPath(this);
+            final PathCopyTreeNode<E> newNode = result.newNode;
+            final DuplicateOnWriteSimpleCollection<ChildWrapper<E>> newCollection =
+                    elementList.remove(new ChildWrapper<>((PathCopyTreeNode<E>) child));
 
-        if (newCollection.size() != elementList.size()) {
-            newNode.elementList = newCollection;
-            final PathCopyTree<E> tree = result.newRoot.tree;
-            tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
-            return true;
-        }
-        else {
-            return false;
+            if (newCollection.size() != elementList.size()) {
+                newNode.elementList = newCollection;
+                final PathCopyTree<E> tree = result.newRoot.tree;
+                tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
     @Override
     public PathCopyTreeNode<E> addChild(E e) {
-        final PathCopyResult<E> result = copyPath(this);
-        final PathCopyTreeNode<E> newNode = result.newNode;
-        final PathCopyTreeNode<E> newChild = new PathCopyTreeNode<E>(newNode, e);
-        newNode.elementList = elementList.add(new ChildWrapper<>(newChild));
-        final PathCopyTree<E> tree = result.newRoot.tree;
-        tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
-        return newChild;
+        synchronized (tree) {
+            final PathCopyResult<E> result = copyPath(this);
+            final PathCopyTreeNode<E> newNode = result.newNode;
+            final PathCopyTreeNode<E> newChild = new PathCopyTreeNode<E>(newNode, e);
+            newNode.elementList = elementList.add(new ChildWrapper<>(newChild));
+            final PathCopyTree<E> tree = result.newRoot.tree;
+            tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
+            return newChild;
+        }
     }
 
     private PathCopyResult<E> copyPath(PathCopyTreeNode<E> oldNode) {
