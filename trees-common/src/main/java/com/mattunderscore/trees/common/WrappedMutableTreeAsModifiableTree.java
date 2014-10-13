@@ -27,17 +27,17 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.mutable.ModifiableTree;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableNodeTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.tree.Node;
 
 /**
  * Wrap a mutable node tree as a mutable tree.
  * @author Matt Champion on 11/10/14.
  */
-public final class WrappedMutableNodeTreeAsModifiableTree<E> implements ModifiableTree<E> {
-    private final MutableNodeTree<E, ? extends MutableNode<E>> delegateTree;
+public final class WrappedMutableTreeAsModifiableTree<E> implements ModifiableTree<E> {
+    private final MutableTree<E, ? extends MutableNode<E>> delegateTree;
 
-    public WrappedMutableNodeTreeAsModifiableTree(MutableNodeTree<E, ? extends MutableNode<E>> delegateTree) {
+    public WrappedMutableTreeAsModifiableTree(MutableTree<E, ? extends MutableNode<E>> delegateTree) {
         this.delegateTree = delegateTree;
     }
 

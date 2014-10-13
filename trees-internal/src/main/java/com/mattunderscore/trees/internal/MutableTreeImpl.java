@@ -32,7 +32,7 @@ import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
 import com.mattunderscore.trees.base.UnfixedNode;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableNodeTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -54,16 +54,16 @@ import java.util.Iterator;
  * parent but seen first.</p>
  * @author Matt Champion on 15/07/14.
  */
-public final class MutableNodeTreeNodeImpl<E> extends UnfixedNode<E> implements MutableNodeTree<E, MutableNode<E>>, MutableNode<E> {
+public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")
     private SimpleCollection<MutableNode<E>> elementList;
 
-    public MutableNodeTreeNodeImpl(E element) {
+    public MutableTreeImpl(E element) {
         super(element);
         elementList = new FixedUncheckedSimpleCollection<>(new Object[0]);
     }
 
-    private MutableNodeTreeNodeImpl(E element, SimpleCollection<MutableNode<E>> childList) {
+    private MutableTreeImpl(E element, SimpleCollection<MutableNode<E>> childList) {
         super(element);
         elementList = childList;
     }
@@ -73,7 +73,7 @@ public final class MutableNodeTreeNodeImpl<E> extends UnfixedNode<E> implements 
         if (e == null) {
             throw new NullPointerException("You cannot add a child to an empty tree");
         }
-        final MutableNodeTreeNodeImpl<E> child = new MutableNodeTreeNodeImpl<E>(e);
+        final MutableTreeImpl<E> child = new MutableTreeImpl<E>(e);
         synchronized (this) {
             final SimpleCollection<MutableNode<E>> oldList = elementList;
             final int size = oldList.size();
@@ -152,38 +152,38 @@ public final class MutableNodeTreeNodeImpl<E> extends UnfixedNode<E> implements 
         return this;
     }
 
-    public final static class Constructor<E> implements TreeConstructor<E, MutableNodeTree<E, MutableNode<E>>> {
+    public final static class Constructor<E> implements TreeConstructor<E, MutableTree<E, MutableNode<E>>> {
 
         @Override
-        public MutableNodeTree<E, MutableNode<E>> build(E e, MutableNodeTree<E, MutableNode<E>>... subtrees) {
-            return new MutableNodeTreeNodeImpl(e, new FixedUncheckedSimpleCollection<E>(subtrees));
+        public MutableTree<E, MutableNode<E>> build(E e, MutableTree<E, MutableNode<E>>... subtrees) {
+            return new MutableTreeImpl(e, new FixedUncheckedSimpleCollection<E>(subtrees));
         }
 
         @Override
         public Class<?> forClass() {
-            return MutableNodeTree.class;
+            return MutableTree.class;
         }
     }
 
-    public final static class EmptyConstructor<E> implements EmptyTreeConstructor<E, MutableNodeTree<E, MutableNode<E>>> {
+    public final static class EmptyConstructor<E> implements EmptyTreeConstructor<E, MutableTree<E, MutableNode<E>>> {
 
         @Override
-        public MutableNodeTree<E, MutableNode<E>> build() {
-            return new MutableNodeTreeNodeImpl(null, new FixedUncheckedSimpleCollection<>(new Object[0]));
+        public MutableTree<E, MutableNode<E>> build() {
+            return new MutableTreeImpl(null, new FixedUncheckedSimpleCollection<>(new Object[0]));
         }
 
         @Override
         public Class<?> forClass() {
-            return MutableNodeTree.class;
+            return MutableTree.class;
         }
     }
 
-    public static final class Converter<E> implements TreeConverter<E, MutableNodeTreeNodeImpl<E>> {
+    public static final class Converter<E> implements TreeConverter<E, MutableTreeImpl<E>> {
 
         @Override
-        public MutableNodeTreeNodeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
+        public MutableTreeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
             final Node<E> root = sourceTree.getRoot();
-            final MutableNodeTreeNodeImpl<E> newTree = new MutableNodeTreeNodeImpl<>(root.getElement());
+            final MutableTreeImpl<E> newTree = new MutableTreeImpl<>(root.getElement());
             for (final Node<E> child : root.getChildren()) {
                 duplicate(newTree, child);
             }
@@ -192,36 +192,36 @@ public final class MutableNodeTreeNodeImpl<E> extends UnfixedNode<E> implements 
 
         @Override
         public Class<?> forClass() {
-            return MutableNodeTree.class;
+            return MutableTree.class;
         }
 
-        private void duplicate(MutableNodeTreeNodeImpl<E> newParent, Node<E> sourceChild) {
-            final MutableNodeTreeNodeImpl<E> newChild = (MutableNodeTreeNodeImpl<E>) newParent.addChild(sourceChild.getElement());
+        private void duplicate(MutableTreeImpl<E> newParent, Node<E> sourceChild) {
+            final MutableTreeImpl<E> newChild = (MutableTreeImpl<E>) newParent.addChild(sourceChild.getElement());
             for (final Node<E> child : sourceChild.getChildren()) {
                 duplicate(newChild, child);
             }
         }
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, MutableNodeTree<E, MutableNode<E>>, MutableNode<E>>, SPISupportAwareComponent {
-        private CopyingNodeToTreeConverter<E, MutableNode<E>, MutableNodeTree<E, MutableNode<E>>, MutableNode<E>> delegateConverter;
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, MutableTree<E, MutableNode<E>>, MutableNode<E>>, SPISupportAwareComponent {
+        private CopyingNodeToTreeConverter<E, MutableNode<E>, MutableTree<E, MutableNode<E>>, MutableNode<E>> delegateConverter;
 
         public NodeConverter() {
         }
 
         @Override
-        public MutableNodeTree<E, MutableNode<E>> treeFromRootNode(MutableNode<E> node) {
+        public MutableTree<E, MutableNode<E>> treeFromRootNode(MutableNode<E> node) {
             return delegateConverter.treeFromRootNode(node);
         }
 
         @Override
         public Class<?> forClass() {
-            return MutableNodeTreeNodeImpl.class;
+            return MutableTreeImpl.class;
         }
 
         @Override
         public void setSupport(SPISupport support) {
-            delegateConverter = new CopyingNodeToTreeConverter(MutableNodeTree.class, MutableNodeTree.class, new TreeBuilderFactoryImpl(support));
+            delegateConverter = new CopyingNodeToTreeConverter(MutableTree.class, MutableTree.class, new TreeBuilderFactoryImpl(support));
         }
     }
 }

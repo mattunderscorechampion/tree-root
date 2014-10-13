@@ -27,7 +27,7 @@ package com.mattunderscore.trees.internal.pathcopy;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableNodeTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Tree based on path copy mutation.
  * @author Matt Champion on 11/09/14.
  */
-public final class PathCopyTree<E> implements MutableNodeTree<E, MutableNode<E>> {
+public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     private final AtomicReference<PathCopyTreeNode<E>> root;
 
     public PathCopyTree() {

@@ -31,7 +31,7 @@ import com.mattunderscore.trees.tree.Tree;
  * Represents a mutable tree.
  * @author Matt Champion on 08/08/14.
  */
-public interface MutableNodeTree<E, N extends MutableNode<E>> extends Tree<E, N> {
+public interface MutableTree<E, N extends MutableNode<E>> extends Tree<E, N> {
     /**
      * Set the root element.
      * @param root Root element.

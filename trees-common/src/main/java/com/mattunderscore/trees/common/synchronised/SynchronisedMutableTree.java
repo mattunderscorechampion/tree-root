@@ -26,16 +26,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.synchronised;
 
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableNodeTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 
 /**
  * Synchronised mutable node tree.
  * @author Matt Champion on 09/10/14.
  */
-public final class SynchronisedMutableNodeTree<E> implements MutableNodeTree<E, MutableNode<E>> {
-    private final MutableNodeTree<E, ? extends MutableNode<E>> delegateTree;
+public final class SynchronisedMutableTree<E> implements MutableTree<E, MutableNode<E>> {
+    private final MutableTree<E, ? extends MutableNode<E>> delegateTree;
 
-    public SynchronisedMutableNodeTree(MutableNodeTree<E, ? extends MutableNode<E>> delegateTree) {
+    public SynchronisedMutableTree(MutableTree<E, ? extends MutableNode<E>> delegateTree) {
         this.delegateTree = delegateTree;
     }
 

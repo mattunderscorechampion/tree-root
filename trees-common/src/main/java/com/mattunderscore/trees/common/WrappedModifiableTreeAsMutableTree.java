@@ -28,7 +28,7 @@ package com.mattunderscore.trees.common;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.ModifiableTree;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableNodeTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.utilities.collections.ConvertingSimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
@@ -39,10 +39,10 @@ import java.util.Iterator;
  * Wrapped mutable tree as a mutable node tree.
  * @author Matt Champion on 11/10/14.
  */
-public final class WrappedModifiableTreeAsMutableNodeTree<E> implements MutableNodeTree<E, MutableNode<E>> {
+public final class WrappedModifiableTreeAsMutableTree<E> implements MutableTree<E, MutableNode<E>> {
     private final ModifiableTree<E> delegateTree;
 
-    public WrappedModifiableTreeAsMutableNodeTree(ModifiableTree<E> delegateTree) {
+    public WrappedModifiableTreeAsMutableTree(ModifiableTree<E> delegateTree) {
         this.delegateTree = delegateTree;
     }
 
