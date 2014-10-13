@@ -33,5 +33,4 @@ Wednesday August 27 22:37:17 2014
 * Added copy based node to tree converter to SPI
 * Added abstract node implementations
 * Added alternative mutable tree API
-* Renamed existing mutable tree API from MutableTree to MutableNodeTree
-
+* Added copy path tree SPI components
