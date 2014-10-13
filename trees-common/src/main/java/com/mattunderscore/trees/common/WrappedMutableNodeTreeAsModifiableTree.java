@@ -23,36 +23,48 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
+package com.mattunderscore.trees.common;
 
+import com.mattunderscore.trees.mutable.ModifiableTree;
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableNodeTree;
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Represents a mutable tree.
- * <p>A mutable tree where mutation operations are applied to the tree not to individual nodes.</p>
- * @author Matt Champion on 07/10/14.
+ * Wrap a mutable node tree as a mutable tree.
+ * @author Matt Champion on 11/10/14.
  */
-public interface MutableTree<E> extends Tree<E, Node<E>> {
-    /**
-     * Set the root element.
-     * @param rootElement Root element.
-     * @return Root node.
-     */
-    Node<E> setRoot(E rootElement);
+public final class WrappedMutableNodeTreeAsModifiableTree<E> implements ModifiableTree<E> {
+    private final MutableNodeTree<E, ? extends MutableNode<E>> delegateTree;
 
-    /**
-     * Add a node to the tree.
-     * @param parent The parent to add the element to.
-     * @param newElement The element to add.
-     * @return The added node.
-     */
-    Node<E> addChild(Node<E> parent, E newElement);
+    public WrappedMutableNodeTreeAsModifiableTree(MutableNodeTree<E, ? extends MutableNode<E>> delegateTree) {
+        this.delegateTree = delegateTree;
+    }
 
-    /**
-     * @param parent The parent to remove the node from.
-     * @param node The node to remove from the tree.
-     * @return {@code true} if removed.
-     */
-    boolean removeChild(Node<E> parent, Node<E> node);
+    @Override
+    public Node<E> setRoot(E rootElement) {
+        return delegateTree.setRoot(rootElement);
+    }
+
+    @Override
+    public Node<E> addChild(Node<E> parent, E newElement) {
+        final MutableNode<E> mutableParent = (MutableNode<E>)parent;
+        return mutableParent.addChild(newElement);
+    }
+
+    @Override
+    public boolean removeChild(Node<E> parent, Node<E> node) {
+        final MutableNode<E> mutableParent = (MutableNode<E>)parent;
+        return mutableParent.removeChild((MutableNode<E>)node);
+    }
+
+    @Override
+    public Node<E> getRoot() {
+        return delegateTree.getRoot();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return delegateTree.isEmpty();
+    }
 }

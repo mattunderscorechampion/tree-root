@@ -25,17 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.synchronised;
 
-import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.ModifiableTree;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * Synchronises a {@link com.mattunderscore.trees.mutable.MutableTree}.
+ * Synchronises a {@link com.mattunderscore.trees.mutable.ModifiableTree}.
  * @author Matt Champion on 09/10/14.
  */
-final class SynchronisedMutableTree<E> implements MutableTree<E> {
-    private final MutableTree<E> delegateTree;
+final class SynchronisedModifiableTree<E> implements ModifiableTree<E> {
+    private final ModifiableTree<E> delegateTree;
 
-    public SynchronisedMutableTree(MutableTree<E> tree) {
+    public SynchronisedModifiableTree(ModifiableTree<E> tree) {
         delegateTree = tree;
     }
 

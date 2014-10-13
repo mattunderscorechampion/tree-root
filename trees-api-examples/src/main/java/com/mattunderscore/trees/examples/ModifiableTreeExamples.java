@@ -27,7 +27,7 @@ package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.ModifiableTree;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 
@@ -36,17 +36,17 @@ import java.util.Iterator;
 /**
  * @author matt on 11/10/14.
  */
-public class MutableTreeExamples {
+public final class ModifiableTreeExamples {
     public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeIteratorFactory traverser)
     {
-        final MutableTree<String> tree = builder.create("root",
+        final ModifiableTree<String> tree = builder.create("root",
                 builder.create("a",
                         builder.create("1"),
                         builder.create("2"),
                         builder.create("3")),
                 builder.create("b",
                         builder.create("+"),
-                        builder.create("-"))).build(MutableTree.class);
+                        builder.create("-"))).build(ModifiableTree.class);
 
         final Iterator<Node<String>> iterator = traverser.preOrderIterator(tree);
         final Node<String> node = iterator.next();
@@ -55,7 +55,7 @@ public class MutableTreeExamples {
 
     public void createTreeFromRoot(BottomUpTreeBuilder<String> builder)
     {
-        final MutableTree<String> tree = builder.create("root").build(MutableTree.class);
+        final ModifiableTree<String> tree = builder.create("root").build(ModifiableTree.class);
         final Node<String> root = tree.getRoot();
         final Node<String> left = tree.addChild(root, "a");
         final Node<String> right = tree.addChild(root, "b");
@@ -76,6 +76,6 @@ public class MutableTreeExamples {
         left.addChild("3");
         right.addChild("+");
         right.addChild("-");
-        final MutableTree<String> tree = b0.build(MutableTree.class);
+        final ModifiableTree<String> tree = b0.build(ModifiableTree.class);
     }
 }
