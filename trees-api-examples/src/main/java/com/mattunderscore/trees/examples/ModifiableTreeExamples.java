@@ -34,7 +34,7 @@ import com.mattunderscore.trees.tree.Node;
 import java.util.Iterator;
 
 /**
- * @author matt on 11/10/14.
+ * @author Matt Champion on 11/10/14.
  */
 public final class ModifiableTreeExamples {
     public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeIteratorFactory traverser)

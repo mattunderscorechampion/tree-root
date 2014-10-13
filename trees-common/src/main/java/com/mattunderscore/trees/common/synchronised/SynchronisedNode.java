@@ -29,7 +29,8 @@ import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * @author matt on 11/10/14.
+ * Synchronised wrapper around node.
+ * @author Matt Champion on 11/10/14.
  */
 public final class SynchronisedNode<E> implements Node<E> {
     private final Object lock;

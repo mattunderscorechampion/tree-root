@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Unit tests for {@link com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection}.
- * @author matt on 19/09/14.
+ * @author Matt Champion on 19/09/14.
  */
 public final class DuplicateOnWriteSimpleCollectionTest {
     @Test
