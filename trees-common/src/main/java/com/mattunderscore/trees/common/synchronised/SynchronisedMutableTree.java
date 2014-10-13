@@ -40,6 +40,11 @@ final class SynchronisedMutableTree<E> implements MutableTree<E> {
     }
 
     @Override
+    public synchronized Node<E> setRoot(E rootElement) {
+        return new SynchronisedNode<>(this, delegateTree.setRoot(rootElement));
+    }
+
+    @Override
     public synchronized Node<E> addChild(Node<E> parent, E newElement) {
         return new SynchronisedNode<>(this, delegateTree.addChild(parent, newElement));
     }

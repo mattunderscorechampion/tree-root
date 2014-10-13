@@ -42,6 +42,11 @@ public final class WrappedMutableNodeTreeAsMutableTree<E> implements MutableTree
     }
 
     @Override
+    public Node<E> setRoot(E rootElement) {
+        return delegateTree.setRoot(rootElement);
+    }
+
+    @Override
     public Node<E> addChild(Node<E> parent, E newElement) {
         final MutableNode<E> mutableParent = (MutableNode<E>)parent;
         return mutableParent.addChild(newElement);

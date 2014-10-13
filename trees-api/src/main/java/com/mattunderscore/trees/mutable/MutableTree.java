@@ -34,6 +34,12 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 07/10/14.
  */
 public interface MutableTree<E> extends Tree<E, Node<E>> {
+    /**
+     * Set the root element.
+     * @param rootElement Root element.
+     * @return Root node.
+     */
+    Node<E> setRoot(E rootElement);
 
     /**
      * Add a node to the tree.
