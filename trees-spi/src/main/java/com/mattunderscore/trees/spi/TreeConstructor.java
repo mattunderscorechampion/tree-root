@@ -29,6 +29,7 @@ import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Used to create trees from the bottom up.
  * @author Matt Champion on 06/08/14.
  */
 public interface TreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {

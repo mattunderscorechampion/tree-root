@@ -29,6 +29,9 @@ import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Takes a node and creates a subtree with the node as the root. The subtree created must not mirror modifications to
+ * the source tree. Mutable trees need to create copies of the subtrees, immutable trees can return views of the source
+ * tree.
  * @author Matt Champion on 12/08/14.
  */
 public interface NodeToTreeConverter<E, N extends Node<E>, T extends Tree<E, N>, S extends Node<E>> extends SPIComponent {

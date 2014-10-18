@@ -29,6 +29,7 @@ import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Converts a tree of one type to another.
  * @author Matt Champion on 15/08/14.
  */
 public interface TreeConverter<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {

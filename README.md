@@ -121,6 +121,21 @@ types without exposing behaviour in the API.
 A more Java centric way of describing this is that the API provides a library that can be used to work with trees.
 The SPI provides a framework for implementing tree based data structures that can be worked on by the API.
 
+###Components
+
+_TreeConstructor_ - Used to create trees from the bottom up.
+
+_EmptyTreeConstructor_ - Used to create empty trees. That do not have a root node.
+
+_EmptySortedTreeConstructor_ - Used to create empty trees that have a sorting algorithm. Only of value to mutable,
+empty trees.
+
+_TreeConverter_ - Converts a tree of one type to another preserving the tree structure and using the same element
+references.
+
+_NodeToTreeConverter_ - Takes a node and creates a subtree with the node as the root. The subtree created must not
+mirror modifications to the source tree.
+
 ##Simple Collection
 
 I have created a SimpleCollection extending Iterable. I had intended to reply on the Collections API for this and for a
