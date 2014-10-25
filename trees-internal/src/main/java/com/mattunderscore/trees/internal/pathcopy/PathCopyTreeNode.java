@@ -35,7 +35,7 @@ import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 import java.util.Iterator;
 
 /**
- * Nodes of trees based on path copy.
+ * Nodes of trees based on path copy. Unable to support removal through iterator because it reverts changes.
  * @author Matt Champion on 13/09/14.
 */
 final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {

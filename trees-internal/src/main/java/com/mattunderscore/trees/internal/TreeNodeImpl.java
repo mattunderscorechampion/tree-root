@@ -38,6 +38,7 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
 import net.jcip.annotations.Immutable;
 
 /**
+ * Immutable tree and tree node implementation.
  * @author Matt Champion on 10/06/14.
  */
 @Immutable

@@ -38,7 +38,7 @@ import com.mattunderscore.trees.tree.Tree;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Tree based on path copy mutation.
+ * Tree based on path copy mutation. Mutation on old
  * @author Matt Champion on 11/09/14.
  */
 public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
