@@ -23,12 +23,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.pathcopy;
+package com.mattunderscore.trees.internal.pathcopy.simple;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.tree.TreeAware;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 
@@ -38,19 +37,19 @@ import java.util.Iterator;
  * Nodes of trees based on path copy. Unable to support removal through iterator because it reverts changes.
  * @author Matt Champion on 13/09/14.
 */
-final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
-    private final PathCopyTree<E> tree;
-    private final PathCopyTreeNode<E> parent;
+final class SimplePathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
+    private final SimplePathCopyTree<E> tree;
+    private final SimplePathCopyTreeNode<E> parent;
     private DuplicateOnWriteSimpleCollection<ChildWrapper<E>> elementList;
 
-    public PathCopyTreeNode(PathCopyTree<E> tree, E element) {
+    public SimplePathCopyTreeNode(SimplePathCopyTree<E> tree, E element) {
         super(element);
         this.tree = tree;
         parent = null;
         elementList = DuplicateOnWriteSimpleCollection.create();
     }
 
-    public PathCopyTreeNode(PathCopyTreeNode<E> parent, E element) {
+    public SimplePathCopyTreeNode(SimplePathCopyTreeNode<E> parent, E element) {
         super(element);
         tree = parent.tree;
         this.parent = parent;
@@ -65,14 +64,14 @@ final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
     @Override
     public boolean removeChild(MutableNode<E> child) {
         synchronized (tree) {
-            final PathCopyResult<E> result = copyPath(this);
-            final PathCopyTreeNode<E> newNode = result.newNode;
+            final SimplePathCopyResult<E> result = copyPath(this);
+            final SimplePathCopyTreeNode<E> newNode = result.newNode;
             final DuplicateOnWriteSimpleCollection<ChildWrapper<E>> newCollection =
-                    elementList.remove(new ChildWrapper<>((PathCopyTreeNode<E>) child));
+                    elementList.remove(new ChildWrapper<>((SimplePathCopyTreeNode<E>) child));
 
             if (newCollection.size() != elementList.size()) {
                 newNode.elementList = newCollection;
-                final PathCopyTree<E> tree = result.newRoot.tree;
+                final SimplePathCopyTree<E> tree = result.newRoot.tree;
                 tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
                 return true;
             } else {
@@ -82,30 +81,30 @@ final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
     }
 
     @Override
-    public PathCopyTreeNode<E> addChild(E e) {
+    public SimplePathCopyTreeNode<E> addChild(E e) {
         synchronized (tree) {
-            final PathCopyResult<E> result = copyPath(this);
-            final PathCopyTreeNode<E> newNode = result.newNode;
-            final PathCopyTreeNode<E> newChild = new PathCopyTreeNode<E>(newNode, e);
+            final SimplePathCopyResult<E> result = copyPath(this);
+            final SimplePathCopyTreeNode<E> newNode = result.newNode;
+            final SimplePathCopyTreeNode<E> newChild = new SimplePathCopyTreeNode<E>(newNode, e);
             newNode.elementList = elementList.add(new ChildWrapper<>(newChild));
-            final PathCopyTree<E> tree = result.newRoot.tree;
+            final SimplePathCopyTree<E> tree = result.newRoot.tree;
             tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
             return newChild;
         }
     }
 
-    private PathCopyResult<E> copyPath(PathCopyTreeNode<E> oldNode) {
+    private SimplePathCopyResult<E> copyPath(SimplePathCopyTreeNode<E> oldNode) {
         if (oldNode.parent != null) {
-            final PathCopyResult<E> result = copyPath(oldNode.parent);
-            final PathCopyTreeNode<E> newParent = result.newNode;
-            final PathCopyTreeNode<E> newNode = new PathCopyTreeNode(newParent, oldNode.element);
+            final SimplePathCopyResult<E> result = copyPath(oldNode.parent);
+            final SimplePathCopyTreeNode<E> newParent = result.newNode;
+            final SimplePathCopyTreeNode<E> newNode = new SimplePathCopyTreeNode(newParent, oldNode.element);
             final DuplicateOnWriteSimpleCollection<ChildWrapper<E>> oldChildren = oldNode.parent.elementList;
             newParent.elementList =
                 oldChildren.replace(new ChildWrapper<>(newNode), new ChildWrapper<>(oldNode));
-            return new PathCopyResult<>(result.newRoot, result.oldRoot, newNode);
+            return new SimplePathCopyResult<>(result.newRoot, result.oldRoot, newNode);
         }
-        final PathCopyTreeNode<E> newNode = new PathCopyTreeNode(tree, oldNode.element);
-        return new PathCopyResult<>(newNode, oldNode, newNode);
+        final SimplePathCopyTreeNode<E> newNode = new SimplePathCopyTreeNode(tree, oldNode.element);
+        return new SimplePathCopyResult<>(newNode, oldNode, newNode);
     }
 
     /**
@@ -113,9 +112,9 @@ final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
      * @param <E>
      */
     private static final class ChildWrapper<E> {
-        private final PathCopyTreeNode<E> child;
+        private final SimplePathCopyTreeNode<E> child;
 
-        private ChildWrapper(PathCopyTreeNode<E> child) {
+        private ChildWrapper(SimplePathCopyTreeNode<E> child) {
             this.child = child;
         }
 
@@ -146,7 +145,7 @@ final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
      * Proxy for the collection that unwraps the elements.
      * @param <E>
      */
-    private static final class CollectionProxy<E> implements SimpleCollection<PathCopyTreeNode<E>> {
+    private static final class CollectionProxy<E> implements SimpleCollection<SimplePathCopyTreeNode<E>> {
         private final SimpleCollection<ChildWrapper<E>> delegate;
 
         private CollectionProxy(SimpleCollection<ChildWrapper<E>> delegate) {
@@ -164,20 +163,20 @@ final class PathCopyTreeNode<E> extends FixedNode<E> implements MutableNode<E> {
         }
 
         @Override
-        public Iterator<PathCopyTreeNode<E>> iterator() {
-            return new ConvertingIterator<PathCopyTreeNode<E>, ChildWrapper<E>>(delegate.iterator()) {
+        public Iterator<SimplePathCopyTreeNode<E>> iterator() {
+            return new ConvertingIterator<SimplePathCopyTreeNode<E>, ChildWrapper<E>>(delegate.iterator()) {
                 @Override
-                protected PathCopyTreeNode<E> convert(ChildWrapper<E> wrapped) {
+                protected SimplePathCopyTreeNode<E> convert(ChildWrapper<E> wrapped) {
                     return wrapped.child;
                 }
             };
         }
 
         @Override
-        public Iterator<PathCopyTreeNode<E>> structuralIterator() {
-            return new ConvertingIterator<PathCopyTreeNode<E>, ChildWrapper<E>>(delegate.structuralIterator()) {
+        public Iterator<SimplePathCopyTreeNode<E>> structuralIterator() {
+            return new ConvertingIterator<SimplePathCopyTreeNode<E>, ChildWrapper<E>>(delegate.structuralIterator()) {
                 @Override
-                protected PathCopyTreeNode<E> convert(ChildWrapper<E> wrapped) {
+                protected SimplePathCopyTreeNode<E> convert(ChildWrapper<E> wrapped) {
                     return wrapped.child;
                 }
             };

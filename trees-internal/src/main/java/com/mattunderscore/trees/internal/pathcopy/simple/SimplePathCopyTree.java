@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.pathcopy;
+package com.mattunderscore.trees.internal.pathcopy.simple;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
@@ -41,22 +41,22 @@ import java.util.concurrent.atomic.AtomicReference;
  * Tree based on path copy mutation. Mutation on old
  * @author Matt Champion on 11/09/14.
  */
-public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
-    private final AtomicReference<PathCopyTreeNode<E>> root;
+public final class SimplePathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
+    private final AtomicReference<SimplePathCopyTreeNode<E>> root;
 
-    public PathCopyTree() {
+    public SimplePathCopyTree() {
         root = new AtomicReference<>();
     }
 
     @Override
     public MutableNode<E> setRoot(E root) {
-        final PathCopyTreeNode<E> newRoot = new PathCopyTreeNode<>(this, root);
+        final SimplePathCopyTreeNode<E> newRoot = new SimplePathCopyTreeNode<>(this, root);
         this.root.set(newRoot);
         return newRoot;
     }
 
     @Override
-    public PathCopyTreeNode<E> getRoot() {
+    public SimplePathCopyTreeNode<E> getRoot() {
         return root.get();
     }
 
@@ -70,28 +70,28 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
      * @param newRoot
      * @param oldRoot
      */
-    void checkAndSetRootNode(PathCopyTreeNode<E> newRoot, PathCopyTreeNode<E> oldRoot) {
+    void checkAndSetRootNode(SimplePathCopyTreeNode<E> newRoot, SimplePathCopyTreeNode<E> oldRoot) {
         root.compareAndSet(oldRoot, newRoot);
     }
 
-    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, PathCopyTree<E>> {
+    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, SimplePathCopyTree<E>> {
 
         @Override
-        public PathCopyTree<E> build() {
-            return new PathCopyTree<>();
+        public SimplePathCopyTree<E> build() {
+            return new SimplePathCopyTree<>();
         }
 
         @Override
         public Class<?> forClass() {
-            return PathCopyTree.class;
+            return SimplePathCopyTree.class;
         }
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, PathCopyTree<E>, Node<E>> {
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, SimplePathCopyTree<E>, Node<E>> {
 
         @Override
-        public PathCopyTree<E> treeFromRootNode(Node<E> node) {
-            final PathCopyTree<E> newTree = new PathCopyTree<>();
+        public SimplePathCopyTree<E> treeFromRootNode(Node<E> node) {
+            final SimplePathCopyTree<E> newTree = new SimplePathCopyTree<>();
             newTree.setRoot(node.getElement());
             copyChildren(newTree.setRoot(node.getElement()), node.getChildren());
             return newTree;
@@ -106,32 +106,32 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
         @Override
         public Class<?> forClass() {
-            return PathCopyTree.class;
+            return SimplePathCopyTree.class;
         }
     }
 
-    public static final class Converter<E> implements TreeConverter<E, PathCopyTree<E>> {
+    public static final class Converter<E> implements TreeConverter<E, SimplePathCopyTree<E>> {
         private final NodeConverter<E> converter = new NodeConverter();
 
         @Override
-        public PathCopyTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {
+        public SimplePathCopyTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {
             final Node<E> root = sourceTree.getRoot();
             return converter.treeFromRootNode(root);
         }
 
         @Override
         public Class<?> forClass() {
-            return PathCopyTree.class;
+            return SimplePathCopyTree.class;
         }
     }
 
-    public static final class Constructor<E> implements TreeConstructor<E, PathCopyTree<E>> {
+    public static final class Constructor<E> implements TreeConstructor<E, SimplePathCopyTree<E>> {
 
         @Override
-        public PathCopyTree<E> build(E e, PathCopyTree<E>[] subtrees) {
-            final PathCopyTree<E> tree = new PathCopyTree<>();
+        public SimplePathCopyTree<E> build(E e, SimplePathCopyTree<E>[] subtrees) {
+            final SimplePathCopyTree<E> tree = new SimplePathCopyTree<>();
             final MutableNode<E> root = tree.setRoot(e);
-            for (PathCopyTree<E> subtree : subtrees) {
+            for (SimplePathCopyTree<E> subtree : subtrees) {
                 final Node<E> subRoot = subtree.getRoot();
                 final MutableNode<E> newSubRoot = root.addChild(subRoot.getElement());
                 copyChildren(newSubRoot, subRoot.getChildren());
@@ -141,7 +141,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
         @Override
         public Class<?> forClass() {
-            return PathCopyTree.class;
+            return SimplePathCopyTree.class;
         }
 
         private void copyChildren(MutableNode<E> newParent, SimpleCollection<? extends Node<E>> children) {

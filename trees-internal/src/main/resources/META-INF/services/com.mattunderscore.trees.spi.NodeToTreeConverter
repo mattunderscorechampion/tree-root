@@ -2,4 +2,4 @@ com.mattunderscore.trees.internal.TreeNodeImpl$NodeConverter
 com.mattunderscore.trees.internal.MutableTreeImpl$NodeConverter
 com.mattunderscore.trees.internal.binary.BinaryTreeWrapper$NodeConverter
 com.mattunderscore.trees.internal.binary.mutable.MutableBinaryTreeImpl$NodeConverter
-com.mattunderscore.trees.internal.pathcopy.PathCopyTree$NodeConverter
+com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree$NodeConverter

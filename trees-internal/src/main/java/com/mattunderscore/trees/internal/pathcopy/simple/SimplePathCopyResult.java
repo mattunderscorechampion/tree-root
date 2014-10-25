@@ -23,18 +23,18 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.pathcopy;
+package com.mattunderscore.trees.internal.pathcopy.simple;
 
 /**
  * Result of copying path.
 * @author Matt Champion on 13/09/14.
 */
-final class PathCopyResult<E> {
-    final PathCopyTreeNode<E> newRoot;
-    final PathCopyTreeNode<E> oldRoot;
-    final PathCopyTreeNode<E> newNode;
+final class SimplePathCopyResult<E> {
+    final SimplePathCopyTreeNode<E> newRoot;
+    final SimplePathCopyTreeNode<E> oldRoot;
+    final SimplePathCopyTreeNode<E> newNode;
 
-    PathCopyResult(PathCopyTreeNode<E> newRoot, PathCopyTreeNode<E> oldRoot, PathCopyTreeNode<E> newNode) {
+    SimplePathCopyResult(SimplePathCopyTreeNode<E> newRoot, SimplePathCopyTreeNode<E> oldRoot, SimplePathCopyTreeNode<E> newNode) {
         this.newRoot = newRoot;
         this.oldRoot = oldRoot;
         this.newNode = newNode;

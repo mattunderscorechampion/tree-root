@@ -28,7 +28,7 @@ package com.mattunderscore.trees.internal;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.internal.pathcopy.PathCopyTree;
+import com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
@@ -42,7 +42,7 @@ import static org.junit.Assert.*;
 /**
  * @author Matt Champion on 13/09/14.
  */
-public final class PathCopyTreeTest {
+public final class SimplePathCopyTreeTest {
     private static TreeIteratorFactory iterators;
     private static BottomUpTreeBuilder<String> builder;
 
@@ -55,7 +55,7 @@ public final class PathCopyTreeTest {
 
     @Test
     public void test() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder.build(SimplePathCopyTree.class);
         final Iterator<String> iterator0 = iterators.inOrderElementsIterator(tree);
         final MutableNode<String> root = tree.setRoot("root");
         assertFalse(iterator0.hasNext());
