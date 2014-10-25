@@ -28,10 +28,10 @@ package com.mattunderscore.trees.operation;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * Result of {@link com.mattunderscore.trees.operation.AddOperation}.
+ * Result of {@link AddChildOperation}.
  * @author Matt Champion on 25/10/14.
  */
-public interface AddResult<E, N extends Node<E>> extends OperationResult {
+public interface AddChildResult<E, N extends Node<E>> extends OperationResult {
     /**
      * @return The new node
      */

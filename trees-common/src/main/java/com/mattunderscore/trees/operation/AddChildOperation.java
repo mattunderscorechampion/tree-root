@@ -31,7 +31,7 @@ import com.mattunderscore.trees.tree.Node;
  * Add operation.
  * @author Matt Champion on 25/10/14.
  */
-public interface AddOperation<E, N extends Node<E>> extends Operation<AddResult<E, N>> {
+public interface AddChildOperation<E, N extends Node<E>> extends Operation<AddChildResult<E, N>> {
     /**
      * @return The parent node
      */
