@@ -28,6 +28,7 @@ package com.mattunderscore.trees.examples;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.position.Position;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
@@ -82,11 +83,28 @@ public final class CompleteExample {
         final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
     }
 
-    public void sum(Trees trees, Tree<Integer, Node<Integer>> tree) {
+    /**
+     * Sum all the values in an integer tree.
+     */
+    public int sum(Trees trees, Tree<Integer, Node<Integer>> tree) {
         final SumWalker walker = new SumWalker();
         trees.treeWalkers().walkElementsInOrder(tree, walker);
+        return walker.sum;
     }
 
+    /**
+     * Lookup a node at a given position in a tree.
+     * @param tree The tree
+     * @param position The position
+     * @return The node of the tree in the position
+     */
+    public Node<String> position(Tree<String, Node<String>> tree, Position position) {
+        return position.lookup(tree);
+    }
+
+    /**
+     * Walker that sums the elements in an integer tree.
+     */
     private static final class SumWalker extends DefaultElementWalker<Integer> {
         int sum = 0;
 
