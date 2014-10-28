@@ -34,7 +34,7 @@ import java.util.Iterator;
  * Relative position representing a child,
  * @author Matt Champion on 25/10/14.
  */
-class NChildRelativePosition implements RelativePosition {
+final class NChildRelativePosition implements RelativePosition {
     private final int child;
 
     public NChildRelativePosition(int child) {

@@ -25,24 +25,37 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.position;
 
+import com.mattunderscore.trees.ids.IdedNode;
+import com.mattunderscore.trees.ids.NodeId;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Composition of a position and a partial position.
- * @author Matt Champion on 25/10/14.
+ * @author Matt Champion on 28/10/14.
  */
-final class CompositePosition implements Position {
-    private final Position pos;
-    private final RelativePosition partialPos;
+final class IDValidatingPosition implements Position {
+    private final Position position;
+    private final NodeId id;
 
-    public CompositePosition(Position pos, RelativePosition partialPos) {
-        this.pos = pos;
-        this.partialPos = partialPos;
+    public IDValidatingPosition(Position position, NodeId id) {
+        this.position = position;
+        this.id = id;
     }
 
     @Override
     public <E, N extends Node<E>, T extends Tree<E, N>> N lookup(T tree) {
-        return partialPos.next(pos.lookup(tree));
+        final N next = position.lookup(tree);
+        if (next instanceof IdedNode) {
+            final NodeId id = ((IdedNode) next).getId();
+            if (this.id.equals(id)) {
+                return next;
+            }
+            else {
+                throw new IllegalStateException("IDs do not match");
+            }
+        }
+        else {
+            throw new IllegalStateException("Node does not have ID");
+        }
     }
 }

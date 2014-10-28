@@ -25,15 +25,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.position;
 
+import com.mattunderscore.trees.ids.NodeId;
+
 /**
  * A position builder.
  * @author Matt Champion on 25/10/14.
  */
-public class PositionBuilder {
+public final class PositionBuilder {
     private final Position position;
 
     public PositionBuilder() {
         position = new RootPosition();
+    }
+
+    public PositionBuilder(NodeId nodeId) {
+        position = new IDValidatingPosition(new RootPosition(), nodeId);
     }
 
     private PositionBuilder(Position position) {
@@ -53,6 +59,18 @@ public class PositionBuilder {
             new CompositePosition(
                 position,
                 new NChildRelativePosition(child)));
+    }
+
+    public PositionBuilder child(int child, NodeId id) {
+        if (child < 0 ) {
+            throw new IllegalArgumentException("Child position cannot be less than zero");
+        }
+
+        return new PositionBuilder(
+                new CompositePosition(
+                        position,
+                        new IDValidatingRelativePosition(
+                                new NChildRelativePosition(child), id)));
     }
 
     /**

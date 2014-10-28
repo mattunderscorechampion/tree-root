@@ -32,7 +32,7 @@ import com.mattunderscore.trees.tree.Tree;
  * Position representing the root of a tree.
  * @author Matt Champion on 25/10/14.
  */
-class RootPosition implements Position {
+final class RootPosition implements Position {
 
     @Override
     public <E, N extends Node<E>, T extends Tree<E, N>> N lookup(T tree) {
