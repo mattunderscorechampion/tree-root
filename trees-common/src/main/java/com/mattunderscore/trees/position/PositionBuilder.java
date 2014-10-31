@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.position;
 
-import com.mattunderscore.trees.ids.NodeId;
+import com.mattunderscore.trees.ids.Id;
 
 /**
  * A position builder.
@@ -38,8 +38,8 @@ public final class PositionBuilder {
         position = new RootPosition();
     }
 
-    public PositionBuilder(NodeId nodeId) {
-        position = new IDValidatingPosition(new RootPosition(), nodeId);
+    public PositionBuilder(Id id) {
+        position = new IDValidatingPosition(new RootPosition(), id);
     }
 
     private PositionBuilder(Position position) {
@@ -61,7 +61,7 @@ public final class PositionBuilder {
                 new NChildRelativePosition(child)));
     }
 
-    public PositionBuilder child(int child, NodeId id) {
+    public PositionBuilder child(int child, Id id) {
         if (child < 0 ) {
             throw new IllegalArgumentException("Child position cannot be less than zero");
         }

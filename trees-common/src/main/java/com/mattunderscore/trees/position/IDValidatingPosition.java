@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.position;
 
-import com.mattunderscore.trees.ids.IdedNode;
-import com.mattunderscore.trees.ids.NodeId;
+import com.mattunderscore.trees.ids.HasId;
+import com.mattunderscore.trees.ids.Id;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -35,9 +35,9 @@ import com.mattunderscore.trees.tree.Tree;
  */
 final class IDValidatingPosition implements Position {
     private final Position position;
-    private final NodeId id;
+    private final Id id;
 
-    public IDValidatingPosition(Position position, NodeId id) {
+    public IDValidatingPosition(Position position, Id id) {
         this.position = position;
         this.id = id;
     }
@@ -45,8 +45,8 @@ final class IDValidatingPosition implements Position {
     @Override
     public <E, N extends Node<E>, T extends Tree<E, N>> N lookup(T tree) {
         final N next = position.lookup(tree);
-        if (next instanceof IdedNode) {
-            final NodeId id = ((IdedNode) next).getId();
+        if (next instanceof HasId) {
+            final Id id = ((HasId) next).getId();
             if (this.id.equals(id)) {
                 return next;
             }

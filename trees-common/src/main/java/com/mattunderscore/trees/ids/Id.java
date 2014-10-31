@@ -23,38 +23,16 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.position;
-
-import com.mattunderscore.trees.ids.HasId;
-import com.mattunderscore.trees.ids.Id;
-import com.mattunderscore.trees.tree.Node;
+package com.mattunderscore.trees.ids;
 
 /**
- * @author Matt Champion on 28/10/14.
+ * An Id for any object.
+ * @author Matt Champion on 22/10/14.
  */
-final class IDValidatingRelativePosition implements RelativePosition {
-    private final RelativePosition relativePosition;
-    private final Id id;
-
-    public IDValidatingRelativePosition(RelativePosition relativePosition, Id id) {
-        this.relativePosition = relativePosition;
-        this.id = id;
-    }
+public interface Id {
+    @Override
+    boolean equals(Object o);
 
     @Override
-    public <E, N extends Node<E>> N next(N previous) {
-        final N next = relativePosition.next(previous);
-        if (next instanceof HasId) {
-            final Id id = ((HasId) next).getId();
-            if (this.id.equals(id)) {
-                return next;
-            }
-            else {
-                throw new IllegalStateException("IDs do not match");
-            }
-        }
-        else {
-            throw new IllegalStateException("Node does not have ID");
-        }
-    }
+    int hashCode();
 }

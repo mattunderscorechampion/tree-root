@@ -25,33 +25,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.ids.impl;
 
-import com.mattunderscore.trees.ids.NodeId;
+import com.mattunderscore.trees.ids.Id;
+import com.mattunderscore.trees.ids.IdGenerator;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Node Id implementation.
+ * NodeId generator implementation.
  * @author Matt Champion on 22/10/14.
  */
-public final class NodeIdImpl implements NodeId {
-    private final long id;
-
-    NodeIdImpl(long id) {
-        this.id = id;
-    }
+public final class IdGeneratorImpl implements IdGenerator {
+    private final AtomicLong generator = new AtomicLong();
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        NodeIdImpl nodeIdImpl = (NodeIdImpl) o;
-
-        if (id != nodeIdImpl.id) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+    public Id next() {
+        return new IdImpl(generator.getAndIncrement());
     }
 }

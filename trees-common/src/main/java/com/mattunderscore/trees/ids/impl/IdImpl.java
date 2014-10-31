@@ -23,17 +23,37 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.ids;
+package com.mattunderscore.trees.ids.impl;
 
-import com.mattunderscore.trees.ids.impl.NodeIdGeneratorImpl;
-import com.mattunderscore.trees.ids.impl.NodeIdImpl;
+import com.mattunderscore.trees.ids.Id;
 
 /**
- * NodeId generator.
+ * Node Id implementation.
  * @author Matt Champion on 22/10/14.
  */
-public interface NodeIdGenerator {
-    NodeIdGenerator GENERATOR = new NodeIdGeneratorImpl();
+public final class IdImpl implements Id {
+    private final long id;
 
-    NodeId next();
+    IdImpl(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        else if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        else {
+            final IdImpl otherId = (IdImpl) o;
+            return id == otherId.id;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }

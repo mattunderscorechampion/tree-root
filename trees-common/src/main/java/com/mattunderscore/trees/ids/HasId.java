@@ -23,22 +23,12 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.ids.impl;
-
-import com.mattunderscore.trees.ids.NodeId;
-import com.mattunderscore.trees.ids.NodeIdGenerator;
-
-import java.util.concurrent.atomic.AtomicLong;
+package com.mattunderscore.trees.ids;
 
 /**
- * NodeId generator implementation.
- * @author Matt Champion on 22/10/14.
+ * An object with an Id
+ * @author Matt Champion on 28/10/14.
  */
-public final class NodeIdGeneratorImpl implements NodeIdGenerator {
-    private final AtomicLong generator = new AtomicLong();
-
-    @Override
-    public NodeId next() {
-        return new NodeIdImpl(generator.getAndIncrement());
-    }
+public interface HasId {
+    Id getId();
 }

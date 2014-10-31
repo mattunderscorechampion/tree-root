@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.ids;
 
+import com.mattunderscore.trees.ids.impl.IdGeneratorImpl;
+
 /**
- * NodeId.
+ * NodeId generator.
  * @author Matt Champion on 22/10/14.
  */
-public interface NodeId {
-    @Override
-    boolean equals(Object o);
+public interface IdGenerator {
+    IdGenerator GENERATOR = new IdGeneratorImpl();
 
-    @Override
-    int hashCode();
+    Id next();
 }
