@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Tree;
 /**
  * @author Matt Champion on 28/10/14.
  */
-final class IDValidatingPosition implements Position {
+public final class IDValidatingPosition implements Position {
     private final Position position;
     private final Id id;
 
