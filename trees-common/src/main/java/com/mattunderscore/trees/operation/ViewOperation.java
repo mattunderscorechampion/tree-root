@@ -32,5 +32,5 @@ import com.mattunderscore.trees.tree.Tree;
  * View operation.
  * @author Matt Champion on 25/10/14.
  */
-public interface ViewOperation<E, N extends Node<E>, T extends Tree<E, N>> extends Operation<ViewResult<E, N, T>> {
+public interface ViewOperation<E, N extends Node<E>, T extends Tree<E, N>, R extends ViewResult<E, N, T>> extends Operation<R> {
 }
