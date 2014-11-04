@@ -7,6 +7,10 @@ A tree structure and utility library.
 There are two ways to build trees. From the bottom-up, starting with leaves and attaching them to a parent. From the
 top-down, starting the root and adding children.
 
+##Status
+This library is sill in an early stage of development. The first major release has not yet been made and the API has
+not been fixed.
+
 ##Prior art
 
 There is a [TreeSet](http://docs.oracle.com/javase/7/docs/api/java/util/TreeSet.html) and a
