@@ -34,3 +34,6 @@ Wednesday August 27 22:37:17 2014
 * Added abstract node implementations
 * Added alternative mutable tree API
 * Added copy path tree SPI components
+* Added IDs
+* Added operations
+* Added second copy path based tree implementation that uses a separate data structure for back references
