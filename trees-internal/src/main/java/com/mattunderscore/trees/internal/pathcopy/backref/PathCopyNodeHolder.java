@@ -23,21 +23,46 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.ids;
+package com.mattunderscore.trees.internal.pathcopy.backref;
+
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * An object with an Id
- * @author Matt Champion on 28/10/14.
+ * Path copy tree node back reference data structure.
+ * @author Matt Champion on 02/11/14.
  */
-public interface HasId {
-    /**
-     * @return The ID of the object
-     */
-    Id getId();
+public final class PathCopyNodeHolder<E> {
+    final PathCopyNodeHolder<E> parent;
+    private final ReentrantLock lock = new ReentrantLock();
+    private PathCopyNode<E> currentNode;
 
-    @Override
-    boolean equals(Object o);
+    public PathCopyNodeHolder(PathCopyNodeHolder<E> parent) {
+        this.parent = parent;
+    }
 
-    @Override
-    int hashCode();
+    public void lock() {
+        lock.lock();
+    }
+
+    public void unlock() {
+        lock.unlock();
+    }
+
+    public PathCopyNode<E> get() {
+        if (lock.isHeldByCurrentThread()) {
+            return currentNode;
+        }
+        else {
+            throw new IllegalStateException("Lock must be held");
+        }
+    }
+
+    public void set(PathCopyNode<E> node) {
+        if (lock.isHeldByCurrentThread()) {
+            currentNode = node;
+        }
+        else {
+            throw new IllegalStateException("Lock must be held");
+        }
+    }
 }
