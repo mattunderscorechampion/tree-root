@@ -180,4 +180,6 @@ _MutableBinaryTreeImpl_ - a mutable binary tree
 
 _BinarySearchTree_ - a mutable binary search tree
 
-_PathCopyTree_ - a path copy tree
+_SimplePathCopyTree_ - a path copy tree, initial implementation
+
+_PathCopyTree_ - a path copy tree that uses a separate data structure for the back references between nodes
