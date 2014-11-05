@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.utilities.iterators;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * An iterator over object arrays that casts the objects to another class.
@@ -47,7 +48,12 @@ public final class CastingArrayIterator<E> implements Iterator<E> {
 
     @Override
     public E next() {
-        return (E)array[pos++];
+        if (pos < array.length) {
+            return (E) array[pos++];
+        }
+        else {
+            throw new NoSuchElementException();
+        }
     }
 
     @Override
