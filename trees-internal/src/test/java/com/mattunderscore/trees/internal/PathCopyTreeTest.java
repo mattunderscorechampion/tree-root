@@ -125,4 +125,22 @@ public class PathCopyTreeTest {
         assertEquals("right", iterator0.next());
         assertFalse(iterator0.hasNext());
     }
+
+    @Test
+    public void mutateOldView() {
+        final PathCopyTree<String> tree = builder.create(
+            "root",
+            builder.create("left"),
+            builder.create("right",
+                builder.create("a"))).build(PathCopyTree.class);
+        final MutableNode<String> root = tree.getRoot();
+        final Iterator<? extends MutableNode<String>> iterator0 = root.getChildren().iterator();
+        final MutableNode<String> left = iterator0.next();
+        final MutableNode<String> right = iterator0.next();
+        final Iterator<? extends MutableNode<String>> iterator1 = right.getChildren().iterator();
+        final MutableNode<String> a = iterator1.next();
+
+        assertTrue(root.removeChild(right));
+        assertFalse(right.removeChild(a));
+    }
 }
