@@ -40,7 +40,6 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
@@ -129,28 +128,19 @@ public class PathCopyTreeTest {
 
     @Test
     public void mutateOldView() {
-        final BottomUpTreeBuilder<String> newBuilder = builder.create(
+        final PathCopyTree<String> tree = builder.create(
             "root",
             builder.create("left"),
             builder.create("right",
-                builder.create("a")));
-        final PathCopyTree<String> tree = newBuilder.build(PathCopyTree.class);
-        final MutableNode<String> root0 = tree.getRoot();
-        final Iterator<? extends MutableNode<String>> iterator0 = root0.getChildren().iterator();
-        final MutableNode<String> left0 = iterator0.next();
-        assertEquals("left", left0.getElement());
-        final MutableNode<String> right0 = iterator0.next();
-        assertEquals("right", right0.getElement());
-        final Iterator<? extends MutableNode<String>> iterator1 = right0.getChildren().iterator();
-        final MutableNode<String> a0 = iterator1.next();
+                builder.create("a"))).build(PathCopyTree.class);
+        final MutableNode<String> root = tree.getRoot();
+        final Iterator<? extends MutableNode<String>> iterator0 = root.getChildren().iterator();
+        final MutableNode<String> left = iterator0.next();
+        final MutableNode<String> right = iterator0.next();
+        final Iterator<? extends MutableNode<String>> iterator1 = right.getChildren().iterator();
+        final MutableNode<String> a = iterator1.next();
 
-        assertTrue(root0.removeChild(right0));
-        assertFalse(right0.removeChild(a0));
-
-        final MutableNode<String> root1 = tree.getRoot();
-        final Iterator<? extends MutableNode<String>> iterator2 = root1.getChildren().iterator();
-        final MutableNode<String> left1 = iterator2.next();
-        assertEquals("left", left1.getElement());
-        assertFalse(iterator2.hasNext());
+        assertTrue(root.removeChild(right));
+        assertFalse(right.removeChild(a));
     }
 }
