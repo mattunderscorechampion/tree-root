@@ -162,27 +162,4 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
     public static <E> DuplicateOnWriteSimpleCollection<E> create(List<E> list) {
         return new DuplicateOnWriteSimpleCollection<>(list.toArray());
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        else if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        final DuplicateOnWriteSimpleCollection that = (DuplicateOnWriteSimpleCollection) o;
-
-        if (!Arrays.equals(elements, that.elements)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(elements);
-    }
 }

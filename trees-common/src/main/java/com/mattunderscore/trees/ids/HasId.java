@@ -30,14 +30,5 @@ package com.mattunderscore.trees.ids;
  * @author Matt Champion on 28/10/14.
  */
 public interface HasId {
-    /**
-     * @return The ID of the object
-     */
     Id getId();
-
-    @Override
-    boolean equals(Object o);
-
-    @Override
-    int hashCode();
 }
