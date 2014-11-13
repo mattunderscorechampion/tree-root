@@ -160,21 +160,16 @@ public final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E
             newNode.holder.parent.lock();
             try {
                 final PathCopyNode<E> oldParent = newNode.holder.parent.get();
-                if (oldParent != null) {
-                    final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren = oldParent.children.replace(newNode, newNode);
-                    final PathCopyNode<E> newParent = new PathCopyNode<E>(generator, oldParent.id, oldParent.holder, oldParent.element, newChildren);
-                    copyPath(generator, newParent);
-                }
-                else {
-                    // TODO: Set root
-                }
+                final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren = oldParent.children.replace(newNode, newNode);
+                final PathCopyNode<E> newParent = new PathCopyNode<E>(generator, oldParent.id, oldParent.holder, oldParent.element, newChildren);
+                copyPath(generator, newParent);
             }
             finally {
                 newNode.holder.parent.unlock();
             }
         }
         else {
-            // TODO: Set root
+
         }
     }
 
