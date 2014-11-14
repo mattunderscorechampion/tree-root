@@ -25,37 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal.pathcopy.operation;
 
-import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
-
-import java.util.concurrent.atomic.AtomicReference;
-
 /**
  * @author matt on 14/11/14.
  */
-final class PathCopyNodeHolder<E> implements Holder<E> {
-    private final Holder<E> parent;
-    private final AtomicReference<PathCopyNode<E>> currentNodeRef;
+public interface Holder<E> {
+    PathCopyNode<E> get();
 
-    public PathCopyNodeHolder(Holder<E> parent, PathCopyNode<E> currentNode) {
-        this.parent = parent;
-        currentNodeRef = new AtomicReference<>(currentNode);
-    }
+    void set(PathCopyNode<E> node);
 
-    public PathCopyNode<E> get() {
-        return currentNodeRef.get();
-    }
-
-    public void set(PathCopyNode<E> node) {
-        currentNodeRef.set(node);
-    }
-
-    public void propagate(PathCopyNode<E> currentNode, PathCopyNode<E> newNode) {
-        final PathCopyNode<E> currentParent = parent.get();
-        final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren =
-                currentParent.getChildren().replace(newNode, currentNode);
-        final PathCopyNode<E> newParent = new PathCopyNode<E>(parent, currentParent.getElement(), newChildren);
-        parent.set(newParent);
-        parent.propagate(currentParent, newParent);
-    }
+    void propagate(PathCopyNode<E> currentNode, PathCopyNode<E> newNode);
 }

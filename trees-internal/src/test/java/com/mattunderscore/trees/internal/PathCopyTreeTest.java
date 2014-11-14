@@ -122,13 +122,20 @@ public final class PathCopyTreeTest {
         assertFalse(iterator1.hasNext());
 
         depth1.addChild("d");
+
         final Iterator<? extends MutableNode<String>> iterator2 = child0.getChildren().iterator();
         assertTrue(iterator2.hasNext());
         final MutableNode<String> child2 = iterator2.next();
         assertEquals("c", child2.getElement());
-        assertTrue(iterator2.hasNext());
-        final MutableNode<String> child3 = iterator2.next();
-        assertEquals("d", child3.getElement());
         assertFalse(iterator2.hasNext());
+
+        final Iterator<? extends MutableNode<String>> iterator3 = tree.getRoot().getChildren().iterator().next().getChildren().iterator();
+        assertTrue(iterator3.hasNext());
+        final MutableNode<String> child4 = iterator3.next();
+        assertEquals("c", child4.getElement());
+        assertTrue(iterator3.hasNext());
+        final MutableNode<String> child5 = iterator3.next();
+        assertEquals("d", child5.getElement());
+        assertFalse(iterator3.hasNext());
     }
 }

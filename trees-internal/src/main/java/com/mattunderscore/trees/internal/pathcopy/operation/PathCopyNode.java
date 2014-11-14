@@ -35,13 +35,13 @@ import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleColl
  */
 final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
     private final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children;
-    private final PathCopyNodeHolder<E> holder;
+    private final Holder<E> holder;
 
-    PathCopyNode(PathCopyNodeHolder<E> holder, E element) {
+    PathCopyNode(Holder<E> holder, E element) {
         this(holder, element, DuplicateOnWriteSimpleCollection.<PathCopyNode<E>>create());
     }
 
-    PathCopyNode(PathCopyNodeHolder<E> holder, E element, DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children) {
+    PathCopyNode(Holder<E> holder, E element, DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children) {
         super(element);
         this.holder = holder;
         this.children = children;
@@ -60,6 +60,7 @@ final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
         if (modifiedChildren.size() != currentChildren.size()) {
             final PathCopyNode<E> newParent = new PathCopyNode<>(holder, element, modifiedChildren);
             holder.set(newParent);
+            holder.propagate(this, newParent);
             return true;
         }
         else {
@@ -72,8 +73,10 @@ final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
         final PathCopyNodeHolder<E> childHolder = new PathCopyNodeHolder<>(holder, null);
         final PathCopyNode<E> child = new PathCopyNode<E>(childHolder, e);
         childHolder.set(child);
+        final PathCopyNode<E> currentParent = holder.get();
         final PathCopyNode<E> newParent = new PathCopyNode<>(holder, element, holder.get().getChildren().add(child));
         holder.set(newParent);
+        holder.propagate(currentParent, newParent);
         return child;
     }
 }

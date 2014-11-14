@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author matt on 14/11/14.
  */
 public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
-    private final AtomicReference<PathCopyNodeHolder<E>> holderRef;
+    final AtomicReference<Holder<E>> holderRef;
 
     private PathCopyTree() {
         this.holderRef = new AtomicReference<>();
@@ -43,7 +43,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
     @Override
     public MutableNode<E> setRoot(E root) {
-        final PathCopyNodeHolder<E> holder = new PathCopyNodeHolder<>(null, null);
+        final Holder<E> holder = new PathCopyRootHolder<>(this);
         final PathCopyNode<E> node = new PathCopyNode<E>(holder, root);
         holder.set(node);
         holderRef.set(holder);
@@ -52,7 +52,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
     @Override
     public MutableNode<E> getRoot() {
-        final PathCopyNodeHolder<E> node = holderRef.get();
+        final Holder<E> node = holderRef.get();
         if (node == null) {
             return null;
         }
