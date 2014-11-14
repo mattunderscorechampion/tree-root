@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal.pathcopy.operation;
 
+import com.mattunderscore.trees.mutable.MutableNode;
+
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -37,5 +39,9 @@ final class PathCopyNodeHolder<E> {
     public PathCopyNodeHolder(PathCopyNodeHolder<E> parent, PathCopyNode<E> currentNode) {
         this.parent = parent;
         currentNodeRef = new AtomicReference<>(currentNode);
+    }
+
+    public MutableNode<E> get() {
+        return currentNodeRef.get();
     }
 }

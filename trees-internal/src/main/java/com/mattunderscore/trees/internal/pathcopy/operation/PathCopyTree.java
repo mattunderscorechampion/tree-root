@@ -43,17 +43,26 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
     @Override
     public MutableNode<E> setRoot(E root) {
-        return null;
+        final PathCopyNode<E> node = new PathCopyNode<E>(root);
+        final PathCopyNodeHolder<E> holder = new PathCopyNodeHolder<>(null, node);
+        holderRef.set(holder);
+        return node;
     }
 
     @Override
     public MutableNode<E> getRoot() {
-        return null;
+        final PathCopyNodeHolder<E> node = holderRef.get();
+        if (node == null) {
+            return null;
+        }
+        else {
+            return node.get();
+        }
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return holderRef.get() == null;
     }
 
     public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, PathCopyTree<E>> {

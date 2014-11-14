@@ -105,10 +105,10 @@ public final class PathCopyTreeTest {
         final MutableNode<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
         final MutableNode<String> depth1 = root.addChild("b");
-        assertFalse(root.isLeaf());
+        assertFalse(tree.getRoot().isLeaf());
         depth1.addChild("c");
 
-        final SimpleCollection<? extends MutableNode<String>> children = root.getChildren();
+        final SimpleCollection<? extends MutableNode<String>> children = tree.getRoot().getChildren();
         assertEquals(1, children.size());
         final Iterator<? extends MutableNode<String>> iterator0 = children.iterator();
         assertTrue(iterator0.hasNext());

@@ -33,15 +33,15 @@ import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleColl
 /**
  * @author matt on 14/11/14.
  */
-public final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
+final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
     private final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children;
 
-    private PathCopyNode(E element) {
+    PathCopyNode(E element) {
         super(element);
         children = DuplicateOnWriteSimpleCollection.create();
     }
 
-    private PathCopyNode(E element, DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children) {
+    PathCopyNode(E element, DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children) {
         super(element);
         this.children = children;
     }
