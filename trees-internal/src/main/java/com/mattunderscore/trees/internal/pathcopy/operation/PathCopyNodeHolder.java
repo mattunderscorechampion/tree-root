@@ -41,7 +41,11 @@ final class PathCopyNodeHolder<E> {
         currentNodeRef = new AtomicReference<>(currentNode);
     }
 
-    public MutableNode<E> get() {
+    public PathCopyNode<E> get() {
         return currentNodeRef.get();
+    }
+
+    public void set(PathCopyNode<E> node) {
+        currentNodeRef.set(node);
     }
 }

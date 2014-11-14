@@ -35,29 +35,45 @@ import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleColl
  */
 final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
     private final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children;
+    private final PathCopyNodeHolder<E> holder;
 
-    PathCopyNode(E element) {
-        super(element);
-        children = DuplicateOnWriteSimpleCollection.create();
+    PathCopyNode(PathCopyNodeHolder<E> holder, E element) {
+        this(holder, element, DuplicateOnWriteSimpleCollection.<PathCopyNode<E>>create());
     }
 
-    PathCopyNode(E element, DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children) {
+    PathCopyNode(PathCopyNodeHolder<E> holder, E element, DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children) {
         super(element);
+        this.holder = holder;
         this.children = children;
     }
 
     @Override
-    public SimpleCollection<PathCopyNode<E>> getChildren() {
+    public DuplicateOnWriteSimpleCollection<PathCopyNode<E>> getChildren() {
         return children;
     }
 
     @Override
     public boolean removeChild(MutableNode<E> child) {
-        return false;
+        final PathCopyNode<E> castChild = (PathCopyNode<E>)child;
+        final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> currentChildren = holder.get().getChildren();
+        final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> modifiedChildren = currentChildren.remove(castChild);
+        if (modifiedChildren.size() != currentChildren.size()) {
+            final PathCopyNode<E> newParent = new PathCopyNode<>(holder, element, modifiedChildren);
+            holder.set(newParent);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
     public MutableNode<E> addChild(E e) {
-        return null;
+        final PathCopyNodeHolder<E> childHolder = new PathCopyNodeHolder<>(holder, null);
+        final PathCopyNode<E> child = new PathCopyNode<E>(childHolder, e);
+        childHolder.set(child);
+        final PathCopyNode<E> newParent = new PathCopyNode<>(holder, element, holder.get().getChildren().add(child));
+        holder.set(newParent);
+        return child;
     }
 }
