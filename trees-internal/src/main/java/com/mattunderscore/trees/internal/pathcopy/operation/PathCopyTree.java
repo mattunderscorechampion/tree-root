@@ -29,10 +29,17 @@ import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * @author matt on 14/11/14.
  */
 public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
+    private final AtomicReference<PathCopyNodeHolder<E>> holderRef;
+
+    private PathCopyTree() {
+        this.holderRef = new AtomicReference<>();
+    }
 
     @Override
     public MutableNode<E> setRoot(E root) {
@@ -53,12 +60,12 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
         @Override
         public PathCopyTree<E> build() {
-            return null;
+            return new PathCopyTree<>();
         }
 
         @Override
         public Class<?> forClass() {
-            return null;
+            return PathCopyTree.class;
         }
     }
 }
