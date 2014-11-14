@@ -23,15 +23,58 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.pathcopy.operation;
+package com.mattunderscore.trees.internal.pathcopy.holder;
+
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author matt on 14/11/14.
  */
-public interface Holder<E> {
-    PathCopyNode<E> get();
+public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
+    final AtomicReference<Holder<E>> holderRef;
 
-    void set(PathCopyNode<E> node);
+    private PathCopyTree() {
+        this.holderRef = new AtomicReference<>();
+    }
 
-    void propagate(PathCopyNode<E> currentNode, PathCopyNode<E> newNode);
+    @Override
+    public MutableNode<E> setRoot(E root) {
+        final Holder<E> holder = new PathCopyRootHolder<>(this);
+        final PathCopyNode<E> node = new PathCopyNode<E>(holder, root);
+        holder.set(node);
+        holderRef.set(holder);
+        return node;
+    }
+
+    @Override
+    public MutableNode<E> getRoot() {
+        final Holder<E> node = holderRef.get();
+        if (node == null) {
+            return null;
+        }
+        else {
+            return node.get();
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return holderRef.get() == null;
+    }
+
+    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, PathCopyTree<E>> {
+        @Override
+        public PathCopyTree<E> build() {
+            return new PathCopyTree<>();
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return PathCopyTree.class;
+        }
+    }
 }

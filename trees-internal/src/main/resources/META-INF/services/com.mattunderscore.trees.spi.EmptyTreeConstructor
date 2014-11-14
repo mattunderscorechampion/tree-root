@@ -3,4 +3,4 @@ com.mattunderscore.trees.internal.MutableTreeImpl$EmptyConstructor
 com.mattunderscore.trees.internal.binary.BinaryTreeNodeImpl$EmptyConstructor
 com.mattunderscore.trees.internal.binary.mutable.MutableBinaryTreeImpl$EmptyConstructor
 com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree$EmptyConstructor
-com.mattunderscore.trees.internal.pathcopy.operation.PathCopyTree$EmptyConstructor
+com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree$EmptyConstructor
