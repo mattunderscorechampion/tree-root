@@ -64,17 +64,20 @@ final class PathCopyNodeHolder<E> implements Holder<E> {
     }
 
     public void propagate(PathCopyNode<E> currentNode, PathCopyNode<E> newNode) {
+        final PathCopyNode<E> currentParent;
+        final PathCopyNode<E> newParent;
         parent.lock();
         try {
-            final PathCopyNode<E> currentParent = parent.get();
+            currentParent = parent.get();
             final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren =
                     currentParent.getChildren().replace(newNode, currentNode);
-            final PathCopyNode<E> newParent = new PathCopyNode<E>(parent, currentParent.getElement(), newChildren);
+            newParent = new PathCopyNode<E>(parent, currentParent.getElement(), newChildren);
             parent.set(newParent);
-            parent.propagate(currentParent, newParent);
         }
         finally {
             parent.unlock();
         }
+
+        parent.propagate(currentParent, newParent);
     }
 }
