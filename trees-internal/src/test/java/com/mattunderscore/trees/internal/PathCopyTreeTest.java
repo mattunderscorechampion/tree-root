@@ -138,4 +138,23 @@ public final class PathCopyTreeTest {
         assertEquals("d", child5.getElement());
         assertFalse(iterator3.hasNext());
     }
+
+    @Test
+    public void mergedMutations() {
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        tree.setRoot("a");
+        final MutableNode<String> root = tree.getRoot();
+        final MutableNode<String> child0 = root.addChild("b");
+        final MutableNode<String> child1 = root.addChild("c");
+
+        assertEquals(0, root.getChildren().size());
+        assertEquals(2, tree.getRoot().getChildren().size());
+
+        final MutableNode<String> leaf = child0.addChild("d");
+        assertEquals(0, child0.getChildren().size());
+
+        final MutableNode<String> childb = tree.getRoot().getChildren().iterator().next();
+        assertEquals(1, childb.getChildren().size());
+        assertEquals("d", childb.getChildren().iterator().next().getElement());
+    }
 }
