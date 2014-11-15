@@ -157,4 +157,14 @@ public final class PathCopyTreeTest {
         assertEquals(1, childb.getChildren().size());
         assertEquals("d", childb.getChildren().iterator().next().getElement());
     }
+
+    @Test
+    public void noRevertOfSetRoot() {
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableNode<String> rootA = tree.setRoot("a");
+        final MutableNode<String> root = tree.setRoot("root");
+        rootA.addChild("b");
+        final MutableNode<String> currentRoot = tree.getRoot();
+        assertEquals("root", currentRoot.getElement());
+    }
 }

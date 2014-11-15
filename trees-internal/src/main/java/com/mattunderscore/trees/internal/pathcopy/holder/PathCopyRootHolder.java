@@ -52,6 +52,5 @@ public final class PathCopyRootHolder<E> implements Holder<E> {
     @Override
     public void propagate(PathCopyNode<E> currentNode, PathCopyNode<E> newNode) {
         currentNodeRef.set(newNode);
-        tree.holderRef.set(this);
     }
 }
