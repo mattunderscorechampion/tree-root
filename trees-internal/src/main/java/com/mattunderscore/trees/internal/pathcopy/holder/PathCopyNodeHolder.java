@@ -28,6 +28,8 @@ package com.mattunderscore.trees.internal.pathcopy.holder;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Node holder for child nodes.
@@ -36,6 +38,7 @@ import java.util.concurrent.atomic.AtomicReference;
 final class PathCopyNodeHolder<E> implements Holder<E> {
     private final Holder<E> parent;
     private final AtomicReference<PathCopyNode<E>> currentNodeRef;
+    private final Lock lock = new ReentrantLock();
 
     public PathCopyNodeHolder(Holder<E> parent, PathCopyNode<E> currentNode) {
         this.parent = parent;
@@ -50,12 +53,28 @@ final class PathCopyNodeHolder<E> implements Holder<E> {
         currentNodeRef.set(node);
     }
 
+    @Override
+    public void lock() {
+        lock.lock();
+    }
+
+    @Override
+    public void unlock() {
+        lock.unlock();
+    }
+
     public void propagate(PathCopyNode<E> currentNode, PathCopyNode<E> newNode) {
-        final PathCopyNode<E> currentParent = parent.get();
-        final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren =
-                currentParent.getChildren().replace(newNode, currentNode);
-        final PathCopyNode<E> newParent = new PathCopyNode<E>(parent, currentParent.getElement(), newChildren);
-        parent.set(newParent);
-        parent.propagate(currentParent, newParent);
+        parent.lock();
+        try {
+            final PathCopyNode<E> currentParent = parent.get();
+            final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren =
+                    currentParent.getChildren().replace(newNode, currentNode);
+            final PathCopyNode<E> newParent = new PathCopyNode<E>(parent, currentParent.getElement(), newChildren);
+            parent.set(newParent);
+            parent.propagate(currentParent, newParent);
+        }
+        finally {
+            parent.unlock();
+        }
     }
 }

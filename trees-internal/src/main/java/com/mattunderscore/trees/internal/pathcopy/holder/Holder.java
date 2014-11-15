@@ -34,5 +34,9 @@ public interface Holder<E> {
 
     void set(PathCopyNode<E> node);
 
+    void lock();
+
+    void unlock();
+
     void propagate(PathCopyNode<E> currentNode, PathCopyNode<E> newNode);
 }

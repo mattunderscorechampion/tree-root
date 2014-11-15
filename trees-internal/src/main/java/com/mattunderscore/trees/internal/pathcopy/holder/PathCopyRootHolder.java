@@ -26,6 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.pathcopy.holder;
 
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Node holder for root nodes
@@ -34,6 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public final class PathCopyRootHolder<E> implements Holder<E> {
     private final PathCopyTree<E> tree;
     private final AtomicReference<PathCopyNode<E>> currentNodeRef;
+    private final Lock lock = new ReentrantLock();
 
     public PathCopyRootHolder(PathCopyTree<E> tree) {
         this.tree = tree;
@@ -48,6 +51,16 @@ public final class PathCopyRootHolder<E> implements Holder<E> {
     @Override
     public void set(PathCopyNode<E> node) {
         currentNodeRef.set(node);
+    }
+
+    @Override
+    public void lock() {
+        lock.lock();
+    }
+
+    @Override
+    public void unlock() {
+        lock.unlock();
     }
 
     @Override
