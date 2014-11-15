@@ -27,13 +27,21 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
+import com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
@@ -43,17 +51,32 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Matt Champion on 21/06/14.
  */
+@RunWith(Parameterized.class)
 public final class StringTreeBuilderImplTest {
     private static final Trees trees = new TreesImpl();
+    private final Class<? extends Tree> treeClass;
+
+    public StringTreeBuilderImplTest(Class<? extends Tree> treeClass) {
+        this.treeClass = treeClass;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {Tree.class},
+                {LinkedTree.class},
+                {MutableTree.class}
+        });
+    }
 
     @Test
-    public void build0() {
+    public void build() {
         final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("a");
         final NodeAppender nodeApp1 = nodeApp0.addChild("b");
         nodeApp1.addChild("c");
         nodeApp0.addChild("d");
-        final Tree<String, Node<String>> tree = nodeApp0.build(Tree.class);
+        final Tree<String, Node<String>> tree = nodeApp0.build(treeClass);
 
         final Node<String> root = tree.getRoot();
         assertEquals(String.class, root.getElementClass());

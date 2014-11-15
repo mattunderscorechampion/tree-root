@@ -29,13 +29,20 @@ import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.*;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
+import com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
@@ -45,16 +52,30 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Matt Champion on 29/06/14.
  */
+@RunWith(Parameterized.class)
 public final class TreeSelectorTest {
     private static final Trees trees = new TreesImpl();
+    private final Class<? extends Tree> treeClass;
+
+    public TreeSelectorTest(Class<? extends Tree> treeClass) {
+        this.treeClass = treeClass;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {Tree.class},
+                {LinkedTree.class}
+        });
+    }
 
     @Test
-    public void test() {
+    public void select() {
         final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
-        final Tree<String, Node<String>> tree = nodeApp0.build(Tree.class);
+        final Tree<String, Node<String>> tree = nodeApp0.build(treeClass);
 
         final TreeSelectorFactory selectorFactory = trees.treeSelectors();
         final NodeMatcher<String> matcher0 = new EqualityMatcher("A");

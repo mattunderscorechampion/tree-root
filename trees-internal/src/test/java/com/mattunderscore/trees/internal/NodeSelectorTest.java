@@ -30,6 +30,9 @@ import static org.junit.Assert.*;
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.common.*;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
+import com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
@@ -37,17 +40,38 @@ import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 
 /**
  * @author Matt Champion on 25/06/14.
  */
+@RunWith(Parameterized.class)
 public final class NodeSelectorTest {
     private static final Trees trees = new TreesImpl();
+    private final Class<? extends Tree> treeClass;
+
+    public NodeSelectorTest(Class<? extends Tree> treeClass) {
+        this.treeClass = treeClass;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {Tree.class},
+                {LinkedTree.class},
+                {MutableTree.class},
+                {SimplePathCopyTree.class},
+                {PathCopyTree.class}
+        });
+    }
 
     @Test
-    public void test() {
+    public void select() {
         final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
