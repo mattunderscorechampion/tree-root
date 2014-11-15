@@ -25,9 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal.pathcopy.holder;
 
+import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.spi.TreeConstructor;
+import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -76,6 +82,71 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
         @Override
         public Class<?> forClass() {
             return PathCopyTree.class;
+        }
+    }
+
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, PathCopyTree<E>, Node<E>> {
+
+        @Override
+        public PathCopyTree<E> treeFromRootNode(Node<E> node) {
+            final PathCopyTree<E> newTree = new PathCopyTree<>();
+            newTree.setRoot(node.getElement());
+            copyChildren(newTree.setRoot(node.getElement()), node.getChildren());
+            return newTree;
+        }
+
+        private void copyChildren(MutableNode<E> newParent, SimpleCollection<? extends Node<E>> children) {
+            for (final Node<E> child : children) {
+                final MutableNode<E> newChild = newParent.addChild(child.getElement());
+                copyChildren(newChild, child.getChildren());
+            }
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return PathCopyTree.class;
+        }
+    }
+
+    public static final class Converter<E> implements TreeConverter<E, PathCopyTree<E>> {
+        private final NodeConverter<E> converter = new NodeConverter();
+
+        @Override
+        public PathCopyTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {
+            final Node<E> root = sourceTree.getRoot();
+            return converter.treeFromRootNode(root);
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return PathCopyTree.class;
+        }
+    }
+
+    public static final class Constructor<E> implements TreeConstructor<E, PathCopyTree<E>> {
+
+        @Override
+        public PathCopyTree<E> build(E e, PathCopyTree<E>[] subtrees) {
+            final PathCopyTree<E> tree = new PathCopyTree<>();
+            final MutableNode<E> root = tree.setRoot(e);
+            for (PathCopyTree<E> subtree : subtrees) {
+                final Node<E> subRoot = subtree.getRoot();
+                final MutableNode<E> newSubRoot = root.addChild(subRoot.getElement());
+                copyChildren(newSubRoot, subRoot.getChildren());
+            }
+            return tree;
+        }
+
+        @Override
+        public Class<?> forClass() {
+            return PathCopyTree.class;
+        }
+
+        private void copyChildren(MutableNode<E> newParent, SimpleCollection<? extends Node<E>> children) {
+            for (final Node<E> child : children) {
+                final MutableNode<E> newChild = newParent.addChild(child.getElement());
+                copyChildren(newChild, child.getChildren());
+            }
         }
     }
 }
