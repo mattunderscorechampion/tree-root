@@ -35,7 +35,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 /**
- * @author matt on 25/10/14.
+ * Position unit tests.
+ * @author Matt Champion on 25/10/14.
  */
 public class PositionTest {
     @Test

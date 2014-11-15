@@ -30,7 +30,8 @@ import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleColl
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * @author matt on 14/11/14.
+ * Node holder for child nodes.
+ * @author Matt Champion on 14/11/14.
  */
 final class PathCopyNodeHolder<E> implements Holder<E> {
     private final Holder<E> parent;

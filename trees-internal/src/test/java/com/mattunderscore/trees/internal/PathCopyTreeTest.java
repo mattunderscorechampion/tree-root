@@ -43,7 +43,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
- * @author matt on 14/11/14.
+ * Tests for path copy tree.
+ * @author Matt Champion on 14/11/14.
  */
 public final class PathCopyTreeTest {
     private static TreeIteratorFactory iterators;

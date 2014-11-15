@@ -26,7 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.pathcopy.holder;
 
 /**
- * @author matt on 14/11/14.
+ * Interface for node holders.
+ * @author Matt Champion on 14/11/14.
  */
 public interface Holder<E> {
     PathCopyNode<E> get();

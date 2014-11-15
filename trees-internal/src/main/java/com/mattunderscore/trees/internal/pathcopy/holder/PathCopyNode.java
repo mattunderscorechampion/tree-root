@@ -30,7 +30,8 @@ import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
 /**
- * @author matt on 14/11/14.
+ * Path copy node that uses holders to propagate changes up.
+ * @author Matt Champion on 14/11/14.
  */
 final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
     private final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children;

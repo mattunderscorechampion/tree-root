@@ -32,7 +32,8 @@ import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * @author matt on 14/11/14.
+ * Path copy tree that uses node holders.
+ * @author Matt Champion on 14/11/14.
  */
 public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     final AtomicReference<Holder<E>> holderRef;

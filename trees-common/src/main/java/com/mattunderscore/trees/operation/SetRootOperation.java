@@ -28,7 +28,8 @@ package com.mattunderscore.trees.operation;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * @author matt on 25/10/14.
+ * Set root operation.
+ * @author Matt Champion on 25/10/14.
  */
 public interface SetRootOperation<E> {
     E getElement();

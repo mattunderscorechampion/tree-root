@@ -28,7 +28,8 @@ package com.mattunderscore.trees.internal.pathcopy.holder;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * @author matt on 14/11/14.
+ * Node holder for root nodes
+ * @author Matt Champion on 14/11/14.
  */
 public final class PathCopyRootHolder<E> implements Holder<E> {
     private final PathCopyTree<E> tree;
