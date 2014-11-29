@@ -114,7 +114,8 @@ public final class BinaryTreeIteratorTest {
     }
 
     private static Tree<String, MutableBinaryTreeNode<String>> createTree() {
-        final Tree<String, MutableBinaryTreeNode<String>> tree = trees.treeBuilders().topDownBuilder().root("f").build(MutableBinaryTreeImpl.class);
+        final Tree<String, MutableBinaryTreeNode<String>> tree = trees.treeBuilders().topDownBuilder()
+            .root("f").build(MutableBinaryTreeImpl.class);
         final MutableBinaryTreeNode<String> f = tree.getRoot();
         final MutableBinaryTreeNode<String> b = f.setLeft("b");
         b.setLeft("a");

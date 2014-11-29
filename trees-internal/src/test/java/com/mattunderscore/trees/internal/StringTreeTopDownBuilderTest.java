@@ -50,6 +50,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for top down builders.
+ * Builds a tree using the top down tree builder and verifies its structure.
  * @author Matt Champion on 21/06/14.
  */
 @RunWith(Parameterized.class)
@@ -75,7 +76,7 @@ public final class StringTreeTopDownBuilderTest {
     public void build() {
         final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("a");
-        final NodeAppender nodeApp1 = nodeApp0.addChild("b");
+        final NodeAppender<String, ?> nodeApp1 = nodeApp0.addChild("b");
         nodeApp1.addChild("c");
         nodeApp0.addChild("d");
         final Tree<String, Node<String>> tree = nodeApp0.build(treeClass);

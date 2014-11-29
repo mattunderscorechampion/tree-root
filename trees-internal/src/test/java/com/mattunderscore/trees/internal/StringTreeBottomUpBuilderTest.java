@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for bottom up builders.
+ * Builds a tree using the bottom up tree builder and verifies its structure.
  * @author Matt Champion
  */
 @RunWith(Parameterized.class)

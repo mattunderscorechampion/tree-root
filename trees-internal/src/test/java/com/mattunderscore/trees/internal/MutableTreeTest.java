@@ -51,7 +51,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests that run on all mutable trees.
+ * Tests that run on mutable trees.
+ * The tests are not applied to path copy trees because of the view semantics.
  * @author Matt Champion on 15/07/14.
  */
 @RunWith(Parameterized.class)
@@ -114,8 +115,8 @@ public final class MutableTreeTest {
         // Create a simple tree
         final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("a");
-        final NodeAppender appender0 = builder0.addChild("b");
-        final NodeAppender appender1 = builder0.addChild("e");
+        final NodeAppender<String, ?> appender0 = builder0.addChild("b");
+        final NodeAppender<String, ?> appender1 = builder0.addChild("e");
         appender0.addChild("c");
         appender0.addChild("d");
         appender1.addChild("f");

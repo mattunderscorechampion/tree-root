@@ -50,14 +50,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
+ * Tests the application of tree selectors.
  * @author Matt Champion on 29/06/14.
  */
 @RunWith(Parameterized.class)
 public final class TreeSelectorTest {
     private static final Trees trees = new TreesImpl();
-    private final Class<? extends Tree> treeClass;
+    private final Class<? extends Tree<String, Node<String>>> treeClass;
 
-    public TreeSelectorTest(Class<? extends Tree> treeClass) {
+    public TreeSelectorTest(Class<? extends Tree<String, Node<String>>> treeClass) {
         this.treeClass = treeClass;
     }
 
@@ -78,14 +79,14 @@ public final class TreeSelectorTest {
         final Tree<String, Node<String>> tree = nodeApp0.build(treeClass);
 
         final TreeSelectorFactory selectorFactory = trees.treeSelectors();
-        final NodeMatcher<String> matcher0 = new EqualityMatcher("A");
+        final NodeMatcher<String> matcher0 = new EqualityMatcher<>("A");
         final TreeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<Tree<String, Node<String>>> treeIterator0 = selector0.select(tree);
         assertTrue(treeIterator0.hasNext());
         assertEquals("A", treeIterator0.next().getRoot().getElement());
         assertFalse(treeIterator0.hasNext());
 
-        final NodeMatcher<String> matcher1 = new EqualityMatcher("B");
+        final NodeMatcher<String> matcher1 = new EqualityMatcher<>("B");
         final TreeSelector<String> selector1 = selectorFactory.newSelector(selector0, matcher1);
         final Iterator<Tree<String, Node<String>>> treeIterator1 = selector1.select(tree);
         assertTrue(treeIterator1.hasNext());

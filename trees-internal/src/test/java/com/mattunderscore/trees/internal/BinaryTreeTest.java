@@ -93,8 +93,8 @@ public final class BinaryTreeTest {
         final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
-                builder.create("a",
-                        builder.create("b")).build(BinaryTree.class);
+            builder.create("a",
+                    builder.create("b")).build(BinaryTree.class);
 
         assertFalse(tree.isEmpty());
         assertEquals("a", tree.getRoot().getElement());
@@ -116,9 +116,9 @@ public final class BinaryTreeTest {
         final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
-                builder.create("a",
-                        null,
-                        builder.create("c")).build(BinaryTree.class);
+            builder.create("a",
+                    null,
+                    builder.create("c")).build(BinaryTree.class);
 
         assertFalse(tree.isEmpty());
         assertEquals("a", tree.getRoot().getElement());
