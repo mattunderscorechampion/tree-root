@@ -34,6 +34,7 @@ import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -172,7 +173,6 @@ public final class PathCopyTreeTest {
     @Test
     public void unmergeableChanges() {
         final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
-        tree.setRoot("a");
         final MutableNode<String> child = tree.setRoot("a").addChild("b");
         assertTrue(tree.getRoot().removeChild(child));
         final MutableNode<String> grandchild = child.addChild("c");
@@ -181,5 +181,25 @@ public final class PathCopyTreeTest {
         final MutableNode<String> root = tree.getRoot();
         assertEquals("a", root.getElement());
         assertEquals(0, root.getChildren().size());
+    }
+
+    @Test
+    public void removalsAreSuccessful() {
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableNode<String> grandchild = tree.setRoot("a").addChild("b").addChild("c");
+        final MutableNode<String> child = tree.getRoot().getChildren().iterator().next();
+
+        assertTrue(tree.getRoot().removeChild(child));
+        assertTrue(child.removeChild(grandchild));
+    }
+
+    @Ignore("Adding a new child should not prevent the removal of the now stale view")
+    @Test
+    public void removalsWorkWithStaleViews() {
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableNode<String> child = tree.setRoot("a").addChild("b");
+        child.addChild("c");
+
+        assertTrue(tree.getRoot().removeChild(child));
     }
 }
