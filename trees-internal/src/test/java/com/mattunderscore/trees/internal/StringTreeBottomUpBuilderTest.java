@@ -42,7 +42,8 @@ public class StringTreeBottomUpBuilderTest {
             {Tree.class}, // 0
             {LinkedTree.class}, // 1
             {MutableTree.class}, // 2
-            {PathCopyTree.class} // 3
+            {PathCopyTree.class}, // 3
+            {SimplePathCopyTree.class} // 4
         });
     }
 

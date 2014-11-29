@@ -130,10 +130,10 @@ public final class SimplePathCopyTree<E> implements MutableTree<E, MutableNode<E
         @Override
         public SimplePathCopyTree<E> build(E e, SimplePathCopyTree<E>[] subtrees) {
             final SimplePathCopyTree<E> tree = new SimplePathCopyTree<>();
-            final MutableNode<E> root = tree.setRoot(e);
+            tree.setRoot(e);
             for (SimplePathCopyTree<E> subtree : subtrees) {
                 final Node<E> subRoot = subtree.getRoot();
-                final MutableNode<E> newSubRoot = root.addChild(subRoot.getElement());
+                final MutableNode<E> newSubRoot = tree.getRoot().addChild(subRoot.getElement());
                 copyChildren(newSubRoot, subRoot.getChildren());
             }
             return tree;
