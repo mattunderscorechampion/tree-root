@@ -25,14 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
-import com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;

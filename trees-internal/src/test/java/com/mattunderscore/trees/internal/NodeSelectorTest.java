@@ -25,18 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import static org.junit.Assert.*;
-
-import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.*;
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
-import com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
-import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
@@ -46,6 +44,10 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests the application of node selectors.
