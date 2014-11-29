@@ -90,7 +90,6 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
         @Override
         public PathCopyTree<E> treeFromRootNode(Node<E> node) {
             final PathCopyTree<E> newTree = new PathCopyTree<>();
-            newTree.setRoot(node.getElement());
             copyChildren(newTree.setRoot(node.getElement()), node.getChildren());
             return newTree;
         }
