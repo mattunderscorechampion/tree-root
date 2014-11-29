@@ -26,7 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.spi;
 
 /**
- * SPI component that can be looked up from a class.
+ * SPI component that can be looked up from a class. May be extended by subclasses to enforce correct type bounds for
+ * key.
  * @author Matt Champion on 31/08/14.
  */
 public interface SPIComponent {
@@ -34,5 +35,4 @@ public interface SPIComponent {
      * @return The key to use for the component lookup
      */
     Class<?> forClass();
-
 }

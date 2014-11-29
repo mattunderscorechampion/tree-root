@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.binary.search;
 
 import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
+import com.mattunderscore.trees.tree.Tree;
 
 import java.util.Comparator;
 
@@ -39,7 +40,7 @@ public final class BinarySearchTreeEmptyConstructor<E> implements EmptySortedTre
     }
 
     @Override
-    public Class<?> forClass() {
+    public Class<? extends Tree> forClass() {
         return BinarySearchTree.class;
     }
 }

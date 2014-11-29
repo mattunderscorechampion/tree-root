@@ -78,7 +78,7 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return Tree.class;
         }
     }
@@ -91,7 +91,7 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return Tree.class;
         }
     }
@@ -104,7 +104,7 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Node> forClass() {
             return TreeNodeImpl.class;
         }
     }
@@ -118,7 +118,7 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return Tree.class;
         }
 

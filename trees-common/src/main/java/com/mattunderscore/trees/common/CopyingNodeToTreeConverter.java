@@ -40,11 +40,11 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 27/09/14.
  */
 public final class CopyingNodeToTreeConverter<E, N extends Node<E>, T extends Tree<E, N>, S extends Node<E>> implements NodeToTreeConverter<E, N, T, S> {
-    private final Class<? extends Tree<E, S>> sourceClass;
+    private final Class<S> sourceClass;
     private final Class<T> targetClass;
     private final TreeBuilderFactory treeBuilderFactory;
 
-    public CopyingNodeToTreeConverter(Class<? extends Tree<E, S>> sourceClass, Class<T> targetClass, TreeBuilderFactory treeBuilderFactory) {
+    public CopyingNodeToTreeConverter(Class<S> sourceClass, Class<T> targetClass, TreeBuilderFactory treeBuilderFactory) {
         this.sourceClass = sourceClass;
         this.targetClass = targetClass;
         this.treeBuilderFactory = treeBuilderFactory;
@@ -67,7 +67,7 @@ public final class CopyingNodeToTreeConverter<E, N extends Node<E>, T extends Tr
     }
 
     @Override
-    public Class<?> forClass() {
+    public Class<? extends Node> forClass() {
         return sourceClass;
     }
 }

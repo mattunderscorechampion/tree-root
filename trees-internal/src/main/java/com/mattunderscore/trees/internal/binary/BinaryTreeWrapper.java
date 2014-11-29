@@ -29,6 +29,8 @@ import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.common.AbstractTreeWrapper;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Wrap and binary node to create a binary tree.
@@ -52,8 +54,8 @@ public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends Abs
         }
 
         @Override
-        public Class<?> forClass() {
-            return BinaryTree.class;
+        public Class<? extends Node> forClass() {
+            return BinaryTreeNode.class;
         }
     }
 }

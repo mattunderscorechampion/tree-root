@@ -33,7 +33,7 @@ import java.util.Comparator;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public interface EmptySortedTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends SPIComponent {
+public interface EmptySortedTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends TreeKeyedSPIComponent {
 
     T build(Comparator<E> comparator);
 }

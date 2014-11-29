@@ -44,7 +44,7 @@ public final class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree
     }
 
     @Override
-    public Class<?> forClass() {
+    public Class<? extends Tree> forClass() {
         return BinaryTree.class;
     }
 

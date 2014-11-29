@@ -80,7 +80,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return PathCopyTree.class;
         }
     }
@@ -103,7 +103,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Node> forClass() {
             return PathCopyNode.class;
         }
     }
@@ -118,7 +118,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return PathCopyTree.class;
         }
     }
@@ -138,7 +138,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return PathCopyTree.class;
         }
 

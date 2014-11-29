@@ -61,13 +61,13 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         }
 
         @Override
-        public Class<?> forClass() {
-            return MutableBinaryTreeImpl.class;
+        public Class<? extends Node> forClass() {
+            return MutableBinaryTreeNodeImpl.class;
         }
 
         @Override
         public void setSupport(SPISupport support) {
-            delegateConverter = new CopyingNodeToTreeConverter(MutableBinaryTreeImpl.class, MutableBinaryTreeImpl.class, new TreeBuilderFactoryImpl(support));
+            delegateConverter = new CopyingNodeToTreeConverter(MutableBinaryTreeNodeImpl.class, MutableBinaryTreeImpl.class, new TreeBuilderFactoryImpl(support));
         }
     }
 
@@ -78,7 +78,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return MutableBinaryTreeImpl.class;
         }
     }
@@ -106,7 +106,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return MutableBinaryTreeImpl.class;
         }
     }
@@ -119,7 +119,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return MutableBinaryTreeImpl.class;
         }
 

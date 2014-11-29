@@ -34,7 +34,7 @@ import com.mattunderscore.trees.tree.Tree;
  * tree.
  * @author Matt Champion on 12/08/14.
  */
-public interface NodeToTreeConverter<E, N extends Node<E>, T extends Tree<E, N>, S extends Node<E>> extends SPIComponent {
+public interface NodeToTreeConverter<E, N extends Node<E>, T extends Tree<E, N>, S extends Node<E>> extends NodeKeyedSPIComponent {
     /**
      * @param node The node to convert
      * @return The tree

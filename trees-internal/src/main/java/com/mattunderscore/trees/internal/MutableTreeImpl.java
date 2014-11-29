@@ -160,7 +160,7 @@ public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableT
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return MutableTree.class;
         }
     }
@@ -173,7 +173,7 @@ public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableT
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return MutableTree.class;
         }
     }
@@ -191,7 +191,7 @@ public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableT
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return MutableTree.class;
         }
 
@@ -215,7 +215,7 @@ public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableT
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Node> forClass() {
             return MutableTreeImpl.class;
         }
 

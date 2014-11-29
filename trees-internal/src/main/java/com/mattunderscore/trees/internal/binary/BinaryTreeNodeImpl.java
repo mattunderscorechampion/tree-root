@@ -101,7 +101,7 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return BinaryTree.class;
         }
     }
@@ -129,7 +129,7 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
         }
 
         @Override
-        public Class<?> forClass() {
+        public Class<? extends Tree> forClass() {
             return BinaryTree.class;
         }
     }
