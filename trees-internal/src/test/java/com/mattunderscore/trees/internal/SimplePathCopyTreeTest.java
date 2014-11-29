@@ -26,8 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.internal.pathcopy.simple.SimplePathCopyTree;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
@@ -38,6 +40,7 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for simple path copy tree.
@@ -94,5 +97,75 @@ public final class SimplePathCopyTreeTest {
         assertFalse(iterator4.hasNext());
 
         assertFalse(newRoot.removeChild(root));
+    }
+
+    @Test
+    public void mutateTree() {
+        final MutableTree<String, MutableNode<String>> tree = builder.build(SimplePathCopyTree.class);
+        tree.setRoot("a");
+        final MutableNode<String> root = tree.getRoot();
+        assertTrue(root.isLeaf());
+        final MutableNode<String> depth1 = root.addChild("b");
+        assertFalse(tree.getRoot().isLeaf());
+        depth1.addChild("c");
+
+        final SimpleCollection<? extends MutableNode<String>> children = tree.getRoot().getChildren();
+        assertEquals(1, children.size());
+        final Iterator<? extends MutableNode<String>> iterator0 = children.iterator();
+        assertTrue(iterator0.hasNext());
+        final MutableNode<String> child0 = iterator0.next();
+        assertEquals("b", child0.getElement());
+
+        final Iterator<? extends MutableNode<String>> iterator1 = child0.getChildren().iterator();
+        assertTrue(iterator1.hasNext());
+        final MutableNode<String> child1 = iterator1.next();
+        assertEquals("c", child1.getElement());
+        assertFalse(iterator1.hasNext());
+
+        depth1.addChild("d");
+
+        final Iterator<? extends MutableNode<String>> iterator2 = child0.getChildren().iterator();
+        assertTrue(iterator2.hasNext());
+        final MutableNode<String> child2 = iterator2.next();
+        assertEquals("c", child2.getElement());
+        assertFalse(iterator2.hasNext());
+
+        final Iterator<? extends MutableNode<String>> iterator3 = tree.getRoot().getChildren().iterator().next().getChildren().iterator();
+        assertTrue(iterator3.hasNext());
+        final MutableNode<String> child4 = iterator3.next();
+        assertEquals("c", child4.getElement());
+        assertTrue(iterator3.hasNext());
+        final MutableNode<String> child5 = iterator3.next();
+        assertEquals("d", child5.getElement());
+        assertFalse(iterator3.hasNext());
+    }
+
+    @Test
+    public void mergedMutations() {
+        final MutableTree<String, MutableNode<String>> tree = builder.build(SimplePathCopyTree.class);
+        tree.setRoot("a");
+        final MutableNode<String> root = tree.getRoot();
+        final MutableNode<String> child0 = root.addChild("b");
+        final MutableNode<String> child1 = root.addChild("c");
+
+        assertEquals(0, root.getChildren().size());
+        assertEquals(2, tree.getRoot().getChildren().size());
+
+        final MutableNode<String> leaf = child0.addChild("d");
+        assertEquals(0, child0.getChildren().size());
+
+        final MutableNode<String> childb = tree.getRoot().getChildren().iterator().next();
+        assertEquals(1, childb.getChildren().size());
+        assertEquals("d", childb.getChildren().iterator().next().getElement());
+    }
+
+    @Test
+    public void noRevertOfSetRoot() {
+        final MutableTree<String, MutableNode<String>> tree = builder.build(SimplePathCopyTree.class);
+        final MutableNode<String> rootA = tree.setRoot("a");
+        final MutableNode<String> root = tree.setRoot("root");
+        rootA.addChild("b");
+        final MutableNode<String> currentRoot = tree.getRoot();
+        assertEquals("root", currentRoot.getElement());
     }
 }
