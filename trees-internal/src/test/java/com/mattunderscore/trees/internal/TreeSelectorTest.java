@@ -66,7 +66,8 @@ public final class TreeSelectorTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
             {Tree.class},
-            {LinkedTree.class}
+            {LinkedTree.class},
+            {PathCopyTree.class}
         });
     }
 

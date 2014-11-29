@@ -104,7 +104,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
         @Override
         public Class<?> forClass() {
-            return PathCopyTree.class;
+            return PathCopyNode.class;
         }
     }
 
