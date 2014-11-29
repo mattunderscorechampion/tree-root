@@ -31,12 +31,10 @@ package com.mattunderscore.trees.internal.pathcopy.simple;
 */
 final class SimplePathCopyResult<E> {
     final SimplePathCopyTreeNode<E> newRoot;
-    final SimplePathCopyTreeNode<E> oldRoot;
     final SimplePathCopyTreeNode<E> newNode;
 
-    SimplePathCopyResult(SimplePathCopyTreeNode<E> newRoot, SimplePathCopyTreeNode<E> oldRoot, SimplePathCopyTreeNode<E> newNode) {
+    SimplePathCopyResult(SimplePathCopyTreeNode<E> newRoot, SimplePathCopyTreeNode<E> newNode) {
         this.newRoot = newRoot;
-        this.oldRoot = oldRoot;
         this.newNode = newNode;
     }
 }

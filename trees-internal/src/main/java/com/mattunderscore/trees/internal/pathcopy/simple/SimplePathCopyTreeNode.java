@@ -71,8 +71,7 @@ final class SimplePathCopyTreeNode<E> extends FixedNode<E> implements MutableNod
 
             if (newCollection.size() != elementList.size()) {
                 newNode.elementList = newCollection;
-                final SimplePathCopyTree<E> tree = result.newRoot.tree;
-                tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
+                tree.root = result.newRoot;
                 return true;
             } else {
                 return false;
@@ -87,8 +86,7 @@ final class SimplePathCopyTreeNode<E> extends FixedNode<E> implements MutableNod
             final SimplePathCopyTreeNode<E> newNode = result.newNode;
             final SimplePathCopyTreeNode<E> newChild = new SimplePathCopyTreeNode<E>(newNode, e);
             newNode.elementList = elementList.add(new ChildWrapper<>(newChild));
-            final SimplePathCopyTree<E> tree = result.newRoot.tree;
-            tree.checkAndSetRootNode(result.newRoot, result.oldRoot);
+            tree.root = result.newRoot;
             return newChild;
         }
     }
@@ -101,10 +99,10 @@ final class SimplePathCopyTreeNode<E> extends FixedNode<E> implements MutableNod
             final DuplicateOnWriteSimpleCollection<ChildWrapper<E>> oldChildren = oldNode.parent.elementList;
             newParent.elementList =
                 oldChildren.replace(new ChildWrapper<>(newNode), new ChildWrapper<>(oldNode));
-            return new SimplePathCopyResult<>(result.newRoot, result.oldRoot, newNode);
+            return new SimplePathCopyResult<>(result.newRoot, newNode);
         }
         final SimplePathCopyTreeNode<E> newNode = new SimplePathCopyTreeNode(tree, oldNode.element);
-        return new SimplePathCopyResult<>(newNode, oldNode, newNode);
+        return new SimplePathCopyResult<>(newNode, newNode);
     }
 
     /**

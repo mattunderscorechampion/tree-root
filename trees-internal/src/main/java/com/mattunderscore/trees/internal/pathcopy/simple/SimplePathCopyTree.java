@@ -34,6 +34,7 @@ import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
+import net.jcip.annotations.GuardedBy;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -42,36 +43,30 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Matt Champion on 11/09/14.
  */
 public final class SimplePathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
-    private final AtomicReference<SimplePathCopyTreeNode<E>> root;
+    @GuardedBy("this")
+    SimplePathCopyTreeNode<E> root;
 
     public SimplePathCopyTree() {
-        root = new AtomicReference<>();
+        root = null;
     }
 
     @Override
     public MutableNode<E> setRoot(E root) {
         final SimplePathCopyTreeNode<E> newRoot = new SimplePathCopyTreeNode<>(this, root);
-        this.root.set(newRoot);
+        synchronized (this) {
+            this.root = newRoot;
+        }
         return newRoot;
     }
 
     @Override
     public SimplePathCopyTreeNode<E> getRoot() {
-        return root.get();
+        return root;
     }
 
     @Override
     public boolean isEmpty() {
-        return root.get() == null;
-    }
-
-    /**
-     * Change the root only if it was the expected node.
-     * @param newRoot
-     * @param oldRoot
-     */
-    void checkAndSetRootNode(SimplePathCopyTreeNode<E> newRoot, SimplePathCopyTreeNode<E> oldRoot) {
-        root.compareAndSet(oldRoot, newRoot);
+        return root == null;
     }
 
     public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, SimplePathCopyTree<E>> {
@@ -92,7 +87,6 @@ public final class SimplePathCopyTree<E> implements MutableTree<E, MutableNode<E
         @Override
         public SimplePathCopyTree<E> treeFromRootNode(Node<E> node) {
             final SimplePathCopyTree<E> newTree = new SimplePathCopyTree<>();
-            newTree.setRoot(node.getElement());
             copyChildren(newTree.setRoot(node.getElement()), node.getChildren());
             return newTree;
         }
