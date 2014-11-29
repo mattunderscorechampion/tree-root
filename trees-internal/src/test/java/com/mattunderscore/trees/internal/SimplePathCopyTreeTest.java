@@ -40,6 +40,7 @@ import java.util.Iterator;
 import static org.junit.Assert.*;
 
 /**
+ * Tests for simple path copy tree.
  * @author Matt Champion on 13/09/14.
  */
 public final class SimplePathCopyTreeTest {

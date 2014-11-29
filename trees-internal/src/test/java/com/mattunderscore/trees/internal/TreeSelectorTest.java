@@ -64,8 +64,8 @@ public final class TreeSelectorTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {Tree.class},
-                {LinkedTree.class}
+            {Tree.class},
+            {LinkedTree.class}
         });
     }
 
