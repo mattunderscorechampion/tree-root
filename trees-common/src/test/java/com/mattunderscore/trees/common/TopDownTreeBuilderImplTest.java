@@ -39,7 +39,7 @@ public class TopDownTreeBuilderImplTest {
     @Test
     public void buildEmpty() {
         final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
-        final LinkedTree<String> tree = builder.build(LinkedTree.class);
+        final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
         assertNull(tree.getRoot());
         assertTrue(tree.isEmpty());
     }
@@ -49,7 +49,7 @@ public class TopDownTreeBuilderImplTest {
         final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("ROOT");
 
-        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(0, tree.getChildren().size());
         assertFalse(tree.isEmpty());
@@ -62,7 +62,7 @@ public class TopDownTreeBuilderImplTest {
         builder0.addChild("a");
         builder0.addChild("b");
 
-        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(2, tree.getChildren().size());
         assertFalse(tree.isEmpty());

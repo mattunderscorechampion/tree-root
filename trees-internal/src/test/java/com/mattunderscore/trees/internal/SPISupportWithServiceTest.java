@@ -46,7 +46,7 @@ public final class SPISupportWithServiceTest {
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
-        final Tree<String, Node<String>> tree0 = nodeApp0.build(Tree.class);
+        final Tree<String, Node<String>> tree0 = nodeApp0.build(TreeNodeImpl.<String>typeKey());
         final Tree<String, Node<String>> tree1 = new TreeNodeImpl.NodeConverter<String>().treeFromRootNode(tree0.getRoot());
         assertSame(tree0, tree1);
     }

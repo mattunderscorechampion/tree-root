@@ -27,6 +27,7 @@ package com.mattunderscore.trees.strings;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.internal.TreeNodeImpl;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
@@ -49,32 +50,32 @@ public final class RegexMatcherTest {
 
     @Test
     public void nodeMatches0() {
-        final Tree<String, Node<String>> tree = builder.create("A").build(Tree.class);
+        final Tree<String, Node<String>> tree = builder.create("A").build(TreeNodeImpl.<String>typeKey());
         final Node<String> node = tree.getRoot();
         assertTrue(aMatcher.matches(node));
     }
 
     @Test
     public void nodeMatches1() {
-        final Node<String> node = builder.create("A").build(Tree.class).getRoot();
+        final Node<String> node = builder.create("A").build(TreeNodeImpl.<String>typeKey()).getRoot();
         assertTrue(aMatcherAlt.matches(node));
     }
 
     @Test
     public void nodeMatches2() {
-        final Node<String> nodeA = builder.create("A").build(Tree.class).getRoot();
-        final Node<String> nodeB = builder.create("B").build(Tree.class).getRoot();
+        final Node<String> nodeA = builder.create("A").build(TreeNodeImpl.<String>typeKey()).getRoot();
+        final Node<String> nodeB = builder.create("B").build(TreeNodeImpl.<String>typeKey()).getRoot();
     }
 
     @Test
     public void nodeNoMatch0() {
-        final Node<String> node = builder.create("B").build(Tree.class).getRoot();
+        final Node<String> node = builder.create("B").build(TreeNodeImpl.<String>typeKey()).getRoot();
         assertFalse(aMatcher.matches(node));
     }
 
     @Test
     public void nodeNoMatch1() {
-        final Node<String> node = builder.create("B").build(Tree.class).getRoot();
+        final Node<String> node = builder.create("B").build(TreeNodeImpl.<String>typeKey()).getRoot();
         assertFalse(aMatcherAlt.matches(node));
     }
 }
