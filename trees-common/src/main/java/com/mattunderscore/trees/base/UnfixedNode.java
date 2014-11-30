@@ -47,7 +47,6 @@ public abstract class UnfixedNode<E> extends AbstractNode<E> {
      * @return The previous element.
      */
     protected E setElement(E element) {
-        final E previousElement = elementReference.getAndSet(element);
-        return previousElement;
+        return elementReference.getAndSet(element);
     }
 }

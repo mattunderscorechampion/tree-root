@@ -48,11 +48,8 @@ public final class AlwaysMatcher<E> implements NodeMatcher<E> {
         if (o ==  null) {
             return false;
         }
-        else if (o == this) {
-            return true;
-        }
         else {
-            return o.getClass().equals(getClass());
+            return o == this || o.getClass().equals(getClass());
         }
     }
 

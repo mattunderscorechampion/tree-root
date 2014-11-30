@@ -30,7 +30,6 @@ import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;

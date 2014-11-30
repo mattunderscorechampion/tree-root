@@ -28,7 +28,6 @@ package com.mattunderscore.trees.common.traversers;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import net.jcip.annotations.NotThreadSafe;
 
 import java.util.Iterator;

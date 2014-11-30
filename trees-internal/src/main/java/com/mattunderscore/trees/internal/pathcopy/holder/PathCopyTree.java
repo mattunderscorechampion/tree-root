@@ -50,8 +50,8 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
 
     @Override
     public MutableNode<E> setRoot(E root) {
-        final Holder<E> holder = new PathCopyRootHolder<>(this);
-        final PathCopyNode<E> node = new PathCopyNode<E>(holder, root);
+        final Holder<E> holder = new PathCopyRootHolder<>();
+        final PathCopyNode<E> node = new PathCopyNode<>(holder, root);
         holder.set(node);
         holderRef.set(holder);
         return node;

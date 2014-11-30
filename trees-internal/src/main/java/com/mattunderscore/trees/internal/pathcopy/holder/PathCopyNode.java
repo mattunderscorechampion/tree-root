@@ -83,8 +83,8 @@ final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
 
     @Override
     public MutableNode<E> addChild(E e) {
-        final PathCopyNodeHolder<E> childHolder = new PathCopyNodeHolder<>(holder, null);
-        final PathCopyNode<E> child = new PathCopyNode<E>(childHolder, e);
+        final PathCopyNodeHolder<E> childHolder = new PathCopyNodeHolder<>(holder);
+        final PathCopyNode<E> child = new PathCopyNode<>(childHolder, e);
         final PathCopyNode<E> currentParent;
         final PathCopyNode<E> newParent;
         childHolder.set(child);

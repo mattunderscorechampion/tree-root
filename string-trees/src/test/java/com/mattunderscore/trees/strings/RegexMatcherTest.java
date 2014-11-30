@@ -26,14 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.strings;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.internal.TreeNodeImpl;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ServiceLoader;
@@ -45,7 +41,7 @@ import static org.junit.Assert.assertTrue;
  * @author Matt Champion on 09/06/14.
  */
 public final class RegexMatcherTest {
-    private static  BottomUpTreeBuilder<String> builder = ServiceLoader.load(Trees.class)
+    private static final BottomUpTreeBuilder<String> builder = ServiceLoader.load(Trees.class)
             .iterator().next()
             .treeBuilders().bottomUpBuilder();
     private static final NodeMatcher<String> aMatcher = new RegexMatcher("^A$");

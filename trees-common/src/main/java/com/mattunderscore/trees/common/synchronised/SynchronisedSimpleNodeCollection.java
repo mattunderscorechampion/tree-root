@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.synchronised;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.tree.Node;
 
 import java.util.Iterator;

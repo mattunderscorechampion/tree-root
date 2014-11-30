@@ -132,7 +132,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
                 // but as this is a read only selection/traversal operation no properties should be violated.
                 // Additionally it should not be permitted to return copies of the nodes you are selecting as they are
                 // not found in the tree you are selecting from violating the principle of least surprise..
-                final Tree<E, N> tree = new SimpleTreeWrapper<E, N>(startingPoints.next());
+                final Tree<E, N> tree = new SimpleTreeWrapper<>(startingPoints.next());
                 currentEndPoints = selector.select(tree);
             }
 

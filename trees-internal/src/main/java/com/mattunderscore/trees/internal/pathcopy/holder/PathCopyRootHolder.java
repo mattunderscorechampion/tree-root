@@ -34,12 +34,10 @@ import java.util.concurrent.locks.ReentrantLock;
  * @author Matt Champion on 14/11/14.
  */
 public final class PathCopyRootHolder<E> implements Holder<E> {
-    private final PathCopyTree<E> tree;
     private final AtomicReference<PathCopyNode<E>> currentNodeRef;
     private final Lock lock = new ReentrantLock();
 
-    public PathCopyRootHolder(PathCopyTree<E> tree) {
-        this.tree = tree;
+    public PathCopyRootHolder() {
         currentNodeRef = new AtomicReference<>();
     }
 

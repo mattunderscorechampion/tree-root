@@ -101,8 +101,8 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
                 right = subtrees[1].getRoot();
             }
 
-            final MutableBinaryTreeNodeImpl<E> root = new MutableBinaryTreeNodeImpl<E>(e, left, right);
-            return new MutableBinaryTreeImpl<E>(root);
+            final MutableBinaryTreeNodeImpl<E> root = new MutableBinaryTreeNodeImpl<>(e, left, right);
+            return new MutableBinaryTreeImpl<>(root);
         }
 
         @Override
@@ -115,7 +115,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         @Override
         public MutableBinaryTreeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
             final Node<E> root = sourceTree.getRoot();
-            return new MutableBinaryTreeImpl<E>(duplicate(root));
+            return new MutableBinaryTreeImpl<>(duplicate(root));
         }
 
         @Override
@@ -142,7 +142,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
                 return new MutableBinaryTreeNodeImpl<E>(sourceChild.getElement(), newLeft, newRight);
             }
             else {
-                return new MutableBinaryTreeNodeImpl<E>(sourceChild.getElement());
+                return new MutableBinaryTreeNodeImpl<>(sourceChild.getElement());
             }
         }
     }

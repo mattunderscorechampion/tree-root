@@ -25,13 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilderAppender;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 

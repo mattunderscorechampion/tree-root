@@ -40,9 +40,9 @@ final class PathCopyNodeHolder<E> implements Holder<E> {
     private final AtomicReference<PathCopyNode<E>> currentNodeRef;
     private final Lock lock = new ReentrantLock();
 
-    public PathCopyNodeHolder(Holder<E> parent, PathCopyNode<E> currentNode) {
+    public PathCopyNodeHolder(Holder<E> parent) {
         this.parent = parent;
-        currentNodeRef = new AtomicReference<>(currentNode);
+        currentNodeRef = new AtomicReference<>();
     }
 
     public PathCopyNode<E> get() {
@@ -71,7 +71,7 @@ final class PathCopyNodeHolder<E> implements Holder<E> {
             currentParent = parent.get();
             final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren =
                     currentParent.getChildren().replace(newNode, currentNode);
-            newParent = new PathCopyNode<E>(parent, currentParent.getElement(), newChildren);
+            newParent = new PathCopyNode<>(parent, currentParent.getElement(), newChildren);
             parent.set(newParent);
         }
         finally {

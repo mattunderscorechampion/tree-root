@@ -25,17 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.internal.binary.mutable.MutableBinaryTreeImpl;
-import com.mattunderscore.trees.spi.DefaultRemovalHandler;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.common.TreesImpl;
-import com.mattunderscore.trees.common.traversers.BreadthFirstIterator;
-import com.mattunderscore.trees.common.traversers.InOrderIterator;
-import com.mattunderscore.trees.common.traversers.PostOrderIterator;
-import com.mattunderscore.trees.common.traversers.PreOrderIterator;
+import com.mattunderscore.trees.internal.binary.mutable.MutableBinaryTreeImpl;
+import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
 
 import java.util.Iterator;

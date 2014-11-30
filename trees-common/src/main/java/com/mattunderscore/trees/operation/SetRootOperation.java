@@ -25,8 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.operation;
 
-import com.mattunderscore.trees.tree.Node;
-
 /**
  * Set root operation.
  * @author Matt Champion on 25/10/14.

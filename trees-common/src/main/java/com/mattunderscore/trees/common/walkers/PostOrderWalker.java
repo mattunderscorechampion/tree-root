@@ -25,12 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.walkers;
 
+import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.traversal.Walker;
 import net.jcip.annotations.Immutable;
-
-import java.util.Iterator;
 
 /**
  * @author Matt Champion on 17/08/14.
@@ -58,10 +56,8 @@ public final class PostOrderWalker {
     }
 
     private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, Walker<N> walker) throws Done {
-        final Iterator<? extends Node<E>> iterator = node.getChildren().iterator();
-        while (iterator.hasNext()) {
-            final N child = (N)iterator.next();
-            accept(child, walker);
+        for (Node<E> child : node.getChildren()) {
+            accept((N)child, walker);
         }
         if (walker.onNext(node)) {
             throw new Done();

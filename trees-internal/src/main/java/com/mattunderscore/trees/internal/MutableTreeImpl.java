@@ -25,12 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
+import com.mattunderscore.trees.base.UnfixedNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
 import com.mattunderscore.trees.common.SPISupport;
 import com.mattunderscore.trees.common.SPISupportAwareComponent;
 import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
-import com.mattunderscore.trees.base.UnfixedNode;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
@@ -40,9 +40,9 @@ import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
-
 import net.jcip.annotations.GuardedBy;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -73,7 +73,7 @@ public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableT
         if (e == null) {
             throw new NullPointerException("You cannot add a child to an empty tree");
         }
-        final MutableTreeImpl<E> child = new MutableTreeImpl<E>(e);
+        final MutableTreeImpl<E> child = new MutableTreeImpl<>(e);
         synchronized (this) {
             final SimpleCollection<MutableNode<E>> oldList = elementList;
             final int size = oldList.size();
@@ -116,10 +116,7 @@ public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableT
             }
             else {
                 final int newSize = size - 1;
-                final Object[] newArray = new Object[newSize];
-                for (int k = 0; k < newSize; k++) {
-                    newArray[k] = searchArray[k];
-                }
+                final Object[] newArray = Arrays.copyOf(searchArray, newSize);
                 elementList = new FixedUncheckedSimpleCollection<>(newArray);
                 return true;
             }

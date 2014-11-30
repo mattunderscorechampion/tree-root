@@ -25,11 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.spi.DefaultRemovalHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
@@ -83,7 +82,7 @@ public final class PreOrderIteratorTest {
     private Tree<String, Node<String>> createTree() {
         final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        final Tree<String, Node<String>> tree = builder.create("f",
+        return builder.create("f",
                 builder.create("b",
                         builder.create("a"),
                         builder.create("d",
@@ -92,6 +91,5 @@ public final class PreOrderIteratorTest {
                 builder.create("i",
                         builder.create("h",
                                 builder.create("g")))).build(LinkedTree.class);
-        return tree;
     }
 }

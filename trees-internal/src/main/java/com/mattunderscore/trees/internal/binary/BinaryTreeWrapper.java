@@ -30,7 +30,6 @@ import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.common.AbstractTreeWrapper;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Wrap and binary node to create a binary tree.

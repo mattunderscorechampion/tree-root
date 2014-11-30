@@ -30,8 +30,6 @@ import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
-import java.util.Iterator;
-
 /**
  * Iterator that provides support for removing elements from trees.
  * @author Matt Champion on 15/09/14.

@@ -29,11 +29,12 @@ import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import net.jcip.annotations.NotThreadSafe;
 
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Stack;
 
 /**
  * @author Matt Champion on 17/08/14.
