@@ -71,12 +71,23 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
         return element == null;
     }
 
-    public final static class Constructor<E> implements TreeConstructor<E, Tree<E, Node<E>>> {
+    private static abstract class AbstractConstructor<E> implements TreeConstructor<E, Tree<E, Node<E>>> {
 
         @Override
-        public Tree<E, Node<E>> build(E e, Tree<E, Node<E>>... subtrees) {
+        public final Tree<E, Node<E>> build(E e, Tree<E, Node<E>>... subtrees) {
             return new TreeNodeImpl(e, subtrees);
         }
+    }
+
+    public static final class Constructor<E> extends AbstractConstructor<E> {
+
+        @Override
+        public Class<? extends Tree> forClass() {
+            return TreeNodeImpl.class;
+        }
+    }
+
+    public static final class DefaultConstructor<E> extends AbstractConstructor<E> {
 
         @Override
         public Class<? extends Tree> forClass() {
@@ -84,12 +95,23 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
         }
     }
 
-    public final static class EmptyConstructor<E> implements EmptyTreeConstructor<E, TreeNodeImpl<E>> {
+    private static abstract class AbstractEmptyConstructor<E> implements EmptyTreeConstructor<E, TreeNodeImpl<E>> {
 
         @Override
-        public TreeNodeImpl<E> build() {
+        public final TreeNodeImpl<E> build() {
             return new TreeNodeImpl(null, new Object[0]);
         }
+    }
+
+    public static final class EmptyConstructor<E> extends AbstractEmptyConstructor<E> {
+
+        @Override
+        public Class<? extends Tree> forClass() {
+            return TreeNodeImpl.class;
+        }
+    }
+
+    public static final class DefaultEmptyConstructor<E> extends AbstractEmptyConstructor<E> {
 
         @Override
         public Class<? extends Tree> forClass() {
@@ -110,17 +132,12 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
         }
     }
 
-    public static final class Converter<E> implements TreeConverter<E, TreeNodeImpl<E>> {
+    private static abstract class AbstractConverter<E> implements TreeConverter<E, TreeNodeImpl<E>> {
 
         @Override
-        public TreeNodeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
+        public final TreeNodeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
             final Node<E> root = sourceTree.getRoot();
             return new TreeNodeImpl(root.getElement(), duplicateChildren(root.getChildren()));
-        }
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return Tree.class;
         }
 
         private Object[] duplicateChildren(SimpleCollection<? extends Node<E>> children) {
@@ -136,12 +153,28 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
         }
     }
 
+    public static final class Converter<E> extends AbstractConverter<E> {
+
+        @Override
+        public Class<? extends Tree> forClass() {
+            return TreeNodeImpl.class;
+        }
+    }
+
+    public static final class DefaultConverter<E> extends AbstractConverter<E> {
+
+        @Override
+        public Class<? extends Tree> forClass() {
+            return Tree.class;
+        }
+    }
+
     /**
      * Construct a TypeKey for a specific element type.
      * @param <E> The element type
      * @return The type key
      */
-    public static <E> TypeKey<Tree<E, Node<E>>> typeKey() {
-        return new TypeKey<Tree<E, Node<E>>>() {};
+    public static <E> TypeKey<? extends Tree<E, Node<E>>> typeKey() {
+        return new TypeKey<TreeNodeImpl<E>>() {};
     }
 }

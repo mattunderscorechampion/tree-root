@@ -1,5 +1,7 @@
 com.mattunderscore.trees.internal.TreeNodeImpl$Converter
+com.mattunderscore.trees.internal.TreeNodeImpl$DefaultConverter
 com.mattunderscore.trees.internal.MutableTreeImpl$Converter
+com.mattunderscore.trees.internal.MutableTreeImpl$DefaultConverter
 com.mattunderscore.trees.internal.binary.BinaryTreeConverter
 com.mattunderscore.trees.internal.binary.mutable.MutableBinaryTreeImpl$Converter
 com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree$Converter

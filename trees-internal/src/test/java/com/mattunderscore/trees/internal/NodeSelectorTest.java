@@ -65,10 +65,12 @@ public final class NodeSelectorTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-            {Tree.class},
-            {LinkedTree.class},
-            {MutableTree.class},
-            {PathCopyTree.class}
+            {Tree.class}, // 0
+            {TreeNodeImpl.class}, // 1, repeats 0 with different key
+            {LinkedTree.class}, // 2
+            {MutableTree.class}, // 3
+            {MutableTreeImpl.class}, // 4, repeats 3 with different key
+            {PathCopyTree.class} // 5
         });
     }
 

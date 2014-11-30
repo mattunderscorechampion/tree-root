@@ -39,9 +39,11 @@ public class StringTreeBottomUpBuilderTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
             {Tree.class}, // 0
-            {LinkedTree.class}, // 1
-            {MutableTree.class}, // 2
-            {PathCopyTree.class} // 3
+            {TreeNodeImpl.class}, // 1, repeats 0 with different key
+            {LinkedTree.class}, // 2
+            {MutableTree.class}, // 3
+            {MutableTreeImpl.class}, // 4, repeats 3 with different key
+            {PathCopyTree.class} // 5
         });
     }
 

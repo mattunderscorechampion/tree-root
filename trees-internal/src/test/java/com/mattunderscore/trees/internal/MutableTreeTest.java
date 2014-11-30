@@ -63,7 +63,9 @@ public final class MutableTreeTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-            {LinkedTree.class},
+            {MutableTree.class}, // 0
+            {MutableTreeImpl.class}, // 1, repeats 0 with different key
+            {LinkedTree.class} // 2
         });
     }
 
