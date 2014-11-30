@@ -29,6 +29,7 @@ import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.base.FixedNode;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -132,5 +133,9 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
         public Class<? extends Tree> forClass() {
             return BinaryTree.class;
         }
+    }
+
+    public static <E> TypeKey<BinaryTree<E, BinaryTreeNode<E>>> typeKey() {
+        return new TypeKey<BinaryTree<E, BinaryTreeNode<E>>>() {};
     }
 }
