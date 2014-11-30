@@ -14,6 +14,8 @@ the tree implementation. This allows for the generic parameters to be matched wi
 This library is sill in an early stage of development. The first major release has not yet been made and the API has
 not been fixed.
 
+Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/trees-parent.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/trees-parent)
+
 ##Prior art
 
 There is a [TreeSet](http://docs.oracle.com/javase/7/docs/api/java/util/TreeSet.html) and a
