@@ -25,13 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.LinkedTree;
-import com.mattunderscore.trees.common.TreesImpl;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -45,21 +45,21 @@ import static org.junit.Assert.assertFalse;
  */
 public final class BreadthFirstIteratorTest {
     private static TreeIteratorFactory iterators;
-    private static Tree<String, Node<String>> tree;
+    private static Tree<String, ? extends Node<String>> tree;
 
     @BeforeClass
     public static void setUp() {
         final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         tree = builder.create("f",
-                builder.create("b",
-                        builder.create("a"),
-                        builder.create("d",
-                                builder.create("c"),
-                                builder.create("e"))),
-                builder.create("i",
-                        builder.create("h",
-                                builder.create("g")))).build(LinkedTree.class);
+            builder.create("b",
+                builder.create("a"),
+                builder.create("d",
+                    builder.create("c"),
+                    builder.create("e"))),
+            builder.create("i",
+                builder.create("h",
+                    builder.create("g")))).build(LinkedTree.<String>typeKey());
 
         iterators = trees.treeIterators();
     }
@@ -67,7 +67,7 @@ public final class BreadthFirstIteratorTest {
     @Test
     public void nodeIterator()
     {
-        final Iterator<Node<String>> iterator = iterators.breadthFirstIterator(tree);
+        final Iterator<? extends Node<String>> iterator = iterators.breadthFirstIterator(tree);
         assertEquals("f", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("i", iterator.next().getElement());

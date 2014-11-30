@@ -42,7 +42,8 @@ public class PositionTest {
     @Test
     public void rootEmptyTree() {
         final Trees trees = new TreesImpl();
-        final LinkedTree<String> tree = trees.treeBuilders().bottomUpBuilder().build(LinkedTree.class);
+        final LinkedTree<String> tree = trees.treeBuilders().<String>bottomUpBuilder()
+            .build(LinkedTree.<String>typeKey());
 
         final Position position = new PositionBuilder().build();
         final LinkedTree<String> node = position.lookup(tree);
@@ -52,7 +53,8 @@ public class PositionTest {
     @Test
     public void root() {
         final Trees trees = new TreesImpl();
-        final LinkedTree<String> tree = trees.treeBuilders().bottomUpBuilder().create("a").build(LinkedTree.class);
+        final LinkedTree<String> tree = trees.treeBuilders().<String>bottomUpBuilder()
+            .create("a").build(LinkedTree.<String>typeKey());
 
         final Position position = new PositionBuilder().build();
         final LinkedTree<String> node = position.lookup(tree);
@@ -62,12 +64,12 @@ public class PositionTest {
     @Test
     public void leftChild() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<Object> treeBuilder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> treeBuilder = trees.treeBuilders().bottomUpBuilder();
         final LinkedTree<String> tree = treeBuilder
             .create(
                 "a",
                 treeBuilder.create("l"),
-                treeBuilder.create("r")).build(LinkedTree.class);
+                treeBuilder.create("r")).build(LinkedTree.<String>typeKey());
 
         final Position position = new PositionBuilder().child(0).build();
         final LinkedTree<String> node = position.lookup(tree);
@@ -77,12 +79,12 @@ public class PositionTest {
     @Test
     public void rightChild() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<Object> treeBuilder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> treeBuilder = trees.treeBuilders().bottomUpBuilder();
         final LinkedTree<String> tree = treeBuilder
             .create(
                 "a",
                     treeBuilder.create("l"),
-                    treeBuilder.create("r")).build(LinkedTree.class);
+                    treeBuilder.create("r")).build(LinkedTree.<String>typeKey());
 
         final Position position = new PositionBuilder().child(1).build();
         final LinkedTree<String> node = position.lookup(tree);
@@ -92,12 +94,12 @@ public class PositionTest {
     @Test(expected = IllegalStateException.class)
     public void wrongDepth() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<Object> treeBuilder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> treeBuilder = trees.treeBuilders().bottomUpBuilder();
         final LinkedTree<String> tree = treeBuilder
             .create(
                 "a",
                 treeBuilder.create("l"),
-                treeBuilder.create("r")).build(LinkedTree.class);
+                treeBuilder.create("r")).build(LinkedTree.<String>typeKey());
 
         final Position position = new PositionBuilder().child(0).child(1).build();
         position.lookup(tree);
@@ -106,12 +108,12 @@ public class PositionTest {
     @Test(expected = IllegalStateException.class)
     public void wrongBreadth() {
         final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<Object> treeBuilder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String> treeBuilder = trees.treeBuilders().bottomUpBuilder();
         final LinkedTree<String> tree = treeBuilder
                 .create(
                         "a",
                         treeBuilder.create("l"),
-                        treeBuilder.create("r")).build(LinkedTree.class);
+                        treeBuilder.create("r")).build(LinkedTree.<String>typeKey());
 
         final Position position = new PositionBuilder().child(2).build();
         position.lookup(tree);

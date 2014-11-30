@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
