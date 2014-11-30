@@ -27,6 +27,7 @@ package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
@@ -46,7 +47,7 @@ public final class ImmutableTreeExamples {
                         builder.create("3")),
                 builder.create("b",
                         builder.create("+"),
-                        builder.create("-"))).build(Tree.class);
+                        builder.create("-"))).build(new TypeKey<Tree<String, Node<String>>>(){});
 
         final Iterator<Node<String>> iterator = traverser.preOrderIterator(tree);
     }
@@ -61,6 +62,6 @@ public final class ImmutableTreeExamples {
         left.addChild("3");
         right.addChild("+");
         right.addChild("-");
-        final Tree<String, Node<String>> tree = b0.build(Tree.class);
+        final Tree<String, Node<String>> tree = b0.build(new TypeKey<Tree<String, Node<String>>>(){});
     }
 }

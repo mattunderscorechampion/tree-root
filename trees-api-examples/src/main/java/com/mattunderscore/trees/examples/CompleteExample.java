@@ -26,8 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.position.Position;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
@@ -58,7 +60,7 @@ public final class CompleteExample {
         final Tree<String, Node<String>> tree = builder.create("a",
                 builder.create("b"),
                 builder.create("c"))
-            .build(Tree.class);
+            .build(new TypeKey<Tree<String, Node<String>>>(){});
 
         nodeSelector(trees, tree);
         treeSelector(trees, tree);
@@ -67,7 +69,7 @@ public final class CompleteExample {
         final Tree<Integer, Node<Integer>> intTree = intBuilder.create(3,
                 intBuilder.create(7),
                 intBuilder.create(9))
-            .build(Tree.class);
+            .build(new TypeKey<Tree<Integer, Node<Integer>>>(){});
         sum(trees, intTree);
     }
 

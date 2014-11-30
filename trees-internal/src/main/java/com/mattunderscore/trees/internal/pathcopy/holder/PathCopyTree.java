@@ -108,7 +108,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     }
 
     public static final class Converter<E> implements TreeConverter<E, PathCopyTree<E>> {
-        private final NodeConverter<E> converter = new NodeConverter();
+        private final NodeConverter<E> converter = new NodeConverter<>();
 
         @Override
         public PathCopyTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {

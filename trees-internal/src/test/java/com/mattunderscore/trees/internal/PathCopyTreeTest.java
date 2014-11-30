@@ -29,6 +29,7 @@ import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
@@ -60,7 +61,7 @@ public final class PathCopyTreeTest {
 
     @Test
     public void test() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder.build(new TypeKey<PathCopyTree<String>>(){});
         final Iterator<String> iterator0 = iterators.inOrderElementsIterator(tree);
         final MutableNode<String> root = tree.setRoot("root");
         assertFalse(iterator0.hasNext());
@@ -102,7 +103,7 @@ public final class PathCopyTreeTest {
 
     @Test
     public void mutateTree() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder.build(new TypeKey<PathCopyTree<String>>(){});
         tree.setRoot("a");
         final MutableNode<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
@@ -143,7 +144,7 @@ public final class PathCopyTreeTest {
 
     @Test
     public void mergedMutations() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder.build(new TypeKey<PathCopyTree<String>>(){});
         tree.setRoot("a");
         final MutableNode<String> root = tree.getRoot();
         final MutableNode<String> child0 = root.addChild("b");
@@ -162,7 +163,7 @@ public final class PathCopyTreeTest {
 
     @Test
     public void noRevertOfSetRoot() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder.build(new TypeKey<PathCopyTree<String>>(){});
         final MutableNode<String> rootA = tree.setRoot("a");
         tree.setRoot("root");
         rootA.addChild("b");
@@ -172,7 +173,7 @@ public final class PathCopyTreeTest {
 
     @Test
     public void unmergeableChanges() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder.build(new TypeKey<PathCopyTree<String>>(){});
         final MutableNode<String> child = tree.setRoot("a").addChild("b");
         assertTrue(tree.getRoot().removeChild(child));
         final MutableNode<String> grandchild = child.addChild("c");
@@ -185,7 +186,7 @@ public final class PathCopyTreeTest {
 
     @Test
     public void removalsAreSuccessful() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder.build(new TypeKey<PathCopyTree<String>>(){});
         final MutableNode<String> grandchild = tree.setRoot("a").addChild("b").addChild("c");
         final MutableNode<String> child = tree.getRoot().getChildren().iterator().next();
 
@@ -196,7 +197,7 @@ public final class PathCopyTreeTest {
     @Ignore("Adding a new child should not prevent the removal of the now stale view")
     @Test
     public void removalsWorkWithStaleViews() {
-        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.class);
+        final MutableTree<String, MutableNode<String>> tree = builder.build(new TypeKey<PathCopyTree<String>>(){});
         final MutableNode<String> child = tree.setRoot("a").addChild("b");
         child.addChild("c");
 

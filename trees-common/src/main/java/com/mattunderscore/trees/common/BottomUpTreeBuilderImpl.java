@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.tree.Tree;
@@ -78,5 +79,10 @@ final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
             }
             return helper.newTreeFrom(klass, root, subtrees);
         }
+    }
+
+    @Override
+    public <T extends Tree<E, ? extends Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+        return build(type.getType());
     }
 }

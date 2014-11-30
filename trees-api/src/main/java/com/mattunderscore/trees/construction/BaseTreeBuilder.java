@@ -42,4 +42,13 @@ public interface BaseTreeBuilder<E, B extends Tree<E, ? extends Node<E>>> {
      * @throws com.mattunderscore.trees.OperationNotSupportedForType if the type of the tree to be built is not supported
      */
     <T extends B> T build(Class<T> klass) throws OperationNotSupportedForType;
+
+    /**
+     * Create a new tree of the type provided.
+     * @param type The type key of the tree to create
+     * @param <T> The type of the tree to create
+     * @return The new tree
+     * @throws com.mattunderscore.trees.OperationNotSupportedForType if the type of the tree to be built is not supported
+     */
+    <T extends B> T build(TypeKey<T> type) throws OperationNotSupportedForType;
 }

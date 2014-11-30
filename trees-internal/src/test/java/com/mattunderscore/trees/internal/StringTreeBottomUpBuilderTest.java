@@ -49,9 +49,9 @@ public class StringTreeBottomUpBuilderTest {
     public void build() {
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final Tree<String, Node<String>> tree = builder.create("a",
-            builder.create("b",
-                builder.create("c")),
-            builder.create("d")).build(treeClass);
+                builder.create("b",
+                        builder.create("c")),
+                builder.create("d")).build(treeClass);
 
         final Node<String> root = tree.getRoot();
         assertEquals(String.class, root.getElementClass());

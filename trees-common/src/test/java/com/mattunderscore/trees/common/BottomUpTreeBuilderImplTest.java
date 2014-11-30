@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.tree.Tree;
@@ -42,7 +43,7 @@ public final class BottomUpTreeBuilderImplTest {
     @Test
     public void buildEmpty() {
         final BottomUpTreeBuilderImpl<String> builder = new BottomUpTreeBuilderImpl<>(helper);
-        final LinkedTree<String> tree = builder.build(LinkedTree.class);
+        final LinkedTree<String> tree = builder.build(new TypeKey<LinkedTree<String>>(){});
         assertNull(tree.getRoot());
         assertTrue(tree.isEmpty());
     }
@@ -52,7 +53,7 @@ public final class BottomUpTreeBuilderImplTest {
         final BottomUpTreeBuilderImpl<String> builder = new BottomUpTreeBuilderImpl<>(helper);
         final BottomUpTreeBuilder<String> builder0 = builder.create("ROOT");
 
-        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        final LinkedTree<String> tree = builder0.build(new TypeKey<LinkedTree<String>>(){});
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(0, tree.getChildren().size());
         assertFalse(tree.isEmpty());
@@ -65,7 +66,7 @@ public final class BottomUpTreeBuilderImplTest {
             builder.create("a"),
             builder.create("b"));
 
-        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        final LinkedTree<String> tree = builder0.build(new TypeKey<LinkedTree<String>>(){});
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(2, tree.getChildren().size());
         assertFalse(tree.isEmpty());
@@ -86,7 +87,7 @@ public final class BottomUpTreeBuilderImplTest {
                         builder.create("x",
                             builder.create("7")))));
 
-        final LinkedTree<String> tree = builder0.build(LinkedTree.class);
+        final LinkedTree<String> tree = builder0.build(new TypeKey<LinkedTree<String>>(){});
         assertEquals("ROOT", tree.getRoot().getElement());
         assertEquals(2, tree.getChildren().size());
         assertFalse(tree.isEmpty());

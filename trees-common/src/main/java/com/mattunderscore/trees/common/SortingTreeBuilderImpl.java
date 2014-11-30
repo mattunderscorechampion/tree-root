@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.tree.Node;
@@ -60,5 +61,10 @@ public final class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
             tree.addElement(element);
         }
         return tree;
+    }
+
+    @Override
+    public <T extends SortingTree<E, Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+        return build(type.getType());
     }
 }

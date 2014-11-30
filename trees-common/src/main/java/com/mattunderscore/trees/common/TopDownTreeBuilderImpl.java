@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
@@ -48,6 +49,11 @@ final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownT
     @Override
     public <T extends Tree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
         return helper.convertTree(klass, tree);
+    }
+
+    @Override
+    public <T extends Tree<E, ? extends Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+        return build(type.getType());
     }
 
     @Override
