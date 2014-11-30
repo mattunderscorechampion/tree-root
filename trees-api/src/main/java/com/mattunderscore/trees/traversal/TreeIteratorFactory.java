@@ -39,33 +39,37 @@ public interface TreeIteratorFactory {
      * @param tree The tree to iterate over
      * @param <E> The element type
      * @param <N> The node type
+     * @param <T> The tree type
      * @return An {@link Iterator} that returns nodes in pre-order
      */
-    <E, N extends Node<E>> Iterator<N> preOrderIterator(Tree<E, N> tree);
+    <E, N extends Node<E>, T extends Tree<E, ? extends N>> Iterator<N> preOrderIterator(T tree);
 
     /**
      * @param tree The tree to iterate over
      * @param <E> The element type
      * @param <N> The node type
+     * @param <T> The tree type
      * @return An {@link Iterator} that returns nodes in in-order
      */
-    <E, N extends Node<E>> Iterator<N> inOrderIterator(Tree<E, N> tree);
+    <E, N extends Node<E>, T extends Tree<E, ? extends N>> Iterator<N> inOrderIterator(T tree);
 
     /**
      * @param tree The tree to iterate over
      * @param <E> The element type
      * @param <N> The node type
+     * @param <T> The tree type
      * @return An {@link Iterator} that returns nodes in post-order
      */
-    <E, N extends Node<E>> Iterator<N> postOrderIterator(Tree<E, N> tree);
+    <E, N extends Node<E>, T extends Tree<E, ? extends N>> Iterator<N> postOrderIterator(T tree);
 
     /**
      * @param tree The tree to iterate over
      * @param <E> The element type
      * @param <N> The node type
+     * @param <T> The tree type
      * @return An {@link Iterator} that returns nodes in breadth first order
      */
-    <E, N extends Node<E>> Iterator<N> breadthFirstIterator(Tree<E, N> tree);
+    <E, N extends Node<E>, T extends Tree<E, ? extends N>> Iterator<N> breadthFirstIterator(T tree);
 
     /**
      * @param tree The tree to iterate over

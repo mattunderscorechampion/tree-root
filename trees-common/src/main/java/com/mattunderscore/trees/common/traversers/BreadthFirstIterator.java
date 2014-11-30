@@ -39,7 +39,7 @@ import java.util.NoSuchElementException;
 /**
  * @author Matt Champion on 05/09/14.
  */
-public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
+public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
     private Iterator<N> currentLayer;
     private List<N> nextLayer;
 

@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Tree;
  * class is registered.
  * @author Matt Champion on 15/09/14.
  */
-public final class DefaultRemovalHandler<E, N extends Node<E>, T extends Tree<E, N>> implements IteratorRemoveHandler<E, N, T> {
+public final class DefaultRemovalHandler<E, N extends Node<E>, T extends Tree<E, ? extends N>> implements IteratorRemoveHandler<E, N, T> {
     @Override
     public boolean isSupported() {
         return false;

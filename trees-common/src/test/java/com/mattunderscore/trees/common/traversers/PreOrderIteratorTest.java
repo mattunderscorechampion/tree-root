@@ -47,8 +47,9 @@ public final class PreOrderIteratorTest {
     @Test
     public void test0()
     {
-        final Tree<String, Node<String>> tree = createTree();
-        final Iterator<Node<String>> iterator = trees.treeIterators().preOrderIterator(tree);
+        final LinkedTree<String> tree = createTree();
+        final Iterator<Node<String>> iterator = trees.treeIterators()
+            .<String, Node<String>, LinkedTree<String>>preOrderIterator(tree);
 
         assertEquals("f", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
@@ -64,22 +65,24 @@ public final class PreOrderIteratorTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void prestartRemove() {
-        final Tree<String, Node<String>> tree = createTree();
-        final Iterator<Node<String>> iterator = trees.treeIterators().preOrderIterator(tree);
+        final LinkedTree<String> tree = createTree();
+        final Iterator<Node<String>> iterator = trees.treeIterators()
+            .<String, Node<String>, LinkedTree<String>>preOrderIterator(tree);
 
         iterator.remove();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void remove() {
-        final Tree<String, Node<String>> tree = createTree();
-        final Iterator<Node<String>> iterator = trees.treeIterators().preOrderIterator(tree);
+        final LinkedTree<String> tree = createTree();
+        final Iterator<Node<String>> iterator = trees.treeIterators()
+            .<String, Node<String>, LinkedTree<String>>preOrderIterator(tree);
 
         assertEquals("f", iterator.next().getElement());
         iterator.remove();
     }
 
-    private Tree<String, Node<String>> createTree() {
+    private LinkedTree<String> createTree() {
         final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         return builder.create("f",
@@ -90,6 +93,6 @@ public final class PreOrderIteratorTest {
                                 builder.create("e"))),
                 builder.create("i",
                         builder.create("h",
-                                builder.create("g")))).build(LinkedTree.class);
+                                builder.create("g")))).build(LinkedTree.<String>typeKey());
     }
 }

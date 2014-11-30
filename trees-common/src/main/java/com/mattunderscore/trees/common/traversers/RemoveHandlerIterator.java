@@ -34,7 +34,7 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
  * Iterator that provides support for removing elements from trees.
  * @author Matt Champion on 15/09/14.
  */
-public abstract class RemoveHandlerIterator<E, N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
+public abstract class RemoveHandlerIterator<E, N extends Node<E>, T extends Tree<E, ? extends N>> extends PrefetchingIterator<N> {
     private final T tree;
     private final IteratorRemoveHandler<E, N, T> handler;
 

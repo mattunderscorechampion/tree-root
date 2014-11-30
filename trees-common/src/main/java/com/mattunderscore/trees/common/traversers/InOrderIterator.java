@@ -38,7 +38,7 @@ import java.util.Stack;
  * @author Matt Champion on 22/08/14.
  */
 @NotThreadSafe
-public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
+public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
     private final Stack<State<E, N>> parents = new Stack<>();
     private N current;
 

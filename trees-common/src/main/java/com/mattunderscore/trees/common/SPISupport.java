@@ -140,7 +140,7 @@ public final class SPISupport {
         return converter.treeFromRootNode(node);
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> lookupHandler(T tree) {
+    public <E, N extends Node<E>, T extends Tree<E, ? extends N>> IteratorRemoveHandler<E, N, T> lookupHandler(T tree) {
         final Class<? extends Tree> keyClass = tree.getClass();
         final IteratorRemoveHandler<E, N, T> handler = iteratorRemoveHandlers.get(keyClass);
         if (handler == null) {

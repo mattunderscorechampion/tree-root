@@ -40,7 +40,7 @@ import java.util.Stack;
  * @author Matt Champion on 17/08/14.
  */
 @NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
+public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
     private final Stack<N> parents = new Stack<>();
     private N current;
 

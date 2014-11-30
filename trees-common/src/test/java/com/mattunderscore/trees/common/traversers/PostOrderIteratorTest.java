@@ -30,6 +30,7 @@ import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.spi.DefaultRemovalHandler;
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public final class PostOrderIteratorTest {
     {
         final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        final Tree<String, Node<String>> tree = builder.create("f",
+        final LinkedTree<String> tree = builder.create("f",
             builder.create("b",
                 builder.create("a"),
                 builder.create("d",
@@ -56,9 +57,10 @@ public final class PostOrderIteratorTest {
                     builder.create("e"))),
             builder.create("i",
                 builder.create("h",
-                    builder.create("g")))).build(LinkedTree.class);
+                    builder.create("g")))).build(LinkedTree.<String>typeKey());
 
-        final Iterator<Node<String>> iterator = new PostOrderIterator<>(tree, new DefaultRemovalHandler<String, Node<String>, Tree<String, Node<String>>>());
+        final Iterator<Node<String>> iterator = trees.treeIterators()
+            .<String, Node<String>, LinkedTree<String>>postOrderIterator(tree);
         assertEquals("a", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
         assertEquals("e", iterator.next().getElement());
