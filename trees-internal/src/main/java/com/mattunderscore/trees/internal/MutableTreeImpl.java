@@ -31,6 +31,7 @@ import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
 import com.mattunderscore.trees.common.SPISupport;
 import com.mattunderscore.trees.common.SPISupportAwareComponent;
 import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
@@ -220,5 +221,14 @@ public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableT
         public void setSupport(SPISupport support) {
             delegateConverter = new CopyingNodeToTreeConverter(MutableTree.class, MutableTree.class, new TreeBuilderFactoryImpl(support));
         }
+    }
+
+    /**
+     * Construct a TypeKey for a specific element type.
+     * @param <E> The element type
+     * @return The type key
+     */
+    public static <E> TypeKey<MutableTree<E, MutableNode<E>>> typeKey() {
+        return new TypeKey<MutableTree<E, MutableNode<E>>>() {};
     }
 }

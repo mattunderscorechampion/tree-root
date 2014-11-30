@@ -28,6 +28,7 @@ package com.mattunderscore.trees.internal.binary.search;
 import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.internal.binary.mutable.MutableBinaryTreeNodeImpl;
 import com.mattunderscore.trees.sorted.SortingTree;
 
@@ -85,5 +86,14 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
     @Override
     public synchronized boolean isEmpty() {
         return root == null;
+    }
+
+    /**
+     * Construct a TypeKey for a specific element type.
+     * @param <E> The element type
+     * @return The type key
+     */
+    public static <E> TypeKey<BinarySearchTree<E>> typeKey() {
+        return new TypeKey<BinarySearchTree<E>>() {};
     }
 }

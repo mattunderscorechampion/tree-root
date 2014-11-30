@@ -28,6 +28,7 @@ package com.mattunderscore.trees.internal.binary.mutable;
 import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 /**

@@ -27,6 +27,7 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.base.FixedNode;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
@@ -133,5 +134,14 @@ public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<
             }
             return newChildren;
         }
+    }
+
+    /**
+     * Construct a TypeKey for a specific element type.
+     * @param <E> The element type
+     * @return The type key
+     */
+    public static <E> TypeKey<Tree<E, Node<E>>> typeKey() {
+        return new TypeKey<Tree<E, Node<E>>>() {};
     }
 }

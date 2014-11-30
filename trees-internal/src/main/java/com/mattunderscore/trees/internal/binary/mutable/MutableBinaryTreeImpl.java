@@ -31,6 +31,7 @@ import com.mattunderscore.trees.common.SPISupportAwareComponent;
 import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.common.AbstractTreeWrapper;
 import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -145,5 +146,14 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
                 return new MutableBinaryTreeNodeImpl<>(sourceChild.getElement());
             }
         }
+    }
+
+    /**
+     * Construct a TypeKey for a specific element type.
+     * @param <E> The element type
+     * @return The type key
+     */
+    public static <E> TypeKey<MutableBinaryTreeImpl<E>> typeKey() {
+        return new TypeKey<MutableBinaryTreeImpl<E>>() {};
     }
 }

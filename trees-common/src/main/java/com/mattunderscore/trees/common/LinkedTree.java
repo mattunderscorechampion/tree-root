@@ -27,6 +27,7 @@ package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.base.UnfixedNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.*;
@@ -171,5 +172,14 @@ public final class LinkedTree<E> extends UnfixedNode<E> implements MutableTree<E
                 duplicate(newChild, child);
             }
         }
+    }
+
+    /**
+     * Construct a TypeKey for a specific element type.
+     * @param <E> The element type
+     * @return The type key
+     */
+    public static <E> TypeKey<LinkedTree<E>> typeKey() {
+        return new TypeKey<LinkedTree<E>>() {};
     }
 }
