@@ -17,7 +17,7 @@ Wednesday August 27 22:37:17 2014
 * Added balanced tree API
 * Made the handling of unknown SPI implementations explicit
 * Added iterators
-* Changed the generic parameters of tree builders, NodeMatcher, NodeSelector, TreeSelector
+* Changed the generic parameters of tree builders, NodeMatcher, NodeSelector, TreeSelector, tree iterators
 * Added a binary tree API
 * Added sorted  tree API
 * Changed the getChildren method of nodes to return a SimpleCollection
