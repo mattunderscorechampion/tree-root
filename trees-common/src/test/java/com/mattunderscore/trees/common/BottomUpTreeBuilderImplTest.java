@@ -97,7 +97,7 @@ public final class BottomUpTreeBuilderImplTest {
     public void failToBuild() {
         final BottomUpTreeBuilderImpl<String> builder = new BottomUpTreeBuilderImpl<>(helper);
         final BottomUpTreeBuilder<String> builder0 = builder.create("ROOT");
-        builder0.build(FakeTree.class);
+        builder0.build(new TypeKey<FakeTree>() {});
     }
 
     public interface FakeTree extends Tree<String, Node<String>> {
