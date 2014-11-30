@@ -5,7 +5,10 @@ A tree structure and utility library.
 ##Building trees
 
 There are two ways to build trees. From the bottom-up, starting with leaves and attaching them to a parent. From the
-top-down, starting the root and adding children.
+top-down, starting the root and adding children. The builders are generalised for any tree implementation. The tree
+structure is specified first then the implementation of the tree. The implementation of the tree is specified either by
+the implementation class or a TypeKey. The TypeKey is an abstract class that should be subclassed to fix the type of
+the tree implementation. This allows for the generic parameters to be matched without warnings about unchecked casts.
 
 ##Status
 This library is sill in an early stage of development. The first major release has not yet been made and the API has

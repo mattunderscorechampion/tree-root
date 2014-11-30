@@ -34,3 +34,5 @@ Wednesday August 27 22:37:17 2014
 * Added abstract node implementations
 * Added alternative mutable tree API
 * Added copy path tree SPI components
+* Added bounded key SPI components
+* Added type key to tree builders to help match generics
