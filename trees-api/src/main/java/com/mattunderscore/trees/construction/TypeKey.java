@@ -3,6 +3,7 @@ package com.mattunderscore.trees.construction;
 import com.mattunderscore.trees.tree.Tree;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * Type key to support generics when constructing trees.
@@ -14,8 +15,17 @@ public abstract class TypeKey<T extends Tree<?, ?>> {
     @SuppressWarnings("unchecked")
     public TypeKey() {
         final ParameterizedType concreteParameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
-        final ParameterizedType parameterizedType = (ParameterizedType) concreteParameterizedType.getActualTypeArguments()[0];
-        type = (Class<T>) parameterizedType.getRawType();
+        final Type treeType = concreteParameterizedType.getActualTypeArguments()[0];
+        if (treeType instanceof ParameterizedType) {
+            final ParameterizedType parameterizedType = (ParameterizedType) treeType;
+            type = (Class<T>) parameterizedType.getRawType();
+        }
+        else if (treeType instanceof Class) {
+            type = (Class<T>) treeType;
+        }
+        else {
+            throw new IllegalStateException("Unable to identify tree class");
+        }
     }
 
     public final Class<T> getType() {
