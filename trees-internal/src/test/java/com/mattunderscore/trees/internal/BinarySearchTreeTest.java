@@ -25,10 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.internal.binary.search.BinarySearchTree;
+import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 import org.junit.Test;
 
@@ -67,7 +70,7 @@ public final class BinarySearchTreeTest {
             .addElement("b")
             .addElement("a")
             .addElement("c")
-            .build(BinarySearchTree.class);
+            .build(BinarySearchTree.<String>typeKey());
 
         assertEquals("b", tree.getRoot().getElement());
         assertEquals("a", tree.getRoot().getLeft().getElement());

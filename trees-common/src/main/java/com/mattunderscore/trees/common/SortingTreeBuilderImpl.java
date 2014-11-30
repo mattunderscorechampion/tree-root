@@ -55,7 +55,7 @@ public final class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
     }
 
     @Override
-    public <T extends SortingTree<E, Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends SortingTree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
         final T tree = helper.createEmptyTree(klass, comparator);
         for (final E element : elements) {
             tree.addElement(element);
@@ -64,7 +64,7 @@ public final class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
     }
 
     @Override
-    public <T extends SortingTree<E, Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+    public <T extends SortingTree<E, ? extends Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
         return build(type.getType());
     }
 }
