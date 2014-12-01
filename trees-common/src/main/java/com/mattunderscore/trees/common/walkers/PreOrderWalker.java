@@ -59,7 +59,7 @@ public final class PreOrderWalker {
 
     private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, Walker<N> walker) throws Done {
         final Iterator<? extends Node<E>> iterator = node.getChildren().iterator();
-        if (walker.onNext(node)) {
+        if (!walker.onNext(node)) {
             throw new Done();
         }
         while (iterator.hasNext()) {

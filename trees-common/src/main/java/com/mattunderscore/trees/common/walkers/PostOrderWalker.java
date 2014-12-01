@@ -59,7 +59,7 @@ public final class PostOrderWalker {
         for (Node<E> child : node.getChildren()) {
             accept((N)child, walker);
         }
-        if (walker.onNext(node)) {
+        if (!walker.onNext(node)) {
             throw new Done();
         }
     }
