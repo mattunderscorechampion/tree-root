@@ -25,13 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.internal.binary.search.BinarySearchTree;
-import com.mattunderscore.trees.sorted.SortingTree;
-import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.TreesImpl;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.internal.binary.search.BinarySearchTree;
+import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 import org.junit.Test;
 
@@ -42,38 +39,51 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
+ * Test for unbalanced binary search tree.
  * @author Matt Champion on 06/09/14.
  */
 public final class BinarySearchTreeTest {
     private final Trees trees = new TreesImpl();
 
     @Test
-    public void test() {
+    public void addingAndOrdering() {
         final Comparator<String> comparator = new ComparableComparator<>();
         final BinarySearchTree<String> tree = new BinarySearchTree<>(comparator);
 
         assertTrue(tree.isEmpty());
         tree.addElement("b");
         assertFalse(tree.isEmpty());
-        tree.addElement("a");
-        tree.addElement("c");
+        tree.addElement("a")
+            .addElement("c")
+            .addElement("f")
+            .addElement("e")
+            .addElement("d");
 
         assertEquals("b", tree.getRoot().getElement());
         assertEquals("a", tree.getRoot().getLeft().getElement());
         assertEquals("c", tree.getRoot().getRight().getElement());
+        assertEquals("f", tree.getRoot().getRight().getRight().getElement());
+        assertEquals("e", tree.getRoot().getRight().getRight().getLeft().getElement());
+        assertEquals("d", tree.getRoot().getRight().getRight().getLeft().getLeft().getElement());
     }
 
     @Test
-    public void complete() {
+    public void construction() {
         final SortingTreeBuilder<String> builder = trees.treeBuilders().sortingTreeBuilder(new ComparableComparator<String>());
         final BinarySearchTree<String> tree = builder
             .addElement("b")
             .addElement("a")
             .addElement("c")
+            .addElement("f")
+            .addElement("e")
+            .addElement("d")
             .build(BinarySearchTree.<String>typeKey());
 
         assertEquals("b", tree.getRoot().getElement());
         assertEquals("a", tree.getRoot().getLeft().getElement());
         assertEquals("c", tree.getRoot().getRight().getElement());
+        assertEquals("f", tree.getRoot().getRight().getRight().getElement());
+        assertEquals("e", tree.getRoot().getRight().getRight().getLeft().getElement());
+        assertEquals("d", tree.getRoot().getRight().getRight().getLeft().getLeft().getElement());
     }
 }
