@@ -32,8 +32,11 @@ import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.operation.SetRootOperation;
 import com.mattunderscore.trees.spi.DefaultRemovalHandler;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
+import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -42,15 +45,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
+ * Tests for in-order iterator.
  * @author Matt Champion on 23/08/14.
  */
 public final class InOrderIteratorTest {
-    @Test
-    public void test0()
-    {
+    private static TreeIteratorFactory iterators;
+    private static Tree<String, ? extends Node<String>> tree;
+
+    @BeforeClass
+    public static void setUp() {
         final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        final LinkedTree<String> tree = builder.create("f",
+        tree = builder.create("f",
             builder.create("b",
                 builder.create("a"),
                 builder.create("d",
@@ -60,8 +66,13 @@ public final class InOrderIteratorTest {
                 builder.create("h",
                     builder.create("g")))).build(LinkedTree.<String>typeKey());
 
-        final Iterator<Node<String>> iterator = trees.treeIterators()
-            .<String, Node<String>, LinkedTree<String>>inOrderIterator(tree);
+        iterators = trees.treeIterators();
+    }
+
+    @Test
+    public void nodeIterator()
+    {
+        final Iterator<Node<String>> iterator = iterators.inOrderIterator(tree);
         assertEquals("a", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
@@ -72,5 +83,51 @@ public final class InOrderIteratorTest {
         assertEquals("h", iterator.next().getElement());
         assertEquals("i", iterator.next().getElement());
         assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void elementIterator()
+    {
+        final Iterator<String> iterator = iterators.inOrderElementsIterator(tree);
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
+        assertEquals("c", iterator.next());
+        assertEquals("d", iterator.next());
+        assertEquals("e", iterator.next());
+        assertEquals("f", iterator.next());
+        assertEquals("g", iterator.next());
+        assertEquals("h", iterator.next());
+        assertEquals("i", iterator.next());
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void prestartRemove() {
+        final Iterator<Node<String>> iterator = iterators.inOrderIterator(tree);
+
+        iterator.remove();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void remove() {
+        final Iterator<Node<String>> iterator = iterators.inOrderIterator(tree);
+
+        assertEquals("a", iterator.next().getElement());
+        iterator.remove();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void prestartElementRemove() {
+        final Iterator<String> iterator = iterators.inOrderElementsIterator(tree);
+
+        iterator.remove();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void elementRemove() {
+        final Iterator<String> iterator = iterators.inOrderElementsIterator(tree);
+
+        assertEquals("a", iterator.next());
+        iterator.remove();
     }
 }

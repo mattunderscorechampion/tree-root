@@ -29,8 +29,10 @@ import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -39,17 +41,34 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
+ * Tests for pre-order iterator.
  * @author Matt Champion on 23/08/14.
  */
 public final class PreOrderIteratorTest {
-    private static final Trees trees = new TreesImpl();
+    private static TreeIteratorFactory iterators;
+    private static Tree<String, ? extends Node<String>> tree;
+
+    @BeforeClass
+    public static void setUp() {
+        final Trees trees = new TreesImpl();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
+        tree = builder.create("f",
+            builder.create("b",
+                builder.create("a"),
+                builder.create("d",
+                    builder.create("c"),
+                    builder.create("e"))),
+            builder.create("i",
+                builder.create("h",
+                    builder.create("g")))).build(LinkedTree.<String>typeKey());
+
+        iterators = trees.treeIterators();
+    }
 
     @Test
-    public void test0()
+    public void nodeIterator()
     {
-        final LinkedTree<String> tree = createTree();
-        final Iterator<Node<String>> iterator = trees.treeIterators()
-            .<String, Node<String>, LinkedTree<String>>preOrderIterator(tree);
+        final Iterator<Node<String>> iterator = iterators.preOrderIterator(tree);
 
         assertEquals("f", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
@@ -63,36 +82,50 @@ public final class PreOrderIteratorTest {
         assertFalse(iterator.hasNext());
     }
 
+    @Test
+    public void elementIterator()
+    {
+        final Iterator<String> iterator = iterators.preOrderElementsIterator(tree);
+
+        assertEquals("f", iterator.next());
+        assertEquals("b", iterator.next());
+        assertEquals("a", iterator.next());
+        assertEquals("d", iterator.next());
+        assertEquals("c", iterator.next());
+        assertEquals("e", iterator.next());
+        assertEquals("i", iterator.next());
+        assertEquals("h", iterator.next());
+        assertEquals("g", iterator.next());
+        assertFalse(iterator.hasNext());
+    }
+
     @Test(expected = UnsupportedOperationException.class)
     public void prestartRemove() {
-        final LinkedTree<String> tree = createTree();
-        final Iterator<Node<String>> iterator = trees.treeIterators()
-            .<String, Node<String>, LinkedTree<String>>preOrderIterator(tree);
+        final Iterator<Node<String>> iterator = iterators.preOrderIterator(tree);
 
         iterator.remove();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void remove() {
-        final LinkedTree<String> tree = createTree();
-        final Iterator<Node<String>> iterator = trees.treeIterators()
-            .<String, Node<String>, LinkedTree<String>>preOrderIterator(tree);
+        final Iterator<Node<String>> iterator = iterators.preOrderIterator(tree);
 
         assertEquals("f", iterator.next().getElement());
         iterator.remove();
     }
 
-    private LinkedTree<String> createTree() {
-        final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        return builder.create("f",
-                builder.create("b",
-                        builder.create("a"),
-                        builder.create("d",
-                                builder.create("c"),
-                                builder.create("e"))),
-                builder.create("i",
-                        builder.create("h",
-                                builder.create("g")))).build(LinkedTree.<String>typeKey());
+    @Test(expected = UnsupportedOperationException.class)
+    public void prestartElementRemove() {
+        final Iterator<String> iterator = iterators.preOrderElementsIterator(tree);
+
+        iterator.remove();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void elementRemove() {
+        final Iterator<String> iterator = iterators.preOrderElementsIterator(tree);
+
+        assertEquals("f", iterator.next());
+        iterator.remove();
     }
 }

@@ -41,6 +41,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
+ * Breadth first iterator tests
  * @author Matt Champion on 05/09/14.
  */
 public final class BreadthFirstIteratorTest {
@@ -94,5 +95,35 @@ public final class BreadthFirstIteratorTest {
         assertEquals("e", iterator.next());
         assertEquals("g", iterator.next());
         assertFalse(iterator.hasNext());
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void prestartRemove() {
+        final Iterator<Node<String>> iterator = iterators.breadthFirstIterator(tree);
+
+        iterator.remove();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void remove() {
+        final Iterator<Node<String>> iterator = iterators.breadthFirstIterator(tree);
+
+        assertEquals("f", iterator.next().getElement());
+        iterator.remove();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void prestartElementRemove() {
+        final Iterator<String> iterator = iterators.breadthFirstElementsIterator(tree);
+
+        iterator.remove();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void elementRemove() {
+        final Iterator<String> iterator = iterators.breadthFirstElementsIterator(tree);
+
+        assertEquals("f", iterator.next());
+        iterator.remove();
     }
 }
