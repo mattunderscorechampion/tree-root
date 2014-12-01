@@ -31,6 +31,7 @@ import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -85,5 +86,14 @@ public final class DuplicateOnWriteSimpleCollectionTest {
         final Iterator<String> iterator = modifiedCollection.iterator();
         iterator.next();
         iterator.remove();
+    }
+
+    @Test
+    public void replace() {
+        final DuplicateOnWriteSimpleCollection<String> collection = DuplicateOnWriteSimpleCollection.create(new String[] {"Who", "is", "a", "good", "boy?"});
+        final DuplicateOnWriteSimpleCollection<String> modifiedCollection = collection.replace("bad", "good");
+        for (final String element : modifiedCollection) {
+            assertNotEquals("good", element);
+        }
     }
 }

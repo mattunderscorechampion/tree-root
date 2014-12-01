@@ -33,6 +33,7 @@ import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.tree.Node;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -149,5 +150,23 @@ public final class MutableTreeTest {
         assertEquals("e", iterator.next().getElement());
         assertEquals("f", iterator.next().getElement());
         assertFalse(iterator.hasNext());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void addNull() {
+        final TopDownTreeRootBuilder<String> rootBuilder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder = rootBuilder.root("a");
+        final MutableTree<String, MutableNode<String>> tree = builder.build(treeClass);
+        tree.getRoot().addChild(null);
+    }
+
+    @Test
+    public void remove() {
+        final TopDownTreeRootBuilder<String> rootBuilder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder = rootBuilder.root("a");
+        final MutableTree<String, MutableNode<String>> tree = builder.build(treeClass);
+        final MutableNode<String> child = tree.getRoot().addChild("b");
+        assertTrue(tree.getRoot().removeChild(child));
+        assertEquals(0, tree.getRoot().getChildren().size());
     }
 }
