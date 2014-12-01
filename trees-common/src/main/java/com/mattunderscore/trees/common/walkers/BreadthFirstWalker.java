@@ -68,8 +68,13 @@ public final class BreadthFirstWalker {
             if (!walker.onNext(node)) {
                 throw new Done();
             }
-            nextLevel.addAll((Collection<N>)node.getChildren());
+            for (final Node<E> child : node.getChildren()) {
+                nextLevel.add((N) child);
+            }
         }
-        accept(nextLevel, walker);
+
+        if (nextLevel.size() > 0) {
+            accept(nextLevel, walker);
+        }
     }
 }
