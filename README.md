@@ -15,6 +15,7 @@ This library is sill in an early stage of development. The first major release h
 not been fixed.
 
 Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/trees-parent.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/trees-parent)
+Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/trees-parent/badge.png)](https://coveralls.io/r/mattunderscorechampion/trees-parent)
 
 ##Prior art
 
