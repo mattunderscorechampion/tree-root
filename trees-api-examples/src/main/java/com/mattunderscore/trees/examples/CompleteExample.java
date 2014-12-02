@@ -25,12 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
-import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.position.Position;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
@@ -92,16 +90,6 @@ public final class CompleteExample {
         final SumWalker walker = new SumWalker();
         trees.treeWalkers().walkElementsInOrder(tree, walker);
         return walker.sum;
-    }
-
-    /**
-     * Lookup a node at a given position in a tree.
-     * @param tree The tree
-     * @param position The position
-     * @return The node of the tree in the position
-     */
-    public Node<String> position(Tree<String, Node<String>> tree, Position position) {
-        return position.lookup(tree);
     }
 
     /**
