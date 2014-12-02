@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.pathcopy.holder;
 
 import com.mattunderscore.trees.base.FixedNode;
+import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
@@ -33,8 +34,7 @@ import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleColl
  * Path copy node that uses holders to propagate changes up.
  * @author Matt Champion on 14/11/14.
  */
-final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
-    private final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children;
+final class PathCopyNode<E> extends ImmutableNode<E> implements MutableNode<E> {
     private final Holder<E> holder;
 
     PathCopyNode(Holder<E> holder, E element) {
@@ -42,14 +42,13 @@ final class PathCopyNode<E> extends FixedNode<E> implements MutableNode<E> {
     }
 
     PathCopyNode(Holder<E> holder, E element, DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children) {
-        super(element);
+        super(element, children);
         this.holder = holder;
-        this.children = children;
     }
 
     @Override
     public DuplicateOnWriteSimpleCollection<PathCopyNode<E>> getChildren() {
-        return children;
+        return (DuplicateOnWriteSimpleCollection<PathCopyNode<E>>) children;
     }
 
     @Override

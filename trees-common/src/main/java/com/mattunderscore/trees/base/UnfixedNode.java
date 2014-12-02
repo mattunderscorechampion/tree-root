@@ -28,6 +28,7 @@ package com.mattunderscore.trees.base;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * Abstract class for immutable nodes.
  * @author Matt Champion on 21/09/14.
  */
 public abstract class UnfixedNode<E> extends AbstractNode<E> {

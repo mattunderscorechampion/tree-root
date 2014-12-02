@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
+import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.construction.TypeKey;
@@ -43,17 +44,15 @@ import net.jcip.annotations.Immutable;
  * @author Matt Champion on 10/06/14.
  */
 @Immutable
-public final class TreeNodeImpl<E> extends FixedNode<E> implements Tree<E, Node<E>>, Node<E> {
-    private final SimpleCollection<Node<E>> children;
+public final class TreeNodeImpl<E> extends ImmutableNode<E> implements Tree<E, Node<E>>, Node<E> {
 
     TreeNodeImpl(E element, Object[] children) {
-        super(element);
-        this.children = new FixedUncheckedSimpleCollection<>(children);
+        super(element, children);
     }
 
     @Override
     public SimpleCollection<Node<E>> getChildren() {
-        return children;
+        return (SimpleCollection<Node<E>>) super.getChildren();
     }
 
     @Override

@@ -27,17 +27,28 @@ package com.mattunderscore.trees.base;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 /** 
  * @author Matt Champion on 21/09/14.
  */
-public final class ImmutableNode<E> extends FixedNode<E> {
-    private final SimpleCollection<FixedNode<E>> children;
+public abstract class ImmutableNode<E> extends FixedNode<E> {
+    protected final SimpleCollection<? extends ImmutableNode<E>> children;
 
-    public ImmutableNode(E element, FixedNode<E>[] childNodes) {
+    public ImmutableNode(E element, ImmutableNode<E>[] childNodes) {
         super(element);
         children = new FixedUncheckedSimpleCollection<>(childNodes);
+    }
+
+    public ImmutableNode(E element, Object[] childNodes) {
+        super(element);
+        children = new FixedUncheckedSimpleCollection<>(childNodes);
+    }
+
+    public ImmutableNode(E element, DuplicateOnWriteSimpleCollection<? extends ImmutableNode<E>> children) {
+        super(element);
+        this.children = children;
     }
 
     @Override
