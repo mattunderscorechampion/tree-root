@@ -29,13 +29,9 @@ import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.operation.SetRootOperation;
-import com.mattunderscore.trees.spi.DefaultRemovalHandler;
-import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
