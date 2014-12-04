@@ -27,15 +27,11 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.base.UnfixedNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
-import com.mattunderscore.trees.common.SPISupport;
-import com.mattunderscore.trees.common.SPISupportAwareComponent;
-import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
+import com.mattunderscore.trees.common.AbstractCopyingNodeConverter;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
@@ -234,25 +230,9 @@ public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableT
         }
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNode<E>, MutableTree<E, MutableNode<E>>, MutableNode<E>>, SPISupportAwareComponent {
-        private CopyingNodeToTreeConverter<E, MutableNode<E>, MutableTree<E, MutableNode<E>>, MutableNode<E>> delegateConverter;
-
+    public static final class NodeConverter<E> extends AbstractCopyingNodeConverter<E, MutableNode<E>, MutableTree<E, MutableNode<E>>, MutableNode<E>> {
         public NodeConverter() {
-        }
-
-        @Override
-        public MutableTree<E, MutableNode<E>> treeFromRootNode(MutableNode<E> node) {
-            return delegateConverter.treeFromRootNode(node);
-        }
-
-        @Override
-        public Class<? extends Node> forClass() {
-            return MutableTreeImpl.class;
-        }
-
-        @Override
-        public void setSupport(SPISupport support) {
-            delegateConverter = new CopyingNodeToTreeConverter(MutableTree.class, MutableTree.class, new TreeBuilderFactoryImpl(support));
+            super();
         }
     }
 

@@ -30,7 +30,10 @@ import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.spi.*;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.spi.TreeConstructor;
+import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
@@ -105,9 +108,7 @@ public final class LinkedTree<E> extends UnfixedNode<E> implements MutableTree<E
         return this;
     }
 
-    public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>>, SPISupportAwareComponent {
-        private CopyingNodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>> delegateConverter;
-
+    public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>> {
         @Override
         public LinkedTree<E> treeFromRootNode(LinkedTree<E> node) {
             return node;
@@ -116,11 +117,6 @@ public final class LinkedTree<E> extends UnfixedNode<E> implements MutableTree<E
         @Override
         public Class<? extends Node> forClass() {
             return LinkedTree.class;
-        }
-
-        @Override
-        public void setSupport(SPISupport support) {
-            delegateConverter = new CopyingNodeToTreeConverter(LinkedTree.class, LinkedTree.class, new TreeBuilderFactoryImpl(support));
         }
     }
 

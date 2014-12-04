@@ -27,16 +27,13 @@ package com.mattunderscore.trees.internal;
 
 import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
-
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.Immutable;
 
 /**

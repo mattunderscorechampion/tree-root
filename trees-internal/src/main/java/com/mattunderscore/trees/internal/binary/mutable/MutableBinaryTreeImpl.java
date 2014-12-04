@@ -26,11 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.internal.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.common.SPISupport;
-import com.mattunderscore.trees.common.SPISupportAwareComponent;
-import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.common.AbstractTreeWrapper;
-import com.mattunderscore.trees.common.CopyingNodeToTreeConverter;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
@@ -53,9 +49,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         super(root);
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>, MutableBinaryTreeNode<E>>, SPISupportAwareComponent {
-        private CopyingNodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>, MutableBinaryTreeNode<E>> delegateConverter;
-
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>, MutableBinaryTreeNode<E>> {
         @Override
         public MutableBinaryTreeImpl<E> treeFromRootNode(MutableBinaryTreeNode<E> node) {
             return new MutableBinaryTreeImpl<>(node);
@@ -64,11 +58,6 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         @Override
         public Class<? extends Node> forClass() {
             return MutableBinaryTreeNodeImpl.class;
-        }
-
-        @Override
-        public void setSupport(SPISupport support) {
-            delegateConverter = new CopyingNodeToTreeConverter(MutableBinaryTreeNodeImpl.class, MutableBinaryTreeImpl.class, new TreeBuilderFactoryImpl(support));
         }
     }
 
