@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
-import com.mattunderscore.trees.base.UnfixedNode;
+import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
@@ -43,7 +43,7 @@ import net.jcip.annotations.NotThreadSafe;
  * @author Matt Champion on 07/08/14.
  */
 @NotThreadSafe
-public final class LinkedTree<E> extends UnfixedNode<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E> {
+public final class LinkedTree<E> extends AbstractSettableNode<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E> {
     private final ArrayListSimpleCollection<LinkedTree<E>> children;
 
     LinkedTree(E root) {

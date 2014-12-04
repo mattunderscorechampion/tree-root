@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
-import com.mattunderscore.trees.base.UnfixedNode;
+import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.common.AbstractCopyingNodeConverter;
 import com.mattunderscore.trees.construction.TypeKey;
@@ -51,7 +51,7 @@ import java.util.Iterator;
  * parent but seen first.</p>
  * @author Matt Champion on 15/07/14.
  */
-public final class MutableTreeImpl<E> extends UnfixedNode<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
+public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")
     private SimpleCollection<MutableNode<E>> elementList;
 
