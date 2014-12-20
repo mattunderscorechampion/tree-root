@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.common.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
@@ -79,7 +80,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
             @Override
             public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
                 final Iterator<N> startingPoints = baseSelector.select(tree);
-                return new AsNodeIterator<>(startingPoints, extensionSelector);
+                return new AsNodeIterator<>(new NodeIterator<>(startingPoints, new AlwaysMatcher()), extensionSelector);
             }
         };
     }
