@@ -29,11 +29,13 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
+import net.jcip.annotations.Immutable;
 
 /**
  * Empty simple collection.
  * @author Matt Champion on 20/12/14
  */
+@Immutable
 public final class EmptySimpleCollection<E> implements SimpleCollection<E> {
     @Override
     public int size() {

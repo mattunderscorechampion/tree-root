@@ -176,6 +176,8 @@ _ArrayListSimpleCollection_ - a simple mutable collection that is not thread saf
 
 _DuplicateOnWriteSimpleCollection_ - simple collection that returns a modified duplicate on mutation.
 
+_EmptySimpleCollection_ - an empty, immutable simple collection.
+
 ##Tree Implementations
 
 _LinkedTree_ - a mutable, not thread safe tree
