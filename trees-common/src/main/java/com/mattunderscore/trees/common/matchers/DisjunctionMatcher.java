@@ -60,7 +60,9 @@ public final class DisjunctionMatcher<E> implements NodeMatcher<E> {
         else if (o.getClass().equals(getClass())) {
             @SuppressWarnings("unchecked")
             final DisjunctionMatcher<E> matcher = (DisjunctionMatcher<E>)o;
-            return matcher.matcher0.equals(matcher0) && matcher.matcher1.equals(matcher1);
+            // Order of matchers does not matter
+            return (matcher.matcher0.equals(matcher0) && matcher.matcher1.equals(matcher1)) ||
+                (matcher.matcher0.equals(matcher1) && matcher.matcher1.equals(matcher0));
         }
         else {
             return false;
@@ -69,7 +71,7 @@ public final class DisjunctionMatcher<E> implements NodeMatcher<E> {
 
     @Override
     public int hashCode() {
-        return matcher0.hashCode() * 31 + matcher1.hashCode();
+        return matcher0.hashCode() + matcher1.hashCode();
     }
 
     /**
