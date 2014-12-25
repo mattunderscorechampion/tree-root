@@ -27,9 +27,11 @@ package com.mattunderscore.trees.utilities.collections;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -43,7 +45,7 @@ import static org.junit.Assert.assertTrue;
 public final class ArrayListSimpleCollectionTest {
     @Test
     public void createWithInitialValues() {
-        final Set<String> set = new HashSet<>();
+        final List<String> set = new ArrayList<>();
         set.add("a");
         set.add("b");
         final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>(set);
