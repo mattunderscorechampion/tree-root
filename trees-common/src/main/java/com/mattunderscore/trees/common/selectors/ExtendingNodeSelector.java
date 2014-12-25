@@ -90,6 +90,7 @@ public abstract class ExtendingNodeSelector<E> implements NodeSelector<E> {
                     }
                 }
                 while (nextChild == null);
+
                 return nextChild;
             }
         }
