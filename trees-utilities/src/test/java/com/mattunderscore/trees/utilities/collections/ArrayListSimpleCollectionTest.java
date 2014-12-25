@@ -27,7 +27,10 @@ package com.mattunderscore.trees.utilities.collections;
 
 import org.junit.Test;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -39,6 +42,24 @@ import static org.junit.Assert.assertTrue;
  */
 public final class ArrayListSimpleCollectionTest {
     @Test
+    public void createWithInitialValues() {
+        final Set<String> set = new HashSet<>();
+        set.add("a");
+        set.add("b");
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>(set);
+        assertFalse(collection.isEmpty());
+        assertEquals(2, collection.size());
+        final Iterator<String> iterator = collection.iterator();
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
+        assertFalse(iterator.hasNext());
+        final Iterator<String> structuralIterator = collection.structuralIterator();
+        assertEquals("a", structuralIterator.next());
+        assertEquals("b", structuralIterator.next());
+        assertFalse(structuralIterator.hasNext());
+    }
+
+    @Test
     public void add() {
         final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
         assertTrue(collection.isEmpty());
@@ -47,6 +68,12 @@ public final class ArrayListSimpleCollectionTest {
         assertEquals(1, collection.size());
         assertEquals("a", collection.iterator().next());
         assertEquals("a", collection.structuralIterator().next());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void addNull() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.add(null);
     }
 
     @Test
