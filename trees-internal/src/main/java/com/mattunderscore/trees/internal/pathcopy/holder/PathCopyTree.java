@@ -43,7 +43,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author Matt Champion on 14/11/14.
  */
 public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
-    final AtomicReference<Holder<E>> holderRef;
+    private final AtomicReference<Holder<E>> holderRef;
 
     private PathCopyTree() {
         this.holderRef = new AtomicReference<>();

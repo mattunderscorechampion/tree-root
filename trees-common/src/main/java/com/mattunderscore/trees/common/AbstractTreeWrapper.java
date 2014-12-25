@@ -33,13 +33,13 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 06/09/14.
  */
 public abstract class AbstractTreeWrapper<E, N extends Node<E>> implements Tree<E, N> {
-    protected final N root;
+    private final N root;
 
-    public AbstractTreeWrapper() {
+    protected AbstractTreeWrapper() {
         this.root = null;
     }
 
-    public AbstractTreeWrapper(N root) {
+    protected AbstractTreeWrapper(N root) {
         this.root = root;
     }
 

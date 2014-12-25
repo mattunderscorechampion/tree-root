@@ -86,10 +86,9 @@ public final class CompleteExample {
     /**
      * Sum all the values in an integer tree.
      */
-    public int sum(Trees trees, Tree<Integer, Node<Integer>> tree) {
+    public void sum(Trees trees, Tree<Integer, Node<Integer>> tree) {
         final SumWalker walker = new SumWalker();
         trees.treeWalkers().walkElementsInOrder(tree, walker);
-        return walker.sum;
     }
 
     /**

@@ -51,8 +51,7 @@ public final class IteratorExamples {
     }
 
     public void iterateAsSubtypeOfNode(TreeIteratorFactory iterators, MutableTree<String, MutableNode<String>> tree) {
-        final Iterator<Node<String>> iterator = iterators
-            .<String, Node<String>, MutableTree<String, MutableNode<String>>>breadthFirstIterator(tree);
+        final Iterator<Node<String>> iterator = iterators.breadthFirstIterator(tree);
         if (iterator.hasNext()) {
             final Node<String> node = iterator.next();
         }

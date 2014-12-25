@@ -53,7 +53,7 @@ public final class ConvertingIteratorTest {
     }
 
     public static final class IntegerParsingConvertingIterator extends ConvertingIterator<Integer, String> {
-        protected IntegerParsingConvertingIterator(Iterator<String> delegate) {
+        private IntegerParsingConvertingIterator(Iterator<String> delegate) {
             super(delegate);
         }
 

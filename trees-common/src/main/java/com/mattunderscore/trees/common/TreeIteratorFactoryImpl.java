@@ -25,18 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.common.traversers.BreadthFirstIterator;
 import com.mattunderscore.trees.common.traversers.InOrderIterator;
 import com.mattunderscore.trees.common.traversers.NodeToElementIterators;
 import com.mattunderscore.trees.common.traversers.PostOrderIterator;
 import com.mattunderscore.trees.common.traversers.PreOrderIterator;
-import com.mattunderscore.trees.common.traversers.RemoveHandlerIterator;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-
-import java.util.Iterator;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.traversal.TreeIteratorFactory}.

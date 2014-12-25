@@ -41,7 +41,7 @@ import java.util.Iterator;
  * @author Matt Champion on 08/09/14.
  */
 public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, MutableBinaryTreeNode<E>> {
-    public MutableBinaryTreeImpl() {
+    private MutableBinaryTreeImpl() {
         super();
     }
 

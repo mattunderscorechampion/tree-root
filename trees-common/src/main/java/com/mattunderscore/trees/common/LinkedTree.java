@@ -94,11 +94,8 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
         if (child == null) {
             return false;
         }
-        else if (child.getClass().equals(getClass())) {
-            return children.remove((LinkedTree<E>)child);
-        }
         else {
-            return false;
+            return child.getClass().equals(getClass()) && children.remove((LinkedTree<E>)child);
         }
     }
 

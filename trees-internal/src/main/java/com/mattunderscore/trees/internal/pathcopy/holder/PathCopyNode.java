@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal.pathcopy.holder;
 
-import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;

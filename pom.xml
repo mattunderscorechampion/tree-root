@@ -105,6 +105,7 @@
                     <format>xml</format>
                     <maxmem>256m</maxmem>
                     <aggregate>true</aggregate>
+                    <check>false</check>
                 </configuration>
             </plugin>
         </plugins>

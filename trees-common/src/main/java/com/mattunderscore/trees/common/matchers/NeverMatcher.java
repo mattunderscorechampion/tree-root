@@ -45,12 +45,7 @@ public final class NeverMatcher<E> implements NodeMatcher<E> {
 
     @Override
     public boolean equals(Object o) {
-        if (o ==  null) {
-            return false;
-        }
-        else {
-            return o == this || o.getClass().equals(getClass());
-        }
+        return o != null && (o == this || o.getClass().equals(getClass()));
     }
 
     @Override
