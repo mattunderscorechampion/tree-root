@@ -47,63 +47,64 @@ public final class TreeWalkerFactoryImplTest {
         final Trees trees = new TreesImpl();
         walkerFactory = trees.treeWalkers();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        tree = builder.create("root", builder.create("a")).build(LinkedTree.<String>typeKey());
+        tree = builder.create("root", builder.create("a", builder.create("c")), builder.create("b"))
+            .build(LinkedTree.<String>typeKey());
     }
 
     @Test
     public void testWalkPreOrder() {
         final TestWalker<LinkedTree<String>> walker = new TestWalker<>();
         walkerFactory.walkPreOrder(tree, walker);
-        assertEquals(2, walker.count);
+        assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkInOrder() {
         final TestWalker<LinkedTree<String>> walker = new TestWalker<>();
         walkerFactory.walkInOrder(tree, walker);
-        assertEquals(2, walker.count);
+        assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkPostOrder() {
         final TestWalker<LinkedTree<String>> walker = new TestWalker<>();
         walkerFactory.walkPostOrder(tree, walker);
-        assertEquals(2, walker.count);
+        assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkBreadthFirst() {
         final TestWalker<LinkedTree<String>> walker = new TestWalker<>();
         walkerFactory.walkBreadthFirst(tree, walker);
-        assertEquals(2, walker.count);
+        assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkElementsPreOrder() {
         final TestWalker<String> walker = new TestWalker<>();
         walkerFactory.walkElementsPreOrder(tree, walker);
-        assertEquals(2, walker.count);
+        assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkElementsInOrder() {
         final TestWalker<String> walker = new TestWalker<>();
         walkerFactory.walkElementsInOrder(tree, walker);
-        assertEquals(2, walker.count);
+        assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkElementsPostOrder() {
         final TestWalker<String> walker = new TestWalker<>();
         walkerFactory.walkElementsPostOrder(tree, walker);
-        assertEquals(2, walker.count);
+        assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkElementsBreadthFirst() {
         final TestWalker<String> walker = new TestWalker<>();
         walkerFactory.walkElementsBreadthFirst(tree, walker);
-        assertEquals(2, walker.count);
+        assertEquals(4, walker.count);
     }
 
     public static final class TestWalker<N> implements Walker<N> {
