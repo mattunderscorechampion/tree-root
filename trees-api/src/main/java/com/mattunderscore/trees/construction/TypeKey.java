@@ -59,12 +59,16 @@ public abstract class TypeKey<T extends Tree<?, ?>> {
 
     @Override
     public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        final TypeKey typeKey = (TypeKey) o;
-
-        return type.equals(typeKey.type);
+        if (this == o) {
+            return true;
+        }
+        else if (o == null || !(o instanceof TypeKey)) {
+            return false;
+        }
+        else {
+            final TypeKey typeKey = (TypeKey) o;
+            return type.equals(typeKey.type);
+        }
     }
 
     @Override
