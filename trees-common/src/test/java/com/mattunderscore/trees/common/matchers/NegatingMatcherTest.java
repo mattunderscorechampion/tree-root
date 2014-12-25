@@ -40,14 +40,14 @@ import org.junit.Test;
  */
 public final class NegatingMatcherTest {
     @Test
-    public void matches() {
+    public void notMatches() {
         final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
         final NodeMatcher<String> matcher = new NegatingMatcher<>(new EqualityMatcher<String>("a"));
         assertFalse(matcher.matches(node));
     }
 
     @Test
-    public void notMatches() {
+    public void matches() {
         final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
         final NodeMatcher<String> matcher = new NegatingMatcher<>(new EqualityMatcher<String>("b"));
         assertTrue(matcher.matches(node));
