@@ -1,6 +1,6 @@
-#Trees
+#Tree Root
 
-A tree structure and utility library.
+A tree structure and utility library called Tree Root.
 
 ##Building trees
 
@@ -14,8 +14,8 @@ the tree implementation. This allows for the generic parameters to be matched wi
 This library is sill in an early stage of development. The first major release has not yet been made and the API has
 not been fixed.
 
-Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/trees-parent.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/trees-parent)
-Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/trees-parent/badge.png)](https://coveralls.io/r/mattunderscorechampion/trees-parent)
+Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/tree-root.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/tree-root)
+Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/tree-root/badge.png)](https://coveralls.io/r/mattunderscorechampion/tree-root)
 
 ##Prior art
 
