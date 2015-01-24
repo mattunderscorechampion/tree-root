@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <artifactId>trees-parent</artifactId>
+        <artifactId>tree-root</artifactId>
         <groupId>com.mattunderscore.trees</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>trees-api-examples</artifactId>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
-            <artifactId>trees-common</artifactId>
-        </dependency>
-    </dependencies>
+    <description>Example usage of the tree-root API</description>
 
     <build>
         <plugins>
@@ -29,4 +24,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>

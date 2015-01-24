@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <artifactId>trees-parent</artifactId>
+        <artifactId>tree-root</artifactId>
         <groupId>com.mattunderscore.trees</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>trees-internal</artifactId>
     <description>Implementation of the API.</description>
@@ -19,28 +20,30 @@
             <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
-            <artifactId>trees-spi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
-            <artifactId>trees-utilities</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-spi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-utilities</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
         </dependency>
     </dependencies>
-
 </project>

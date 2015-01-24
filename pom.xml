@@ -9,36 +9,36 @@
     </parent>
 
     <groupId>com.mattunderscore.trees</groupId>
-    <artifactId>trees-parent</artifactId>
+    <artifactId>tree-root</artifactId>
     <packaging>pom</packaging>
     <version>0.0.5-SNAPSHOT</version>
-    <description>Parent container for trees library.</description>
+    <description>Parent project for tree-root library.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <modules>
-        <module>trees-api</module>
-        <module>trees-internal</module>
         <module>string-trees</module>
-        <module>trees-spi</module>
-        <module>trees-common</module>
-        <module>trees-utilities</module>
+        <module>trees-api</module>
         <module>trees-api-examples</module>
+        <module>trees-common</module>
+        <module>trees-internal</module>
+        <module>trees-spi</module>
+        <module>trees-utilities</module>
     </modules>
 
     <licenses>
         <license>
             <name>BSD 3-clause License</name>
-            <url>https://raw.github.com/mattunderscorechampion/trees-parent/master/LICENSE</url>
+            <url>https://raw.github.com/mattunderscorechampion/tree-root/master/LICENSE</url>
         </license>
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/mattunderscorechampion/trees-parent</connection>
-        <developerConnection>scm:git:https://github.com/mattunderscorechampion/trees-parent</developerConnection>
-        <url>https://github.com/mattunderscorechampion/trees-parent</url>
+        <connection>scm:git:https://github.com/mattunderscorechampion/tree-root</connection>
+        <developerConnection>scm:git:https://github.com/mattunderscorechampion/tree-root</developerConnection>
+        <url>https://github.com/mattunderscorechampion/tree-root</url>
         <tag>trees-parent-0.0.3</tag>
     </scm>
 
@@ -63,10 +63,10 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.4</version>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.1</version>
                 <configuration>
-                    <goals>deploy</goals>
+                    <createChecksum>true</createChecksum>
                 </configuration>
             </plugin>
 
@@ -78,23 +78,17 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.2</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>2.5.1</version>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
-                    <createChecksum>true</createChecksum>
+                    <goals>deploy</goals>
                 </configuration>
             </plugin>
 
             <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>3.0.1</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.2</version>
             </plugin>
 
             <plugin>
@@ -107,6 +101,12 @@
                     <aggregate>true</aggregate>
                     <check>false</check>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>3.0.1</version>
             </plugin>
         </plugins>
 
@@ -128,39 +128,47 @@
         <dependencies>
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>string-trees</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
-                <artifactId>trees-internal</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
-                <artifactId>trees-spi</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
-                <artifactId>trees-utilities</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
-                <artifactId>string-trees</artifactId>
+                <artifactId>trees-internal</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>trees-spi</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>trees-utilities</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.11</version>
+                <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>net.jcip</groupId>
                 <artifactId>jcip-annotations</artifactId>
