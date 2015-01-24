@@ -1,16 +1,21 @@
 #Changelog
 
 
-##0.0.0 - Failed release
+###0.0.0 - Failed release
 Wednesday August 27 21:00:51 2014
 
-##0.0.1 - Failed release
+###0.0.1 - Failed release
 Wednesday August 27 21:15:37 2014
 
-##0.0.2 - Initial release of API
+###0.0.2 - Initial release of API
 Wednesday August 27 22:37:17 2014
 
-##0.1.0 - Unreleased (TBD)
+###0.0.3 - Failed release
+Thursday January 22 20:59:57 2015
+
+###0.0.4 - Second release of API
+Thursday January 22 21:27:56 2015
+
 * Added leaf method to nodes
 * Renamed all interfaces to conform to convention
 * Allow mutable trees change the root node 
