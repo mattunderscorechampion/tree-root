@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>trees-internal</artifactId>
+    <name>Tree Root implementation</name>
     <description>Implementation of the API.</description>
 
     <properties>

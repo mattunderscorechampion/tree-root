@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>trees-spi</artifactId>
+    <name>Tree Root SPI</name>
     <description>Provides an API for implementing services.</description>
 
     <properties>

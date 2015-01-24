@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>trees-utilities</artifactId>
+    <name>Utilities</name>
     <description>Provides utilities used by the implementation but not directly related to trees.</description>
 
     <properties>

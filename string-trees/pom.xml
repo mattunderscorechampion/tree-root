@@ -9,6 +9,7 @@
     </parent>
 
     <artifactId>string-trees</artifactId>
+    <name>String tree support</name>
     <description>Provides support specifically for string based trees and nodes.</description>
 
     <properties>
