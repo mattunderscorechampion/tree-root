@@ -8,9 +8,9 @@
         <version>0.0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>trees-common</artifactId>
-    <name>Tree Root common code</name>
-    <description>Contains code that can be used by any implementation of the API.</description>
+    <artifactId>trees-integration-tests</artifactId>
+    <name>Integration tests</name>
+    <description>Integration tests for tests that depend on multiple modules</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,26 +20,30 @@
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-api</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
-            <artifactId>trees-spi</artifactId>
+            <artifactId>trees-binary</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
-            <artifactId>trees-utilities</artifactId>
+            <artifactId>trees-internal</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-pathcopy</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>net.jcip</groupId>
-            <artifactId>jcip-annotations</artifactId>
         </dependency>
     </dependencies>
 </project>
