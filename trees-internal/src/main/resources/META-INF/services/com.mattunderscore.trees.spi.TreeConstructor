@@ -1,4 +1,2 @@
-com.mattunderscore.trees.internal.TreeNodeImpl$Constructor
-com.mattunderscore.trees.internal.TreeNodeImpl$DefaultConstructor
 com.mattunderscore.trees.internal.MutableTreeImpl$Constructor
 com.mattunderscore.trees.internal.MutableTreeImpl$DefaultConstructor

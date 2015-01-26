@@ -8,9 +8,9 @@
         <version>0.0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>string-trees</artifactId>
-    <name>String tree support</name>
-    <description>Provides support specifically for string based trees and nodes.</description>
+    <artifactId>trees-immutable</artifactId>
+    <name>Immutable Tree Root implementation</name>
+    <description>Immutable implementation of the API.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,13 +19,32 @@
     <dependencies>
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
-            <artifactId>trees-immutable</artifactId>
+            <artifactId>trees-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-spi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-utilities</artifactId>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
         </dependency>
     </dependencies>
 </project>

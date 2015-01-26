@@ -25,6 +25,7 @@
         <module>trees-api-examples</module>
         <module>trees-binary</module>
         <module>trees-common</module>
+        <module>trees-immutable</module>
         <module>trees-internal</module>
         <module>trees-integration-tests</module>
         <module>trees-spi</module>
@@ -151,6 +152,12 @@
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>trees-immutable</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

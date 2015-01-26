@@ -3,10 +3,14 @@
 /target
 /string-trees/target
 /trees-api/target
+/trees-binary/target
+/trees-immutable/target
 /trees-internal/target
+/trees-integration-tests/target
 /trees-spi/target
 /trees-common/target
 /trees-utilities/target
+/trees-pathcopy/target
 /trees-api-examples/target
 /trees-spi-examples/target
 .classpath

@@ -31,6 +31,12 @@
 
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-immutable</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-internal</artifactId>
             <scope>test</scope>
         </dependency>
