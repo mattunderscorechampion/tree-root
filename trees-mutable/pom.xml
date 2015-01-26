@@ -8,9 +8,9 @@
         <version>0.0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>trees-internal</artifactId>
-    <name>Tree Root implementation</name>
-    <description>Implementation of the API.</description>
+    <artifactId>trees-mutable</artifactId>
+    <name>Mutable Tree Root implementation</name>
+    <description>Mutable implementation of the API.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

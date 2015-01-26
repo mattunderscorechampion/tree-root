@@ -5,6 +5,7 @@
 /trees-api/target
 /trees-binary/target
 /trees-immutable/target
+/trees-mutable/target
 /trees-internal/target
 /trees-integration-tests/target
 /trees-spi/target
