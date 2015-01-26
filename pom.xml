@@ -163,13 +163,13 @@
 
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
-                <artifactId>trees-internal</artifactId>
+                <artifactId>trees-integration-tests</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
-                <artifactId>trees-integration-tests</artifactId>
+                <artifactId>trees-mutable</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
