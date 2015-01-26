@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>trees-binary</artifactId>
-    <name>Binary tree</name>
+    <name>Binary tree implementation</name>
     <description>Implementation of binary trees</description>
 
     <properties>

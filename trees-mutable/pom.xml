@@ -9,8 +9,8 @@
     </parent>
 
     <artifactId>trees-mutable</artifactId>
-    <name>Mutable Tree Root implementation</name>
-    <description>Mutable implementation of the API.</description>
+    <name>Mutable tree implementation</name>
+    <description>Implementation of a mutable tree</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

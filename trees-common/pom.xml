@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>trees-common</artifactId>
-    <name>Tree Root common code</name>
+    <name>Tree Root common</name>
     <description>Contains code that can be used by any implementation of the API.</description>
 
     <properties>

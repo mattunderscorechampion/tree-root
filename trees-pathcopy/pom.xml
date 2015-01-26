@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>trees-pathcopy</artifactId>
-    <name>Path copy tree</name>
+    <name>Path copy tree implementation</name>
     <description>Implementation of a path copy tree</description>
 
     <properties>
