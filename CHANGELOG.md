@@ -41,3 +41,8 @@ Thursday January 22 21:27:56 2015
 * Added bounded key SPI components
 * Added type key to tree builders to help match generics
 * Added separate keys for default specific implementations
+
+###0.0.5 - TBD
+
+* Renamed project to Tree Root
+* Separated tree implementations into different modules
