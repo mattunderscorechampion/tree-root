@@ -23,32 +23,30 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal.pathcopy.holder;
-
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
+package com.mattunderscore.trees.pathcopy.holder;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Node holder for child nodes.
+ * Node holder for root nodes
  * @author Matt Champion on 14/11/14.
  */
-final class PathCopyNodeHolder<E> implements Holder<E> {
-    private final Holder<E> parent;
+public final class PathCopyRootHolder<E> implements Holder<E> {
     private final AtomicReference<PathCopyNode<E>> currentNodeRef;
     private final Lock lock = new ReentrantLock();
 
-    public PathCopyNodeHolder(Holder<E> parent) {
-        this.parent = parent;
+    public PathCopyRootHolder() {
         currentNodeRef = new AtomicReference<>();
     }
 
+    @Override
     public PathCopyNode<E> get() {
         return currentNodeRef.get();
     }
 
+    @Override
     public void set(PathCopyNode<E> node) {
         currentNodeRef.set(node);
     }
@@ -63,21 +61,8 @@ final class PathCopyNodeHolder<E> implements Holder<E> {
         lock.unlock();
     }
 
+    @Override
     public void propagate(PathCopyNode<E> currentNode, PathCopyNode<E> newNode) {
-        final PathCopyNode<E> currentParent;
-        final PathCopyNode<E> newParent;
-        parent.lock();
-        try {
-            currentParent = parent.get();
-            final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren =
-                    currentParent.getChildren().replace(newNode, currentNode);
-            newParent = new PathCopyNode<>(parent, currentParent.getElement(), newChildren);
-            parent.set(newParent);
-        }
-        finally {
-            parent.unlock();
-        }
-
-        parent.propagate(currentParent, newParent);
+        currentNodeRef.set(newNode);
     }
 }

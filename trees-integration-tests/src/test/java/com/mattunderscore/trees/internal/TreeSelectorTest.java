@@ -30,7 +30,7 @@ import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.common.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
+import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;

@@ -31,7 +31,7 @@ import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.immutable.TreeNodeImpl;
-import com.mattunderscore.trees.internal.pathcopy.holder.PathCopyTree;
+import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableTreeImpl;
 import com.mattunderscore.trees.tree.Node;
