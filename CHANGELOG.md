@@ -46,3 +46,5 @@ Thursday January 22 21:27:56 2015
 
 * Renamed project to Tree Root
 * Separated tree implementations into different modules
+* Separated tests that rely on multiple modules into separate module
+* Separated tree implementations into different packages
