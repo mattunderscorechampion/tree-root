@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.internal;
 
+import com.mattunderscore.trees.immutable.TreeNodeImpl;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.tree.Tree;
