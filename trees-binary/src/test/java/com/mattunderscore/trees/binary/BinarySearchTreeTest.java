@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.binary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -35,7 +35,7 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.TreesImpl;
-import com.mattunderscore.trees.internal.search.BinarySearchTree;
+import com.mattunderscore.trees.binary.search.BinarySearchTree;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 

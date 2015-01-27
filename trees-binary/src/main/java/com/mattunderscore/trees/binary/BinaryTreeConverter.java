@@ -23,38 +23,49 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.internal;
+package com.mattunderscore.trees.binary;
 
-import com.mattunderscore.trees.binary.BinaryTree;
-import com.mattunderscore.trees.binary.BinaryTreeNode;
-import com.mattunderscore.trees.common.AbstractTreeWrapper;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import java.util.Iterator;
+
+import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Wrap and binary node to create a binary tree.
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
-
-    public BinaryTreeWrapper() {
-        super();
+public final class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, BinaryTreeNode<E>>> {
+    @Override
+    public BinaryTree<E, BinaryTreeNode<E>> build(Tree<E, ? extends Node<E>> sourceTree) {
+        final Node<E> root = sourceTree.getRoot();
+        return new BinaryTreeWrapper<E, BinaryTreeNode<E>>(duplicate(root));
     }
 
-    public BinaryTreeWrapper(N root) {
-        super(root);
+    @Override
+    public Class<? extends Tree> forClass() {
+        return BinaryTree.class;
     }
 
-    public static final class NodeConverter<E, N extends BinaryTreeNode<E>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>, N> {
-
-        @Override
-        public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {
-            return new BinaryTreeWrapper<>(node);
+    private BinaryTreeNodeImpl<E> duplicate(Node<E> sourceChild) {
+        final Iterator<? extends Node<E>> children = sourceChild.getChildren().iterator();
+        if (children.hasNext()) {
+            final Node<E> left = children.next();
+            Node<E> right = null;
+            if (children.hasNext()) {
+                right = children.next();
+            }
+            if (children.hasNext()) {
+                throw new IllegalStateException("A binary tree can only have two children");
+            }
+            final BinaryTreeNodeImpl<E> newLeft = duplicate(left);
+            BinaryTreeNodeImpl<E> newRight = null;
+            if (right != null) {
+                newRight = duplicate(right);
+            }
+            return new BinaryTreeNodeImpl<>(sourceChild.getElement(), newLeft, newRight);
         }
-
-        @Override
-        public Class<? extends Node> forClass() {
-            return BinaryTreeNode.class;
+        else {
+            return new BinaryTreeNodeImpl<>(sourceChild.getElement());
         }
     }
 }

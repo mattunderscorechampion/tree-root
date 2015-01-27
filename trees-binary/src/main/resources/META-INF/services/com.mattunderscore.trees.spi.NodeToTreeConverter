@@ -1,2 +1,2 @@
-com.mattunderscore.trees.internal.BinaryTreeWrapper$NodeConverter
-com.mattunderscore.trees.internal.mutable.MutableBinaryTreeImpl$NodeConverter
+com.mattunderscore.trees.binary.BinaryTreeWrapper$NodeConverter
+com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl$NodeConverter
