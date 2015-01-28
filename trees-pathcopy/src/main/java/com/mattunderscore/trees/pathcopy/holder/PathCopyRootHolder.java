@@ -33,7 +33,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Node holder for root nodes
  * @author Matt Champion on 14/11/14.
  */
-public final class PathCopyRootHolder<E> implements Holder<E> {
+final class PathCopyRootHolder<E> implements Holder<E> {
     private final AtomicReference<PathCopyNode<E>> currentNodeRef;
     private final Lock lock = new ReentrantLock();
 
