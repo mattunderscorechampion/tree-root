@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,59 +25,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 /**
- * Path copy tree that uses node holders.
- * @author Matt Champion on 14/11/14.
+ * Implementation of {@link com.mattunderscore.trees.spi.TreeConverter} for
+ * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyTree}.
+ * @author Matt Champion on 28/01/15.
  */
-public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
-    private final AtomicReference<Holder<E>> holderRef;
+public final class Converter<E> implements TreeConverter<E, PathCopyTree<E>> {
+    private final NodeConverter<E> converter = new NodeConverter<>();
 
-    PathCopyTree() {
-        this.holderRef = new AtomicReference<>();
+    @Override
+    public PathCopyTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {
+        final Node<E> root = sourceTree.getRoot();
+        return converter.treeFromRootNode(root);
     }
 
     @Override
-    public MutableNode<E> setRoot(E root) {
-        final Holder<E> holder = new PathCopyRootHolder<>();
-        final PathCopyNode<E> node = new PathCopyNode<>(holder, root);
-        holder.set(node);
-        holderRef.set(holder);
-        return node;
-    }
-
-    @Override
-    public MutableNode<E> getRoot() {
-        final Holder<E> node = holderRef.get();
-        if (node == null) {
-            return null;
-        }
-        else {
-            return node.get();
-        }
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return holderRef.get() == null;
-    }
-
-    /**
-     * Construct a TypeKey for a specific element type.
-     * @param <E> The element type
-     * @return The type key
-     */
-    public static <E> TypeKey<PathCopyTree<E>> typeKey() {
-        return new TypeKey<PathCopyTree<E>>() {};
+    public Class<? extends Tree> forClass() {
+        return PathCopyTree.class;
     }
 }
