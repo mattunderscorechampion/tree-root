@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,50 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.immutable;
 
-import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.Immutable;
 
 /**
- * Immutable tree and tree node implementation.
- * @author Matt Champion on 10/06/14.
+ * Implementation of {@link com.mattunderscore.trees.spi.TreeConstructor} for
+ * {@link com.mattunderscore.trees.tree.Tree}.
+ * @author Matt Champion on 28/01/15.
  */
-@Immutable
-public final class TreeNodeImpl<E> extends ImmutableNode<E> implements Tree<E, Node<E>>, Node<E> {
-
-    TreeNodeImpl(E element, Object[] children) {
-        super(element, children);
-    }
+public final class DefaultConstructor<E> extends AbstractConstructor<E> {
 
     @Override
-    public SimpleCollection<Node<E>> getChildren() {
-        return (SimpleCollection<Node<E>>) super.getChildren();
-    }
-
-    @Override
-    public Node<E> getRoot() {
-        if (isEmpty()) {
-            return null;
-        }
-        else {
-            return this;
-        }
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return element == null;
-    }
-
-    /**
-     * Construct a TypeKey for a specific element type.
-     * @param <E> The element type
-     * @return The type key
-     */
-    public static <E> TypeKey<? extends Tree<E, Node<E>>> typeKey() {
-        return new TypeKey<TreeNodeImpl<E>>() {};
+    public Class<? extends Tree> forClass() {
+        return Tree.class;
     }
 }

@@ -1,2 +1,2 @@
-com.mattunderscore.trees.immutable.TreeNodeImpl$EmptyConstructor
-com.mattunderscore.trees.immutable.TreeNodeImpl$DefaultEmptyConstructor
+com.mattunderscore.trees.immutable.EmptyConstructor
+com.mattunderscore.trees.immutable.DefaultEmptyConstructor
