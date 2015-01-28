@@ -1,2 +1,2 @@
-com.mattunderscore.trees.mutable.MutableTreeImpl$Converter
-com.mattunderscore.trees.mutable.MutableTreeImpl$DefaultConverter
+com.mattunderscore.trees.mutable.Converter
+com.mattunderscore.trees.mutable.DefaultConverter

@@ -29,10 +29,6 @@ import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.common.AbstractCopyingNodeConverter;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 import net.jcip.annotations.GuardedBy;
@@ -58,7 +54,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
         elementList = new FixedUncheckedSimpleCollection<>(new Object[0]);
     }
 
-    private MutableTreeImpl(E element, SimpleCollection<MutableNode<E>> childList) {
+    MutableTreeImpl(E element, SimpleCollection<MutableNode<E>> childList) {
         super(element);
         elementList = childList;
     }
@@ -142,96 +138,6 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
     public synchronized MutableNode<E> setRoot(E root) {
         elementReference.set(root);
         return this;
-    }
-
-    private static abstract class AbstractConstructor<E> implements TreeConstructor<E, MutableTree<E, MutableNode<E>>> {
-
-        @Override
-        public final MutableTree<E, MutableNode<E>> build(E e, MutableTree<E, MutableNode<E>>... subtrees) {
-            return new MutableTreeImpl(e, new FixedUncheckedSimpleCollection<E>(subtrees));
-        }
-    }
-
-    public static final class Constructor<E> extends AbstractConstructor<E> {
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return MutableTreeImpl.class;
-        }
-    }
-
-    public static final class DefaultConstructor<E> extends AbstractConstructor<E> {
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return MutableTree.class;
-        }
-    }
-
-    private static abstract class AbstractEmptyConstructor<E> implements EmptyTreeConstructor<E, MutableTree<E, MutableNode<E>>> {
-
-        @Override
-        public final MutableTree<E, MutableNode<E>> build() {
-            return new MutableTreeImpl(null, new FixedUncheckedSimpleCollection<>(new Object[0]));
-        }
-    }
-
-    public static final class EmptyConstructor<E> extends AbstractEmptyConstructor<E> {
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return MutableTreeImpl.class;
-        }
-    }
-
-    public static final class DefaultEmptyConstructor<E> extends AbstractEmptyConstructor<E> {
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return MutableTree.class;
-        }
-    }
-
-    private static abstract class AbstractConverter<E> implements TreeConverter<E, MutableTreeImpl<E>> {
-
-        @Override
-        public final MutableTreeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
-            final Node<E> root = sourceTree.getRoot();
-            final MutableTreeImpl<E> newTree = new MutableTreeImpl<>(root.getElement());
-            for (final Node<E> child : root.getChildren()) {
-                duplicate(newTree, child);
-            }
-            return newTree;
-        }
-
-        private void duplicate(MutableTreeImpl<E> newParent, Node<E> sourceChild) {
-            final MutableTreeImpl<E> newChild = (MutableTreeImpl<E>) newParent.addChild(sourceChild.getElement());
-            for (final Node<E> child : sourceChild.getChildren()) {
-                duplicate(newChild, child);
-            }
-        }
-    }
-
-    public static final class Converter<E> extends AbstractConverter<E> {
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return MutableTreeImpl.class;
-        }
-    }
-
-    public static final class DefaultConverter<E> extends AbstractConverter<E> {
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return MutableTree.class;
-        }
-    }
-
-    public static final class NodeConverter<E> extends AbstractCopyingNodeConverter<E, MutableNode<E>, MutableTree<E, MutableNode<E>>, MutableNode<E>> {
-        public NodeConverter() {
-            super();
-        }
     }
 
     /**
