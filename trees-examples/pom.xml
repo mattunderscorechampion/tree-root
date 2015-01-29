@@ -9,8 +9,8 @@
     </parent>
 
     <artifactId>trees-api-examples</artifactId>
-    <name>Tree Root API examples</name>
-    <description>Example usage of the Tree Root API</description>
+    <name>Tree Root examples</name>
+    <description>Example usage of the Tree Root API and implementations</description>
 
     <build>
         <plugins>
