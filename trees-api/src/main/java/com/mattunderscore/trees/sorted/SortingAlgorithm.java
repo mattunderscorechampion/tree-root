@@ -25,9 +25,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.sorted;
 
+import java.util.Comparator;
+
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableTree;
+
 /**
  * An algorithm used to sort trees.
  * @author Matt Champion on 07/09/14.
  */
 public interface SortingAlgorithm {
+
+      /**
+       * Add a new tree in a sorted location.
+       * @param comparator Comparator
+       * @param tree Tree
+       * @param element Element
+       * @param <E> Type of eleemnt
+       */
+      <E> void addNewElement(Comparator<E> comparator, MutableTree<E, ? extends MutableNode<E>> tree, E element);
 }

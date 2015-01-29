@@ -27,11 +27,15 @@ package com.mattunderscore.trees.common;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Comparator;
+
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTree;
@@ -74,6 +78,10 @@ public class TreeBuilderFactoryImplTest {
     public void testSortedTreeBuilder() {
         final SortedTreeBuilder<String> builder = trees.treeBuilders()
             .sortedTreeBuilder(new ComparableComparator<String>(), new SortingAlgorithm() {
+                @Override
+                public <E> void addNewElement(Comparator<E> comparator, MutableTree<E, ? extends MutableNode<E>> tree,
+                    E element) {
+                }
             });
     }
 }
