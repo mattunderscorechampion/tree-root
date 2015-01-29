@@ -31,6 +31,7 @@ import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
+import com.mattunderscore.trees.utilities.ComparableComparator;
 
 import java.util.Comparator;
 
@@ -65,7 +66,17 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
     }
 
     @Override
+    public <E extends Comparable> SortingTreeBuilder<E> sortingTreeBuilder() {
+        return new SortingTreeBuilderImpl<>(support, new ComparableComparator<E>());
+    }
+
+    @Override
     public <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm) {
         throw new UnsupportedOperationException("Sorting algorithms not yet implemented");
+    }
+
+    @Override
+    public <E extends Comparable> SortedTreeBuilder<E> sortedTreeBuilder(SortingAlgorithm algorithm) {
+        return sortedTreeBuilder(new ComparableComparator<E>(), algorithm);
     }
 }

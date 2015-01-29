@@ -39,14 +39,14 @@ public interface TreeBuilderFactory {
     /**
      * Obtain a {@link TopDownTreeRootBuilder}.
      * @param <E> The element type of the tree
-     * @return
+     * @return Top down tree builder
      */
     <E> TopDownTreeRootBuilder<E> topDownBuilder();
 
     /**
      * Obtain a {@link BottomUpTreeBuilder}.
      * @param <E> The element type of the tree
-     * @return
+     * @return Bottom up tree builder
      */
     <E> BottomUpTreeBuilder<E> bottomUpBuilder();
 
@@ -54,17 +54,35 @@ public interface TreeBuilderFactory {
      * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorting trees.
      * @param comparator The comparator used to sort the elements
      * @param <E> The element type of the tree
-     * @return
+     * @return Sorting tree builder
      */
     <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator);
 
     /**
-     * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorted trees. The algorithm to place the nodes must be
-     * specified separately.
+     * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorting trees. Uses the
+     * element's comparison operations to sort the tree.
+     * @param <E> The element type of the tree
+     * @return Sorting tree builder
+     */
+    <E extends Comparable> SortingTreeBuilder<E> sortingTreeBuilder();
+
+    /**
+     * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorted trees. The
+     * algorithm to place the nodes must be specified separately.
      * @param comparator The comparator used to sort the elements
      * @param algorithm The algorithm to sort the trees.
      * @param <E> The element type of the tree
-     * @return
+     * @return Sorted tree builder
      */
     <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm);
+
+    /**
+     * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorted trees. The
+     * algorithm to place the nodes must be specified separately. Uses the element's comparison operations to sort the
+     * tree.
+     * @param algorithm The algorithm to sort the trees.
+     * @param <E> The element type of the tree
+     * @return Sorted tree builder
+     */
+    <E extends Comparable> SortedTreeBuilder<E> sortedTreeBuilder(SortingAlgorithm algorithm);
 }

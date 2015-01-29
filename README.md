@@ -56,8 +56,7 @@ This example builds an immutable tree and walks over the elements in order, left
     final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
     final Trees trees = serviceLoader.iterator().next();
 
-    final SortingTreeBuilder<Integer> builder = trees.treeBuilders()
-        .sortingTreeBuilder(new ComparableComparator<Integer>());
+    final SortingTreeBuilder<Integer> builder = trees.treeBuilders().sortingTreeBuilder();
     final BinarySearchTree<Integer> tree = builder
         .addElement(2)
         .addElement(1)

@@ -59,6 +59,12 @@ public class TreeBuilderFactoryImplTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void testSortingTreeBuilder() {
+        final SortingTreeBuilder<String> builder = trees.treeBuilders().sortingTreeBuilder();
+        builder.build(new TypeKey<SortingTree<String, ? extends Node<String>>>() {});
+    }
+
+    @Test(expected = OperationNotSupportedForType.class)
+    public void testSortingTreeBuilderWithComparator() {
         final SortingTreeBuilder<String> builder = trees.treeBuilders()
             .sortingTreeBuilder(new ComparableComparator<String>());
         builder.build(new TypeKey<SortingTree<String, ? extends Node<String>>>() {});
