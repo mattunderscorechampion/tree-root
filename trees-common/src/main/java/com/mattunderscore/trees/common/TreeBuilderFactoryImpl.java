@@ -72,7 +72,7 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
 
     @Override
     public <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm) {
-        throw new UnsupportedOperationException("Sorting algorithms not yet implemented");
+        return new SortedTreeBuilderImpl(support, comparator, algorithm);
     }
 
     @Override

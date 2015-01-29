@@ -70,7 +70,7 @@ public class TreeBuilderFactoryImplTest {
         builder.build(new TypeKey<SortingTree<String, ? extends Node<String>>>() {});
     }
 
-    @Test(expected = UnsupportedOperationException.class) // Sorting algorithms not implemented
+    @Test
     public void testSortedTreeBuilder() {
         final SortedTreeBuilder<String> builder = trees.treeBuilders()
             .sortedTreeBuilder(new ComparableComparator<String>(), new SortingAlgorithm() {
