@@ -4,11 +4,14 @@ A tree structure and utility library called Tree Root.
 
 ##Building trees
 
-There are two ways to build trees. From the bottom-up, starting with leaves and attaching them to a parent. From the
-top-down, starting the root and adding children. The builders are generalised for any tree implementation. The tree
-structure is specified first then the implementation of the tree. The implementation of the tree is specified either by
-the implementation class or a TypeKey. The TypeKey is an abstract class that should be subclassed to fix the type of
-the tree implementation. This allows for the generic parameters to be matched without warnings about unchecked casts.
+There are multiple ways to build trees. From the bottom-up, starting with leaves and attaching them to a parent. From
+the top-down, starting the root and adding children. Organised and sorted tree builders where the structure of the tree
+is left up to the builder. The builders are generalised for any tree implementation. The tree structure is specified
+first then the implementation of the tree.
+
+The implementation of the tree is specified either by the implementation class or a TypeKey. The TypeKey is an abstract
+class that should be subclassed to fix the type of the tree implementation. This allows for the generic parameters to
+be matched without warnings about unchecked casts.
 
 ##Examples
 
@@ -136,6 +139,7 @@ should not be implemented within specific tree implementations.
 
 Where utilities depend on the specific implementations of the tree this should use the SPI and the ServiceLoader
 interface. The ServiceLoader can be used to look up implementation specific support for the task provided by the SPI.
+
 For example to rebalance a tree in place, using the methods provided by the API may not allow efficient operations as
 they are based on elements. An SPI implementation can be provided for each concrete mutable tree implementation that
 provides operations on nodes to support more efficient rebalancing.
@@ -190,9 +194,10 @@ service is not complete or the implementation does not support the action.
 
 When a TreesImpl object is created it looks up all the implementations using the ServiceLoader and registers the SPI
 implementation against the class that is used for. When a utility operation is used it looks up the SPI implementation
-for the tree or node class it has been invoked for and uses the SPI to perform the operation. The SPI implementation
-may use the fact that it registered against the concrete type to cast a Tree or Node to the concrete type safely at
-runtime. This allows for the use of methods not exposed by the API.
+for the tree or node class it has been invoked for and uses the SPI to perform the operation.
+
+The SPI implementation may use the fact that it registered against the concrete type to cast a Tree or Node to the
+concrete type safely at runtime. This allows for the use of methods not exposed by the API.
 
 This is intended to provide a Python like approach to certain utilities. The Python len() function can be used for any
 object that provides a \__len\__() method. This allows standard functions or utilities to be used with new and extended
