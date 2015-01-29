@@ -26,11 +26,11 @@
         <module>trees-binary</module>
         <module>trees-common</module>
         <module>trees-immutable</module>
-        <module>trees-mutable</module>
         <module>trees-integration-tests</module>
+        <module>trees-mutable</module>
+        <module>trees-pathcopy</module>
         <module>trees-spi</module>
         <module>trees-utilities</module>
-        <module>trees-pathcopy</module>
     </modules>
 
     <licenses>

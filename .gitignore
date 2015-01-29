@@ -1,6 +1,7 @@
 /.idea
 *.iml
 .DS_Store
+dependency-reduced-pom.xml
 /target
 /string-trees/target
 /trees-api/target
