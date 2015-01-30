@@ -74,6 +74,6 @@ public class TreeBuilderFactoryImplTest {
     public void testSortedTreeBuilder() {
         final SortedTreeBuilder<String> builder = trees.treeBuilders()
             .sortedTreeBuilder(new ComparableComparator<String>(), new SortingAlgorithm() {
-            });
+        });
     }
 }

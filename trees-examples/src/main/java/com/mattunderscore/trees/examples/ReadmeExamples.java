@@ -11,7 +11,6 @@ import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.ComparableComparator;
 
 /**
  * Examples used in the README.
