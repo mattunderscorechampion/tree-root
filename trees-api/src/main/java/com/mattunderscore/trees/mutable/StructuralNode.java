@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -26,22 +26,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.mutable;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * Represents a mutable node of a tree.
- * @author Matt Champion on 08/08/14.
+ * Mutable node. Unlike {@link MutableNode} child nodes are placed at specific positions.
+ * @author Matt Champion on 30/01/15
  */
-public interface MutableNode<E> extends Node<E>, NodeAppender<E, MutableNode<E>>
-{
-    @Override
-    SimpleCollection<? extends MutableNode<E>> getChildren();
+public interface StructuralNode<E> extends Node<E> {
+      @Override
+      SimpleCollection<? extends StructuralNode<E>> getChildren();
 
-    /**
-     * Remove the node if it is a child of the recipient
-     * @param child the node to remove
-     * @return {@code true} if the node was removed
-     */
-    boolean removeChild(MutableNode<E> child);
+      /**
+       * Set the nth child node.
+       * <p>
+       * Replaces any node already there.
+       * @param nChild The nth value
+       * @param element The element
+       * @return The new node
+       */
+      StructuralNode<E> setChild(int nChild, E element);
 }

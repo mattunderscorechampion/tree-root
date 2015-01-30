@@ -30,6 +30,7 @@ import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.StructuralNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -43,7 +44,7 @@ import net.jcip.annotations.NotThreadSafe;
  * @author Matt Champion on 07/08/14.
  */
 @NotThreadSafe
-public final class LinkedTree<E> extends AbstractSettableNode<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E> {
+public final class LinkedTree<E> extends AbstractSettableNode<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E>, StructuralNode<E> {
     private final ArrayListSimpleCollection<LinkedTree<E>> children;
 
     LinkedTree(E root) {
@@ -75,8 +76,15 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
     }
 
     @Override
-    public SimpleCollection<? extends MutableNode<E>> getChildren() {
+    public SimpleCollection<LinkedTree<E>> getChildren() {
         return children;
+    }
+
+    @Override
+    public StructuralNode<E> setChild(int nChild, E element) {
+        final LinkedTree<E> child = new LinkedTree<>(element);
+        children.set(nChild, child);
+        return child;
     }
 
     @Override
@@ -91,12 +99,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
 
     @Override
     public boolean removeChild(MutableNode<E> child) {
-        if (child == null) {
-            return false;
-        }
-        else {
-            return child.getClass().equals(getClass()) && children.remove((LinkedTree<E>)child);
-        }
+        return child != null && child.getClass().equals(getClass()) && children.remove((LinkedTree<E>)child);
     }
 
     @Override

@@ -26,6 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.utilities.collections;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
+
 import net.jcip.annotations.NotThreadSafe;
 
 import java.util.*;
@@ -55,12 +57,35 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
         list = new ArrayList<>(initial);
     }
 
+    /**
+     * Add element to the end of the list.
+     * @param element The element to add
+     */
     public void add(E element) {
         if (element == null) {
             throw new NullPointerException("Nulls are not permitted in this collection");
         }
         else {
             list.add(element);
+        }
+    }
+
+    /**
+     * Set an element as a specific position.
+     * @param index The position
+     * @param element The element
+     * @return Any replaced value
+     */
+    public E set(int index, E element) {
+        if (index < list.size()) {
+            return list.set(index, element);
+        }
+        else {
+            for (int i = list.size(); i < index; i++) {
+                list.add(null);
+            }
+            list.add(element);
+            return null;
         }
     }
 
@@ -85,7 +110,28 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return list.iterator();
+        final Iterator<E> iterator = list.iterator();
+        return new PrefetchingIterator<E>() {
+            @Override
+            protected E calculateNext() throws NoSuchElementException {
+                while(true) {
+                    final E next = iterator.next();
+                    if (next != null) {
+                        return next;
+                    }
+                }
+            }
+
+            @Override
+            protected boolean isRemoveSupported() {
+                return true;
+            }
+
+            @Override
+            protected void remove(E current) {
+                iterator.remove();
+            }
+        };
     }
 
 }

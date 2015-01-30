@@ -116,4 +116,81 @@ public final class ArrayListSimpleCollectionTest {
 
         assertEquals(0, collection.size());
     }
+
+    @Test
+    public void set0() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.set(0, "a");
+
+        assertEquals(1, collection.size());
+        assertEquals("a", collection.iterator().next());
+        assertEquals("a", collection.structuralIterator().next());
+    }
+
+    @Test
+    public void set1() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.set(1, "a");
+
+        assertEquals(2, collection.size());
+        assertEquals("a", collection.iterator().next());
+        final Iterator<String> structuralIterator = collection.structuralIterator();
+        assertEquals(null, structuralIterator.next());
+        assertEquals("a", structuralIterator.next());
+    }
+
+    @Test
+    public void set2() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.set(2, "a");
+
+        assertEquals(3, collection.size());
+        assertEquals("a", collection.iterator().next());
+        final Iterator<String> structuralIterator = collection.structuralIterator();
+        assertEquals(null, structuralIterator.next());
+        assertEquals(null, structuralIterator.next());
+        assertEquals("a", structuralIterator.next());
+    }
+
+    @Test
+    public void set3() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.add("x");
+        collection.set(0, "a");
+
+        assertEquals(1, collection.size());
+        assertEquals("a", collection.iterator().next());
+        assertEquals("a", collection.structuralIterator().next());
+    }
+
+    @Test
+    public void set4() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.add("x");
+        collection.set(1, "a");
+
+        assertEquals(2, collection.size());
+        final Iterator<String> iterator = collection.iterator();
+        final Iterator<String> structuralIterator = collection.structuralIterator();
+        assertEquals("x", iterator.next());
+        assertEquals("a", iterator.next());
+        assertEquals("x", structuralIterator.next());
+        assertEquals("a", structuralIterator.next());
+    }
+
+    @Test
+    public void set5() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.add("x");
+        collection.set(2, "a");
+
+        assertEquals(3, collection.size());
+        final Iterator<String> iterator = collection.iterator();
+        final Iterator<String> structuralIterator = collection.structuralIterator();
+        assertEquals("x", iterator.next());
+        assertEquals("a", iterator.next());
+        assertEquals("x", structuralIterator.next());
+        assertEquals(null, structuralIterator.next());
+        assertEquals("a", structuralIterator.next());
+    }
 }
