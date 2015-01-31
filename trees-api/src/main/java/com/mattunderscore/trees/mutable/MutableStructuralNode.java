@@ -26,15 +26,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.mutable;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.StructuralNode;
 
 /**
- * Mutable node. Unlike {@link MutableNode} child nodes are placed at specific positions.
+ * Mutable structural node. Unlike {@link MutableNode} child nodes are placed at specific positions.
  * @author Matt Champion on 30/01/15
  */
-public interface StructuralNode<E> extends Node<E> {
+public interface MutableStructuralNode<E> extends StructuralNode<E> {
       @Override
-      SimpleCollection<? extends StructuralNode<E>> getChildren();
+      SimpleCollection<? extends MutableStructuralNode<E>> getChildren();
 
       /**
        * Set the nth child node.
@@ -44,5 +44,5 @@ public interface StructuralNode<E> extends Node<E> {
        * @param element The element
        * @return The new node
        */
-      StructuralNode<E> setChild(int nChild, E element);
+      MutableStructuralNode<E> setChild(int nChild, E element);
 }

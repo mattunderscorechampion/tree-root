@@ -30,21 +30,24 @@ import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.mutable.StructuralNode;
+import com.mattunderscore.trees.mutable.MutableStructuralNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.StructuralNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
 import net.jcip.annotations.NotThreadSafe;
 
 /**
+ * A simple tree implementation. Commonly used for temporary trees.
  * @author Matt Champion on 07/08/14.
  */
 @NotThreadSafe
-public final class LinkedTree<E> extends AbstractSettableNode<E> implements MutableTree<E, LinkedTree<E>>, MutableNode<E>, StructuralNode<E> {
+public final class LinkedTree<E> extends AbstractSettableNode<E> implements MutableTree<E, LinkedTree<E>>,
+        MutableNode<E>, MutableStructuralNode<E> {
     private final ArrayListSimpleCollection<LinkedTree<E>> children;
 
     LinkedTree(E root) {
@@ -81,7 +84,12 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
     }
 
     @Override
-    public StructuralNode<E> setChild(int nChild, E element) {
+    public StructuralNode<E> getChild(int nChild) {
+        return children.get(nChild);
+    }
+
+    @Override
+    public MutableStructuralNode<E> setChild(int nChild, E element) {
         final LinkedTree<E> child = new LinkedTree<>(element);
         children.set(nChild, child);
         return child;

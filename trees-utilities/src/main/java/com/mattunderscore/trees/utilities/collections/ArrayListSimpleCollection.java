@@ -73,8 +73,19 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
     /**
      * Set an element as a specific position.
      * @param index The position
-     * @param element The element
      * @return Any replaced value
+     * @throws IndexOutOfBoundsException If index is greater than the current size
+     */
+    public E get(int index) throws IndexOutOfBoundsException {
+        return list.get(index);
+    }
+
+    /**
+     * Set an element as a specific position. If index is beyond the current size, any intermediate values will be set
+     * to null.
+     * @param index The position
+     * @param element The element
+     * @return The element
      */
     public E set(int index, E element) {
         if (index < list.size()) {
