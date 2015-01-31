@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,44 +23,32 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.base;
+package com.mattunderscore.trees.utilities;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
 import org.junit.Test;
 
 /**
- * Unit tests for ImmutableNode.
- * @author Matt Champion on 20/12/14
+ * Comparator test.
+ * @author Matt Champion
  */
-public final class ImmutableNodeTest {
+public final class ComparableComparatorTest {
     @Test
-    public void test0() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
-        assertEquals("a", node.getElement());
-        assertEquals(String.class, node.getElementClass());
-        assertTrue(node.isLeaf());
+    public void lessThan() {
+        final ComparableComparator<Integer> comparator = new ComparableComparator<>();
+        assertEquals(1, comparator.compare(3, 7));
     }
 
     @Test
-    public void test1() {
-        final Node<String> node = new ImmutableNode<String>("a", new ImmutableNode[0]) {};
-        assertEquals("a", node.getElement());
-        assertEquals(String.class, node.getElementClass());
-        assertTrue(node.isLeaf());
+    public void greaterThan() {
+        final ComparableComparator<Integer> comparator = new ComparableComparator<>();
+        assertEquals(-1, comparator.compare(7, 3));
     }
 
     @Test
-    public void test2() {
-        final Node<String> node = new ImmutableNode<String>(
-            "a",
-            DuplicateOnWriteSimpleCollection.<ImmutableNode<String>>create()) {};
-        assertEquals("a", node.getElement());
-        assertEquals(String.class, node.getElementClass());
-        assertTrue(node.isLeaf());
+    public void equals() {
+        final ComparableComparator<Integer> comparator = new ComparableComparator<>();
+        assertEquals(0, comparator.compare(4, 4));
     }
 }

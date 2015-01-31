@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,44 +23,28 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.base;
+package com.mattunderscore.trees;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
 import org.junit.Test;
 
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+
 /**
- * Unit tests for ImmutableNode.
- * @author Matt Champion on 20/12/14
+ * @author Matt Champion on 31/01/15
  */
-public final class ImmutableNodeTest {
-    @Test
-    public void test0() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
-        assertEquals("a", node.getElement());
-        assertEquals(String.class, node.getElementClass());
-        assertTrue(node.isLeaf());
-    }
-
-    @Test
-    public void test1() {
-        final Node<String> node = new ImmutableNode<String>("a", new ImmutableNode[0]) {};
-        assertEquals("a", node.getElement());
-        assertEquals(String.class, node.getElementClass());
-        assertTrue(node.isLeaf());
-    }
-
-    @Test
-    public void test2() {
-        final Node<String> node = new ImmutableNode<String>(
-            "a",
-            DuplicateOnWriteSimpleCollection.<ImmutableNode<String>>create()) {};
-        assertEquals("a", node.getElement());
-        assertEquals(String.class, node.getElementClass());
-        assertTrue(node.isLeaf());
-    }
+public final class OperationNotSupportedForTypeTest {
+      @Test(expected = OperationNotSupportedForType.class)
+      public void test() throws Exception {
+            final Exception e = new OperationNotSupportedForType(Tree.class, Node.class);
+            assertEquals(
+                "Operation not supported. Type " +
+                    Tree.class.getName() +
+                    " not supported for " +
+                    Node.class.getName(),
+                e.getMessage());
+            throw e;
+      }
 }
