@@ -25,6 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
+import java.util.ServiceLoader;
+
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+
 /**
  * Entry point for examples module.
  * @author Matt Champion on 29/01/15
@@ -45,5 +51,16 @@ public final class ExamplesEntryPoint {
 
         System.out.println("Binary search tree example:");
         readmeExamples.binarySearchTree();
+
+        final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
+        final Trees trees = serviceLoader.iterator().next();
+
+        System.out.println("General examples:");
+        final ImmutableTreeExamples immutableTreeExamples = new ImmutableTreeExamples();
+        final TraversalExamples traversalExamples = new TraversalExamples();
+        final Tree<String, Node<String>> tree = immutableTreeExamples.createTreeFromTheBottomUp(trees.treeBuilders().<String>bottomUpBuilder());
+        immutableTreeExamples.createTreeFromTopDown(trees.treeBuilders().<String>topDownBuilder());
+
+        traversalExamples.elementIterator(trees.treeIterators(), tree);
     }
 }

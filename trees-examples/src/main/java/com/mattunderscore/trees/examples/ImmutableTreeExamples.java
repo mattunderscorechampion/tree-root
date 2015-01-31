@@ -27,20 +27,18 @@ package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilder;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilderAppender;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-
-import java.util.Iterator;
 
 /**
  * @author Matt Champion on 08/08/14.
  */
 public final class ImmutableTreeExamples {
-    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder, TreeIteratorFactory traverser)
-    {
-        final Tree<String, Node<String>> tree = builder.create("root",
+    public Tree<String, Node<String>> createTreeFromTheBottomUp(BottomUpTreeBuilder<String> builder) {
+        return builder.create("root",
                 builder.create("a",
                         builder.create("1"),
                         builder.create("2"),
@@ -48,20 +46,20 @@ public final class ImmutableTreeExamples {
                 builder.create("b",
                         builder.create("+"),
                         builder.create("-"))).build(new TypeKey<Tree<String, Node<String>>>(){});
-
-        final Iterator<Node<String>> iterator = traverser.preOrderIterator(tree);
     }
 
-    public void createTreeFromTopDown(TopDownTreeRootBuilder<String> builder)
-    {
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> b0 = builder.root("root");
-        final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> left = b0.addChild("a");
-        final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> right = b0.addChild("b");
+    public Tree<String, Node<String>> createTreeFromTopDown(TopDownTreeRootBuilder<String> builder) {
+        final TopDownTreeBuilder<String> root = builder.root("root");
+        final TopDownTreeBuilderAppender<String> left = root.addChild("a");
+        final TopDownTreeBuilderAppender<String> right = root.addChild("b");
+
         left.addChild("1");
         left.addChild("2");
         left.addChild("3");
+
         right.addChild("+");
         right.addChild("-");
-        final Tree<String, Node<String>> tree = b0.build(new TypeKey<Tree<String, Node<String>>>(){});
+
+        return root.build(new TypeKey<Tree<String, Node<String>>>(){});
     }
 }

@@ -33,6 +33,7 @@ import com.mattunderscore.trees.binary.search.BinarySearchTree;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
+import com.mattunderscore.trees.traversal.DefaultElementWalker;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
@@ -52,21 +53,11 @@ public final class ReadmeExamples {
             builder.create("c"))
             .build(new TypeKey<Tree<String, Node<String>>>(){});
 
-        trees.treeWalkers().walkElementsInOrder(tree, new Walker<String>() {
-            @Override
-            public void onEmpty() {
-                System.out.println("Empty");
-            }
-
+        trees.treeWalkers().walkElementsInOrder(tree, new DefaultElementWalker<String>() {
             @Override
             public boolean onNext(String node) {
                 System.out.println("Element: " + node);
                 return true;
-            }
-
-            @Override
-            public void onCompleted() {
-                System.out.println("Complete");
             }
         });
     }

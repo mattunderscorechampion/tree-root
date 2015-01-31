@@ -27,33 +27,48 @@ package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.traversal.DefaultElementWalker;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
+import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 import java.util.Iterator;
 
 /**
+ * Traversal examples.
  * @author Matt Champion
  */
-public final class IteratorExamples {
+public final class TraversalExamples {
     public void nodeIterator(TreeIteratorFactory iterators, MutableTree<String, MutableNode<String>> tree) {
         final Iterator<MutableNode<String>> iterator = iterators.breadthFirstIterator(tree);
-        if (iterator.hasNext()) {
-            final MutableNode<String> node = iterator.next();
+        while (iterator.hasNext()) {
+            final Node<String> node = iterator.next();
         }
     }
 
-    public void elementIterator(TreeIteratorFactory iterators, MutableTree<String, MutableNode<String>> tree) {
+    public void elementIterator(TreeIteratorFactory iterators, Tree<String, Node<String>> tree) {
         final Iterator<String> iterator = iterators.breadthFirstElementsIterator(tree);
-        if (iterator.hasNext()) {
+        while (iterator.hasNext()) {
             final String element = iterator.next();
+            System.out.println(element);
         }
     }
 
     public void iterateAsSubtypeOfNode(TreeIteratorFactory iterators, MutableTree<String, MutableNode<String>> tree) {
         final Iterator<Node<String>> iterator = iterators.breadthFirstIterator(tree);
-        if (iterator.hasNext()) {
+        while (iterator.hasNext()) {
             final Node<String> node = iterator.next();
         }
+    }
+
+    public void elementWalker(TreeWalkerFactory walkers, Tree<String, Node<String>> tree) {
+        walkers.walkElementsInOrder(tree, new DefaultElementWalker<String>() {
+            @Override
+            public boolean onNext(String element) {
+                System.out.println(element);
+                return true;
+            }
+        });
     }
 }
