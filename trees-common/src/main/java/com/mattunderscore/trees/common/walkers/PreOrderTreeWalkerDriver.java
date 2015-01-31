@@ -23,44 +23,45 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.examples;
+package com.mattunderscore.trees.common.walkers;
 
-import java.util.ServiceLoader;
+import java.util.Iterator;
 
-import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Entry point for examples module.
- * @author Matt Champion on 29/01/15
+ * Driver for the in-order internal iteration of a tree walker.
+ * @author Matt Champion on 31/01/15
  */
-public final class ExamplesEntryPoint {
-    private ExamplesEntryPoint() {
-    }
+public final class PreOrderTreeWalkerDriver {
+      public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, TreeWalker<N> walker) {
+            walker.onStarted();
+            if (tree.isEmpty()) {
+                  walker.onCompleted();
+            }
+            else {
+                  final N node = tree.getRoot();
+                  accept(node, walker);
+                  walker.onCompleted();
+            }
+      }
 
-    /**
-     * Entry point.
-     * @param args Command line arguments
-     */
-    public static void main(String[] args) {
-        System.out.println("Readme Examples:");
-        final ReadmeExamples readmeExamples = new ReadmeExamples();
-        System.out.println("Immutable tree example:");
-        readmeExamples.immutableTree();
-
-        System.out.println("Binary search tree example:");
-        readmeExamples.binarySearchTree();
-
-        final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
-        final Trees trees = serviceLoader.iterator().next();
-
-        System.out.println("General examples:");
-        final ImmutableTreeExamples immutableTreeExamples = new ImmutableTreeExamples();
-        final TraversalExamples traversalExamples = new TraversalExamples();
-        final Tree<String, Node<String>> tree = immutableTreeExamples.createTreeFromTheBottomUp(trees.treeBuilders().<String>bottomUpBuilder());
-        immutableTreeExamples.createTreeFromTopDown(trees.treeBuilders().<String>topDownBuilder());
-
-        traversalExamples.elementTreeWalker(trees.treeWalkers(), tree);
-    }
+      private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, TreeWalker<N> walker) {
+            walker.onNode(node);
+            final Iterator<? extends Node<E>> iterator = node.getChildren().iterator();
+            if (iterator.hasNext()) {
+                  walker.onNodeChildrenStarted(node);
+                  while (iterator.hasNext()) {
+                        final N child = (N) iterator.next();
+                        accept(child, walker);
+                  }
+                  walker.onNodeChildrenCompleted(node);
+            }
+            else {
+                  walker.onNodeNoChildren(node);
+            }
+      }
 }

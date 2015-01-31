@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -26,26 +26,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.traversal;
 
 /**
- * Interface for walking over a collection. Provides internal iterator.
- * @param <E> The type of the collection
- * @author Matt Champion on 16/08/14.
+ * @author Matt Champion on 31/01/15
  */
-public interface Walker<E> {
+public abstract class DefaultElementTreeWalker<E> implements TreeWalker<E> {
+      @Override
+      public void onStarted() {
+      }
 
-    /**
-     * Invoked if the collection is empty.
-     */
-    void onEmpty();
+      @Override
+      public void onNode(E node) {
+      }
 
-    /**
-     * Invoked for each element.
-     * @param node The element
-     * @return {@code true} if the walker should continue to the next element
-     */
-    boolean onNext(E node);
+      @Override
+      public void onNodeChildrenStarted(E node) {
+      }
 
-    /**
-     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(E)}.
-     */
-    void onCompleted();
+      @Override
+      public void onNodeChildrenCompleted(E node) {
+      }
+
+      @Override
+      public void onNodeNoChildren(E node) {
+      }
+
+      @Override
+      public void onCompleted() {
+      }
 }

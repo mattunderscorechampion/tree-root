@@ -36,7 +36,7 @@ public interface TreeWalkerFactory {
     /**
      * Traverse the tree in preorder.
      * @param tree The tree
-     * @param walker
+     * @param walker The walker
      * @param <E> Element type
      * @param <N> Node type
      * @param <T> Tree type
@@ -46,7 +46,7 @@ public interface TreeWalkerFactory {
     /**
      * Traverse the tree in order.
      * @param tree The tree
-     * @param walker
+     * @param walker The walker
      * @param <E> Element type
      * @param <N> Node type
      * @param <T> Tree type
@@ -56,7 +56,7 @@ public interface TreeWalkerFactory {
     /**
      * Traverse the tree in post order.
      * @param tree The tree
-     * @param walker
+     * @param walker The walker
      * @param <E> Element type
      * @param <N> Node type
      * @param <T> Tree type
@@ -66,7 +66,7 @@ public interface TreeWalkerFactory {
     /**
      * Traverse the tree in breadth first order.
      * @param tree The tree
-     * @param walker
+     * @param walker The walker
      * @param <E> Element type
      * @param <N> Node type
      * @param <T> Tree type
@@ -76,7 +76,7 @@ public interface TreeWalkerFactory {
     /**
      * Traverse the tree elements in preorder.
      * @param tree The tree
-     * @param walker
+     * @param walker The walker
      * @param <E> Element type
      * @param <N> Node type
      * @param <T> Tree type
@@ -86,7 +86,7 @@ public interface TreeWalkerFactory {
     /**
      * Traverse the tree elements in order.
      * @param tree The tree
-     * @param walker
+     * @param walker The walker
      * @param <E> Element type
      * @param <N> Node type
      * @param <T> Tree type
@@ -96,7 +96,7 @@ public interface TreeWalkerFactory {
     /**
      * Traverse the tree elements in post order.
      * @param tree The tree
-     * @param walker
+     * @param walker The walker
      * @param <E> Element type
      * @param <N> Node type
      * @param <T> Tree type
@@ -106,10 +106,31 @@ public interface TreeWalkerFactory {
     /**
      * Traverse the tree elements in breadth first order.
      * @param tree The tree
-     * @param walker
+     * @param walker The walker
      * @param <E> Element type
      * @param <N> Node type
      * @param <T> Tree type
      */
     <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker);
+
+    /**
+     * Traverse the tree in preorder.
+     * @param tree The tree
+     * @param walker The tree walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<N> walker);
+
+    /**
+     * Traverse the tree elements in preorder.
+     * @param tree The tree
+     * @param walker The tree walker
+     * @param <E> Element type
+     * @param <N> Node type
+     * @param <T> Tree type
+     */
+    <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, TreeWalker<E> walker);
+
 }

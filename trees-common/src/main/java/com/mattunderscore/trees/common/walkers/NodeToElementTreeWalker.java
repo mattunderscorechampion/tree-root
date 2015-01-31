@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,29 +23,50 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.traversal;
+package com.mattunderscore.trees.common.walkers;
+
+import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.Walker;
+import com.mattunderscore.trees.tree.Node;
 
 /**
- * Interface for walking over a collection. Provides internal iterator.
- * @param <E> The type of the collection
- * @author Matt Champion on 16/08/14.
+ * A Node tree walker that unwraps the elements and passes them to a delegated element tree walker.
+ * @author Matt Champion on 31/01/15
  */
-public interface Walker<E> {
+public class NodeToElementTreeWalker<E, N extends Node<E>> implements TreeWalker<N> {
+      private final TreeWalker<E> delegateTreeWalker;
 
-    /**
-     * Invoked if the collection is empty.
-     */
-    void onEmpty();
+      public NodeToElementTreeWalker(TreeWalker<E> delegateTreeWalker) {
+            this.delegateTreeWalker = delegateTreeWalker;
+      }
 
-    /**
-     * Invoked for each element.
-     * @param node The element
-     * @return {@code true} if the walker should continue to the next element
-     */
-    boolean onNext(E node);
+      @Override
+      public void onStarted() {
+            delegateTreeWalker.onStarted();
+      }
 
-    /**
-     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(E)}.
-     */
-    void onCompleted();
+      @Override
+      public void onNode(N node) {
+            delegateTreeWalker.onNode(node.getElement());
+      }
+
+      @Override
+      public void onNodeChildrenStarted(N node) {
+            delegateTreeWalker.onNodeChildrenStarted(node.getElement());
+      }
+
+      @Override
+      public void onNodeChildrenCompleted(N node) {
+            delegateTreeWalker.onNodeChildrenCompleted(node.getElement());
+      }
+
+      @Override
+      public void onNodeNoChildren(N node) {
+            delegateTreeWalker.onNodeNoChildren(node.getElement());
+      }
+
+      @Override
+      public void onCompleted() {
+            delegateTreeWalker.onCompleted();
+      }
 }

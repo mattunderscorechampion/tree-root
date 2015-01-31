@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
+import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.common.walkers.*;
@@ -41,12 +42,14 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
     private final InOrderWalker inOrderWalker;
     private final PostOrderWalker postOrderWalker;
     private final PreOrderWalker preOrderWalker;
+    private final PreOrderTreeWalkerDriver preOrderTreeWalkerDriver;
 
     public TreeWalkerFactoryImpl() {
         breadthFirstWalker = new BreadthFirstWalker();
         inOrderWalker = new InOrderWalker();
         postOrderWalker = new PostOrderWalker();
         preOrderWalker = new PreOrderWalker();
+        preOrderTreeWalkerDriver = new PreOrderTreeWalkerDriver();
     }
 
     @Override
@@ -91,5 +94,16 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
     public <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
         breadthFirstWalker.accept(tree, nodeWalker);
+    }
+
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<N> walker) {
+        preOrderTreeWalkerDriver.accept(tree, walker);
+    }
+
+    @Override
+    public <E, N extends Node<E>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, TreeWalker<E> walker) {
+        final TreeWalker<N> nodeWalker = new NodeToElementTreeWalker<>(walker);
+        preOrderTreeWalkerDriver.accept(tree, nodeWalker);
     }
 }
