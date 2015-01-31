@@ -37,6 +37,7 @@ import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public final class LinkedTreeTest {
@@ -97,5 +98,46 @@ public final class LinkedTreeTest {
         final MutableNode<String> child2 = iterator1.next();
         assertEquals("c", child2.getElement());
         assertFalse(iterator1.hasNext());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void get() {
+        final LinkedTree<String> node0 = tree.getRoot().getChild(0);
+        final LinkedTree<String> node1 = tree.getRoot().getChild(1);
+        assertEquals("b", node0.getElement());
+        assertEquals("c", node1.getElement());
+
+        tree.getRoot().getChild(2);
+    }
+
+    @Test
+    public void set() {
+        tree.getRoot().setChild(2, "d");
+
+        assertEquals(3, tree.getRoot().getChildren().size());
+        final Iterator<LinkedTree<String>> iterator = tree.getChildren().iterator();
+        assertEquals("b", iterator.next().getElement());
+        assertEquals("c", iterator.next().getElement());
+        assertEquals("d", iterator.next().getElement());
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void setWithNulls() {
+        tree.getRoot().setChild(3, "d");
+
+        assertEquals(4, tree.getRoot().getChildren().size());
+        final Iterator<LinkedTree<String>> iterator = tree.getChildren().iterator();
+        assertEquals("b", iterator.next().getElement());
+        assertEquals("c", iterator.next().getElement());
+        assertEquals("d", iterator.next().getElement());
+        assertFalse(iterator.hasNext());
+
+        final Iterator<LinkedTree<String>> structuralIterator = tree.getChildren().structuralIterator();
+        assertEquals("b", structuralIterator.next().getElement());
+        assertEquals("c", structuralIterator.next().getElement());
+        assertNull(structuralIterator.next());
+        assertEquals("d", structuralIterator.next().getElement());
+        assertFalse(structuralIterator.hasNext());
     }
 }

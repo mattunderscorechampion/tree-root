@@ -84,12 +84,12 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
     }
 
     @Override
-    public StructuralNode<E> getChild(int nChild) {
+    public LinkedTree<E> getChild(int nChild) {
         return children.get(nChild);
     }
 
     @Override
-    public MutableStructuralNode<E> setChild(int nChild, E element) {
+    public LinkedTree<E> setChild(int nChild, E element) {
         final LinkedTree<E> child = new LinkedTree<>(element);
         children.set(nChild, child);
         return child;
