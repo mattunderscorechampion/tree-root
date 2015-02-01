@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.tree;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
+import java.util.Iterator;
 
 /**
  * Node that has children in specific places.
@@ -33,7 +33,14 @@ import com.mattunderscore.trees.collection.SimpleCollection;
  */
 public interface StructuralNode<E> extends Node<E> {
     @Override
-    SimpleCollection<? extends StructuralNode<E>> getChildren();
+    Iterator<? extends StructuralNode<E>> childIterator();
+
+    /**
+     * An iterator over the structure of the children. If there is an empty place where an element
+     * might be but is not then the iterator will return null.
+     * @return Structural iterator
+     */
+    Iterator<? extends StructuralNode<E>> childStructuralIterator();
 
     /**
      * Get the nth child node.

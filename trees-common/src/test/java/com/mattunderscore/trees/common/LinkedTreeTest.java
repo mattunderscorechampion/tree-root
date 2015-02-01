@@ -54,9 +54,8 @@ public final class LinkedTreeTest {
     public void structure() {
         assertFalse(tree.isEmpty());
         assertFalse(tree.getRoot().isLeaf());
-        final SimpleCollection<? extends MutableNode<String>> children = tree.getRoot().getChildren();
-        assertEquals(2, children.size());
-        final Iterator<? extends Node<String>> iterator = children.iterator();
+        assertEquals(2, tree.getRoot().getNumberOfChildren());
+        final Iterator<? extends Node<String>> iterator = tree.childIterator();
         final Node<String> child0 = iterator.next();
         final Node<String> child1 = iterator.next();
 
@@ -71,9 +70,8 @@ public final class LinkedTreeTest {
     public void add() {
         final Node<String> newNode = tree.getRoot().addChild("d");
 
-        final SimpleCollection<? extends MutableNode<String>> children = tree.getRoot().getChildren();
-        assertEquals(3, children.size());
-        final Iterator<? extends Node<String>> iterator = children.iterator();
+        assertEquals(3, tree.getRoot().getNumberOfChildren());
+        final Iterator<? extends Node<String>> iterator = tree.childIterator();
         final Node<String> child0 = iterator.next();
         final Node<String> child1 = iterator.next();
         final Node<String> child2 = iterator.next();
@@ -83,9 +81,8 @@ public final class LinkedTreeTest {
 
     @Test
     public void remove() {
-        final SimpleCollection<? extends MutableNode<String>> children = tree.getRoot().getChildren();
-        assertEquals(2, children.size());
-        final Iterator<? extends MutableNode<String>> iterator0 = children.iterator();
+        assertEquals(2, tree.getRoot().getNumberOfChildren());
+        final Iterator<? extends MutableNode<String>> iterator0 = tree.childIterator();
         final MutableNode<String> child0 = iterator0.next();
         final MutableNode<String> child1 = iterator0.next();
 
@@ -94,7 +91,7 @@ public final class LinkedTreeTest {
         assertFalse(iterator0.hasNext());
         assertTrue(tree.getRoot().removeChild(child0));
 
-        final Iterator<? extends MutableNode<String>> iterator1 = children.iterator();
+        final Iterator<? extends MutableNode<String>> iterator1 = tree.childIterator();
         final MutableNode<String> child2 = iterator1.next();
         assertEquals("c", child2.getElement());
         assertFalse(iterator1.hasNext());
@@ -114,8 +111,8 @@ public final class LinkedTreeTest {
     public void set() {
         tree.getRoot().setChild(2, "d");
 
-        assertEquals(3, tree.getRoot().getChildren().size());
-        final Iterator<LinkedTree<String>> iterator = tree.getChildren().iterator();
+        assertEquals(3, tree.getRoot().getNumberOfChildren());
+        final Iterator<LinkedTree<String>> iterator = tree.childIterator();
         assertEquals("b", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
         assertEquals("d", iterator.next().getElement());
@@ -126,14 +123,14 @@ public final class LinkedTreeTest {
     public void setWithNulls() {
         tree.getRoot().setChild(3, "d");
 
-        assertEquals(4, tree.getRoot().getChildren().size());
-        final Iterator<LinkedTree<String>> iterator = tree.getChildren().iterator();
+        assertEquals(4, tree.getRoot().getNumberOfChildren());
+        final Iterator<LinkedTree<String>> iterator = tree.childIterator();
         assertEquals("b", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
         assertEquals("d", iterator.next().getElement());
         assertFalse(iterator.hasNext());
 
-        final Iterator<LinkedTree<String>> structuralIterator = tree.getChildren().structuralIterator();
+        final Iterator<LinkedTree<String>> structuralIterator = tree.childStructuralIterator();
         assertEquals("b", structuralIterator.next().getElement());
         assertEquals("c", structuralIterator.next().getElement());
         assertNull(structuralIterator.next());

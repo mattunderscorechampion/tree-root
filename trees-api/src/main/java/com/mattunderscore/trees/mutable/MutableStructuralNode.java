@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.StructuralNode;
 
@@ -34,7 +36,13 @@ import com.mattunderscore.trees.tree.StructuralNode;
  */
 public interface MutableStructuralNode<E> extends StructuralNode<E> {
       @Override
-      SimpleCollection<? extends MutableStructuralNode<E>> getChildren();
+      Iterator<? extends MutableStructuralNode<E>> childIterator();
+
+      @Override
+      Iterator<? extends MutableStructuralNode<E>> childStructuralIterator();
+
+      @Override
+      MutableStructuralNode<E> getChild(int nChild);
 
       /**
        * Set the nth child node.

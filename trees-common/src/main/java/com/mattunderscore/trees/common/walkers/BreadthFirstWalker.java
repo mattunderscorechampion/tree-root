@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.walkers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.mattunderscore.trees.traversal.Walker;
@@ -67,8 +68,9 @@ public final class BreadthFirstWalker {
             if (!walker.onNext(node)) {
                 throw new Done();
             }
-            for (final Node<E> child : node.getChildren()) {
-                nextLevel.add((N) child);
+            final Iterator<? extends Node<E>> iterator = node.childIterator();
+            while (iterator.hasNext()) {
+                nextLevel.add((N) iterator.next());
             }
         }
 

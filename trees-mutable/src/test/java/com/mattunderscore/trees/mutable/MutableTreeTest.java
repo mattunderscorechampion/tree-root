@@ -81,21 +81,20 @@ public final class MutableTreeTest {
         assertFalse(root.isLeaf());
         depth1.addChild("c");
 
-        final SimpleCollection<? extends MutableNode<String>> children = root.getChildren();
-        assertEquals(1, children.size());
-        final Iterator<? extends MutableNode<String>> iterator0 = children.iterator();
+        assertEquals(1, root.getNumberOfChildren());
+        final Iterator<? extends MutableNode<String>> iterator0 = root.childIterator();
         assertTrue(iterator0.hasNext());
         final MutableNode<String> child0 = iterator0.next();
         assertEquals("b", child0.getElement());
 
-        final Iterator<? extends MutableNode<String>> iterator1 = child0.getChildren().iterator();
+        final Iterator<? extends MutableNode<String>> iterator1 = child0.childIterator();
         assertTrue(iterator1.hasNext());
         final MutableNode<String> child1 = iterator1.next();
         assertEquals("c", child1.getElement());
         assertFalse(iterator1.hasNext());
 
         depth1.addChild("d");
-        final Iterator<? extends MutableNode<String>> iterator2 = child0.getChildren().iterator();
+        final Iterator<? extends MutableNode<String>> iterator2 = child0.childIterator();
         assertTrue(iterator2.hasNext());
         final MutableNode<String> child2 = iterator2.next();
         assertEquals("c", child2.getElement());
@@ -128,14 +127,14 @@ public final class MutableTreeTest {
         assertEquals("b", iterator.next().getElement());
 
         // Get the left and right nodes of the root, remove them and add a new child
-        final Iterator<? extends MutableNode<String>> childIterator = root.getChildren().iterator();
+        final Iterator<? extends MutableNode<String>> childIterator = root.childIterator();
         final MutableNode<String> left = childIterator.next();
         final MutableNode<String> right = childIterator.next();
         root.removeChild(right);
         root.removeChild(left);
         root.addChild("g");
 
-        final Iterator<? extends MutableNode<String>> grandchildIterator = right.getChildren().iterator();
+        final Iterator<? extends MutableNode<String>> grandchildIterator = right.childIterator();
         final MutableNode<String> grandchild = grandchildIterator.next();
         right.removeChild(grandchild);
 
@@ -168,6 +167,6 @@ public final class MutableTreeTest {
         final MutableTree<String, MutableNode<String>> tree = builder.build(treeClass);
         final MutableNode<String> child = tree.getRoot().addChild("b");
         assertTrue(tree.getRoot().removeChild(child));
-        assertEquals(0, tree.getRoot().getChildren().size());
+        assertEquals(0, tree.getRoot().getNumberOfChildren());
     }
 }

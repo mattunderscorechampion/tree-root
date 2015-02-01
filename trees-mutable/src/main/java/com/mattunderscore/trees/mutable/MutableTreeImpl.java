@@ -47,14 +47,14 @@ import java.util.Iterator;
  */
 public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
     @GuardedBy("this")
-    private SimpleCollection<MutableNode<E>> elementList;
+    private SimpleCollection<MutableTreeImpl<E>> elementList;
 
     public MutableTreeImpl(E element) {
         super(element);
         elementList = new FixedUncheckedSimpleCollection<>(new Object[0]);
     }
 
-    MutableTreeImpl(E element, SimpleCollection<MutableNode<E>> childList) {
+    MutableTreeImpl(E element, SimpleCollection<MutableTreeImpl<E>> childList) {
         super(element);
         elementList = childList;
     }
@@ -66,11 +66,11 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
         }
         final MutableTreeImpl<E> child = new MutableTreeImpl<>(e);
         synchronized (this) {
-            final SimpleCollection<MutableNode<E>> oldList = elementList;
+            final SimpleCollection<MutableTreeImpl<E>> oldList = elementList;
             final int size = oldList.size();
             final Object[] newArray = new Object[size + 1];
             int i = 0;
-            final Iterator<MutableNode<E>> iterator = oldList.structuralIterator();
+            final Iterator<MutableTreeImpl<E>> iterator = oldList.structuralIterator();
             while (iterator.hasNext()) {
                 newArray[i] = iterator.next();
                 i++;
@@ -87,12 +87,12 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
             return false;
         }
         synchronized (this) {
-            final SimpleCollection<MutableNode<E>> oldList = elementList;
+            final SimpleCollection<MutableTreeImpl<E>> oldList = elementList;
             final int size = oldList.size();
             final Object[] searchArray = new Object[size];
             int i = 0;
             int j = 0;
-            final Iterator<MutableNode<E>> iterator = oldList.structuralIterator();
+            final Iterator<MutableTreeImpl<E>> iterator = oldList.structuralIterator();
             while (iterator.hasNext()) {
                 final MutableNode<E> currentNode = iterator.next();
                 if (child != currentNode) {
@@ -130,11 +130,6 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
     }
 
     @Override
-    public synchronized SimpleCollection<MutableNode<E>> getChildren() {
-        return elementList;
-    }
-
-    @Override
     public synchronized MutableNode<E> setRoot(E root) {
         elementReference.set(root);
         return this;
@@ -147,5 +142,15 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
      */
     public static <E> TypeKey<MutableTree<E, MutableNode<E>>> typeKey() {
         return new TypeKey<MutableTree<E, MutableNode<E>>>() {};
+    }
+
+    @Override
+    public int getNumberOfChildren() {
+        return elementList.size();
+    }
+
+    @Override
+    public Iterator<? extends MutableTreeImpl<E>> childIterator() {
+        return elementList.iterator();
     }
 }

@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
@@ -40,14 +42,16 @@ public final class NodeConverter<E> implements NodeToTreeConverter<E, MutableNod
     @Override
     public PathCopyTree<E> treeFromRootNode(Node<E> node) {
         final PathCopyTree<E> newTree = new PathCopyTree<>();
-        copyChildren(newTree.setRoot(node.getElement()), node.getChildren());
+        copyChildren(newTree.setRoot(node.getElement()), node);
         return newTree;
     }
 
-    private void copyChildren(MutableNode<E> newParent, SimpleCollection<? extends Node<E>> children) {
-        for (final Node<E> child : children) {
+    private void copyChildren(MutableNode<E> newParent, Node<E> parent) {
+        final Iterator<? extends Node<E>> iterator = parent.childIterator();
+        while (iterator.hasNext()) {
+            final Node<E> child = iterator.next();
             final MutableNode<E> newChild = newParent.addChild(child.getElement());
-            copyChildren(newChild, child.getChildren());
+            copyChildren(newChild, child);
         }
     }
 

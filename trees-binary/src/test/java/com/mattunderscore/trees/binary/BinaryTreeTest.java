@@ -82,8 +82,7 @@ public final class BinaryTreeTest {
         assertEquals("b", tree.getRoot().getLeft().getElement());
         assertEquals("c", tree.getRoot().getRight().getElement());
 
-        final SimpleCollection<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
-        final Iterator<? extends BinaryTreeNode<String>> iterator = children.iterator();
+        final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
         final BinaryTreeNode<String> left = iterator.next();
         assertTrue(left.isLeaf());
         assertEquals("b", left.getElement());
@@ -107,8 +106,7 @@ public final class BinaryTreeTest {
         assertEquals("b", tree.getRoot().getLeft().getElement());
         assertNull(tree.getRoot().getRight());
 
-        final SimpleCollection<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
-        final Iterator<? extends BinaryTreeNode<String>> iterator = children.iterator();
+        final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
         final BinaryTreeNode<String> left = iterator.next();
         assertTrue(left.isLeaf());
         assertEquals("b", left.getElement());
@@ -131,8 +129,7 @@ public final class BinaryTreeTest {
         assertNull(tree.getRoot().getLeft());
         assertEquals("c", tree.getRoot().getRight().getElement());
 
-        final SimpleCollection<? extends BinaryTreeNode<String>> children = tree.getRoot().getChildren();
-        final Iterator<? extends BinaryTreeNode<String>> iterator = children.iterator();
+        final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
         final BinaryTreeNode<String> left = iterator.next();
         assertNull(left);
         final BinaryTreeNode<String> right = iterator.next();

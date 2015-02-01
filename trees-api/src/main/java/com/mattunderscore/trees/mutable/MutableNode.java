@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.tree.Node;
@@ -36,7 +38,7 @@ import com.mattunderscore.trees.tree.Node;
 public interface MutableNode<E> extends Node<E>, NodeAppender<E, MutableNode<E>>
 {
     @Override
-    SimpleCollection<? extends MutableNode<E>> getChildren();
+    Iterator<? extends MutableNode<E>> childIterator();
 
     /**
      * Remove the node if it is a child of the recipient

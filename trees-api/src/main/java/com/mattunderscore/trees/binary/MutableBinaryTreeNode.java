@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
+import java.util.Iterator;
+
+import com.mattunderscore.trees.mutable.MutableStructuralNode;
+
 /**
  * A mutable binary tree
  * @author Matt Champion on 06/09/14.
@@ -54,4 +58,14 @@ public interface MutableBinaryTreeNode<E> extends BinaryTreeNode<E> {
      * @return The right subtree
      */
     MutableBinaryTreeNode<E> getRight();
+
+    @Override
+    Iterator<? extends MutableBinaryTreeNode<E>> childIterator();
+
+    @Override
+    Iterator<? extends MutableBinaryTreeNode<E>> childStructuralIterator();
+
+    @Override
+    MutableBinaryTreeNode<E> getChild(int nChild);
+
 }

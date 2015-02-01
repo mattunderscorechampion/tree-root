@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.tree.Node;
 
 /**
@@ -32,6 +34,9 @@ import com.mattunderscore.trees.tree.Node;
  * @author Matt Champion on 07/10/14.
  */
 public interface SettableNode<E> extends Node<E> {
+
+    @Override
+    Iterator<? extends SettableNode<E>> childIterator();
 
     /**
      * Set the element of the node.

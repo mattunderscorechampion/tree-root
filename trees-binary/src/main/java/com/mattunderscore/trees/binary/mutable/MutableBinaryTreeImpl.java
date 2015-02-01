@@ -114,7 +114,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         }
 
         private MutableBinaryTreeNodeImpl<E> duplicate(Node<E> sourceChild) {
-            final Iterator<? extends Node<E>> children = sourceChild.getChildren().iterator();
+            final Iterator<? extends Node<E>> children = sourceChild.childIterator();
             if (children.hasNext()) {
                 final Node<E> left = children.next();
                 Node<E> right = null;

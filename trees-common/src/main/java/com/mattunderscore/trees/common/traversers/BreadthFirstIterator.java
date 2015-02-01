@@ -59,9 +59,9 @@ public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E,
                 next = currentLayer.next();
             } while (next == null);
 
-            final SimpleCollection<N> children = (SimpleCollection<N>)next.getChildren();
-            for (final N child : children) {
-                nextLayer.add(child);
+            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
+            while (iterator.hasNext()) {
+                nextLayer.add(iterator.next());
             }
             return next;
         }
@@ -74,9 +74,9 @@ public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E,
                 next = currentLayer.next();
             } while (next == null);
 
-            final SimpleCollection<N> children = (SimpleCollection<N>)next.getChildren();
-            for (final N child : children) {
-                nextLayer.add(child);
+            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
+            while (iterator.hasNext()) {
+                nextLayer.add(iterator.next());
             }
             return next;
         }

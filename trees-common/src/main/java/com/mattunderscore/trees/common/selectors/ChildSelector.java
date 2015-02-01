@@ -44,7 +44,6 @@ public final class ChildSelector<E> extends ExtendingNodeSelector<E> {
 
     @Override
     protected final <N extends Node<E>> Iterator<N> getExtendingIterator(N nodeToExtendFrom) {
-        final SimpleCollection<N> children = (SimpleCollection<N>)nodeToExtendFrom.getChildren();
-        return children.iterator();
+        return (Iterator<N>)nodeToExtendFrom.childIterator();
     }
 }

@@ -25,12 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableStructuralNode;
+import com.mattunderscore.trees.mutable.SettableNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -79,8 +82,8 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
     }
 
     @Override
-    public SimpleCollection<LinkedTree<E>> getChildren() {
-        return children;
+    public Iterator<LinkedTree<E>> childStructuralIterator() {
+        return children.structuralIterator();
     }
 
     @Override
@@ -114,6 +117,16 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
     public LinkedTree<E> setRoot(E root) {
         setElement(root);
         return this;
+    }
+
+    @Override
+    public int getNumberOfChildren() {
+        return children.size();
+    }
+
+    @Override
+    public Iterator<LinkedTree<E>> childIterator() {
+        return children.iterator();
     }
 
     public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>> {
@@ -159,8 +172,9 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
         public LinkedTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {
             final Node<E> root = sourceTree.getRoot();
             final LinkedTree<E> newTree = new LinkedTree<>(root.getElement());
-            for (final Node<E> child : root.getChildren()) {
-                duplicate(newTree, child);
+            final Iterator<? extends Node<E>> iterator = root.childIterator();
+            while (iterator.hasNext()) {
+                duplicate(newTree, iterator.next());
             }
             return newTree;
         }
@@ -172,8 +186,9 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
 
         private void duplicate(LinkedTree<E> newParent, Node<E> sourceChild) {
             final LinkedTree<E> newChild = (LinkedTree<E>) newParent.addChild(sourceChild.getElement());
-            for (final Node<E> child : sourceChild.getChildren()) {
-                duplicate(newChild, child);
+            final Iterator<? extends Node<E>> iterator = sourceChild.childIterator();
+            while (iterator.hasNext()) {
+                duplicate(newChild, iterator.next());
             }
         }
     }

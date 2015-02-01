@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.immutable;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
@@ -41,11 +43,6 @@ public final class TreeNodeImpl<E> extends ImmutableNode<E> implements Tree<E, N
 
     TreeNodeImpl(E element, Object[] children) {
         super(element, children);
-    }
-
-    @Override
-    public SimpleCollection<Node<E>> getChildren() {
-        return (SimpleCollection<Node<E>>) super.getChildren();
     }
 
     @Override
@@ -70,5 +67,10 @@ public final class TreeNodeImpl<E> extends ImmutableNode<E> implements Tree<E, N
      */
     public static <E> TypeKey<? extends Tree<E, Node<E>>> typeKey() {
         return new TypeKey<TreeNodeImpl<E>>() {};
+    }
+
+    @Override
+    public Iterator<? extends TreeNodeImpl<E>> childIterator() {
+        return (Iterator<? extends TreeNodeImpl<E>>)children.iterator();
     }
 }

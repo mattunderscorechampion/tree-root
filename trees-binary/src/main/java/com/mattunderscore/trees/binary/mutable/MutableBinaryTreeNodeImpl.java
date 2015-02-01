@@ -25,15 +25,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
+import java.util.Iterator;
+
+import net.jcip.annotations.NotThreadSafe;
+
 import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
+import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
+import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
  * Mutable binary tree node implementation.
  * @author Matt Champion on 06/09/14.
  */
+@NotThreadSafe
 public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements MutableBinaryTreeNode<E> {
     private MutableBinaryTreeNode<E> left;
     private MutableBinaryTreeNode<E> right;
@@ -84,12 +90,45 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
     }
 
     @Override
-    public synchronized SimpleCollection<? extends MutableBinaryTreeNodeImpl<E>> getChildren() {
-        return new FixedUncheckedSimpleCollection<>(children);
+    public int getNumberOfChildren() {
+        if (children.length == 2 && children[0] == null) {
+            return 1;
+        }
+        else {
+            return children.length;
+        }
     }
 
     @Override
-    public synchronized boolean isLeaf() {
+    public Iterator<? extends MutableBinaryTreeNode<E>> childIterator() {
+        if (children.length == 2 && children[0] == null) {
+            return new SingletonIterator<>((MutableBinaryTreeNode<E>)children[1]);
+        }
+        else if (children.length == 0) {
+            return new EmptyIterator<>();
+        }
+        else {
+            return new CastingArrayIterator<>(children);
+        }
+    }
+
+    @Override
+    public Iterator<? extends MutableBinaryTreeNode<E>> childStructuralIterator() {
+        return new CastingArrayIterator<>(children);
+    }
+
+    @Override
+    public MutableBinaryTreeNode<E> getChild(int nChild) {
+        if (nChild >= getNumberOfChildren()) {
+            throw new IndexOutOfBoundsException();
+        }
+        else {
+            return (MutableBinaryTreeNode<E>)children[nChild];
+        }
+    }
+
+    @Override
+    public boolean isLeaf() {
         return left == null && right == null;
     }
 }

@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.base;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
@@ -52,7 +54,12 @@ public abstract class ImmutableNode<E> extends FixedNode<E> {
     }
 
     @Override
-    public SimpleCollection<? extends Node<E>> getChildren() {
-        return children;
+    public int getNumberOfChildren() {
+        return children.size();
+    }
+
+    @Override
+    public Iterator<? extends ImmutableNode<E>> childIterator() {
+        return children.iterator();
     }
 }

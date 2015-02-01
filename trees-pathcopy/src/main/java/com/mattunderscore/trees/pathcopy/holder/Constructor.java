@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -45,7 +47,7 @@ public final class Constructor<E> implements TreeConstructor<E, PathCopyTree<E>>
         for (PathCopyTree<E> subtree : subtrees) {
             final Node<E> subRoot = subtree.getRoot();
             final MutableNode<E> newSubRoot = root.addChild(subRoot.getElement());
-            copyChildren(newSubRoot, subRoot.getChildren());
+            copyChildren(newSubRoot, subRoot);
         }
         return tree;
     }
@@ -55,10 +57,12 @@ public final class Constructor<E> implements TreeConstructor<E, PathCopyTree<E>>
         return PathCopyTree.class;
     }
 
-    private void copyChildren(MutableNode<E> newParent, SimpleCollection<? extends Node<E>> children) {
-        for (final Node<E> child : children) {
+    private void copyChildren(MutableNode<E> newParent, Node<E> parent) {
+        final Iterator<? extends Node<E>> iterator = parent.childIterator();
+        while (iterator.hasNext()) {
+            final Node<E> child = iterator.next();
             final MutableNode<E> newChild = newParent.addChild(child.getElement());
-            copyChildren(newChild, child.getChildren());
+            copyChildren(newChild, child);
         }
     }
 }

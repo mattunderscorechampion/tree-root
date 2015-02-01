@@ -25,14 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.tree;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
+import java.util.Iterator;
 
 /**
  * Represents a node of the tree.
  * @author Matt Champion on 08/08/14.
  */
 public interface Node<E> {
-
     /**
      * @return The element stored in the node
      */
@@ -44,9 +43,14 @@ public interface Node<E> {
     Class<E> getElementClass();
 
     /**
-     * @return The children of the node
+     * @return The number of child nodes
      */
-    SimpleCollection<? extends Node<E>> getChildren();
+    int getNumberOfChildren();
+
+    /**
+     * @return Iterator for children
+     */
+    Iterator<? extends Node<E>> childIterator();
 
     /**
      * @return {@code true} if the node is a leaf node

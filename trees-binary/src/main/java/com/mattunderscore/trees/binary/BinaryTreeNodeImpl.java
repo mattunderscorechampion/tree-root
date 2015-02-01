@@ -25,13 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.base.FixedNode;
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
+import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
+import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
  * Binary tree node implementation.
@@ -83,8 +86,41 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
     }
 
     @Override
-    public SimpleCollection<? extends BinaryTreeNodeImpl<E>> getChildren() {
-        return new FixedUncheckedSimpleCollection<>(children);
+    public int getNumberOfChildren() {
+        if (children.length == 2 && children[0] == null) {
+            return 1;
+        }
+        else {
+            return children.length;
+        }
+    }
+
+    @Override
+    public Iterator<? extends BinaryTreeNodeImpl<E>> childIterator() {
+        if (children.length == 2 && children[0] == null) {
+            return new SingletonIterator<>((BinaryTreeNodeImpl<E>)children[1]);
+        }
+        else if (children.length == 0) {
+            return new EmptyIterator<>();
+        }
+        else {
+            return new CastingArrayIterator<>(children);
+        }
+    }
+
+    @Override
+    public Iterator<? extends BinaryTreeNodeImpl<E>> childStructuralIterator() {
+        return new CastingArrayIterator<>(children);
+    }
+
+    @Override
+    public BinaryTreeNodeImpl<E> getChild(int nChild) {
+        if (nChild >= getNumberOfChildren()) {
+            throw new IndexOutOfBoundsException();
+        }
+        else {
+            return (BinaryTreeNodeImpl<E>)children[nChild];
+        }
     }
 
     @Override

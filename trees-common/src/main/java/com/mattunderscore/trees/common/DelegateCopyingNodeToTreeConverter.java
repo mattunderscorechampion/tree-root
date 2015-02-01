@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilderAppender;
@@ -57,9 +59,10 @@ public final class DelegateCopyingNodeToTreeConverter<E, N extends Node<E>, T ex
     }
 
     private void copyChildren(TopDownTreeBuilderAppender<E> appender, S node) {
-        for (Node<E> child : node.getChildren()) {
+        final Iterator<S> iterator = (Iterator<S>)node.childIterator();
+        while (iterator.hasNext()) {
             final TopDownTreeBuilderAppender<E> newAppender = appender.addChild(node.getElement());
-            copyChildren(newAppender, (S)child);
+            copyChildren(newAppender, (S)iterator.next());
         }
     }
 

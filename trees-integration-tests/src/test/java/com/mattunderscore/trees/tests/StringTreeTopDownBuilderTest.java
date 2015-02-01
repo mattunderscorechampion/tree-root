@@ -85,9 +85,8 @@ public final class StringTreeTopDownBuilderTest {
         final Node<String> root = tree.getRoot();
         Assert.assertEquals(String.class, root.getElementClass());
         Assert.assertEquals("a", root.getElement());
-        final SimpleCollection<? extends Node<String>> children0 = root.getChildren();
-        final Iterator<? extends Node<String>> iterator0 = children0.iterator();
-        Assert.assertEquals(2, children0.size());
+        final Iterator<? extends Node<String>> iterator0 = root.childIterator();
+        Assert.assertEquals(2, root.getNumberOfChildren());
         Assert.assertEquals("a", root.getElement());
         Assert.assertTrue(iterator0.hasNext());
         final Node<String> bNode = iterator0.next();
@@ -96,8 +95,8 @@ public final class StringTreeTopDownBuilderTest {
         Assert.assertFalse(iterator0.hasNext());
         Assert.assertEquals("b", bNode.getElement());
         Assert.assertEquals("d", dNode.getElement());
-        final SimpleCollection<? extends Node<String>> children1 = bNode.getChildren();
-        final Iterator<? extends Node<String>> iterator1 = children1.iterator();
+        Assert.assertEquals(1, bNode.getNumberOfChildren());
+        final Iterator<? extends Node<String>> iterator1 = bNode.childIterator();
         Assert.assertTrue(iterator1.hasNext());
         final Node<String> cNode = iterator1.next();
         Assert.assertFalse(iterator1.hasNext());

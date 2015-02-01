@@ -25,26 +25,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.tests;
 
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.common.LinkedTree;
-import com.mattunderscore.trees.common.TreesImpl;
-import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.immutable.TreeNodeImpl;
-import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
-import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.mutable.MutableTreeImpl;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.immutable.TreeNodeImpl;
+import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.MutableTreeImpl;
+import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Tests for bottom up builders.
@@ -83,9 +82,8 @@ public class StringTreeBottomUpBuilderTest {
         final Node<String> root = tree.getRoot();
         Assert.assertEquals(String.class, root.getElementClass());
         Assert.assertEquals("a", root.getElement());
-        final SimpleCollection<? extends Node<String>> children0 = root.getChildren();
-        final Iterator<? extends Node<String>> iterator0 = children0.iterator();
-        Assert.assertEquals(2, children0.size());
+        final Iterator<? extends Node<String>> iterator0 = root.childIterator();
+        Assert.assertEquals(2, root.getNumberOfChildren());
         Assert.assertEquals("a", root.getElement());
         Assert.assertTrue(iterator0.hasNext());
         final Node<String> bNode = iterator0.next();
@@ -94,8 +92,7 @@ public class StringTreeBottomUpBuilderTest {
         Assert.assertFalse(iterator0.hasNext());
         Assert.assertEquals("b", bNode.getElement());
         Assert.assertEquals("d", dNode.getElement());
-        final SimpleCollection<? extends Node<String>> children1 = bNode.getChildren();
-        final Iterator<? extends Node<String>> iterator1 = children1.iterator();
+        final Iterator<? extends Node<String>> iterator1 = bNode.childIterator();
         Assert.assertTrue(iterator1.hasNext());
         final Node<String> cNode = iterator1.next();
         Assert.assertFalse(iterator1.hasNext());

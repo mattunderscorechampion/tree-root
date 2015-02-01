@@ -82,7 +82,7 @@ public final class PostOrderIterator<E , N extends Node<E>, T extends Tree<E, ? 
 
         public State(N node) {
             this.node = node;
-            this.iterator = (Iterator<N>)node.getChildren().structuralIterator();
+            this.iterator = (Iterator<N>)node.childIterator();
         }
     }
 }

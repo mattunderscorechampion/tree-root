@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
@@ -45,7 +47,6 @@ final class PathCopyNode<E> extends ImmutableNode<E> implements MutableNode<E> {
         this.holder = holder;
     }
 
-    @Override
     public DuplicateOnWriteSimpleCollection<PathCopyNode<E>> getChildren() {
         return (DuplicateOnWriteSimpleCollection<PathCopyNode<E>>) children;
     }
@@ -98,5 +99,10 @@ final class PathCopyNode<E> extends ImmutableNode<E> implements MutableNode<E> {
 
         holder.propagate(currentParent, newParent);
         return child;
+    }
+
+    @Override
+    public Iterator<? extends PathCopyNode<E>> childIterator() {
+        return (Iterator<? extends PathCopyNode<E>>)children.iterator();
     }
 }

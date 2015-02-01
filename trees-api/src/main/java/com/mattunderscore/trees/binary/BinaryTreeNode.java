@@ -25,14 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.tree.StructuralNode;
 
 /**
  * A binary tree node.
  * @author Matt Champion on 06/09/14.
  */
-public interface BinaryTreeNode<E> extends Node<E> {
+public interface BinaryTreeNode<E> extends StructuralNode<E> {
     /**
      * @return The left subtree
      */
@@ -43,5 +46,12 @@ public interface BinaryTreeNode<E> extends Node<E> {
      */
     BinaryTreeNode<E> getRight();
 
-    SimpleCollection<? extends BinaryTreeNode<E>> getChildren();
+    @Override
+    Iterator<? extends BinaryTreeNode<E>> childIterator();
+
+    @Override
+    Iterator<? extends BinaryTreeNode<E>> childStructuralIterator();
+
+    @Override
+    BinaryTreeNode<E> getChild(int nChild);
 }

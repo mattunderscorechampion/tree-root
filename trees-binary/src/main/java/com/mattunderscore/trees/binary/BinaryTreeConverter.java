@@ -47,7 +47,7 @@ public final class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree
     }
 
     private BinaryTreeNodeImpl<E> duplicate(Node<E> sourceChild) {
-        final Iterator<? extends Node<E>> children = sourceChild.getChildren().iterator();
+        final Iterator<? extends Node<E>> children = sourceChild.childIterator();
         if (children.hasNext()) {
             final Node<E> left = children.next();
             Node<E> right = null;

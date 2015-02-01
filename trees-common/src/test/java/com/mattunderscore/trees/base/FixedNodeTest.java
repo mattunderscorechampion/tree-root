@@ -28,9 +28,14 @@ package com.mattunderscore.trees.base;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.mutable.SettableNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.utilities.collections.EmptySimpleCollection;
+import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
+
 import org.junit.Test;
 
 /**
@@ -40,8 +45,13 @@ import org.junit.Test;
 public final class FixedNodeTest {
     private static final Node<String> NODE = new FixedNode<String>("a") {
         @Override
-        public SimpleCollection<? extends Node<String>> getChildren() {
-            return new EmptySimpleCollection<>();
+        public int getNumberOfChildren() {
+            return 0;
+        }
+
+        @Override
+        public Iterator<? extends SettableNode<String>> childIterator() {
+            return new EmptyIterator<>();
         }
     };
 

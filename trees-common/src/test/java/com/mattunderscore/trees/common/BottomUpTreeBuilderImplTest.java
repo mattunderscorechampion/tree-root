@@ -55,7 +55,7 @@ public final class BottomUpTreeBuilderImplTest {
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
         assertEquals("ROOT", tree.getRoot().getElement());
-        assertEquals(0, tree.getChildren().size());
+        assertEquals(0, tree.getNumberOfChildren());
         assertFalse(tree.isEmpty());
     }
 
@@ -68,7 +68,7 @@ public final class BottomUpTreeBuilderImplTest {
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
         assertEquals("ROOT", tree.getRoot().getElement());
-        assertEquals(2, tree.getChildren().size());
+        assertEquals(2, tree.getNumberOfChildren());
         assertFalse(tree.isEmpty());
     }
 
@@ -89,7 +89,7 @@ public final class BottomUpTreeBuilderImplTest {
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
         assertEquals("ROOT", tree.getRoot().getElement());
-        assertEquals(2, tree.getChildren().size());
+        assertEquals(2, tree.getNumberOfChildren());
         assertFalse(tree.isEmpty());
     }
 

@@ -40,6 +40,6 @@ public abstract class AbstractNode<E> implements Node<E> {
 
     @Override
     public boolean isLeaf() {
-        return getChildren().isEmpty();
+        return getNumberOfChildren() == 0;
     }
 }

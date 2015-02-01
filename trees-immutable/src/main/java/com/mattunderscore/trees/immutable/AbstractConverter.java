@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.immutable;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
@@ -40,15 +42,17 @@ abstract class AbstractConverter<E> implements TreeConverter<E, TreeNodeImpl<E>>
     @Override
     public final TreeNodeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
         final Node<E> root = sourceTree.getRoot();
-        return new TreeNodeImpl(root.getElement(), duplicateChildren(root.getChildren()));
+        return new TreeNodeImpl(root.getElement(), duplicateChildren(root));
     }
 
-    private Object[] duplicateChildren(SimpleCollection<? extends Node<E>> children) {
+    private Object[] duplicateChildren(Node<E> parent) {
         @SuppressWarnings("unchecked")
-        final Object[] newChildren = new Object[children.size()];
+        final Object[] newChildren = new Object[parent.getNumberOfChildren()];
         int i = 0;
-        for (final Node<E> sourceChild : children) {
-            final Object[] newGrandChildren = duplicateChildren(sourceChild.getChildren());
+        final Iterator<? extends Node<E>> iterator = parent.childIterator();
+        while (iterator.hasNext()) {
+            final Node<E> sourceChild = iterator.next();
+            final Object[] newGrandChildren = duplicateChildren(sourceChild);
             newChildren[i] = new TreeNodeImpl<>(sourceChild.getElement(), newGrandChildren);
             i++;
         }
