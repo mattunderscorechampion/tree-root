@@ -2,6 +2,13 @@
 
 A tree structure and utility library called Tree Root.
 
+##Status
+This library is sill in an early stage of development. The first major release has not yet been made and the API has
+not been fixed.
+
+Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/tree-root.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/tree-root)
+Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/tree-root/badge.png)](https://coveralls.io/r/mattunderscorechampion/tree-root)
+
 ##Building trees
 
 There are multiple ways to build trees. From the bottom-up, starting with leaves and attaching them to a parent. From
@@ -82,13 +89,6 @@ generating the output:
     Element: 5
     Element: 6
 
-##Status
-This library is sill in an early stage of development. The first major release has not yet been made and the API has
-not been fixed.
-
-Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/tree-root.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/tree-root)
-Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/tree-root/badge.png)](https://coveralls.io/r/mattunderscorechampion/tree-root)
-
 ##Prior art
 
 There is a [TreeSet](http://docs.oracle.com/javase/7/docs/api/java/util/TreeSet.html) and a
@@ -150,7 +150,9 @@ provides operations on nodes to support more efficient rebalancing.
 * Leaf - a node that has no children
 * Root - a node that has no parent node
 * Tree - a data structure that may contain nodes and has at most one root node
-* Sorted tree - tree that has elements in certain positions based on comparisons between the elements
+* Structural tree - a tree where the child nodes are ordered and may have empty spaces
+* Sorted tree - tree that has elements in certain positions based on comparisons between the elements, a mutable sorted
+tree can be modified so that it is no longer sorted
 * Sorting tree - a mutable sorted tree that adds new elements to the correct positions based on comparisons between the
 elements
 * Balanced tree - tree that has all its leaves at the same distance from the root
@@ -220,6 +222,18 @@ references.
 _NodeToTreeConverter_ - Takes a node and creates a subtree with the node as the root. The subtree created must not
 mirror modifications to the source tree.
 
+##Tree traversal
+
+Tree traversal can be implemented manually by iterating over the children of nodes. Support is provided by the API for
+both external and internal iterators. Internal iteration is supported through walkers. External iteration is supported
+through the Java standard library iterators. Pre-order, in-order, post-order and breadth-first orders are all supported.
+Iterating over nodes and elements are both supported.
+
+##Selection
+
+The API can be used to select nodes and subtrees. The construction of selectors needs to be made more concise. Selectors
+return iterators over either nodes or trees.
+
 ##Simple Collection
 
 I have created a SimpleCollection extending Iterable. I had intended to reply on the Collections API for this and for a
@@ -234,12 +248,6 @@ The SimpleCollection might be ordered. If it is ordered it should also have some
 the number elements of the collection, for example a binary tree node may have 0 to 2 child nodes, one node for each
 branch. One iterator would return only the nodes present, the structural iterator must return two values, in order left
 to right returning null if the branch is not present.
-
-##Targeted Language
-
-The current target is Java 7. I know Java 8 is the latest version and the Streams API may be helpful for tree
-traversals. I maybe able to add some Java 8 specific extensions and I will move the target over to Java 8 towards EOL of
-Java 7.
 
 ##Simple collection implementations
 
@@ -267,3 +275,15 @@ _MutableBinaryTreeImpl_ - a mutable binary tree
 _BinarySearchTree_ - a mutable binary search tree
 
 _PathCopyTree_ - a path copy tree that uses a separate data structure for the back references between nodes
+
+##Targeted Language
+
+The current target is Java 7. I know Java 8 is the latest version and the Streams API may be helpful for tree
+traversals. I maybe able to add some Java 8 specific extensions and I will move the target over to Java 8 towards EOL of
+Java 7.
+
+##License
+
+Copyright (c) 2014, 2015 Matthew Champion
+
+Licensed under BSD 3-clause license
