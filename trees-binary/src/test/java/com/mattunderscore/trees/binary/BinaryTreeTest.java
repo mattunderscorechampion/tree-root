@@ -27,7 +27,9 @@ package com.mattunderscore.trees.binary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
@@ -78,15 +80,20 @@ public final class BinaryTreeTest {
 
         assertFalse(tree.isEmpty());
         assertEquals("a", tree.getRoot().getElement());
+        assertEquals(2, tree.getRoot().getNumberOfChildren());
         assertFalse(tree.getRoot().isLeaf());
         assertEquals("b", tree.getRoot().getLeft().getElement());
         assertEquals("c", tree.getRoot().getRight().getElement());
 
         final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
         final BinaryTreeNode<String> left = iterator.next();
+        assertSame(left, tree.getRoot().getChild(0));
+        assertSame(left, tree.getRoot().getLeft());
         assertTrue(left.isLeaf());
         assertEquals("b", left.getElement());
         final BinaryTreeNode<String> right = iterator.next();
+        assertSame(right, tree.getRoot().getChild(1));
+        assertSame(right, tree.getRoot().getRight());
         assertTrue(right.isLeaf());
         assertEquals("c", right.getElement());
         assertFalse(iterator.hasNext());
@@ -102,9 +109,12 @@ public final class BinaryTreeTest {
 
         assertFalse(tree.isEmpty());
         assertEquals("a", tree.getRoot().getElement());
+        assertEquals(1, tree.getRoot().getNumberOfChildren());
         assertFalse(tree.getRoot().isLeaf());
         assertEquals("b", tree.getRoot().getLeft().getElement());
+        assertSame(tree.getRoot().getLeft(), tree.getRoot().getChild(0));
         assertNull(tree.getRoot().getRight());
+        assertNull(tree.getRoot().getChild(0));
 
         final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
         final BinaryTreeNode<String> left = iterator.next();
@@ -125,6 +135,7 @@ public final class BinaryTreeTest {
 
         assertFalse(tree.isEmpty());
         assertEquals("a", tree.getRoot().getElement());
+        assertEquals(1, tree.getRoot().getNumberOfChildren());
         assertFalse(tree.getRoot().isLeaf());
         assertNull(tree.getRoot().getLeft());
         assertEquals("c", tree.getRoot().getRight().getElement());
@@ -132,9 +143,13 @@ public final class BinaryTreeTest {
         final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
         final BinaryTreeNode<String> left = iterator.next();
         assertNull(left);
+        assertNull(tree.getRoot().getLeft());
+        assertNull(tree.getRoot().getChild(0));
         final BinaryTreeNode<String> right = iterator.next();
         assertTrue(right.isLeaf());
         assertEquals("c", right.getElement());
+        assertSame(right, tree.getRoot().getRight());
+        assertSame(right, tree.getRoot().getChild(1));
         assertFalse(iterator.hasNext());
     }
 }
