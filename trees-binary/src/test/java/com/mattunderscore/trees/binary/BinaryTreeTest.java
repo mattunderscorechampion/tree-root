@@ -27,7 +27,6 @@ package com.mattunderscore.trees.binary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -38,13 +37,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.binary.BinaryTree;
-import com.mattunderscore.trees.binary.BinaryTreeNode;
-import com.mattunderscore.trees.binary.BinaryTreeNodeImpl;
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.tree.Node;
 
 /**
  * @author Matt Champion on 06/09/14.
