@@ -44,6 +44,7 @@ import com.mattunderscore.trees.binary.BinaryTreeNodeImpl;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * @author Matt Champion on 06/09/14.
@@ -59,7 +60,7 @@ public final class BinaryTreeTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void lessThanTwo() {
+    public void moreThanTwo() {
         final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         builder.create("a",
@@ -67,6 +68,31 @@ public final class BinaryTreeTest {
             builder.create("c"),
             builder.create("d"))
                 .build(BinaryTreeNodeImpl.<String>typeKey());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void noChildren() {
+        final Trees trees = new TreesImpl();
+        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
+        final BinaryTree<String, BinaryTreeNode<String>> tree =
+            builder.create("a").build(BinaryTreeNodeImpl.<String>typeKey());
+
+        assertFalse(tree.isEmpty());
+        assertEquals("a", tree.getRoot().getElement());
+        assertEquals(0, tree.getRoot().getNumberOfChildren());
+        assertTrue(tree.getRoot().isLeaf());
+        assertNull(tree.getRoot().getLeft());
+        assertNull(tree.getRoot().getRight());
+        assertNull(tree.getRoot().getChild(0));
+        assertNull(tree.getRoot().getChild(1));
+        final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
+        assertFalse(iterator.hasNext());
+        final Iterator<? extends BinaryTreeNode<String>> structuralIterator = tree.getRoot().childStructuralIterator();
+        assertNull(structuralIterator.next());
+        assertNull(structuralIterator.next());
+        assertFalse(structuralIterator.hasNext());
+
+        tree.getRoot().getChild(2);
     }
 
     @Test
