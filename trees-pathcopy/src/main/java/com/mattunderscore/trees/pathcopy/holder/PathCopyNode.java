@@ -81,7 +81,7 @@ final class PathCopyNode<E> extends ImmutableNode<E> implements MutableNode<E> {
     }
 
     @Override
-    public MutableNode<E> addChild(E e) {
+    public PathCopyNode<E> addChild(E e) {
         final PathCopyNodeHolder<E> childHolder = new PathCopyNodeHolder<>(holder);
         final PathCopyNode<E> child = new PathCopyNode<>(childHolder, e);
         final PathCopyNode<E> currentParent;
@@ -102,7 +102,7 @@ final class PathCopyNode<E> extends ImmutableNode<E> implements MutableNode<E> {
     }
 
     @Override
-    public Iterator<? extends PathCopyNode<E>> childIterator() {
-        return (Iterator<? extends PathCopyNode<E>>)children.iterator();
+    public Iterator<PathCopyNode<E>> childIterator() {
+        return (Iterator<PathCopyNode<E>>)children.iterator();
     }
 }

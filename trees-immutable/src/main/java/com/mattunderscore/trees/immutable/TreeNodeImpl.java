@@ -46,7 +46,7 @@ public final class TreeNodeImpl<E> extends ImmutableNode<E> implements Tree<E, N
     }
 
     @Override
-    public Node<E> getRoot() {
+    public TreeNodeImpl<E> getRoot() {
         if (isEmpty()) {
             return null;
         }
@@ -70,7 +70,7 @@ public final class TreeNodeImpl<E> extends ImmutableNode<E> implements Tree<E, N
     }
 
     @Override
-    public Iterator<? extends TreeNodeImpl<E>> childIterator() {
-        return (Iterator<? extends TreeNodeImpl<E>>)children.iterator();
+    public Iterator<TreeNodeImpl<E>> childIterator() {
+        return (Iterator<TreeNodeImpl<E>>)children.iterator();
     }
 }

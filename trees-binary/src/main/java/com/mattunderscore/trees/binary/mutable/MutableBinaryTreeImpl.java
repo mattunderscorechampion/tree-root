@@ -45,13 +45,14 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         super();
     }
 
-    private MutableBinaryTreeImpl(MutableBinaryTreeNode<E> root) {
+    private MutableBinaryTreeImpl(MutableBinaryTreeNodeImpl<E> root) {
         super(root);
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>, MutableBinaryTreeNode<E>> {
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableBinaryTreeNode<E>,
+            MutableBinaryTreeImpl<E>, MutableBinaryTreeNodeImpl<E>> {
         @Override
-        public MutableBinaryTreeImpl<E> treeFromRootNode(MutableBinaryTreeNode<E> node) {
+        public MutableBinaryTreeImpl<E> treeFromRootNode(MutableBinaryTreeNodeImpl<E> node) {
             return new MutableBinaryTreeImpl<>(node);
         }
 
@@ -81,14 +82,14 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
                 throw new IllegalStateException("A binary tree cannot have more than two children");
             }
 
-            MutableBinaryTreeNode<E> left = null;
-            MutableBinaryTreeNode<E> right = null;
+            MutableBinaryTreeNodeImpl<E> left = null;
+            MutableBinaryTreeNodeImpl<E> right = null;
 
             if (subtrees.length > 0) {
-                left = subtrees[0].getRoot();
+                left = (MutableBinaryTreeNodeImpl<E>)subtrees[0].getRoot();
             }
             if (subtrees.length > 1) {
-                right = subtrees[1].getRoot();
+                right = (MutableBinaryTreeNodeImpl<E>) subtrees[1].getRoot();
             }
 
             final MutableBinaryTreeNodeImpl<E> root = new MutableBinaryTreeNodeImpl<>(e, left, right);

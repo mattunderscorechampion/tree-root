@@ -99,7 +99,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
     }
 
     @Override
-    public MutableNode<E> addChild(E e) {
+    public LinkedTree<E> addChild(E e) {
         if (e == null) {
             throw new NullPointerException("You cannot add a child to an empty tree");
         }

@@ -27,8 +27,6 @@ package com.mattunderscore.trees.binary;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.mutable.MutableStructuralNode;
-
 /**
  * A mutable binary tree
  * @author Matt Champion on 06/09/14.

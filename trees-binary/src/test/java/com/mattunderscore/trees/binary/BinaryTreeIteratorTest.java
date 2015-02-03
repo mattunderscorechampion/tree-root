@@ -33,9 +33,8 @@ import java.util.Iterator;
 import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
+import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.tree.Tree;
 
 /**

@@ -60,7 +60,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
     }
 
     @Override
-    public MutableNode<E> addChild(E e) {
+    public MutableTreeImpl<E> addChild(E e) {
         if (e == null) {
             throw new NullPointerException("You cannot add a child to an empty tree");
         }
@@ -115,7 +115,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
     }
 
     @Override
-    public MutableNode<E> getRoot() {
+    public MutableTreeImpl<E> getRoot() {
         if (isEmpty()) {
             return null;
         }
@@ -130,7 +130,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
     }
 
     @Override
-    public synchronized MutableNode<E> setRoot(E root) {
+    public synchronized MutableTreeImpl<E> setRoot(E root) {
         elementReference.set(root);
         return this;
     }
@@ -150,7 +150,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
     }
 
     @Override
-    public Iterator<? extends MutableTreeImpl<E>> childIterator() {
+    public Iterator<MutableTreeImpl<E>> childIterator() {
         return elementList.iterator();
     }
 }

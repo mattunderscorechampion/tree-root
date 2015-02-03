@@ -41,8 +41,8 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
  */
 @NotThreadSafe
 public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements MutableBinaryTreeNode<E> {
-    private MutableBinaryTreeNode<E> left;
-    private MutableBinaryTreeNode<E> right;
+    private MutableBinaryTreeNodeImpl<E> left;
+    private MutableBinaryTreeNodeImpl<E> right;
     private final Object[] children = new Object[2];
 
     public MutableBinaryTreeNodeImpl(E element) {
@@ -51,41 +51,41 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
         right = null;
     }
 
-    public MutableBinaryTreeNodeImpl(E element, MutableBinaryTreeNode<E> left, MutableBinaryTreeNode<E> right) {
+    public MutableBinaryTreeNodeImpl(E element, MutableBinaryTreeNodeImpl<E> left, MutableBinaryTreeNodeImpl<E> right) {
         super(element);
         setInternalLeft(left);
         setInternalRight(right);
     }
 
     @Override
-    public MutableBinaryTreeNode<E> setLeft(E element) {
+    public MutableBinaryTreeNodeImpl<E> setLeft(E element) {
         return setInternalLeft(new MutableBinaryTreeNodeImpl<>(element));
     }
 
     @Override
-    public MutableBinaryTreeNode<E> setRight(E element) {
+    public MutableBinaryTreeNodeImpl<E> setRight(E element) {
         return setInternalRight(new MutableBinaryTreeNodeImpl<>(element));
     }
 
-    private synchronized MutableBinaryTreeNode<E> setInternalRight(MutableBinaryTreeNode<E> right) {
+    private synchronized MutableBinaryTreeNodeImpl<E> setInternalRight(MutableBinaryTreeNodeImpl<E> right) {
         this.right = right;
         children[1] = right;
         return right;
     }
 
-    private synchronized MutableBinaryTreeNode<E> setInternalLeft(MutableBinaryTreeNode<E> left) {
+    private synchronized MutableBinaryTreeNodeImpl<E> setInternalLeft(MutableBinaryTreeNodeImpl<E> left) {
         this.left = left;
         children[0] = left;
         return left;
     }
 
     @Override
-    public synchronized MutableBinaryTreeNode<E> getLeft() {
+    public synchronized MutableBinaryTreeNodeImpl<E> getLeft() {
         return left;
     }
 
     @Override
-    public synchronized MutableBinaryTreeNode<E> getRight() {
+    public synchronized MutableBinaryTreeNodeImpl<E> getRight() {
         return right;
     }
 
@@ -100,9 +100,9 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
     }
 
     @Override
-    public Iterator<? extends MutableBinaryTreeNode<E>> childIterator() {
+    public Iterator<MutableBinaryTreeNodeImpl<E>> childIterator() {
         if (children.length == 2 && children[0] == null) {
-            return new SingletonIterator<>((MutableBinaryTreeNode<E>)children[1]);
+            return new SingletonIterator<>((MutableBinaryTreeNodeImpl<E>)children[1]);
         }
         else if (children.length == 0) {
             return new EmptyIterator<>();
@@ -118,12 +118,12 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
     }
 
     @Override
-    public MutableBinaryTreeNode<E> getChild(int nChild) {
+    public MutableBinaryTreeNodeImpl<E> getChild(int nChild) {
         if (nChild >= getNumberOfChildren()) {
             throw new IndexOutOfBoundsException();
         }
         else {
-            return (MutableBinaryTreeNode<E>)children[nChild];
+            return (MutableBinaryTreeNodeImpl<E>)children[nChild];
         }
     }
 

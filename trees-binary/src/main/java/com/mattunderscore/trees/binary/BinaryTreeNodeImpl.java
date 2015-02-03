@@ -76,12 +76,12 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
     }
 
     @Override
-    public BinaryTreeNode<E> getLeft() {
+    public BinaryTreeNodeImpl<E> getLeft() {
         return left;
     }
 
     @Override
-    public BinaryTreeNode<E> getRight() {
+    public BinaryTreeNodeImpl<E> getRight() {
         return right;
     }
 
@@ -96,7 +96,7 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
     }
 
     @Override
-    public Iterator<? extends BinaryTreeNodeImpl<E>> childIterator() {
+    public Iterator<BinaryTreeNodeImpl<E>> childIterator() {
         if (children.length == 2 && children[0] == null) {
             return new SingletonIterator<>((BinaryTreeNodeImpl<E>)children[1]);
         }
@@ -109,7 +109,7 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
     }
 
     @Override
-    public Iterator<? extends BinaryTreeNodeImpl<E>> childStructuralIterator() {
+    public Iterator<BinaryTreeNodeImpl<E>> childStructuralIterator() {
         return new CastingArrayIterator<>(children);
     }
 
