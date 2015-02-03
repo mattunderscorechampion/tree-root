@@ -35,7 +35,7 @@ public abstract class DefaultElementWalker<E> implements Walker<E> {
     }
 
     @Override
-    public boolean onNext(E node) {
+    public boolean onNext(E element) {
         return true;
     }
 
