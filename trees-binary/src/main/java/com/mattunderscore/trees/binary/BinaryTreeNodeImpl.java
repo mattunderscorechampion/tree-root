@@ -43,36 +43,17 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryTreeNode<E> {
     private final BinaryTreeNodeImpl<E> left;
     private final BinaryTreeNodeImpl<E> right;
-    private final Object[] children;
 
     public BinaryTreeNodeImpl(E element) {
         super(element);
         left = null;
         right = null;
-        children = new Object[0];
     }
 
     public BinaryTreeNodeImpl(E element, BinaryTreeNodeImpl<E> left, BinaryTreeNodeImpl<E> right) {
         super(element);
         this.left = left;
         this.right = right;
-        if (left != null && right != null) {
-            children = new Object[2];
-            children[0] = left;
-            children[1] = right;
-        }
-        else if (left != null) {
-            children = new Object[1];
-            children[0] = left;
-        }
-        else if (right != null) {
-            children = new Object[2];
-            children[0] = null;
-            children[1] = right;
-        }
-        else {
-            children = new Object[0];
-        }
     }
 
     @Override
@@ -87,39 +68,48 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
 
     @Override
     public int getNumberOfChildren() {
-        if (children.length == 2 && children[0] == null) {
+        if (left == null && right == null) {
+            return 0;
+        }
+        else if (left == null || right == null) {
             return 1;
         }
         else {
-            return children.length;
+            return 2;
         }
     }
 
     @Override
     public Iterator<BinaryTreeNodeImpl<E>> childIterator() {
-        if (children.length == 2 && children[0] == null) {
-            return new SingletonIterator<>((BinaryTreeNodeImpl<E>)children[1]);
-        }
-        else if (children.length == 0) {
+        if (left == null && right == null) {
             return new EmptyIterator<>();
         }
+        else if (left != null && right == null) {
+            return new SingletonIterator<>(left);
+        }
+        else if (left == null) {
+            return new SingletonIterator<>(right);
+        }
         else {
-            return new CastingArrayIterator<>(children);
+            return new CastingArrayIterator<>(new Object[]{left, right});
         }
     }
 
     @Override
     public Iterator<BinaryTreeNodeImpl<E>> childStructuralIterator() {
-        return new CastingArrayIterator<>(children);
+        return new CastingArrayIterator<>(new Object[]{left, right});
     }
 
     @Override
     public BinaryTreeNodeImpl<E> getChild(int nChild) {
-        if (nChild >= getNumberOfChildren()) {
-            throw new IndexOutOfBoundsException();
+        if (nChild == 1) {
+            return right;
+        }
+        else if (nChild == 0) {
+            return left;
         }
         else {
-            return (BinaryTreeNodeImpl<E>)children[nChild];
+            throw new IndexOutOfBoundsException();
         }
     }
 

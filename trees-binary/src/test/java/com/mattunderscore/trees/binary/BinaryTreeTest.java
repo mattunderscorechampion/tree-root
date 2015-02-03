@@ -114,7 +114,7 @@ public final class BinaryTreeTest {
         assertEquals("b", tree.getRoot().getLeft().getElement());
         assertSame(tree.getRoot().getLeft(), tree.getRoot().getChild(0));
         assertNull(tree.getRoot().getRight());
-        assertNull(tree.getRoot().getChild(0));
+        assertNull(tree.getRoot().getChild(1));
 
         final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
         final BinaryTreeNode<String> left = iterator.next();
