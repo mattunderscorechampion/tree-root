@@ -52,3 +52,6 @@ Thursday January 22 21:27:56 2015
 * Renamed examples module
 * Allow the creation of sorting and sorted tree builders without specifying a comparator if the element type is
 comparable
+* Added structural nodes that allow specific access and placement of nodes
+* Removed the simple collection returned from Node
+* Added size and child iterator methods to Node
