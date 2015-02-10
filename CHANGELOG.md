@@ -55,3 +55,4 @@ comparable
 * Added structural nodes that allow specific access and placement of nodes
 * Removed the simple collection returned from Node
 * Added size and child iterator methods to Node
+* Added enhanced tree internal iterator for pre-order traversal
