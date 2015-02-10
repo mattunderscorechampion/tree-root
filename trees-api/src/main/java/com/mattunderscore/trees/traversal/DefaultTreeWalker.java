@@ -26,9 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.traversal;
 
 /**
+ * Default null operation tree walker.
  * @author Matt Champion on 31/01/15
  */
-public abstract class DefaultElementTreeWalker<E> implements TreeWalker<E> {
+public abstract class DefaultTreeWalker<E> implements TreeWalker<E> {
       @Override
       public void onStarted() {
       }
