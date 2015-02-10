@@ -57,6 +57,10 @@ public final class PreOrderTreeWalkerDriver {
                   while (iterator.hasNext()) {
                         final N child = (N) iterator.next();
                         accept(child, walker);
+
+                        if (iterator.hasNext()) {
+                              walker.onNodeChildrenRemaining(node);
+                        }
                   }
                   walker.onNodeChildrenCompleted(node);
             }

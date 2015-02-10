@@ -42,6 +42,10 @@ public abstract class DefaultElementTreeWalker<E> implements TreeWalker<E> {
       }
 
       @Override
+      public void onNodeChildrenRemaining(E node) {
+      }
+
+      @Override
       public void onNodeChildrenCompleted(E node) {
       }
 

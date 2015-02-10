@@ -26,14 +26,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.common.walkers;
 
 import com.mattunderscore.trees.traversal.TreeWalker;
-import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
 
 /**
  * A Node tree walker that unwraps the elements and passes them to a delegated element tree walker.
  * @author Matt Champion on 31/01/15
  */
-public class NodeToElementTreeWalker<E, N extends Node<E>> implements TreeWalker<N> {
+public final class NodeToElementTreeWalker<E, N extends Node<E>> implements TreeWalker<N> {
       private final TreeWalker<E> delegateTreeWalker;
 
       public NodeToElementTreeWalker(TreeWalker<E> delegateTreeWalker) {
@@ -53,6 +52,11 @@ public class NodeToElementTreeWalker<E, N extends Node<E>> implements TreeWalker
       @Override
       public void onNodeChildrenStarted(N node) {
             delegateTreeWalker.onNodeChildrenStarted(node.getElement());
+      }
+
+      @Override
+      public void onNodeChildrenRemaining(N node) {
+            delegateTreeWalker.onNodeChildrenRemaining(node.getElement());
       }
 
       @Override

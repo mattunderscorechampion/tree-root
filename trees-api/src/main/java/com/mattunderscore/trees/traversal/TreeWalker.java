@@ -15,6 +15,8 @@ public interface TreeWalker<E> {
 
     void onNodeChildrenStarted(E node);
 
+    void onNodeChildrenRemaining(E node);
+
     void onNodeChildrenCompleted(E node);
 
     void onNodeNoChildren(E node);

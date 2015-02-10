@@ -79,23 +79,27 @@ public final class TraversalExamples {
         walkers.walkPreOrder(tree, new TreeWalker<Node<String>>() {
             @Override
             public void onStarted() {
-                System.out.print("( ");
+                System.out.print("(");
             }
 
             @Override
             public void onNode(Node<String> node) {
                 System.out.print(node.getElement());
-                System.out.print(" ");
             }
 
             @Override
             public void onNodeChildrenStarted(Node<String> node) {
-                System.out.print("( ");
+                System.out.print(" (");
+            }
+
+            @Override
+            public void onNodeChildrenRemaining(Node<String> node) {
+                System.out.print(" ");
             }
 
             @Override
             public void onNodeChildrenCompleted(Node<String> node) {
-                System.out.print(") ");
+                System.out.print(")");
             }
 
             @Override
