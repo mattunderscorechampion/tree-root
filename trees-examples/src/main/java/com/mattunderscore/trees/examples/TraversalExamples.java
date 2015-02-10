@@ -27,7 +27,6 @@ package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.traversal.DefaultElementTreeWalker;
 import com.mattunderscore.trees.traversal.DefaultElementWalker;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalker;
@@ -36,7 +35,6 @@ import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 import java.util.Iterator;
-import java.util.Queue;
 
 /**
  * Traversal examples.
