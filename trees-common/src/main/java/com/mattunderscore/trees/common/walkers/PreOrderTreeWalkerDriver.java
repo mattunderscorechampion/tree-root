@@ -51,7 +51,7 @@ public final class PreOrderTreeWalkerDriver {
 
       private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, TreeWalker<N> walker) {
             walker.onNode(node);
-            final Iterator<? extends Node<E>> iterator = node.getChildren().iterator();
+            final Iterator<? extends Node<E>> iterator = node.childIterator();
             if (iterator.hasNext()) {
                   walker.onNodeChildrenStarted(node);
                   while (iterator.hasNext()) {
