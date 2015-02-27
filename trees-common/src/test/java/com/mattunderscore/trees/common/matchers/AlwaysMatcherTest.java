@@ -42,12 +42,12 @@ public final class AlwaysMatcherTest {
     @Test
     public void matches() {
         final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
-        final NodeMatcher<String> matcher = new AlwaysMatcher<>();
+        final NodeMatcher<String> matcher = AlwaysMatcher.create();
         assertTrue(matcher.matches(node));
     }
 
     @Test
-    public void testEquals() {
+    public void testEquals0() {
         final NodeMatcher<String> matcher0 = new AlwaysMatcher<>();
         final NodeMatcher<String> matcher1 = new AlwaysMatcher<>();
 
@@ -57,15 +57,24 @@ public final class AlwaysMatcherTest {
     }
 
     @Test
+    public void testEquals1() {
+        final NodeMatcher<String> matcher = AlwaysMatcher.create();
+
+        assertTrue(matcher.equals(matcher));
+        assertTrue(matcher.equals(matcher));
+        assertEquals(matcher.hashCode(), matcher.hashCode());
+    }
+
+    @Test
     public void testNotEquals0() {
-        final NodeMatcher<String> matcher0 = new AlwaysMatcher<>();
+        final NodeMatcher<String> matcher0 = AlwaysMatcher.create();
 
         assertFalse(matcher0.equals(null));
     }
 
     @Test
     public void testNotEquals1() {
-        final NodeMatcher<String> matcher0 = new AlwaysMatcher<>();
+        final NodeMatcher<String> matcher0 = AlwaysMatcher.create();
 
         assertFalse(matcher0.equals(new Object()));
     }
