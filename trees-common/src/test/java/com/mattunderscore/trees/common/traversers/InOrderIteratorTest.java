@@ -47,6 +47,7 @@ import static org.junit.Assert.assertFalse;
 public final class InOrderIteratorTest {
     private static TreeIteratorFactory iterators;
     private static Tree<String, ? extends Node<String>> tree;
+    private static Tree<String, ? extends Node<String>> emptyTree;
 
     @BeforeClass
     public static void setUp() {
@@ -63,6 +64,8 @@ public final class InOrderIteratorTest {
                     builder.create("g")))).build(LinkedTree.<String>typeKey());
 
         iterators = trees.treeIterators();
+
+        emptyTree = trees.treeBuilders().bottomUpBuilder().build(LinkedTree.class);
     }
 
     @Test
@@ -125,5 +128,11 @@ public final class InOrderIteratorTest {
 
         assertEquals("a", iterator.next());
         iterator.remove();
+    }
+
+    @Test
+    public void empty() {
+        final Iterator<String> iterator = iterators.inOrderElementsIterator(emptyTree);
+        assertFalse(iterator.hasNext());
     }
 }
