@@ -29,8 +29,11 @@ import static org.junit.Assert.assertEquals;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.traversal.Walker;
+import com.mattunderscore.trees.tree.Node;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -103,6 +106,20 @@ public final class TreeWalkerFactoryImplTest {
         assertEquals(4, walker.count);
     }
 
+    @Test
+    public void testWalkTreePreOrder() {
+        final TestTreeWalker<LinkedTree<String>> walker = new TestTreeWalker<>();
+        walkerFactory.walkPreOrder(tree, walker);
+        assertEquals(4, walker.count);
+    }
+
+    @Test
+    public void testWalkTreeElementsPreOrder() {
+        final TestTreeWalker<String> walker = new TestTreeWalker<>();
+        walkerFactory.walkElementsPreOrder(tree, walker);
+        assertEquals(4, walker.count);
+    }
+
     public static final class TestWalker<N> implements Walker<N> {
         private int count = 0;
 
@@ -115,6 +132,39 @@ public final class TreeWalkerFactoryImplTest {
         public boolean onNext(N node) {
             count++;
             return true;
+        }
+
+        @Override
+        public void onCompleted() {
+        }
+    }
+
+    public static final class TestTreeWalker<N> implements TreeWalker<N> {
+        private int count = 0;
+
+        @Override
+        public void onStarted() {
+        }
+
+        @Override
+        public void onNode(N node) {
+            count++;
+        }
+
+        @Override
+        public void onNodeChildrenStarted(N node) {
+        }
+
+        @Override
+        public void onNodeChildrenRemaining(N node) {
+        }
+
+        @Override
+        public void onNodeChildrenCompleted(N node) {
+        }
+
+        @Override
+        public void onNodeNoChildren(N node) {
         }
 
         @Override
