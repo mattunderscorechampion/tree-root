@@ -41,13 +41,43 @@ import org.junit.Test;
 public final class TypeKeyTest {
 
     @Test
-    public void equals() {
+    public void type0() {
+        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
+
+        assertEquals(Tree.class, key0.getType());
+    }
+
+    @Test
+    public void type1() {
+        final TypeKey<TestTree> key0 = new TypeKey<TestTree>() { };
+
+        assertEquals(TestTree.class, key0.getType());
+    }
+
+    @Test
+    public void testToString() {
+        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
+
+        assertTrue(key0.toString().startsWith("TypeKey"));
+        assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
+    }
+
+    @Test
+    public void equals0() {
         final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
         final TypeKey<Tree<String, Node<String>>> key1 = new TypeKey<Tree<String, Node<String>>>() { };
 
         assertTrue(key0.equals(key1));
         assertTrue(key1.equals(key0));
         assertEquals(key0.hashCode(), key1.hashCode());
+    }
+
+    @Test
+    public void equals1() {
+        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
+
+        assertTrue(key0.equals(key0));
+        assertEquals(key0.hashCode(), key0.hashCode());
     }
 
     @Ignore("The types of the parameters of the tree are erased")
@@ -71,5 +101,18 @@ public final class TypeKeyTest {
         final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
 
         assertFalse(key0.equals(new Object()));
+    }
+
+    public static final class TestTree implements Tree<String, Node<String>> {
+
+        @Override
+        public Node<String> getRoot() {
+            return null;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
     }
 }

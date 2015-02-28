@@ -78,6 +78,6 @@ public abstract class TypeKey<T extends Tree<?, ?>> {
 
     @Override
     public final String toString() {
-        return "TypeKey:" + type.getName();
+        return "TypeKey: " + type.getName();
     }
 }
