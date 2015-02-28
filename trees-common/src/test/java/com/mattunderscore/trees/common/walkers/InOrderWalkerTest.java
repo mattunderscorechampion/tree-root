@@ -1,14 +1,18 @@
 package com.mattunderscore.trees.common.walkers;
 
-import static org.junit.Assert.assertFalse;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Iterator;
-
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.ArgumentMatcher;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 
 import com.mattunderscore.trees.Trees;
@@ -70,7 +74,8 @@ public final class InOrderWalkerTest {
 
     @Test
     public void elements() {
-        walkers.walkElementsInOrder(emptyTree, elementWalker);
+        when(elementWalker.onNext(isA(String.class))).thenReturn(true);
+        walkers.walkElementsInOrder(tree, elementWalker);
         verify(elementWalker).onNext("a");
         verify(elementWalker).onNext("b");
         verify(elementWalker).onNext("c");
@@ -81,5 +86,45 @@ public final class InOrderWalkerTest {
         verify(elementWalker).onNext("h");
         verify(elementWalker).onNext("i");
         verify(elementWalker).onCompleted();
+        verifyNoMoreInteractions(elementWalker);
+    }
+
+    @Test
+    public void firstElement() {
+        when(elementWalker.onNext(isA(String.class))).thenReturn(false);
+        walkers.walkElementsInOrder(tree, elementWalker);
+        verify(elementWalker).onNext("a");
+        verifyNoMoreInteractions(elementWalker);
+    }
+
+    @Test
+    public void nodes() {
+        when(nodeWalker.onNext(isA(Node.class))).thenReturn(true);
+        walkers.walkInOrder(tree, nodeWalker);
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("a")));
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("b")));
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("c")));
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("d")));
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("e")));
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("f")));
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("g")));
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("h")));
+        verify(nodeWalker).onNext(argThat(new ElementMatcher("i")));
+        verify(nodeWalker).onCompleted();
+        verifyNoMoreInteractions(nodeWalker);
+    }
+
+    public static final class ElementMatcher extends ArgumentMatcher<Node<String>> {
+        private final String element;
+
+        public ElementMatcher(String element) {
+            this.element = element;
+        }
+
+        @Override
+        public boolean matches(Object o) {
+            final Node<String> node = (Node<String>)o;
+            return element.equals(node.getElement());
+        }
     }
 }
