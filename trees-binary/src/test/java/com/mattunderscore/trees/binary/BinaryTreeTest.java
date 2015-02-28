@@ -39,15 +39,16 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 
 /**
  * @author Matt Champion on 06/09/14.
  */
 public final class BinaryTreeTest {
+    private final Trees trees = new TreesImpl();
 
     @Test
     public void empty() {
-        final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree = builder.build(BinaryTreeNodeImpl.<String>typeKey());
         assertTrue(tree.isEmpty());
@@ -55,7 +56,6 @@ public final class BinaryTreeTest {
 
     @Test(expected = IllegalStateException.class)
     public void moreThanTwo() {
-        final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         builder.create("a",
             builder.create("b"),
@@ -66,7 +66,6 @@ public final class BinaryTreeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void noChildren() {
-        final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a").build(BinaryTreeNodeImpl.<String>typeKey());
@@ -91,7 +90,6 @@ public final class BinaryTreeTest {
 
     @Test
     public void twoChildren() {
-        final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
@@ -121,7 +119,6 @@ public final class BinaryTreeTest {
 
     @Test
     public void leftOnly() {
-        final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
@@ -146,7 +143,6 @@ public final class BinaryTreeTest {
     @Ignore("Not sure how I want to build a binary tree with only a right child")
     @Test
     public void rightOnly() {
-        final Trees trees = new TreesImpl();
         final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
@@ -171,5 +167,21 @@ public final class BinaryTreeTest {
         assertSame(right, tree.getRoot().getRight());
         assertSame(right, tree.getRoot().getChild(1));
         assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void topDownBuilder() {
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder =
+            trees.treeBuilders().<String>topDownBuilder().root("root");
+        final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> child0 = builder.addChild("child0");
+        builder.addChild("child1");
+        child0.addChild("child2");
+
+        final BinaryTree<String, BinaryTreeNode<String>> tree = builder.build(BinaryTree.class);
+
+        assertEquals("root", tree.getRoot().getElement());
+        assertEquals("child0", tree.getRoot().getLeft().getElement());
+        assertEquals("child1", tree.getRoot().getRight().getElement());
+        assertEquals("child2", tree.getRoot().getLeft().getLeft().getElement());
     }
 }
