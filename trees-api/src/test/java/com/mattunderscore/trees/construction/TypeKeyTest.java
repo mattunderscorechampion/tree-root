@@ -55,6 +55,13 @@ public final class TypeKeyTest {
     }
 
     @Test
+    public void type2() {
+        final TypeKey<TestTree> key0 = new TestTreeTypeKey();
+
+        assertEquals(TestTree.class, key0.getType());
+    }
+
+    @Test
     public void testToString() {
         final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
 
@@ -114,5 +121,8 @@ public final class TypeKeyTest {
         public boolean isEmpty() {
             return false;
         }
+    }
+
+    public static final class TestTreeTypeKey extends TypeKey<TestTree> {
     }
 }
