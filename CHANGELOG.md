@@ -56,3 +56,4 @@ comparable
 * Removed the simple collection returned from Node
 * Added size and child iterator methods to Node
 * Added enhanced tree internal iterator for pre-order traversal
+* Targeted Java 8
