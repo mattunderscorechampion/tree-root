@@ -4,7 +4,7 @@
 
     <parent>
         <artifactId>tree-root</artifactId>
-        <groupId>com.mattunderscore.trees</groupId>
+        <groupId>com.mattunderscore.tree.root</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
 
@@ -36,31 +36,31 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-api</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-binary</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-immutable</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-mutable</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-pathcopy</artifactId>
             <scope>test</scope>
         </dependency>

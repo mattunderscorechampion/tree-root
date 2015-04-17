@@ -8,7 +8,7 @@
         <version>7</version>
     </parent>
 
-    <groupId>com.mattunderscore.trees</groupId>
+    <groupId>com.mattunderscore.tree.root</groupId>
     <artifactId>tree-root</artifactId>
     <packaging>pom</packaging>
     <version>0.0.5-SNAPSHOT</version>
@@ -220,91 +220,91 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>string-trees</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>linked-tree</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>node-selectors</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>tree-traversers</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-basic-nodes</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-binary</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-immutable</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-integration-tests</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-matchers</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-mutable</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-pathcopy</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-spi</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.mattunderscore.trees</groupId>
+                <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-utilities</artifactId>
                 <version>${project.version}</version>
             </dependency>

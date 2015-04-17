@@ -48,6 +48,7 @@ Thursday January 22 21:27:56 2015
 * Separated tree implementations into different modules
 * Separated tests that rely on multiple modules into separate module
 * Separated tree implementations into different packages
+* Separated common elements into different modules
 * Made examples executable
 * Renamed examples module
 * Allow the creation of sorting and sorted tree builders without specifying a comparator if the element type is
@@ -57,3 +58,4 @@ comparable
 * Added size and child iterator methods to Node
 * Added enhanced tree internal iterator for pre-order traversal
 * Targeted Java 8
+* Changed group ID

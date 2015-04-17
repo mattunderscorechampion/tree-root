@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>tree-root</artifactId>
-        <groupId>com.mattunderscore.trees</groupId>
+        <groupId>com.mattunderscore.tree.root</groupId>
         <version>0.0.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -25,22 +25,22 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-basic-nodes</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-spi</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.trees</groupId>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-utilities</artifactId>
         </dependency>
     </dependencies>
