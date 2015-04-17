@@ -23,10 +23,10 @@
     <modules>
         <module>string-trees</module>
         <module>trees-api</module>
+        <module>trees-api-examples</module>
         <module>trees-basic-nodes</module>
         <module>trees-binary</module>
         <module>trees-common</module>
-        <module>trees-examples</module>
         <module>trees-immutable</module>
         <module>trees-integration-tests</module>
         <module>trees-matchers</module>
