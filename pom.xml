@@ -29,6 +29,7 @@
         <module>trees-examples</module>
         <module>trees-immutable</module>
         <module>trees-integration-tests</module>
+        <module>trees-matchers</module>
         <module>trees-mutable</module>
         <module>trees-pathcopy</module>
         <module>trees-spi</module>
@@ -254,6 +255,12 @@
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>trees-integration-tests</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>trees-matchers</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

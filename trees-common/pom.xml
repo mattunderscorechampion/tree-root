@@ -29,6 +29,11 @@
 
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-matchers</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-spi</artifactId>
         </dependency>
 
