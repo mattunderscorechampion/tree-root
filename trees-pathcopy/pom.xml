@@ -12,10 +12,6 @@
     <name>Path copy tree implementation</name>
     <description>Implementation of a path copy tree</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
     </prerequisites>

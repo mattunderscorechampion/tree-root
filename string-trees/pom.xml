@@ -12,10 +12,6 @@
     <name>String tree support</name>
     <description>Provides support specifically for string based trees and nodes.</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
     </prerequisites>

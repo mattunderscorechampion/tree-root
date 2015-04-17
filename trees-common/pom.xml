@@ -12,10 +12,6 @@
     <name>Tree Root common</name>
     <description>Contains code that can be used by any implementation of the API.</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
     </prerequisites>

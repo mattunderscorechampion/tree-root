@@ -12,10 +12,6 @@
     <name>Utilities</name>
     <description>Provides utilities used by the implementation but not directly related to trees.</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
     </prerequisites>

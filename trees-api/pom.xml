@@ -12,10 +12,6 @@
     <name>Tree Root API</name>
     <description>API for Tree Root library.</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
     </prerequisites>

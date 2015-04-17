@@ -12,10 +12,6 @@
     <name>Integration tests</name>
     <description>Integration tests for tests that depend on multiple modules</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
     </prerequisites>

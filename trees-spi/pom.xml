@@ -12,10 +12,6 @@
     <name>Tree Root SPI</name>
     <description>Provides an API for implementing services.</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
     </prerequisites>
