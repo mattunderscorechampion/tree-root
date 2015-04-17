@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>linked-tree</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-api</artifactId>
         </dependency>
 

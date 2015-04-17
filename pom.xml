@@ -22,6 +22,7 @@
 
     <modules>
         <module>string-trees</module>
+        <module>linked-tree</module>
         <module>trees-api</module>
         <module>trees-api-examples</module>
         <module>trees-basic-nodes</module>
@@ -219,6 +220,12 @@
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>string-trees</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>linked-tree</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
