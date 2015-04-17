@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.tests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -31,6 +31,8 @@ import static org.junit.Assert.assertFalse;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.common.TreesImpl;
 import com.mattunderscore.trees.common.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.common.selectors.ChildSelector;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
@@ -38,6 +40,8 @@ import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -65,8 +69,8 @@ public final class ChildSelectorTest {
         final NodeSelector<String> extendedSelector = new ChildSelector<>(selector);
 
         final Iterator<Node<String>> iterator = extendedSelector.select(tree);
-        assertEquals("b", iterator.next().getElement());
-        assertEquals("c", iterator.next().getElement());
-        assertFalse(iterator.hasNext());
+        Assert.assertEquals("b", iterator.next().getElement());
+        Assert.assertEquals("c", iterator.next().getElement());
+        Assert.assertFalse(iterator.hasNext());
     }
 }

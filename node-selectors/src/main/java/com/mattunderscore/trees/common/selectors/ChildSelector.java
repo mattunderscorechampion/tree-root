@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.selectors;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.Node;
 
