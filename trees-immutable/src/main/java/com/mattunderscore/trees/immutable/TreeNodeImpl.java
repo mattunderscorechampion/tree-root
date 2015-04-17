@@ -28,7 +28,6 @@ package com.mattunderscore.trees.immutable;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;

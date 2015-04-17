@@ -27,9 +27,7 @@ package com.mattunderscore.trees.mutable;
 
 import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.common.AbstractCopyingNodeConverter;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 import net.jcip.annotations.GuardedBy;
 

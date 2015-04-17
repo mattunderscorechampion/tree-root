@@ -24,6 +24,11 @@
 
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>trees-basic-nodes</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-spi</artifactId>
         </dependency>
 

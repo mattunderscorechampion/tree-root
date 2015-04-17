@@ -30,55 +30,41 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.mutable.SettableNode;
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.utilities.collections.EmptySimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for AbstractSettableNode.
+ * Unit tests for FixedNode.
  * @author Matt Champion on 20/12/14
  */
-public final class AbstractSettableNodeTest {
-    private SettableNode<String> node;
+public final class FixedNodeTest {
+    private static final Node<String> NODE = new FixedNode<String>("a") {
+        @Override
+        public int getNumberOfChildren() {
+            return 0;
+        }
 
-    @Before
-    public void setUp() {
-        node = new AbstractSettableNode<String>("a") {
-            @Override
-            public int getNumberOfChildren() {
-                return 0;
-            }
-
-            @Override
-            public Iterator<? extends SettableNode<String>> childIterator() {
-                return new EmptyIterator<>();
-            }
-        };
-    }
+        @Override
+        public Iterator<? extends SettableNode<String>> childIterator() {
+            return new EmptyIterator<>();
+        }
+    };
 
     @Test
     public void getElement() {
-        assertEquals("a", node.getElement());
+        assertEquals("a", NODE.getElement());
     }
 
     @Test
     public void getElementClass() {
-        assertEquals(String.class, node.getElementClass());
+        assertEquals(String.class, NODE.getElementClass());
     }
 
     @Test
     public void isLeaf() {
-        assertTrue(node.isLeaf());
-    }
-
-    @Test
-    public void setElement() {
-        assertEquals("a", node.setElement("b"));
-        assertEquals("b", node.getElement());
+        assertTrue(NODE.isLeaf());
     }
 }

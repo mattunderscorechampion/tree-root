@@ -28,18 +28,15 @@ package com.mattunderscore.trees.common;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.base.AbstractSettableNode;
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableStructuralNode;
-import com.mattunderscore.trees.mutable.SettableNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.StructuralNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
 import net.jcip.annotations.NotThreadSafe;
