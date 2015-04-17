@@ -25,8 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.common.AbstractCopyingNodeConverter;
-
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.NodeToTreeConverter} for
  * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
