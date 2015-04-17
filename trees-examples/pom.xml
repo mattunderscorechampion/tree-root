@@ -12,6 +12,10 @@
     <name>Tree Root examples</name>
     <description>Example usage of the Tree Root API and implementations</description>
 
+    <prerequisites>
+        <maven>${trees.prerequisite.maven.version}</maven>
+    </prerequisites>
+
     <build>
         <plugins>
             <plugin>

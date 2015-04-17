@@ -17,6 +17,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <trees.prerequisite.maven.version>3.0</trees.prerequisite.maven.version>
     </properties>
 
     <modules>
@@ -63,6 +64,10 @@
             <timezone>+0</timezone>
         </developer>
     </developers>
+
+    <prerequisites>
+        <maven>${trees.prerequisite.maven.version}</maven>
+    </prerequisites>
 
     <build>
         <plugins>
