@@ -35,6 +35,7 @@
         <module>trees-pathcopy</module>
         <module>trees-spi</module>
         <module>trees-utilities</module>
+        <module>tree-traversers</module>
     </modules>
 
     <licenses>
@@ -226,6 +227,12 @@
             <dependency>
                 <groupId>com.mattunderscore.trees</groupId>
                 <artifactId>linked-tree</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.trees</groupId>
+                <artifactId>tree-traversers</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

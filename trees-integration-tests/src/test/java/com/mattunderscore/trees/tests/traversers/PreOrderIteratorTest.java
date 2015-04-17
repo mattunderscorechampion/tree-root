@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.tests.traversers;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.common.LinkedTree;
@@ -32,6 +32,8 @@ import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
+
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -70,16 +72,16 @@ public final class PreOrderIteratorTest {
     {
         final Iterator<Node<String>> iterator = iterators.preOrderIterator(tree);
 
-        assertEquals("f", iterator.next().getElement());
-        assertEquals("b", iterator.next().getElement());
-        assertEquals("a", iterator.next().getElement());
-        assertEquals("d", iterator.next().getElement());
-        assertEquals("c", iterator.next().getElement());
-        assertEquals("e", iterator.next().getElement());
-        assertEquals("i", iterator.next().getElement());
-        assertEquals("h", iterator.next().getElement());
-        assertEquals("g", iterator.next().getElement());
-        assertFalse(iterator.hasNext());
+        Assert.assertEquals("f", iterator.next().getElement());
+        Assert.assertEquals("b", iterator.next().getElement());
+        Assert.assertEquals("a", iterator.next().getElement());
+        Assert.assertEquals("d", iterator.next().getElement());
+        Assert.assertEquals("c", iterator.next().getElement());
+        Assert.assertEquals("e", iterator.next().getElement());
+        Assert.assertEquals("i", iterator.next().getElement());
+        Assert.assertEquals("h", iterator.next().getElement());
+        Assert.assertEquals("g", iterator.next().getElement());
+        Assert.assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -87,16 +89,16 @@ public final class PreOrderIteratorTest {
     {
         final Iterator<String> iterator = iterators.preOrderElementsIterator(tree);
 
-        assertEquals("f", iterator.next());
-        assertEquals("b", iterator.next());
-        assertEquals("a", iterator.next());
-        assertEquals("d", iterator.next());
-        assertEquals("c", iterator.next());
-        assertEquals("e", iterator.next());
-        assertEquals("i", iterator.next());
-        assertEquals("h", iterator.next());
-        assertEquals("g", iterator.next());
-        assertFalse(iterator.hasNext());
+        Assert.assertEquals("f", iterator.next());
+        Assert.assertEquals("b", iterator.next());
+        Assert.assertEquals("a", iterator.next());
+        Assert.assertEquals("d", iterator.next());
+        Assert.assertEquals("c", iterator.next());
+        Assert.assertEquals("e", iterator.next());
+        Assert.assertEquals("i", iterator.next());
+        Assert.assertEquals("h", iterator.next());
+        Assert.assertEquals("g", iterator.next());
+        Assert.assertFalse(iterator.hasNext());
     }
 
     @Test(expected = UnsupportedOperationException.class)
@@ -110,7 +112,7 @@ public final class PreOrderIteratorTest {
     public void remove() {
         final Iterator<Node<String>> iterator = iterators.preOrderIterator(tree);
 
-        assertEquals("f", iterator.next().getElement());
+        Assert.assertEquals("f", iterator.next().getElement());
         iterator.remove();
     }
 
@@ -125,7 +127,7 @@ public final class PreOrderIteratorTest {
     public void elementRemove() {
         final Iterator<String> iterator = iterators.preOrderElementsIterator(tree);
 
-        assertEquals("f", iterator.next());
+        Assert.assertEquals("f", iterator.next());
         iterator.remove();
     }
 }

@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2014 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,54 +23,49 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.walkers;
+package com.mattunderscore.trees.common.traversers;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-
-import com.mattunderscore.trees.traversal.Walker;
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+import net.jcip.annotations.NotThreadSafe;
+
+import java.lang.reflect.Array;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Stack;
 
 /**
- * @author Matt Champion on 26/02/15
+ * @author Matt Champion on 17/08/14.
  */
-public final class NodeToElementWalkerTest {
-    @Mock
-    private Walker<String> walker;
+@NotThreadSafe
+public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
+    private final Stack<N> parents = new Stack<>();
+    private N current;
 
-    @Mock
-    private Node<String> node;
-
-    @Before
-    public void setUp() {
-        initMocks(this);
-
-        when(node.getElement()).thenReturn("hello");
+    public PreOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
+        super(tree, handler);
+        current = tree.getRoot();
+        parents.push(current);
     }
 
-    @Test
-    public void onEmpty() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
-        elementWalker.onEmpty();
-        verify(walker).onEmpty();
-    }
-
-    @Test
-    public void onCompleted() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
-        elementWalker.onCompleted();
-        verify(walker).onCompleted();
-    }
-
-    @Test
-    public void onNext() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
-        elementWalker.onNext(node);
-        verify(walker).onNext("hello");
+    @Override
+    protected N calculateNext() throws NoSuchElementException {
+        if (!parents.isEmpty()) {
+            final N n = current;
+            final N[] reversed = (N[]) Array.newInstance(n.getClass(), n.getNumberOfChildren());
+            final Iterator<N> childIterator = (Iterator<N>)n.childIterator();
+            for (int i = n.getNumberOfChildren() - 1; i >= 0; i--) {
+                reversed[i] = childIterator.next();
+            }
+            for (final N child : reversed) {
+                parents.push(child);
+            }
+            do {
+                current = parents.pop();
+            } while (current == null);
+            return n;
+        }
+        throw new NoSuchElementException();
     }
 }

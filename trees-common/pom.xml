@@ -24,6 +24,11 @@
 
         <dependency>
             <groupId>com.mattunderscore.trees</groupId>
+            <artifactId>tree-traversers</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.trees</groupId>
             <artifactId>trees-api</artifactId>
         </dependency>
 

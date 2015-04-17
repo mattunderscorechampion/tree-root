@@ -1,6 +1,5 @@
-package com.mattunderscore.trees.common.walkers;
+package com.mattunderscore.trees.tests.walkers;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -8,9 +7,11 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
+import com.mattunderscore.trees.common.walkers.NodeToElementTreeWalker;
 import com.mattunderscore.trees.traversal.TreeWalker;
-import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
 
 public class NodeToElementTreeWalkerTest {
@@ -22,57 +23,57 @@ public class NodeToElementTreeWalkerTest {
 
     @Before
     public void setUp() {
-        initMocks(this);
+        MockitoAnnotations.initMocks(this);
 
-        when(node.getElement()).thenReturn("hello");
+        Mockito.when(node.getElement()).thenReturn("hello");
     }
 
     @Test
     public void onStarted() throws Exception {
         final NodeToElementTreeWalker<String, Node<String>> elementWalker = new NodeToElementTreeWalker<>(walker);
         elementWalker.onStarted();
-        verify(walker).onStarted();
+        Mockito.verify(walker).onStarted();
     }
 
     @Test
     public void onNode() throws Exception {
         final NodeToElementTreeWalker<String, Node<String>> elementWalker = new NodeToElementTreeWalker<>(walker);
         elementWalker.onNode(node);
-        verify(walker).onNode("hello");
+        Mockito.verify(walker).onNode("hello");
     }
 
     @Test
     public void onNodeChildrenStarted() throws Exception {
         final NodeToElementTreeWalker<String, Node<String>> elementWalker = new NodeToElementTreeWalker<>(walker);
         elementWalker.onNodeChildrenStarted(node);
-        verify(walker).onNodeChildrenStarted("hello");
+        Mockito.verify(walker).onNodeChildrenStarted("hello");
     }
 
     @Test
     public void onNodeChildrenRemaining() throws Exception {
         final NodeToElementTreeWalker<String, Node<String>> elementWalker = new NodeToElementTreeWalker<>(walker);
         elementWalker.onNodeChildrenRemaining(node);
-        verify(walker).onNodeChildrenRemaining("hello");
+        Mockito.verify(walker).onNodeChildrenRemaining("hello");
     }
 
     @Test
     public void onNodeChildrenCompleted() throws Exception {
         final NodeToElementTreeWalker<String, Node<String>> elementWalker = new NodeToElementTreeWalker<>(walker);
         elementWalker.onNodeChildrenCompleted(node);
-        verify(walker).onNodeChildrenCompleted("hello");
+        Mockito.verify(walker).onNodeChildrenCompleted("hello");
     }
 
     @Test
     public void onNodeNoChildren() throws Exception {
         final NodeToElementTreeWalker<String, Node<String>> elementWalker = new NodeToElementTreeWalker<>(walker);
         elementWalker.onNodeNoChildren(node);
-        verify(walker).onNodeNoChildren("hello");
+        Mockito.verify(walker).onNodeNoChildren("hello");
     }
 
     @Test
     public void onCompleted() throws Exception {
         final NodeToElementTreeWalker<String, Node<String>> elementWalker = new NodeToElementTreeWalker<>(walker);
         elementWalker.onCompleted();
-        verify(walker).onCompleted();
+        Mockito.verify(walker).onCompleted();
     }
 }

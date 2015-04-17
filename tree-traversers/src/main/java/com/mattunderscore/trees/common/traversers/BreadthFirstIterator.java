@@ -25,48 +25,59 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.common.traversers;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.NotThreadSafe;
+import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Stack;
 
 /**
- * @author Matt Champion on 17/08/14.
+ * @author Matt Champion on 05/09/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
+    private Iterator<N> currentLayer;
+    private List<N> nextLayer;
 
-    public PreOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
+
+    public BreadthFirstIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
         super(tree, handler);
-        current = tree.getRoot();
-        parents.push(current);
+        currentLayer = new EmptyIterator<>();
+        nextLayer = new ArrayList<>(1);
+        nextLayer.add(tree.getRoot());
     }
 
     @Override
     protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final N[] reversed = (N[]) Array.newInstance(n.getClass(), n.getNumberOfChildren());
-            final Iterator<N> childIterator = (Iterator<N>)n.childIterator();
-            for (int i = n.getNumberOfChildren() - 1; i >= 0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (final N child : reversed) {
-                parents.push(child);
-            }
+        if (currentLayer.hasNext()) {
+            N next;
             do {
-                current = parents.pop();
-            } while (current == null);
-            return n;
+                next = currentLayer.next();
+            } while (next == null);
+
+            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
+            while (iterator.hasNext()) {
+                nextLayer.add(iterator.next());
+            }
+            return next;
         }
-        throw new NoSuchElementException();
+        else {
+            currentLayer = nextLayer.iterator();
+            nextLayer = new ArrayList<>();
+
+            N next;
+            do {
+                next = currentLayer.next();
+            } while (next == null);
+
+            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
+            while (iterator.hasNext()) {
+                nextLayer.add(iterator.next());
+            }
+            return next;
+        }
     }
 }
