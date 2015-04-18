@@ -50,7 +50,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
         MutableNode<E>, MutableStructuralNode<E> {
     private final ArrayListSimpleCollection<LinkedTree<E>> children;
 
-    LinkedTree(E root) {
+    public LinkedTree(E root) {
         super(root);
         children = new ArrayListSimpleCollection<>();
     }

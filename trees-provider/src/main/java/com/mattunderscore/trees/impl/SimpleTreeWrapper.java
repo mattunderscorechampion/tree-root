@@ -23,14 +23,17 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.spi.SPIComponent;
+import com.mattunderscore.trees.tree.Node;
 
 /**
- * Interface used to inject SPISupport into SPIComponents that need it.
- * @author Matt Champion on 27/09/14.
+ * Simple implementation of a tree wrapper. This will not correctly support the properties of trees but allows a node to
+ * be turned into a tree when it is required for the API. Allows any type of node to be wrapped.
+ * @author Matt Champion on 28/09/14.
  */
-public interface SPISupportAwareComponent extends SPIComponent {
-    void setSupport(SPISupport support);
+public final class SimpleTreeWrapper<E, N extends Node<E>> extends AbstractTreeWrapper<E, N> {
+    public SimpleTreeWrapper(N root) {
+        super(root);
+    }
 }

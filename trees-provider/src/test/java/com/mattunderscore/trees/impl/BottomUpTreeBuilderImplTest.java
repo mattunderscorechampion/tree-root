@@ -23,9 +23,12 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.impl;
 
+import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.impl.BottomUpTreeBuilderImpl;
+import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.tree.Tree;

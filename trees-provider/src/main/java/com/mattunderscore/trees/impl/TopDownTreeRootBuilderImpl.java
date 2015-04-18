@@ -23,62 +23,32 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.Immutable;
-
-import java.lang.reflect.Array;
 
 /**
- * @author Matt Champion on 13/08/14.
+ * @author Matt Champion on 15/08/14.
  */
-@Immutable
-final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
+final class TopDownTreeRootBuilderImpl<E> implements TopDownTreeRootBuilder<E> {
     private final SPISupport helper;
-    private final E root;
-    private final BottomUpTreeBuilder<E>[] children;
 
-    public BottomUpTreeBuilderImpl(SPISupport helper) {
-        this(helper, null, new BottomUpTreeBuilder[0]);
-    }
-
-    private BottomUpTreeBuilderImpl(SPISupport helper, E e) {
-        this(helper, e, new BottomUpTreeBuilder[0]);
-    }
-
-    private BottomUpTreeBuilderImpl(SPISupport helper, E e, BottomUpTreeBuilder[] builders) {
+    public TopDownTreeRootBuilderImpl(SPISupport helper) {
         this.helper = helper;
-        root = e;
-        children = builders;
     }
 
     @Override
-    public BottomUpTreeBuilder<E> create(E e) {
-        return new BottomUpTreeBuilderImpl<>(helper, e);
-    }
-
-    @Override
-    public BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders) {
-        return new BottomUpTreeBuilderImpl<>(helper, e, builders);
+    public TopDownTreeBuilder<E> root(E e) {
+        return new TopDownTreeBuilderImpl<>(helper, e);
     }
 
     @Override
     public <T extends Tree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        if (root == null) {
-            return helper.createEmptyTree(klass);
-        }
-        else {
-            final T[] subtrees = (T[])Array.newInstance(klass, children.length);
-            for (int i = 0; i < children.length; i++) {
-                subtrees[i] = children[i].build(klass);
-            }
-            return helper.newTreeFrom(klass, root, subtrees);
-        }
+        return helper.createEmptyTree(klass);
     }
 
     @Override

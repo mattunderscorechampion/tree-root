@@ -23,48 +23,56 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.impl;
 
+import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.common.LinkedTree;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * @author Matt Champion on 15/08/14.
  */
-public class TopDownTreeBuilderImplTest {
-    private static final SPISupport helper = new SPISupport();
+@NotThreadSafe
+final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E> {
+    private final SPISupport helper;
+    private final LinkedTree<E> tree;
 
-    @Test
-    public void buildEmpty() {
-        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
-        final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
-        assertNull(tree.getRoot());
-        assertTrue(tree.isEmpty());
+    public TopDownTreeBuilderImpl(SPISupport helper, E root) {
+        this.helper = helper;
+        tree = new LinkedTree<>(root);
     }
 
-    @Test
-    public void buildLeaf() {
-        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("ROOT");
-
-        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
-        assertEquals("ROOT", tree.getRoot().getElement());
-        assertEquals(0, tree.getNumberOfChildren());
-        assertFalse(tree.isEmpty());
+    @Override
+    public <T extends Tree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+        return helper.convertTree(klass, tree);
     }
 
-    @Test
-    public void buildSimple() {
-        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("ROOT");
-        builder0.addChild("a");
-        builder0.addChild("b");
+    @Override
+    public <T extends Tree<E, ? extends Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+        return build(type.getType());
+    }
 
-        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
-        assertEquals("ROOT", tree.getRoot().getElement());
-        assertEquals(2, tree.getNumberOfChildren());
-        assertFalse(tree.isEmpty());
+    @Override
+    public TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> addChild(E e) {
+        return new Appender<>(tree.addChild(e));
+    }
+
+    @NotThreadSafe
+    private static final class Appender<S> implements TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> {
+        private final MutableNode<S> root;
+
+        public Appender(MutableNode<S> root) {
+            this.root = root;
+        }
+
+        @Override
+        public TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> addChild(S e) {
+            return new Appender<>(root.addChild(e));
+        }
     }
 }

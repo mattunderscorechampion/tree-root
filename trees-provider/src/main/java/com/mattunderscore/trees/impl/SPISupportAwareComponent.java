@@ -23,33 +23,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common;
+package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.spi.SPIComponent;
 
 /**
- * Abstract implementation of a tree wrapper.
- * @author Matt Champion on 06/09/14.
+ * Interface used to inject SPISupport into SPIComponents that need it.
+ * @author Matt Champion on 27/09/14.
  */
-public abstract class AbstractTreeWrapper<E, N extends Node<E>> implements Tree<E, N> {
-    private final N root;
-
-    protected AbstractTreeWrapper() {
-        this.root = null;
-    }
-
-    protected AbstractTreeWrapper(N root) {
-        this.root = root;
-    }
-
-    @Override
-    public N getRoot() {
-        return root;
-    }
-
-    @Override
-    public final boolean isEmpty() {
-        return root == null;
-    }
+public interface SPISupportAwareComponent extends SPIComponent {
+    void setSupport(SPISupport support);
 }
