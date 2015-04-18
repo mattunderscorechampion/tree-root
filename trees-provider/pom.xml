@@ -8,9 +8,12 @@
         <version>0.0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>trees-common</artifactId>
-    <name>Tree Root common</name>
-    <description>Contains code that can be used by any implementation of the API.</description>
+    <artifactId>trees-provider</artifactId>
+    <name>Tree Root API provider</name>
+    <description>
+        Provider for trees API. This service provider is also a service consumer. Implementations for trees need to have
+        separate providers.
+    </description>
 
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
