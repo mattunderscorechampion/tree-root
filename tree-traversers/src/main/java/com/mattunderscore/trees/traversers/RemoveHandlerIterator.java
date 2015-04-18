@@ -23,48 +23,33 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.walkers;
+package com.mattunderscore.trees.traversers;
 
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.traversal.Walker;
-import net.jcip.annotations.Immutable;
-
-import java.util.Iterator;
+import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 /**
- * @author Matt Champion on 17/08/14.
+ * Iterator that provides support for removing elements from trees.
+ * @author Matt Champion on 15/09/14.
  */
-@Immutable
-public final class PreOrderWalker {
+public abstract class RemoveHandlerIterator<E, N extends Node<E>, T extends Tree<E, ? extends N>> extends PrefetchingIterator<N> {
+    private final T tree;
+    private final IteratorRemoveHandler<E, N, T> handler;
 
-    public PreOrderWalker() {
+    public RemoveHandlerIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
+        this.tree = tree;
+        this.handler = handler;
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
-        if (tree.isEmpty()) {
-            walker.onEmpty();
-            walker.onCompleted();
-        }
-        else {
-            final N node = tree.getRoot();
-            try {
-                accept(node, walker);
-                walker.onCompleted();
-            }
-            catch (Done done) {
-            }
-        }
+    @Override
+    protected boolean isRemoveSupported() {
+        return handler.isSupported();
     }
 
-    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, Walker<N> walker) throws Done {
-        final Iterator<? extends Node<E>> iterator = node.childIterator();
-        if (!walker.onNext(node)) {
-            throw new Done();
-        }
-        while (iterator.hasNext()) {
-            final N child = (N)iterator.next();
-            accept(child, walker);
-        }
+    @Override
+    protected void remove(N node) {
+        handler.remove(tree, node);
     }
 }

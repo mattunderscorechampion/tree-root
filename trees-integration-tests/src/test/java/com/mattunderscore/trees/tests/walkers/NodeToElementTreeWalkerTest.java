@@ -1,8 +1,6 @@
 package com.mattunderscore.trees.tests.walkers;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.mattunderscore.trees.common.walkers.NodeToElementTreeWalker;
+import com.mattunderscore.trees.walkers.NodeToElementTreeWalker;
 import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.tree.Node;
 

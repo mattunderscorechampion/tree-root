@@ -23,11 +23,26 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.walkers;
+package com.mattunderscore.trees.traversers;
+
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
+
+import java.util.Iterator;
 
 /**
- * @author Matt Champion on 24/08/14.
+ * An element iterator that delegates to a Node iterator and unwraps the return to an element.
+ * @author Matt Champion on 10/09/14.
  */
-final class Done extends Exception {
-    private static final long serialVersionUID = 2087996958250298205L;
+public final class NodeToElementIterators<E, N extends Node<E>> extends ConvertingIterator<E, N> {
+
+    public NodeToElementIterators(Iterator<N> delegatedIterator) {
+        super(delegatedIterator);
+    }
+
+    @Override
+    protected E convert(N n) {
+        return n.getElement();
+    }
+
 }

@@ -25,13 +25,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import net.jcip.annotations.Immutable;
+
 import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.TreeWalkerFactory;
+import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.common.walkers.*;
-import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.traversal.TreeWalkerFactory;
-import net.jcip.annotations.Immutable;
+import com.mattunderscore.trees.walkers.BreadthFirstWalker;
+import com.mattunderscore.trees.walkers.InOrderWalker;
+import com.mattunderscore.trees.walkers.NodeToElementTreeWalker;
+import com.mattunderscore.trees.walkers.NodeToElementWalker;
+import com.mattunderscore.trees.walkers.PostOrderWalker;
+import com.mattunderscore.trees.walkers.PreOrderTreeWalkerDriver;
+import com.mattunderscore.trees.walkers.PreOrderWalker;
 
 /**
  * @author Matt Champion on 23/08/14.

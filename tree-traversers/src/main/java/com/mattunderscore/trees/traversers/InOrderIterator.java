@@ -23,61 +23,70 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.traversers;
 
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.StructuralNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
+import net.jcip.annotations.NotThreadSafe;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Stack;
 
 /**
- * @author Matt Champion on 05/09/14.
+ * @author Matt Champion on 22/08/14.
  */
-public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
-    private Iterator<N> currentLayer;
-    private List<N> nextLayer;
+@NotThreadSafe
+public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
+    private final Stack<State<E, N>> parents = new Stack<>();
+    private N current;
 
-
-    public BreadthFirstIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
+    public InOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
         super(tree, handler);
-        currentLayer = new EmptyIterator<>();
-        nextLayer = new ArrayList<>(1);
-        nextLayer.add(tree.getRoot());
+        current = tree.getRoot();
     }
 
     @Override
     protected N calculateNext() throws NoSuchElementException {
-        if (currentLayer.hasNext()) {
-            N next;
-            do {
-                next = currentLayer.next();
-            } while (next == null);
-
-            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
-            while (iterator.hasNext()) {
-                nextLayer.add(iterator.next());
+        while (!parents.isEmpty() || current != null) {
+            if (current != null) {
+                final State<E, N> state = new State<>(current);
+                parents.push(state);
+                if (state.iterator.hasNext()) {
+                    current = state.iterator.next();
+                }
+                else {
+                    current = null;
+                }
             }
-            return next;
+            else {
+                final State<E, N> state = parents.peek();
+                if (state.iterator.hasNext()) {
+                    current = state.iterator.next();
+                }
+                if (!state.iterator.hasNext()) {
+                    parents.pop();
+                }
+                return state.node;
+            }
         }
-        else {
-            currentLayer = nextLayer.iterator();
-            nextLayer = new ArrayList<>();
+        throw new NoSuchElementException();
+    }
 
-            N next;
-            do {
-                next = currentLayer.next();
-            } while (next == null);
+    private static final class State<E, N extends Node<E>> {
+        private final N node;
+        private final Iterator<N> iterator;
 
-            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
-            while (iterator.hasNext()) {
-                nextLayer.add(iterator.next());
+        public State(N node) {
+            this.node = node;
+            if (node instanceof StructuralNode) {
+                this.iterator = (Iterator<N>) ((StructuralNode) node).childStructuralIterator();
             }
-            return next;
+            else {
+                this.iterator = (Iterator<N>) node.childIterator();
+            }
         }
     }
 }

@@ -23,49 +23,48 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.walkers;
 
-import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.NotThreadSafe;
+import com.mattunderscore.trees.traversal.Walker;
+import net.jcip.annotations.Immutable;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Stack;
 
 /**
  * @author Matt Champion on 17/08/14.
  */
-@NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
-    private final Stack<N> parents = new Stack<>();
-    private N current;
+@Immutable
+public final class PreOrderWalker {
 
-    public PreOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
-        super(tree, handler);
-        current = tree.getRoot();
-        parents.push(current);
+    public PreOrderWalker() {
     }
 
-    @Override
-    protected N calculateNext() throws NoSuchElementException {
-        if (!parents.isEmpty()) {
-            final N n = current;
-            final N[] reversed = (N[]) Array.newInstance(n.getClass(), n.getNumberOfChildren());
-            final Iterator<N> childIterator = (Iterator<N>)n.childIterator();
-            for (int i = n.getNumberOfChildren() - 1; i >= 0; i--) {
-                reversed[i] = childIterator.next();
-            }
-            for (final N child : reversed) {
-                parents.push(child);
-            }
-            do {
-                current = parents.pop();
-            } while (current == null);
-            return n;
+    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
+        if (tree.isEmpty()) {
+            walker.onEmpty();
+            walker.onCompleted();
         }
-        throw new NoSuchElementException();
+        else {
+            final N node = tree.getRoot();
+            try {
+                accept(node, walker);
+                walker.onCompleted();
+            }
+            catch (Done done) {
+            }
+        }
+    }
+
+    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, Walker<N> walker) throws Done {
+        final Iterator<? extends Node<E>> iterator = node.childIterator();
+        if (!walker.onNext(node)) {
+            throw new Done();
+        }
+        while (iterator.hasNext()) {
+            final N child = (N)iterator.next();
+            accept(child, walker);
+        }
     }
 }

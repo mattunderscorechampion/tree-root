@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2014 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,55 +23,59 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.tests.walkers;
+package com.mattunderscore.trees.walkers;
 
-import static org.mockito.Mockito.verify;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
-import com.mattunderscore.trees.walkers.NodeToElementWalker;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+import net.jcip.annotations.Immutable;
 
 /**
- * @author Matt Champion on 26/02/15
+ * @author Matt Champion on 17/08/14.
  */
-public final class NodeToElementWalkerTest {
-    @Mock
-    private Walker<String> walker;
+@Immutable
+public final class BreadthFirstWalker {
 
-    @Mock
-    private Node<String> node;
-
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-
-        Mockito.when(node.getElement()).thenReturn("hello");
+    public BreadthFirstWalker() {
     }
 
-    @Test
-    public void onEmpty() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
-        elementWalker.onEmpty();
-        Mockito.verify(walker).onEmpty();
+    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
+        if (tree.isEmpty()) {
+            walker.onEmpty();
+            walker.onCompleted();
+        }
+        else {
+            final N node = tree.getRoot();
+            final List<N> rootLevel = new ArrayList<>(1);
+            rootLevel.add(node);
+            try {
+                accept(rootLevel, walker);
+                walker.onCompleted();
+            }
+            catch (Done done) {
+                done.printStackTrace();
+            }
+        }
     }
 
-    @Test
-    public void onCompleted() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
-        elementWalker.onCompleted();
-        Mockito.verify(walker).onCompleted();
-    }
+    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(List<N> currentLevel, Walker<N> walker) throws Done {
+        final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
+        for (final N node : currentLevel) {
+            if (!walker.onNext(node)) {
+                throw new Done();
+            }
+            final Iterator<? extends Node<E>> iterator = node.childIterator();
+            while (iterator.hasNext()) {
+                nextLevel.add((N) iterator.next());
+            }
+        }
 
-    @Test
-    public void onNext() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
-        elementWalker.onNext(node);
-        Mockito.verify(walker).onNext("hello");
+        if (nextLevel.size() > 0) {
+            accept(nextLevel, walker);
+        }
     }
 }

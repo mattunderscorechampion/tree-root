@@ -23,34 +23,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.walkers;
-
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.traversal.Walker;
+package com.mattunderscore.trees.walkers;
 
 /**
- * A Node walker that unwraps the elements and passes them to a delegated element walker.
- * @author Matt Champion on 10/09/14.
+ * @author Matt Champion on 24/08/14.
  */
-public final class NodeToElementWalker<E, N extends Node<E>> implements Walker<N> {
-    private final Walker<E> delegateWalker;
-
-    public NodeToElementWalker(Walker<E> delegateWalker) {
-        this.delegateWalker = delegateWalker;
-    }
-
-    @Override
-    public void onEmpty() {
-        delegateWalker.onEmpty();
-    }
-
-    @Override
-    public boolean onNext(N node) {
-        return delegateWalker.onNext(node.getElement());
-    }
-
-    @Override
-    public void onCompleted() {
-        delegateWalker.onCompleted();
-    }
+final class Done extends Exception {
+    private static final long serialVersionUID = 2087996958250298205L;
 }

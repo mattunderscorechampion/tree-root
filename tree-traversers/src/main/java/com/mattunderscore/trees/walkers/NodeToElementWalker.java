@@ -23,26 +23,34 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.traversers;
+package com.mattunderscore.trees.walkers;
 
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
-
-import java.util.Iterator;
+import com.mattunderscore.trees.traversal.Walker;
 
 /**
- * An element iterator that delegates to a Node iterator and unwraps the return to an element.
+ * A Node walker that unwraps the elements and passes them to a delegated element walker.
  * @author Matt Champion on 10/09/14.
  */
-public final class NodeToElementIterators<E, N extends Node<E>> extends ConvertingIterator<E, N> {
+public final class NodeToElementWalker<E, N extends Node<E>> implements Walker<N> {
+    private final Walker<E> delegateWalker;
 
-    public NodeToElementIterators(Iterator<N> delegatedIterator) {
-        super(delegatedIterator);
+    public NodeToElementWalker(Walker<E> delegateWalker) {
+        this.delegateWalker = delegateWalker;
     }
 
     @Override
-    protected E convert(N n) {
-        return n.getElement();
+    public void onEmpty() {
+        delegateWalker.onEmpty();
     }
 
+    @Override
+    public boolean onNext(N node) {
+        return delegateWalker.onNext(node.getElement());
+    }
+
+    @Override
+    public void onCompleted() {
+        delegateWalker.onCompleted();
+    }
 }

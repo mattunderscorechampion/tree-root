@@ -23,59 +23,61 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.walkers;
+package com.mattunderscore.trees.traversers;
+
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.Immutable;
+import java.util.NoSuchElementException;
 
 /**
- * @author Matt Champion on 17/08/14.
+ * @author Matt Champion on 05/09/14.
  */
-@Immutable
-public final class BreadthFirstWalker {
+public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
+    private Iterator<N> currentLayer;
+    private List<N> nextLayer;
 
-    public BreadthFirstWalker() {
+
+    public BreadthFirstIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
+        super(tree, handler);
+        currentLayer = new EmptyIterator<>();
+        nextLayer = new ArrayList<>(1);
+        nextLayer.add(tree.getRoot());
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
-        if (tree.isEmpty()) {
-            walker.onEmpty();
-            walker.onCompleted();
+    @Override
+    protected N calculateNext() throws NoSuchElementException {
+        if (currentLayer.hasNext()) {
+            N next;
+            do {
+                next = currentLayer.next();
+            } while (next == null);
+
+            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
+            while (iterator.hasNext()) {
+                nextLayer.add(iterator.next());
+            }
+            return next;
         }
         else {
-            final N node = tree.getRoot();
-            final List<N> rootLevel = new ArrayList<>(1);
-            rootLevel.add(node);
-            try {
-                accept(rootLevel, walker);
-                walker.onCompleted();
-            }
-            catch (Done done) {
-                done.printStackTrace();
-            }
-        }
-    }
+            currentLayer = nextLayer.iterator();
+            nextLayer = new ArrayList<>();
 
-    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(List<N> currentLevel, Walker<N> walker) throws Done {
-        final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
-        for (final N node : currentLevel) {
-            if (!walker.onNext(node)) {
-                throw new Done();
-            }
-            final Iterator<? extends Node<E>> iterator = node.childIterator();
+            N next;
+            do {
+                next = currentLayer.next();
+            } while (next == null);
+
+            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
             while (iterator.hasNext()) {
-                nextLevel.add((N) iterator.next());
+                nextLayer.add(iterator.next());
             }
-        }
-
-        if (nextLevel.size() > 0) {
-            accept(nextLevel, walker);
+            return next;
         }
     }
 }

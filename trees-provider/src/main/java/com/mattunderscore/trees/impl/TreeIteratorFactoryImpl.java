@@ -27,11 +27,11 @@ package com.mattunderscore.trees.impl;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.common.traversers.BreadthFirstIterator;
-import com.mattunderscore.trees.common.traversers.InOrderIterator;
-import com.mattunderscore.trees.common.traversers.NodeToElementIterators;
-import com.mattunderscore.trees.common.traversers.PostOrderIterator;
-import com.mattunderscore.trees.common.traversers.PreOrderIterator;
+import com.mattunderscore.trees.traversers.BreadthFirstIterator;
+import com.mattunderscore.trees.traversers.InOrderIterator;
+import com.mattunderscore.trees.traversers.NodeToElementIterators;
+import com.mattunderscore.trees.traversers.PostOrderIterator;
+import com.mattunderscore.trees.traversers.PreOrderIterator;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;

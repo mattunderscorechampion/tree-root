@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2014 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,54 +23,55 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.walkers;
+package com.mattunderscore.trees.walkers;
 
-import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.traversal.Walker;
+import net.jcip.annotations.Immutable;
+
+import java.util.Iterator;
 
 /**
- * A Node tree walker that unwraps the elements and passes them to a delegated element tree walker.
- * @author Matt Champion on 31/01/15
+ * @author Matt Champion on 17/08/14.
  */
-public final class NodeToElementTreeWalker<E, N extends Node<E>> implements TreeWalker<N> {
-      private final TreeWalker<E> delegateTreeWalker;
+@Immutable
+public final class InOrderWalker {
 
-      public NodeToElementTreeWalker(TreeWalker<E> delegateTreeWalker) {
-            this.delegateTreeWalker = delegateTreeWalker;
-      }
+    public InOrderWalker() {
+    }
 
-      @Override
-      public void onStarted() {
-            delegateTreeWalker.onStarted();
-      }
+    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
+        if (tree.isEmpty()) {
+            walker.onEmpty();
+            walker.onCompleted();
+        }
+        else {
+            final N node = tree.getRoot();
+            try {
+                accept(node, walker);
+                walker.onCompleted();
+            }
+            catch (Done done) {
+            }
+        }
+    }
 
-      @Override
-      public void onNode(N node) {
-            delegateTreeWalker.onNode(node.getElement());
-      }
+    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, Walker<N> walker) throws Done {
+        final Iterator<? extends Node<E>> iterator = node.childIterator();
 
-      @Override
-      public void onNodeChildrenStarted(N node) {
-            delegateTreeWalker.onNodeChildrenStarted(node.getElement());
-      }
+        if (iterator.hasNext()) {
+            final N child = (N) iterator.next();
+            accept(child, walker);
+        }
 
-      @Override
-      public void onNodeChildrenRemaining(N node) {
-            delegateTreeWalker.onNodeChildrenRemaining(node.getElement());
-      }
+        if (!walker.onNext(node)) {
+            throw new Done();
+        }
 
-      @Override
-      public void onNodeChildrenCompleted(N node) {
-            delegateTreeWalker.onNodeChildrenCompleted(node.getElement());
-      }
-
-      @Override
-      public void onNodeNoChildren(N node) {
-            delegateTreeWalker.onNodeNoChildren(node.getElement());
-      }
-
-      @Override
-      public void onCompleted() {
-            delegateTreeWalker.onCompleted();
-      }
+        while (iterator.hasNext()) {
+            final N child = (N) iterator.next();
+            accept(child, walker);
+        }
+    }
 }
