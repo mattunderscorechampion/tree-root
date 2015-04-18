@@ -28,7 +28,7 @@ package com.mattunderscore.trees.tests;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.common.matchers.EqualityMatcher;
+import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.selection.NodeMatcher;

@@ -23,28 +23,31 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.matchers;
+package com.mattunderscore.trees.matchers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.mattunderscore.trees.base.ImmutableNode;
+import com.mattunderscore.trees.matchers.AlwaysMatcher;
+import com.mattunderscore.trees.matchers.DisjunctionMatcher;
+import com.mattunderscore.trees.matchers.EqualityMatcher;
+import com.mattunderscore.trees.matchers.NeverMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.Node;
 import org.junit.Test;
 
 /**
- * Unit tests for ConjunctionMatcher.
+ * Unit tests for DisjunctionMatcher.
  * @author Matt Champion on 25/12/14
  */
-public final class ConjunctionMatcherTest {
-
+public final class DisjunctionMatcherTest {
     @Test
     public void simplifyingCreator0() {
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher = ConjunctionMatcher.create(matcher0, matcher1);
+        final NodeMatcher<String> matcher = DisjunctionMatcher.create(matcher0, matcher1);
 
         assertEquals(matcher, matcher0);
     }
@@ -53,36 +56,36 @@ public final class ConjunctionMatcherTest {
     public void simplifyingCreator1() {
         final NodeMatcher<String> matcher0 = new AlwaysMatcher<>();
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher = ConjunctionMatcher.create(matcher0, matcher1);
+        final NodeMatcher<String> matcher = DisjunctionMatcher.create(matcher0, matcher1);
 
-        assertEquals(matcher, matcher1);
+        assertEquals(matcher, matcher0);
     }
 
     @Test
     public void simplifyingCreator2() {
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher1 = new AlwaysMatcher<>();
-        final NodeMatcher<String> matcher = ConjunctionMatcher.create(matcher0, matcher1);
+        final NodeMatcher<String> matcher = DisjunctionMatcher.create(matcher0, matcher1);
 
-        assertEquals(matcher, matcher0);
+        assertEquals(matcher, matcher1);
     }
 
     @Test
     public void simplifyingCreator3() {
         final NodeMatcher<String> matcher0 = new NeverMatcher<>();
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher = ConjunctionMatcher.create(matcher0, matcher1);
+        final NodeMatcher<String> matcher = DisjunctionMatcher.create(matcher0, matcher1);
 
-        assertEquals(matcher, matcher0);
+        assertEquals(matcher, matcher1);
     }
 
     @Test
     public void simplifyingCreator4() {
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher1 = new NeverMatcher<>();
-        final NodeMatcher<String> matcher = ConjunctionMatcher.create(matcher0, matcher1);
+        final NodeMatcher<String> matcher = DisjunctionMatcher.create(matcher0, matcher1);
 
-        assertEquals(matcher, matcher1);
+        assertEquals(matcher, matcher0);
     }
 
     @Test
@@ -90,7 +93,7 @@ public final class ConjunctionMatcherTest {
         final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher = new ConjunctionMatcher<>(matcher0, matcher1);
+        final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
 
         assertTrue(matcher.matches(node));
     }
@@ -100,9 +103,9 @@ public final class ConjunctionMatcherTest {
         final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher1 = new NeverMatcher<>();
-        final NodeMatcher<String> matcher = new ConjunctionMatcher<>(matcher0, matcher1);
+        final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
 
-        assertFalse(matcher.matches(node));
+        assertTrue(matcher.matches(node));
     }
 
     @Test
@@ -110,9 +113,9 @@ public final class ConjunctionMatcherTest {
         final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
         final NodeMatcher<String> matcher0 = new NeverMatcher<>();
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher = new ConjunctionMatcher<>(matcher0, matcher1);
+        final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
 
-        assertFalse(matcher.matches(node));
+        assertTrue(matcher.matches(node));
     }
 
     @Test
@@ -120,7 +123,7 @@ public final class ConjunctionMatcherTest {
         final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
         final NodeMatcher<String> matcher0 = new NeverMatcher<>();
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("b");
-        final NodeMatcher<String> matcher = new ConjunctionMatcher<>(matcher0, matcher1);
+        final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
 
         assertFalse(matcher.matches(node));
     }
@@ -129,11 +132,11 @@ public final class ConjunctionMatcherTest {
     public void testEquals0() {
         final NodeMatcher<String> matcher00 = new NeverMatcher<>();
         final NodeMatcher<String> matcher01 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher0 = new ConjunctionMatcher<>(matcher00, matcher01);
+        final NodeMatcher<String> matcher0 = new DisjunctionMatcher<>(matcher00, matcher01);
 
         final NodeMatcher<String> matcher10 = new NeverMatcher<>();
         final NodeMatcher<String> matcher11 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher1 = new ConjunctionMatcher<>(matcher10, matcher11);
+        final NodeMatcher<String> matcher1 = new DisjunctionMatcher<>(matcher10, matcher11);
 
         assertTrue(matcher0.equals(matcher1));
         assertTrue(matcher1.equals(matcher0));
@@ -144,11 +147,11 @@ public final class ConjunctionMatcherTest {
     public void testEquals1() {
         final NodeMatcher<String> matcher00 = new NeverMatcher<>();
         final NodeMatcher<String> matcher01 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher0 = new ConjunctionMatcher<>(matcher00, matcher01);
+        final NodeMatcher<String> matcher0 = new DisjunctionMatcher<>(matcher00, matcher01);
 
         final NodeMatcher<String> matcher10 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher11 = new NeverMatcher<>();
-        final NodeMatcher<String> matcher1 = new ConjunctionMatcher<>(matcher10, matcher11);
+        final NodeMatcher<String> matcher1 = new DisjunctionMatcher<>(matcher10, matcher11);
 
         assertTrue(matcher0.equals(matcher1));
         assertTrue(matcher1.equals(matcher0));
@@ -159,11 +162,11 @@ public final class ConjunctionMatcherTest {
     public void testNotEquals0() {
         final NodeMatcher<String> matcher00 = new NeverMatcher<>();
         final NodeMatcher<String> matcher01 = new EqualityMatcher<>("a");
-        final NodeMatcher<String> matcher0 = new ConjunctionMatcher<>(matcher00, matcher01);
+        final NodeMatcher<String> matcher0 = new DisjunctionMatcher<>(matcher00, matcher01);
 
         final NodeMatcher<String> matcher10 = new NeverMatcher<>();
         final NodeMatcher<String> matcher11 = new EqualityMatcher<>("b");
-        final NodeMatcher<String> matcher1 = new ConjunctionMatcher<>(matcher10, matcher11);
+        final NodeMatcher<String> matcher1 = new DisjunctionMatcher<>(matcher10, matcher11);
 
         assertFalse(matcher0.equals(matcher1));
     }
@@ -172,7 +175,7 @@ public final class ConjunctionMatcherTest {
     public void testNotEquals1() {
         final NodeMatcher<String> matcher0 = new NeverMatcher<>();
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("b");
-        final NodeMatcher<String> matcher = new ConjunctionMatcher<>(matcher0, matcher1);
+        final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
 
         assertFalse(matcher.equals(null));
     }
@@ -181,7 +184,7 @@ public final class ConjunctionMatcherTest {
     public void testNotEquals2() {
         final NodeMatcher<String> matcher0 = new NeverMatcher<>();
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("b");
-        final NodeMatcher<String> matcher = new ConjunctionMatcher<>(matcher0, matcher1);
+        final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
 
         assertFalse(matcher.equals(new Object()));
     }

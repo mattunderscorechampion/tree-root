@@ -32,7 +32,7 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.common.matchers.AlwaysMatcher;
+import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;

@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.matchers;
+package com.mattunderscore.trees.matchers;
 
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.selection.NodeMatcher;
@@ -31,42 +31,30 @@ import com.mattunderscore.trees.selection.NodeMatcher;
 import net.jcip.annotations.Immutable;
 
 /**
- * Matches nodes to the same element passed to it.
+ * Matches no nodes.
  * @author Matt Champion on 16/08/14.
  */
 @Immutable
-public final class IdentityMatcher<E> implements NodeMatcher<E> {
-    private final E value;
-
-    public IdentityMatcher(E value) {
-        this.value = value;
-    }
+public final class NeverMatcher<E> implements NodeMatcher<E> {
+    private static final NodeMatcher<?> INSTANCE = new NeverMatcher<>();
 
     @Override
     public <T extends Node<E>> boolean matches(T node) {
-        return node.getElement() == value;
+        return false;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o ==  null) {
-            return false;
-        }
-        else if (o == this) {
-            return true;
-        }
-        else if (o.getClass().equals(getClass())) {
-            @SuppressWarnings("unchecked")
-            final IdentityMatcher<E> matcher = (IdentityMatcher<E>)o;
-            return matcher.value == value;
-        }
-        else {
-            return false;
-        }
+        return o != null && (o == this || o.getClass().equals(getClass()));
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return 31;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <E> NodeMatcher<E> create() {
+        return (NodeMatcher<E>)INSTANCE;
     }
 }

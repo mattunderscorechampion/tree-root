@@ -23,46 +23,50 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.matchers;
+package com.mattunderscore.trees.matchers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.Node;
-import org.junit.Test;
+import com.mattunderscore.trees.selection.NodeMatcher;
 
-public final class NeverMatcherTest {
-    @Test
-    public void matches() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
-        final NodeMatcher<String> matcher = new NeverMatcher<>();
-        assertFalse(matcher.matches(node));
+import net.jcip.annotations.Immutable;
+
+/**
+ * Matches nodes to the same element passed to it.
+ * @author Matt Champion on 16/08/14.
+ */
+@Immutable
+public final class IdentityMatcher<E> implements NodeMatcher<E> {
+    private final E value;
+
+    public IdentityMatcher(E value) {
+        this.value = value;
     }
 
-    @Test
-    public void testEquals() {
-        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
-        final NodeMatcher<String> matcher1 = new NeverMatcher<>();
-
-        assertTrue(matcher0.equals(matcher1));
-        assertTrue(matcher1.equals(matcher0));
-        assertEquals(matcher0.hashCode(), matcher1.hashCode());
+    @Override
+    public <T extends Node<E>> boolean matches(T node) {
+        return node.getElement() == value;
     }
 
-    @Test
-    public void testNotEquals0() {
-        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
-
-        assertFalse(matcher0.equals(null));
+    @Override
+    public boolean equals(Object o) {
+        if (o ==  null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            @SuppressWarnings("unchecked")
+            final IdentityMatcher<E> matcher = (IdentityMatcher<E>)o;
+            return matcher.value == value;
+        }
+        else {
+            return false;
+        }
     }
 
-    @Test
-    public void testNotEquals1() {
-        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
-
-        assertFalse(matcher0.equals(new Object()));
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 }

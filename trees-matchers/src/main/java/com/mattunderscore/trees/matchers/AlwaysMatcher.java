@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.matchers;
+package com.mattunderscore.trees.matchers;
 
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.selection.NodeMatcher;
@@ -31,16 +31,16 @@ import com.mattunderscore.trees.selection.NodeMatcher;
 import net.jcip.annotations.Immutable;
 
 /**
- * Matches no nodes.
- * @author Matt Champion on 16/08/14.
+ * Matches any node.
+ * @author Matt Champion on 25/06/14.
  */
 @Immutable
-public final class NeverMatcher<E> implements NodeMatcher<E> {
-    private static final NodeMatcher<?> INSTANCE = new NeverMatcher<>();
+public final class AlwaysMatcher<E> implements NodeMatcher<E> {
+    private static final NodeMatcher<?> INSTANCE = new AlwaysMatcher<>();
 
     @Override
     public <T extends Node<E>> boolean matches(T node) {
-        return false;
+        return true;
     }
 
     @Override

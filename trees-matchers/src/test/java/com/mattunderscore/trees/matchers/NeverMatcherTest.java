@@ -23,42 +23,30 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.common.matchers;
+package com.mattunderscore.trees.matchers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.mattunderscore.trees.base.ImmutableNode;
+import com.mattunderscore.trees.matchers.NeverMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.Node;
 import org.junit.Test;
 
-/**
- * Unit tests for IdentityMatcher.
- * @author Matt Champion on 25/12/14
- */
-public final class IdentityMatcherTest {
+public final class NeverMatcherTest {
     @Test
     public void matches() {
-        final String element = "a";
-        final Node<String> node = new ImmutableNode<String>(element, new Object[0]) {};
-        final NodeMatcher<String> matcher = new IdentityMatcher<>(element);
-        assertTrue(matcher.matches(node));
-    }
-
-    @Test
-    public void notMatches() {
-        final Node<String> node = new ImmutableNode<String>(new String("a"), new Object[0]) {};
-        final NodeMatcher<String> matcher = new IdentityMatcher<>(new String("a"));
+        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
+        final NodeMatcher<String> matcher = new NeverMatcher<>();
         assertFalse(matcher.matches(node));
     }
 
     @Test
     public void testEquals() {
-        final String element = "a";
-        final NodeMatcher<String> matcher0 = new IdentityMatcher<>(element);
-        final NodeMatcher<String> matcher1 = new IdentityMatcher<>(element);
+        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
+        final NodeMatcher<String> matcher1 = new NeverMatcher<>();
 
         assertTrue(matcher0.equals(matcher1));
         assertTrue(matcher1.equals(matcher0));
@@ -67,22 +55,14 @@ public final class IdentityMatcherTest {
 
     @Test
     public void testNotEquals0() {
-        final NodeMatcher<String> matcher0 = new IdentityMatcher<>(new String("a"));
-        final NodeMatcher<String> matcher1 = new IdentityMatcher<>(new String("a"));
-
-        assertFalse(matcher0.equals(matcher1));
-    }
-
-    @Test
-    public void testNotEquals1() {
-        final NodeMatcher matcher0 = new IdentityMatcher<>(new String("a"));
+        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
 
         assertFalse(matcher0.equals(null));
     }
 
     @Test
-    public void testNotEquals2() {
-        final NodeMatcher matcher0 = new IdentityMatcher<>(new String("a"));
+    public void testNotEquals1() {
+        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
 
         assertFalse(matcher0.equals(new Object()));
     }
