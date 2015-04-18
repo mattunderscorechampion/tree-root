@@ -34,7 +34,7 @@ import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.matchers.AlwaysMatcher;
-import com.mattunderscore.trees.common.selectors.ChildSelector;
+import com.mattunderscore.trees.selectors.ChildSelector;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
