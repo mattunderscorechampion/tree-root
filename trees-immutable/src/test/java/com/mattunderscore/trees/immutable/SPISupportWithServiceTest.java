@@ -29,7 +29,7 @@ import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.impl.TreesImpl;
 import org.junit.Test;
 
 import static org.junit.Assert.assertSame;

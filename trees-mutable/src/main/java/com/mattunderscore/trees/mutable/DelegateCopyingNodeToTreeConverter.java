@@ -27,9 +27,9 @@ package com.mattunderscore.trees.mutable;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.common.SPISupport;
-import com.mattunderscore.trees.common.SPISupportAwareComponent;
-import com.mattunderscore.trees.common.TreeBuilderFactoryImpl;
+import com.mattunderscore.trees.impl.SPISupport;
+import com.mattunderscore.trees.impl.SPISupportAwareComponent;
+import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilderAppender;

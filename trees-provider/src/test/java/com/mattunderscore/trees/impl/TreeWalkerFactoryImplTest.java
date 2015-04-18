@@ -28,9 +28,8 @@ package com.mattunderscore.trees.impl;
 import static org.junit.Assert.assertEquals;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.traversal.Walker;

@@ -25,10 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.BottomUpTreeBuilderImpl;
-import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.tree.Tree;

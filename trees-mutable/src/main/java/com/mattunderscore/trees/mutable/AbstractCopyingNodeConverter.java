@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.common.SPISupport;
-import com.mattunderscore.trees.common.SPISupportAwareComponent;
+import com.mattunderscore.trees.impl.SPISupport;
+import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;

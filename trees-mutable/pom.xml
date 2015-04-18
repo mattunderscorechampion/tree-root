@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-common</artifactId>
+            <artifactId>trees-provider</artifactId>
         </dependency>
 
         <dependency>

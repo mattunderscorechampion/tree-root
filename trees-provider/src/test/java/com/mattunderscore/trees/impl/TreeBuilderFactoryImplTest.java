@@ -29,11 +29,10 @@ import static org.junit.Assert.assertTrue;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.LinkedTree;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTree;

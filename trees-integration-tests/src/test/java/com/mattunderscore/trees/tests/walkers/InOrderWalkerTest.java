@@ -1,13 +1,7 @@
 package com.mattunderscore.trees.tests.walkers;
 
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,8 +12,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.LinkedTree;
-import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.traversal.Walker;

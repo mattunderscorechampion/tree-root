@@ -34,14 +34,10 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.common.LinkedTree;
-import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.mutable.MutableTreeImpl;
 
 import org.junit.Ignore;
 import org.junit.Test;

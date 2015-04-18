@@ -27,7 +27,7 @@ package com.mattunderscore.trees.pathcopy.holder;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.mutable.MutableNode;

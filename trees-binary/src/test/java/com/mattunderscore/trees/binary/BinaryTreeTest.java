@@ -37,7 +37,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 

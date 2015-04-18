@@ -31,8 +31,8 @@ import static org.junit.Assert.assertFalse;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.LinkedTree;
-import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.Node;

@@ -34,7 +34,7 @@ import java.util.Comparator;
 import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.common.TreesImpl;
+import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.binary.search.BinarySearchTree;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.utilities.ComparableComparator;
