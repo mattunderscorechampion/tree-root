@@ -23,13 +23,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.tests;
+package com.mattunderscore.trees.linked.tree;
 
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Node;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,22 +36,31 @@ import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public final class LinkedTreeTest {
-    private static final Trees trees = new TreesImpl();
     private LinkedTree<String> tree;
 
     @Before
     public void setUp() {
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        tree = builder.create("a", builder.create("b"), builder.create("c")).build(LinkedTree.<String>typeKey());
+        TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<String>();
+        tree = constructor.build(
+            "a",
+            new LinkedTree[] {
+                constructor.build(
+                    "b",
+                    new LinkedTree[] {}),
+                constructor.build(
+                    "c",
+                    new LinkedTree[] {}) });
     }
 
     @Test
     public void structure() {
         assertFalse(tree.isEmpty());
+        assertNotNull(tree.getRoot());
         assertFalse(tree.getRoot().isLeaf());
         assertEquals(2, tree.getRoot().getNumberOfChildren());
         final Iterator<? extends Node<String>> iterator = tree.childIterator();
@@ -69,6 +76,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void add() {
+        assertNotNull(tree.getRoot());
         final Node<String> newNode = tree.getRoot().addChild("d");
 
         assertEquals(3, tree.getRoot().getNumberOfChildren());
@@ -82,6 +90,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void remove() {
+        assertNotNull(tree.getRoot());
         assertEquals(2, tree.getRoot().getNumberOfChildren());
         final Iterator<? extends MutableNode<String>> iterator0 = tree.childIterator();
         final MutableNode<String> child0 = iterator0.next();
@@ -100,6 +109,7 @@ public final class LinkedTreeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void get() {
+        assertNotNull(tree.getRoot());
         final LinkedTree<String> node0 = tree.getRoot().getChild(0);
         final LinkedTree<String> node1 = tree.getRoot().getChild(1);
         assertEquals("b", node0.getElement());
@@ -110,6 +120,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void set() {
+        assertNotNull(tree.getRoot());
         tree.getRoot().setChild(2, "d");
 
         assertEquals(3, tree.getRoot().getNumberOfChildren());
@@ -122,6 +133,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void setWithNulls() {
+        assertNotNull(tree.getRoot());
         tree.getRoot().setChild(3, "d");
 
         assertEquals(4, tree.getRoot().getNumberOfChildren());
