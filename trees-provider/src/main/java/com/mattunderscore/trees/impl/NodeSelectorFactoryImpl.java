@@ -77,7 +77,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
         private final NodeMatcher<E> matcher;
         private Iterator<N> possibles;
 
-        public NodeIterator(Iterator<N> parents, NodeMatcher matcher) {
+        public NodeIterator(Iterator<N> parents, NodeMatcher<E> matcher) {
             this.parents = parents;
             this.matcher = matcher;
         }
