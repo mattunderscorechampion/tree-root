@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selectors;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Iterator;
 
 import org.junit.Assert;
@@ -33,39 +37,47 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.matchers.AlwaysMatcher;
+import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Unit tests for ChildSelector.
- * @author Matt Champion on 25/12/14
+ * @author Matt Champion on 18/04/15
  */
-public final class ChildSelectorTest {
-    private static Tree<String, ? extends Node<String>> tree;
+public final class RootMatcherTest {
+      private static Tree<String, ? extends Node<String>> tree;
 
-    @BeforeClass
-    public static void setUpClass() {
-        final TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
-        tree = constructor.build(
-            "a",
-            new LinkedTree[]{
-                constructor.build(
-                    "b",
-                    new LinkedTree[]{}),
-                constructor.build(
-                    "c",
-                    new LinkedTree[]{})});
-    }
+      @BeforeClass
+      public static void setUpClass() {
+            final TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+            tree = constructor.build(
+                "a",
+                new LinkedTree[]{
+                    constructor.build(
+                        "b",
+                        new LinkedTree[]{}),
+                    constructor.build(
+                        "c",
+                        new LinkedTree[]{})});
+      }
 
-    @Test
-    public void selectsChildren() {
-        final NodeSelector<String> extendedSelector = new ChildSelector<>(new RootMatcherSelector<>(new AlwaysMatcher<>()));
+      @Test
+      public void select() {
+            final NodeSelector<String> selector = new RootMatcherSelector<>(new EqualityMatcher<>("a"));
 
-        final Iterator<Node<String>> iterator = extendedSelector.select((Tree<String, Node<String>>)tree);
-        Assert.assertEquals("b", iterator.next().getElement());
-        Assert.assertEquals("c", iterator.next().getElement());
-        Assert.assertFalse(iterator.hasNext());
-    }
+            final Iterator<Node<String>> iterator = selector.select((Tree<String, Node<String>>)tree);
+            assertTrue(iterator.hasNext());
+            assertEquals("a", iterator.next().getElement());
+            assertFalse(iterator.hasNext());
+      }
+
+      @Test
+      public void selectNothing() {
+            final NodeSelector<String> selector = new RootMatcherSelector<>(new EqualityMatcher<>("b"));
+
+            final Iterator<Node<String>> iterator = selector.select((Tree<String, Node<String>>)tree);
+            assertFalse(iterator.hasNext());
+      }
 }

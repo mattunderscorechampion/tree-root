@@ -35,12 +35,13 @@ import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
+ * Selects nodes when the root node matches a matcher.
  * @author Matt Champion on 18/04/15
  */
-public final class MatcherSelector<E> implements NodeSelector<E> {
+public final class RootMatcherSelector<E> implements NodeSelector<E> {
     private final NodeMatcher<E> matcher;
 
-    public MatcherSelector(NodeMatcher<E> matcher) {
+    public RootMatcherSelector(NodeMatcher<E> matcher) {
         this.matcher = matcher;
     }
 

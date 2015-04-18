@@ -29,7 +29,7 @@ import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
-import com.mattunderscore.trees.selectors.MatcherSelector;
+import com.mattunderscore.trees.selectors.RootMatcherSelector;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
@@ -47,7 +47,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
 
     @Override
     public <E> NodeSelector<E> newSelector(final NodeMatcher<E> matcher) {
-        return new MatcherSelector<>(matcher);
+        return new RootMatcherSelector<>(matcher);
     }
 
     @Override
