@@ -9,7 +9,7 @@
         <version>0.0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>trees-matchers</artifactId>
+    <artifactId>node-matchers</artifactId>
     <name>Tree Root matchers</name>
     <description>Basic tree matchers.</description>
 

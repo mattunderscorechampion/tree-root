@@ -29,13 +29,13 @@
         <module>trees-binary</module>
         <module>trees-immutable</module>
         <module>trees-integration-tests</module>
-        <module>trees-matchers</module>
         <module>trees-mutable</module>
         <module>trees-pathcopy</module>
         <module>trees-provider</module>
         <module>trees-spi</module>
         <module>trees-utilities</module>
         <module>tree-traversers</module>
+        <module>node-matchers</module>
         <module>node-selectors</module>
     </modules>
 
@@ -282,7 +282,7 @@
 
             <dependency>
                 <groupId>com.mattunderscore.tree.root</groupId>
-                <artifactId>trees-matchers</artifactId>
+                <artifactId>node-matchers</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

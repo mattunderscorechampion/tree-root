@@ -47,7 +47,7 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-matchers</artifactId>
+            <artifactId>node-matchers</artifactId>
         </dependency>
 
         <dependency>
