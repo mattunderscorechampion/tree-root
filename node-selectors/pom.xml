@@ -21,7 +21,24 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>linked-tree</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>node-matchers</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-utilities</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
 

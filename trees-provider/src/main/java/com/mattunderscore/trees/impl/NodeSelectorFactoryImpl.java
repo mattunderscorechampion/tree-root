@@ -29,11 +29,10 @@ import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
+import com.mattunderscore.trees.selectors.MatcherSelector;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 import java.util.Iterator;
 
@@ -48,18 +47,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
 
     @Override
     public <E> NodeSelector<E> newSelector(final NodeMatcher<E> matcher) {
-        return new NodeSelector<E>() {
-            @Override
-            public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
-                final N root = tree.getRoot();
-                if (matcher.matches(root)) {
-                    return new SingletonIterator<>(root);
-                }
-                else {
-                    return EmptyIterator.get();
-                }
-            }
-        };
+        return new MatcherSelector<>(matcher);
     }
 
     @Override
@@ -144,4 +132,5 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
             }
         }
     }
+
 }

@@ -23,52 +23,47 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.tests;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+package com.mattunderscore.trees.selectors;
 
 import java.util.Iterator;
-
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.matchers.AlwaysMatcher;
-import com.mattunderscore.trees.selectors.ChildSelector;
-import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.selection.NodeSelector;
-import com.mattunderscore.trees.selection.NodeSelectorFactory;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.matchers.AlwaysMatcher;
+import com.mattunderscore.trees.selection.NodeSelector;
+import com.mattunderscore.trees.spi.TreeConstructor;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Unit tests for ChildSelector.
  * @author Matt Champion on 25/12/14
  */
 public final class ChildSelectorTest {
-    private static NodeSelectorFactory factory;
-    private static Tree<String, Node<String>> tree;
+    private static Tree<String, ? extends Node<String>> tree;
 
     @BeforeClass
     public static void setUpClass() {
-        final Trees trees = new TreesImpl();
-        factory = trees.nodeSelectors();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        tree = builder.create("a",
-            builder.create("b"),
-            builder.create("c")).build(LinkedTree.class);
+        final TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        tree = constructor.build(
+            "a",
+            new LinkedTree[]{
+                constructor.build(
+                    "b",
+                    new LinkedTree[]{}),
+                constructor.build(
+                    "c",
+                    new LinkedTree[]{})});
     }
 
     @Test
     public void selectsChildren() {
-        final NodeSelector<String> selector = factory.newSelector(new AlwaysMatcher<String>());
-        final NodeSelector<String> extendedSelector = new ChildSelector<>(selector);
+        final NodeSelector<String> extendedSelector = new ChildSelector<>(new MatcherSelector<>(new AlwaysMatcher<>()));
 
-        final Iterator<Node<String>> iterator = extendedSelector.select(tree);
+        final Iterator<Node<String>> iterator = extendedSelector.select((Tree<String, Node<String>>)tree);
         Assert.assertEquals("b", iterator.next().getElement());
         Assert.assertEquals("c", iterator.next().getElement());
         Assert.assertFalse(iterator.hasNext());
