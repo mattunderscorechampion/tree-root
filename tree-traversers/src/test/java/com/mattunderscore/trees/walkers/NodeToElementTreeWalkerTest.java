@@ -1,4 +1,4 @@
-package com.mattunderscore.trees.tests.walkers;
+package com.mattunderscore.trees.walkers;
 
 import static org.mockito.Mockito.verify;
 

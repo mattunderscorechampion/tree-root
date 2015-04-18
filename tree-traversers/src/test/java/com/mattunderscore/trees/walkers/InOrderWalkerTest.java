@@ -1,6 +1,4 @@
-package com.mattunderscore.trees.tests.walkers;
-
-import static org.mockito.Mockito.verify;
+package com.mattunderscore.trees.walkers;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -11,42 +9,57 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.traversal.TreeWalkerFactory;
+import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 
 public final class InOrderWalkerTest {
-    private static TreeWalkerFactory walkers;
-    private static Tree<String, Node<String>> tree;
-    private static Tree<String, Node<String>> emptyTree;
+    private static InOrderWalker walker;
+    private static LinkedTree<String> tree;
+    private static LinkedTree<String> emptyTree;
 
     @Mock
-    private Walker<Node<String>> nodeWalker;
+    private Walker<LinkedTree<String>> nodeWalker;
     @Mock
     private Walker<String> elementWalker;
 
     @BeforeClass
     public static void setUpClass() {
-        final Trees trees = new TreesImpl();
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        tree = builder.create("f",
-            builder.create("b",
-                builder.create("a"),
-                builder.create("d",
-                    builder.create("c"),
-                    builder.create("e"))),
-            builder.create("i",
-                builder.create("h",
-                    builder.create("g")))).build(LinkedTree.class);
+        final TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        tree = constructor.build(
+            "f",
+            new LinkedTree[]{
+                constructor.build(
+                    "b",
+                    new LinkedTree[]{
+                        constructor.build(
+                            "a",
+                            new LinkedTree[]{}),
+                        constructor.build(
+                            "d",
+                            new LinkedTree[]{
+                                constructor.build(
+                                    "c",
+                                    new LinkedTree[]{}),
+                                constructor.build(
+                                    "e",
+                                    new LinkedTree[]{})
+                            })
+                    }),
+                constructor.build(
+                    "i",
+                    new LinkedTree[]{
+                        constructor.build(
+                            "h",
+                            new LinkedTree[]{
+                                constructor.build(
+                                    "g",
+                                    new LinkedTree[]{})})})});
 
-        walkers = trees.treeWalkers();
+        emptyTree = new LinkedTree.EmptyConstructor<String>().build();
 
-        emptyTree = trees.treeBuilders().bottomUpBuilder().build(LinkedTree.class);
+        walker = new InOrderWalker();
     }
 
     @Before
@@ -56,14 +69,14 @@ public final class InOrderWalkerTest {
 
     @Test
     public void empty() {
-        walkers.walkInOrder(emptyTree, nodeWalker);
+        walker.accept(emptyTree, nodeWalker);
         Mockito.verify(nodeWalker).onEmpty();
         Mockito.verify(nodeWalker).onCompleted();
     }
 
     @Test
     public void emptyElements() {
-        walkers.walkElementsInOrder(emptyTree, elementWalker);
+        walker.accept(emptyTree, new NodeToElementWalker<>(elementWalker));
         Mockito.verify(elementWalker).onEmpty();
         Mockito.verify(elementWalker).onCompleted();
     }
@@ -71,7 +84,7 @@ public final class InOrderWalkerTest {
     @Test
     public void elements() {
         Mockito.when(elementWalker.onNext(Matchers.isA(String.class))).thenReturn(true);
-        walkers.walkElementsInOrder(tree, elementWalker);
+        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
         Mockito.verify(elementWalker).onNext("a");
         Mockito.verify(elementWalker).onNext("b");
         Mockito.verify(elementWalker).onNext("c");
@@ -88,15 +101,15 @@ public final class InOrderWalkerTest {
     @Test
     public void firstElement() {
         Mockito.when(elementWalker.onNext(Matchers.isA(String.class))).thenReturn(false);
-        walkers.walkElementsInOrder(tree, elementWalker);
+        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
         Mockito.verify(elementWalker).onNext("a");
         Mockito.verifyNoMoreInteractions(elementWalker);
     }
 
     @Test
     public void nodes() {
-        Mockito.when(nodeWalker.onNext(Matchers.isA(Node.class))).thenReturn(true);
-        walkers.walkInOrder(tree, nodeWalker);
+        Mockito.when(nodeWalker.onNext(Matchers.isA(LinkedTree.class))).thenReturn(true);
+        walker.accept(tree, nodeWalker);
         Mockito.verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("a")));
         Mockito.verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("b")));
         Mockito.verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("c")));
@@ -110,7 +123,7 @@ public final class InOrderWalkerTest {
         Mockito.verifyNoMoreInteractions(nodeWalker);
     }
 
-    public static final class ElementMatcher extends ArgumentMatcher<Node<String>> {
+    public static final class ElementMatcher extends ArgumentMatcher<LinkedTree<String>> {
         private final String element;
 
         public ElementMatcher(String element) {

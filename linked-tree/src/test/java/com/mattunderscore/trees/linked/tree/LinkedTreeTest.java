@@ -45,7 +45,7 @@ public final class LinkedTreeTest {
 
     @Before
     public void setUp() {
-        TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<String>();
+        final TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "a",
             new LinkedTree[] {
@@ -54,7 +54,7 @@ public final class LinkedTreeTest {
                     new LinkedTree[] {}),
                 constructor.build(
                     "c",
-                    new LinkedTree[] {}) });
+                    new LinkedTree[] {})});
     }
 
     @Test
