@@ -44,6 +44,7 @@ import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Unit tests for {@link RootMatcherSelector}.
  * @author Matt Champion on 18/04/15
  */
 public final class RootMatcherSelectorTest {
