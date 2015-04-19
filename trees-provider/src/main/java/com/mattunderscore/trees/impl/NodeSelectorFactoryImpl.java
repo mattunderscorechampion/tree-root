@@ -56,7 +56,7 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
             @Override
             public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
                 final Iterator<N> parents = selector.select(tree);
-                return new NodeIterator<>(parents, matcher);
+                return new NodeChildrenIterator<>(parents, matcher);
             }
         };
     }
@@ -67,17 +67,22 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
             @Override
             public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
                 final Iterator<N> startingPoints = baseSelector.select(tree);
-                return new AsNodeIterator<>(new NodeIterator<>(startingPoints, new AlwaysMatcher()), extensionSelector);
+                return new NodeSelectionIterator<>(new NodeChildrenIterator<>(startingPoints, new AlwaysMatcher<>()), extensionSelector);
             }
         };
     }
 
-    private static final class NodeIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
+    /**
+     * Iterator over the children of nodes provided by an iterator and filtered by a matcher.
+     * @param <E> The element type
+     * @param <N> The node type
+     */
+    private static final class NodeChildrenIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
         private final Iterator<N> parents;
         private final NodeMatcher<E> matcher;
         private Iterator<N> possibles;
 
-        public NodeIterator(Iterator<N> parents, NodeMatcher<E> matcher) {
+        public NodeChildrenIterator(Iterator<N> parents, NodeMatcher<E> matcher) {
             this.parents = parents;
             this.matcher = matcher;
         }
@@ -103,12 +108,17 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
         }
     }
 
-    private static final class AsNodeIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
+    /**
+     * Iterator over the selected nodes of nodes provided by an iterator and filtered by a selector.
+     * @param <E> The element type
+     * @param <N> The node type
+     */
+    private static final class NodeSelectionIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
         private final Iterator<N> startingPoints;
         private final NodeSelector<E> selector;
         private Iterator<N> currentEndPoints;
 
-        public AsNodeIterator(Iterator<N> startingPoints, NodeSelector<E> selector) {
+        public NodeSelectionIterator(Iterator<N> startingPoints, NodeSelector<E> selector) {
             this.startingPoints = startingPoints;
             this.selector = selector;
         }
@@ -132,5 +142,4 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
             }
         }
     }
-
 }
