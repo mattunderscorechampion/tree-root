@@ -27,6 +27,7 @@ package com.mattunderscore.trees.linked.tree;
 
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Node;
 import org.junit.Before;
@@ -149,5 +150,71 @@ public final class LinkedTreeTest {
         assertNull(structuralIterator.next());
         assertEquals("d", structuralIterator.next().getElement());
         assertFalse(structuralIterator.hasNext());
+    }
+
+    @Test
+    public void emptyConstructor() {
+        final EmptyTreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.EmptyConstructor<>();
+        final LinkedTree<String> emptyTree = constructor.build();
+        assertTrue(emptyTree.isEmpty());
+        assertNull(emptyTree.getRoot());
+        assertEquals(LinkedTree.class, constructor.forClass());
+    }
+
+    @Test
+    public void nodeToTreeConverterTest0() {
+        final LinkedTree.NodeConverter<String> converter = new LinkedTree.NodeConverter<>();
+        final LinkedTree<String> newTree = converter.treeFromRootNode(tree);
+
+        assertFalse(newTree.isEmpty());
+        assertNotNull(newTree.getRoot());
+        assertFalse(newTree.getRoot().isLeaf());
+        assertEquals(2, newTree.getRoot().getNumberOfChildren());
+        final Iterator<? extends Node<String>> iterator = newTree.childIterator();
+        final Node<String> child0 = iterator.next();
+        final Node<String> child1 = iterator.next();
+
+        assertTrue(child0.isLeaf());
+        assertTrue(child1.isLeaf());
+
+        assertEquals(String.class, child0.getElementClass());
+        assertEquals("c", child1.getElement());
+
+        assertEquals(LinkedTree.class, converter.forClass());
+    }
+
+    @Test
+    public void nodeToTreeConverterTest1() {
+        final LinkedTree.NodeConverter<String> converter = new LinkedTree.NodeConverter<>();
+        final LinkedTree<String> newTree = converter.treeFromRootNode(tree.getChild(1));
+
+        assertFalse(newTree.isEmpty());
+        assertNotNull(newTree.getRoot());
+        assertTrue(newTree.getRoot().isLeaf());
+        assertEquals("c", newTree.getRoot().getElement());
+
+        assertEquals(LinkedTree.class, converter.forClass());
+    }
+
+    @Test
+    public void converter() {
+        final LinkedTree.Converter<String> converter = new LinkedTree.Converter<>();
+        final LinkedTree<String> newTree = converter.build(tree);
+
+        assertFalse(newTree.isEmpty());
+        assertNotNull(newTree.getRoot());
+        assertFalse(newTree.getRoot().isLeaf());
+        assertEquals(2, newTree.getRoot().getNumberOfChildren());
+        final Iterator<? extends Node<String>> iterator = newTree.childIterator();
+        final Node<String> child0 = iterator.next();
+        final Node<String> child1 = iterator.next();
+
+        assertTrue(child0.isLeaf());
+        assertTrue(child1.isLeaf());
+
+        assertEquals(String.class, child0.getElementClass());
+        assertEquals("c", child1.getElement());
+
+        assertEquals(LinkedTree.class, converter.forClass());
     }
 }
