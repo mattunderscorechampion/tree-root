@@ -39,7 +39,9 @@ public final class NextNodeSelectorTest {
 
     @Test
     public void select() {
-        final NodeSelector<String> selector = new NextNodeSelector<>(new RootMatcherSelector<>(new AlwaysMatcher<>()), new AlwaysMatcher<>());
+        final NodeSelector<String> selector = new NextNodeSelector<>(
+            new RootMatcherSelector<>(new AlwaysMatcher<>()),
+            new AlwaysMatcher<>());
         final Iterator<Node<String>> iterator = selector.select(tree);
 
         assertTrue(iterator.hasNext());
@@ -50,7 +52,9 @@ public final class NextNodeSelectorTest {
 
     @Test
     public void selectNothing() {
-        final NodeSelector<String> selector = new NextNodeSelector<>(new RootMatcherSelector<>(new AlwaysMatcher<>()), new NeverMatcher<>());
+        final NodeSelector<String> selector = new NextNodeSelector<>(
+            new RootMatcherSelector<>(new AlwaysMatcher<>()),
+            new NeverMatcher<>());
         final Iterator<Node<String>> iterator = selector.select(tree);
 
         assertFalse(iterator.hasNext());
