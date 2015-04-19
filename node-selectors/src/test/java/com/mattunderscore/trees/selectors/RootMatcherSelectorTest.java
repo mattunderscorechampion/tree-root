@@ -46,7 +46,7 @@ import com.mattunderscore.trees.tree.Tree;
 /**
  * @author Matt Champion on 18/04/15
  */
-public final class RootMatcherTest {
+public final class RootMatcherSelectorTest {
       private static Tree<String, ? extends Node<String>> tree;
 
       @BeforeClass
