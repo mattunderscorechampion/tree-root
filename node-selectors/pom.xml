@@ -16,6 +16,11 @@
     <dependencies>
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>tree-wrappers</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-api</artifactId>
         </dependency>
 
@@ -28,7 +33,6 @@
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>node-matchers</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

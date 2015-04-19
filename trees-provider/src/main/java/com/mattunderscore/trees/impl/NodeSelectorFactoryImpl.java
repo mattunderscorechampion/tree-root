@@ -25,16 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
+import com.mattunderscore.trees.selectors.NextNodeSelector;
 import com.mattunderscore.trees.selectors.RootMatcherSelector;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-
-import java.util.Iterator;
+import com.mattunderscore.trees.selectors.SelectorNodeSelector;
 
 /**
  * Factory for node selectors.
@@ -52,94 +48,12 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
 
     @Override
     public <E> NodeSelector<E> newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
-        return new NodeSelector<E>() {
-            @Override
-            public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
-                final Iterator<N> parents = selector.select(tree);
-                return new NodeChildrenIterator<>(parents, matcher);
-            }
-        };
+        return new NextNodeSelector<>(selector, matcher);
     }
 
     @Override
     public <E> NodeSelector<E> newSelector(final NodeSelector<E> baseSelector, final NodeSelector<E> extensionSelector) {
-        return new NodeSelector<E>() {
-            @Override
-            public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
-                final Iterator<N> startingPoints = baseSelector.select(tree);
-                return new NodeSelectionIterator<>(new NodeChildrenIterator<>(startingPoints, new AlwaysMatcher<>()), extensionSelector);
-            }
-        };
+        return new SelectorNodeSelector<>(baseSelector, extensionSelector);
     }
 
-    /**
-     * Iterator over the children of nodes provided by an iterator and filtered by a matcher.
-     * @param <E> The element type
-     * @param <N> The node type
-     */
-    private static final class NodeChildrenIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
-        private final Iterator<N> parents;
-        private final NodeMatcher<E> matcher;
-        private Iterator<N> possibles;
-
-        public NodeChildrenIterator(Iterator<N> parents, NodeMatcher<E> matcher) {
-            this.parents = parents;
-            this.matcher = matcher;
-        }
-
-        protected N calculateNext() {
-            if (possibles == null) {
-                final N next = parents.next();
-                possibles = (Iterator<N>)next.childIterator();
-            }
-
-            if (possibles.hasNext()) {
-                final N possible = possibles.next();
-                if (matcher.matches(possible)) {
-                    return possible;
-                } else {
-                    return calculateNext();
-                }
-            }
-            else {
-                possibles = null;
-                return calculateNext();
-            }
-        }
-    }
-
-    /**
-     * Iterator over the selected nodes of nodes provided by an iterator and filtered by a selector.
-     * @param <E> The element type
-     * @param <N> The node type
-     */
-    private static final class NodeSelectionIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
-        private final Iterator<N> startingPoints;
-        private final NodeSelector<E> selector;
-        private Iterator<N> currentEndPoints;
-
-        public NodeSelectionIterator(Iterator<N> startingPoints, NodeSelector<E> selector) {
-            this.startingPoints = startingPoints;
-            this.selector = selector;
-        }
-
-        protected N calculateNext() {
-            if (currentEndPoints == null) {
-                // Creating a tree using the simple tree wrapper does not correctly preserve the properties of the tree
-                // but as this is a read only selection/traversal operation no properties should be violated.
-                // Additionally it should not be permitted to return copies of the nodes you are selecting as they are
-                // not found in the tree you are selecting from violating the principle of least surprise..
-                final Tree<E, N> tree = new SimpleTreeWrapper<>(startingPoints.next());
-                currentEndPoints = selector.select(tree);
-            }
-
-            if (currentEndPoints.hasNext()) {
-                return currentEndPoints.next();
-            }
-            else {
-                currentEndPoints = null;
-                return calculateNext();
-            }
-        }
-    }
 }

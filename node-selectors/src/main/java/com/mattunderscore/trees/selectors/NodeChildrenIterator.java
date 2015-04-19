@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,36 +23,46 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.binary;
+package com.mattunderscore.trees.selectors;
 
-import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import java.util.Iterator;
+
+import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 /**
- * Wrap and binary node to create a binary tree.
- * @author Matt Champion on 06/09/14.
+ * Iterator over the children of nodes provided by an iterator and filtered by a matcher.
+ * @param <E> The element type
+ * @param <N> The node type
  */
-public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
+final class NodeChildrenIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
+    private final Iterator<N> parents;
+    private final NodeMatcher<E> matcher;
+    private Iterator<N> possibles;
 
-    public BinaryTreeWrapper() {
-        super();
+    public NodeChildrenIterator(Iterator<N> parents, NodeMatcher<E> matcher) {
+        this.parents = parents;
+        this.matcher = matcher;
     }
 
-    public BinaryTreeWrapper(N root) {
-        super(root);
-    }
-
-    public static final class NodeConverter<E, N extends BinaryTreeNode<E>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>, N> {
-
-        @Override
-        public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {
-            return new BinaryTreeWrapper<>(node);
+    protected N calculateNext() {
+        if (possibles == null) {
+            final N next = parents.next();
+            possibles = (Iterator<N>)next.childIterator();
         }
 
-        @Override
-        public Class<? extends Node> forClass() {
-            return BinaryTreeNode.class;
+        if (possibles.hasNext()) {
+            final N possible = possibles.next();
+            if (matcher.matches(possible)) {
+                return possible;
+            } else {
+                return calculateNext();
+            }
+        }
+        else {
+            possibles = null;
+            return calculateNext();
         }
     }
 }

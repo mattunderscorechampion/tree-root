@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,36 +23,31 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.binary;
+package com.mattunderscore.trees.selectors;
 
-import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import java.util.Iterator;
+
+import com.mattunderscore.trees.matchers.AlwaysMatcher;
+import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Wrap and binary node to create a binary tree.
- * @author Matt Champion on 06/09/14.
+ * Selector that applies a selector to the child nodes selected by another selector.
+ * @param <E> The element type
  */
-public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
+public final class SelectorNodeSelector<E> implements NodeSelector<E> {
+    private final NodeSelector<E> baseSelector;
+    private final NodeSelector<E> extensionSelector;
 
-    public BinaryTreeWrapper() {
-        super();
+    public SelectorNodeSelector(NodeSelector<E> baseSelector, NodeSelector<E> extensionSelector) {
+        this.baseSelector = baseSelector;
+        this.extensionSelector = extensionSelector;
     }
 
-    public BinaryTreeWrapper(N root) {
-        super(root);
-    }
-
-    public static final class NodeConverter<E, N extends BinaryTreeNode<E>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>, N> {
-
-        @Override
-        public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {
-            return new BinaryTreeWrapper<>(node);
-        }
-
-        @Override
-        public Class<? extends Node> forClass() {
-            return BinaryTreeNode.class;
-        }
+    @Override
+    public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
+        final Iterator<N> startingPoints = baseSelector.select(tree);
+        return new NodeSelectionIterator<>(new NodeChildrenIterator<>(startingPoints, new AlwaysMatcher<>()), extensionSelector);
     }
 }

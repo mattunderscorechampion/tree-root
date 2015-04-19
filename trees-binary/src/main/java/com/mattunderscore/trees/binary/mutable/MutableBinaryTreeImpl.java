@@ -28,7 +28,7 @@ package com.mattunderscore.trees.binary.mutable;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.impl.AbstractTreeWrapper;
+import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;

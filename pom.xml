@@ -21,8 +21,12 @@
     </properties>
 
     <modules>
-        <module>string-trees</module>
         <module>linked-tree</module>
+        <module>node-matchers</module>
+        <module>node-selectors</module>
+        <module>string-trees</module>
+        <module>tree-wrappers</module>
+        <module>trees-utilities</module>
         <module>trees-api</module>
         <module>trees-api-examples</module>
         <module>trees-basic-nodes</module>
@@ -33,10 +37,7 @@
         <module>trees-pathcopy</module>
         <module>trees-provider</module>
         <module>trees-spi</module>
-        <module>trees-utilities</module>
         <module>tree-traversers</module>
-        <module>node-matchers</module>
-        <module>node-selectors</module>
     </modules>
 
     <licenses>
@@ -241,6 +242,12 @@
             <dependency>
                 <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>tree-traversers</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.tree.root</groupId>
+                <artifactId>tree-wrappers</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

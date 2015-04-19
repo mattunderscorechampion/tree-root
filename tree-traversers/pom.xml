@@ -14,6 +14,10 @@
     <name>Tree Root traversers</name>
     <description>Tree traversal strategies.</description>
 
+    <prerequisites>
+        <maven>${trees.prerequisite.maven.version}</maven>
+    </prerequisites>
+
     <dependencies>
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
