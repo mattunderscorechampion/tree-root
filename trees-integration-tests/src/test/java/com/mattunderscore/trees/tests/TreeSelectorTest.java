@@ -26,10 +26,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.tests;
 
 import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.immutable.TreeNodeImpl;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
@@ -62,8 +64,10 @@ public final class TreeSelectorTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-            {Tree.class},
-            {LinkedTree.class},
+            {Tree.class}, // 0
+            {TreeNodeImpl.class}, // 1, repeats 0 with different key
+            {LinkedTree.class}, // 2
+            {MutableTree.class}, // 3
             {PathCopyTree.class}
         });
     }

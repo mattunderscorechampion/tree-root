@@ -64,8 +64,9 @@ public final class DelegateCopyingNodeToTreeConverter<E, N extends Node<E>, T ex
     private void copyChildren(TopDownTreeBuilderAppender<E> appender, S node) {
         final Iterator<S> iterator = (Iterator<S>)node.childIterator();
         while (iterator.hasNext()) {
-            final TopDownTreeBuilderAppender<E> newAppender = appender.addChild(node.getElement());
-            copyChildren(newAppender, (S)iterator.next());
+            final S child = (S)iterator.next();
+            final TopDownTreeBuilderAppender<E> newAppender = appender.addChild(child.getElement());
+            copyChildren(newAppender, child);
         }
     }
 
