@@ -32,6 +32,7 @@ import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.MutableTreeImpl;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
@@ -68,7 +69,8 @@ public final class TreeSelectorTest {
             {TreeNodeImpl.class}, // 1, repeats 0 with different key
             {LinkedTree.class}, // 2
             {MutableTree.class}, // 3
-            {PathCopyTree.class}
+            {MutableTreeImpl.class}, // 4, repeats 3 with different key
+            {PathCopyTree.class} // 5
         });
     }
 
