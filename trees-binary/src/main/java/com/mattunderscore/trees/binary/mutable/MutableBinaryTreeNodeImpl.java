@@ -91,24 +91,30 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
 
     @Override
     public int getNumberOfChildren() {
-        if (children.length == 2 && children[0] == null) {
-            return 1;
+        if (children[0] == null && children[1] == null) {
+            return 0;
+        }
+        else if (children[0] != null && children[1] != null) {
+            return 2;
         }
         else {
-            return children.length;
+            return 1;
         }
     }
 
     @Override
     public Iterator<MutableBinaryTreeNodeImpl<E>> childIterator() {
-        if (children.length == 2 && children[0] == null) {
-            return new SingletonIterator<>((MutableBinaryTreeNodeImpl<E>)children[1]);
-        }
-        else if (children.length == 0) {
+        if (children[0] == null && children[1] == null) {
             return new EmptyIterator<>();
         }
-        else {
+        else if (children[0] != null && children[1] != null) {
             return new CastingArrayIterator<>(children);
+        }
+        else if (children[0] != null) {
+            return new SingletonIterator<>((MutableBinaryTreeNodeImpl<E>)children[0]);
+        }
+        else {
+            return new SingletonIterator<>((MutableBinaryTreeNodeImpl<E>)children[1]);
         }
     }
 
