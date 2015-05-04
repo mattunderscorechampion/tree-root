@@ -35,11 +35,8 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableTree;
 
 /**
  * Test for {@link NodeConverter}.
@@ -59,16 +56,15 @@ public final class NodeConverterTest {
                 converter.treeFromRootNode(tree.getRoot());
 
             final MutableNode<String> convertedRoot = convertedTree.getRoot();
-            assertEquals(1, convertedRoot.getNumberOfChildren());
-            final Iterator<? extends MutableNode<String>> iterator0 = convertedRoot.childIterator();
-            assertTrue(iterator0.hasNext());
-            final MutableNode<String> child0 = iterator0.next();
+            assertEquals(2, convertedRoot.getNumberOfChildren());
+            final Iterator<? extends MutableNode<String>> iterator = convertedRoot.childIterator();
+            assertTrue(iterator.hasNext());
+            final MutableNode<String> child0 = iterator.next();
             assertEquals("b", child0.getElement());
 
-            final Iterator<? extends MutableNode<String>> iterator1 = child0.childIterator();
-            assertTrue(iterator1.hasNext());
-            final MutableNode<String> child1 = iterator1.next();
+            assertTrue(iterator.hasNext());
+            final MutableNode<String> child1 = iterator.next();
             assertEquals("c", child1.getElement());
-            assertFalse(iterator1.hasNext());
+            assertFalse(iterator.hasNext());
       }
 }
