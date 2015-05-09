@@ -1,5 +1,7 @@
 package com.mattunderscore.trees.walkers;
 
+import static com.mattunderscore.trees.walkers.MatcherUtilities.linkedTreeElementMatcher;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -7,7 +9,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.ArgumentMatcher;
+import org.mockito.InOrder;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -15,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.tree.Node;
 
 public final class PostOrderWalkerTest {
     private static PostOrderWalker walker;
@@ -26,6 +27,8 @@ public final class PostOrderWalkerTest {
     private Walker<LinkedTree<String>> nodeWalker;
     @Mock
     private Walker<String> elementWalker;
+    private InOrder elementOrder;
+    private InOrder nodeOrder;
 
     @BeforeClass
     public static void setUpClass() {
@@ -68,36 +71,43 @@ public final class PostOrderWalkerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        nodeOrder = inOrder(nodeWalker);
+        elementOrder = inOrder(elementWalker);
     }
 
     @Test
     public void empty() {
         walker.accept(emptyTree, nodeWalker);
-        verify(nodeWalker).onEmpty();
-        verify(nodeWalker).onCompleted();
+        nodeOrder.verify(nodeWalker).onEmpty();
+        nodeOrder.verify(nodeWalker).onCompleted();
+        nodeOrder.verifyNoMoreInteractions();
+        verifyNoMoreInteractions(nodeWalker);
     }
 
     @Test
     public void emptyElements() {
         walker.accept(emptyTree, new NodeToElementWalker<>(elementWalker));
-        verify(elementWalker).onEmpty();
-        verify(elementWalker).onCompleted();
+        elementOrder.verify(elementWalker).onEmpty();
+        elementOrder.verify(elementWalker).onCompleted();
+        elementOrder.verifyNoMoreInteractions();
+        verifyNoMoreInteractions(elementWalker);
     }
 
     @Test
     public void elements() {
         when(elementWalker.onNext(Matchers.isA(String.class))).thenReturn(true);
         walker.accept(tree, new NodeToElementWalker<>(elementWalker));
-        verify(elementWalker).onNext("a");
-        verify(elementWalker).onNext("c");
-        verify(elementWalker).onNext("e");
-        verify(elementWalker).onNext("d");
-        verify(elementWalker).onNext("b");
-        verify(elementWalker).onNext("g");
-        verify(elementWalker).onNext("h");
-        verify(elementWalker).onNext("i");
-        verify(elementWalker).onNext("f");
-        verify(elementWalker).onCompleted();
+        elementOrder.verify(elementWalker).onNext("a");
+        elementOrder.verify(elementWalker).onNext("c");
+        elementOrder.verify(elementWalker).onNext("e");
+        elementOrder.verify(elementWalker).onNext("d");
+        elementOrder.verify(elementWalker).onNext("b");
+        elementOrder.verify(elementWalker).onNext("g");
+        elementOrder.verify(elementWalker).onNext("h");
+        elementOrder.verify(elementWalker).onNext("i");
+        elementOrder.verify(elementWalker).onNext("f");
+        elementOrder.verify(elementWalker).onCompleted();
+        elementOrder.verifyNoMoreInteractions();
         verifyNoMoreInteractions(elementWalker);
     }
 
@@ -110,33 +120,30 @@ public final class PostOrderWalkerTest {
     }
 
     @Test
+    public void firstTwoElements() {
+        when(elementWalker.onNext(Matchers.isA(String.class))).thenReturn(true, false);
+        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
+        elementOrder.verify(elementWalker).onNext("a");
+        elementOrder.verify(elementWalker).onNext("c");
+        elementOrder.verifyNoMoreInteractions();
+        verifyNoMoreInteractions(elementWalker);
+    }
+
+    @Test
     public void nodes() {
         when(nodeWalker.onNext(Matchers.isA(LinkedTree.class))).thenReturn(true);
         walker.accept(tree, nodeWalker);
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("a")));
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("c")));
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("e")));
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("d")));
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("b")));
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("g")));
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("h")));
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("i")));
-        verify(nodeWalker).onNext(Matchers.argThat(new ElementMatcher("f")));
-        verify(nodeWalker).onCompleted();
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("a"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("c"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("e"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("d"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("b"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("g"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("h"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("i"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("f"));
+        nodeOrder.verify(nodeWalker).onCompleted();
+        nodeOrder.verifyNoMoreInteractions();
         verifyNoMoreInteractions(nodeWalker);
-    }
-
-    public static final class ElementMatcher extends ArgumentMatcher<LinkedTree<String>> {
-        private final String element;
-
-        public ElementMatcher(String element) {
-            this.element = element;
-        }
-
-        @Override
-        public boolean matches(Object o) {
-            final Node<String> node = (Node<String>)o;
-            return element.equals(node.getElement());
-        }
     }
 }
