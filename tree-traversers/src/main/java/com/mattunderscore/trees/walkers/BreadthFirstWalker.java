@@ -57,7 +57,7 @@ public final class BreadthFirstWalker {
                 walker.onCompleted();
             }
             catch (Done done) {
-                done.printStackTrace();
+                // Used to stop traversal
             }
         }
     }

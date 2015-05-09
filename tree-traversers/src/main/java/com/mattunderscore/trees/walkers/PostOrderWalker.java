@@ -53,6 +53,7 @@ public final class PostOrderWalker {
                 walker.onCompleted();
             }
             catch (Done done) {
+                // Used to stop traversal
             }
         }
     }

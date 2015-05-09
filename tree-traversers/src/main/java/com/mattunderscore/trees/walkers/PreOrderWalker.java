@@ -53,6 +53,7 @@ public final class PreOrderWalker {
                 walker.onCompleted();
             }
             catch (Done done) {
+                // Used to stop traversal
             }
         }
     }

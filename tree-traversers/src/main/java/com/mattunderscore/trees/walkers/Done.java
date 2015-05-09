@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.walkers;
 
 /**
+ * Exception used to halt traversal early.
  * @author Matt Champion on 24/08/14.
  */
 final class Done extends Exception {
