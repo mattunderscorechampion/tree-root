@@ -5,7 +5,7 @@
     <parent>
         <artifactId>tree-root</artifactId>
         <groupId>com.mattunderscore.tree.root</groupId>
-        <version>0.0.5-SNAPSHOT</version>
+        <version>0.0.5</version>
     </parent>
 
     <artifactId>trees-immutable</artifactId>
