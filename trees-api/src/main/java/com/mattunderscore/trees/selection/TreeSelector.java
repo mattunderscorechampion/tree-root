@@ -49,10 +49,11 @@ public interface TreeSelector<E> {
 
     /**
      * @param tree The tree to select from
+     * @param newTreeType The class of the new subtree
      * @param <N> The type of nodes in the tree
      * @param <T> The type of the tree
      * @param <O> The type of nodes in the subtree
-     * @param <O> The type of the subtree
+     * @param <U> The type of the subtree
      * @return An {@link java.util.Iterator} over the selected subtrees
      * @throws OperationNotSupportedForType if the type of the tree can not be selected
      */

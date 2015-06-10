@@ -39,31 +39,31 @@ public interface Trees {
 
     /**
      * Obtain a {@link com.mattunderscore.trees.selection.TreeSelectorFactory}.
-     * @return
+     * @return A {@link com.mattunderscore.trees.selection.TreeSelectorFactory}
      */
     TreeSelectorFactory treeSelectors();
 
     /**
      * Obtain a {@link com.mattunderscore.trees.selection.NodeSelectorFactory}.
-     * @return
+     * @return A {@link com.mattunderscore.trees.selection.NodeSelectorFactory}
      */
     NodeSelectorFactory nodeSelectors();
 
     /**
      * Obtain a {@link com.mattunderscore.trees.traversal.TreeWalkerFactory}.
-     * @return
+     * @return A {@link com.mattunderscore.trees.traversal.TreeWalkerFactory}
      */
     TreeWalkerFactory treeWalkers();
 
     /**
      * Obtain a {@link com.mattunderscore.trees.traversal.TreeIteratorFactory}.
-     * @return
+     * @return A {@link com.mattunderscore.trees.traversal.TreeIteratorFactory}
      */
     TreeIteratorFactory treeIterators();
 
     /**
      * Obtain a {@link com.mattunderscore.trees.construction.TreeBuilderFactory}.
-     * @return
+     * @return A {@link com.mattunderscore.trees.construction.TreeBuilderFactory}
      */
     TreeBuilderFactory treeBuilders();
 }

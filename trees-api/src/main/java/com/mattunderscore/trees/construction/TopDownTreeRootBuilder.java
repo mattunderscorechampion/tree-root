@@ -42,15 +42,15 @@ public interface TopDownTreeRootBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? 
 
     /**
      * Builder used to create a non-empty tree.
-     * @param <S>
+     * @param <S> The element type of the tree that will be built
      */
-    public interface TopDownTreeBuilder<S> extends BaseTreeBuilder<S, Tree<S, ? extends Node<S>>>, TopDownTreeBuilderAppender<S> {
+    interface TopDownTreeBuilder<S> extends BaseTreeBuilder<S, Tree<S, ? extends Node<S>>>, TopDownTreeBuilderAppender<S> {
     }
 
     /**
      * Appended to add a new child to the tree.
-     * @param <S>
+     * @param <S> The element type of the tree that will be built
      */
-    public interface TopDownTreeBuilderAppender<S> extends NodeAppender<S, TopDownTreeBuilderAppender<S>> {
+    interface TopDownTreeBuilderAppender<S> extends NodeAppender<S, TopDownTreeBuilderAppender<S>> {
     }
 }

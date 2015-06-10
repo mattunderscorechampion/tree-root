@@ -87,7 +87,7 @@ public abstract class PrefetchingIterator<E> implements Iterator<E> {
     protected abstract E calculateNext() throws NoSuchElementException;
 
     /**
-     * @return @{code true} if removal is supported
+     * @return {@code true} if removal is supported
      */
     protected boolean isRemoveSupported() {
         return false;
@@ -95,7 +95,7 @@ public abstract class PrefetchingIterator<E> implements Iterator<E> {
 
     /**
      * Perform the removal
-     * @param current
+     * @param current The current item to remove
      */
     protected void remove(E current) {
     }

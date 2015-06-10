@@ -45,7 +45,7 @@ public interface Walker<E> {
     boolean onNext(E node);
 
     /**
-     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from {@link #onNext(E)}.
+     * Invoked after all others have been invoked. Not invoked if {@code false} is returned from onNext.
      */
     void onCompleted();
 }
