@@ -42,7 +42,18 @@ Thursday January 22 21:27:56 2015
 * Added type key to tree builders to help match generics
 * Added separate keys for default specific implementations
 
-###0.0.5 - TBD
+###0.0.5 - Failed release
+Wednesday June 10 22:09:16 2015
+
+Deploy goal skipped
+
+###0.0.6 - Failed release
+Wednesday June 10 22:43:55 2015
+
+Deploy goal skipped
+
+###0.0.7 - Third release of API
+Wednesday June 10 23:22:02 2015
 
 * Renamed project to Tree Root
 * Separated tree implementations into different modules
@@ -59,3 +70,6 @@ comparable
 * Added enhanced tree internal iterator for pre-order traversal
 * Targeted Java 8
 * Changed group ID
+
+###0.0.8 - TBD
+
