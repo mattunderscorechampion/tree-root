@@ -11,7 +11,7 @@
     <groupId>com.mattunderscore.tree.root</groupId>
     <artifactId>tree-root</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.7</version>
     <name>Tree Root project</name>
     <description>Parent project for Tree Root library.</description>
 
@@ -51,7 +51,7 @@
         <connection>scm:git:https://github.com/mattunderscorechampion/tree-root</connection>
         <developerConnection>scm:git:https://github.com/mattunderscorechampion/tree-root</developerConnection>
         <url>https://github.com/mattunderscorechampion/tree-root</url>
-        <tag>trees-parent-0.0.3</tag>
+        <tag>tree-root-0.0.7</tag>
     </scm>
 
     <distributionManagement>
