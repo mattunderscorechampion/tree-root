@@ -5,7 +5,7 @@
     <parent>
         <artifactId>tree-root</artifactId>
         <groupId>com.mattunderscore.tree.root</groupId>
-        <version>0.0.6-SNAPSHOT</version>
+        <version>0.0.6</version>
     </parent>
 
     <artifactId>tree-traversers</artifactId>
