@@ -52,7 +52,12 @@ Wednesday June 10 22:43:55 2015
 
 Deploy goal skipped
 
-###0.0.7 - Third release of API
+###0.0.7 - Bad release
+Wednesday June 10 23:22:02 2015
+
+Root POM not deployed, prevents dependency resolution
+
+###0.0.8 - Third release of API
 Wednesday June 10 23:22:02 2015
 
 * Renamed project to Tree Root
@@ -71,5 +76,4 @@ comparable
 * Targeted Java 8
 * Changed group ID
 
-###0.0.8 - TBD
-
+###0.0.9 - TBD
