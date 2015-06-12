@@ -71,6 +71,7 @@ public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection
             pos = 0;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         protected E calculateNext() throws NoSuchElementException {
             while (pos < array.length) {
@@ -95,6 +96,7 @@ public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection
             return pos < array.length;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public E next() {
             return (E) array[pos++];

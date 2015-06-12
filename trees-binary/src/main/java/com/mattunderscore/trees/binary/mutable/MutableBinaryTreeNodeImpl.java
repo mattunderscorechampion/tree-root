@@ -43,7 +43,7 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements MutableBinaryTreeNode<E> {
     private MutableBinaryTreeNodeImpl<E> left;
     private MutableBinaryTreeNodeImpl<E> right;
-    private final Object[] children = new Object[2];
+    private final MutableBinaryTreeNodeImpl[] children = new MutableBinaryTreeNodeImpl[2];
 
     public MutableBinaryTreeNodeImpl(E element) {
         super(element);

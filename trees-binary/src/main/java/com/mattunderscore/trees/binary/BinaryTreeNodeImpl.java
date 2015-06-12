@@ -91,13 +91,13 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
             return new SingletonIterator<>(right);
         }
         else {
-            return new CastingArrayIterator<>(new Object[]{left, right});
+            return new CastingArrayIterator<>(new BinaryTreeNodeImpl[] {left, right});
         }
     }
 
     @Override
     public Iterator<BinaryTreeNodeImpl<E>> childStructuralIterator() {
-        return new CastingArrayIterator<>(new Object[]{left, right});
+        return new CastingArrayIterator<>(new BinaryTreeNodeImpl[] {left, right});
     }
 
     @Override

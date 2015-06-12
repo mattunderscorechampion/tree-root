@@ -27,7 +27,9 @@ package com.mattunderscore.trees.utilities.collections;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -90,7 +92,22 @@ public final class DuplicateOnWriteSimpleCollectionTest {
 
     @Test
     public void replace() {
-        final DuplicateOnWriteSimpleCollection<String> collection = DuplicateOnWriteSimpleCollection.create(new String[] {"Who", "is", "a", "good", "boy?"});
+        final DuplicateOnWriteSimpleCollection<CharSequence> collection = DuplicateOnWriteSimpleCollection.create(new String[] {"Who", "is", "a", "good", "boy?"});
+        final DuplicateOnWriteSimpleCollection<CharSequence> modifiedCollection = collection.replace(new StringBuffer("bad"), "good");
+        for (final CharSequence element : modifiedCollection) {
+            assertNotEquals("good", element);
+        }
+    }
+
+    @Test
+    public void create() {
+        final List<String> strings = new ArrayList<>();
+        strings.add("Who");
+        strings.add("is");
+        strings.add("a");
+        strings.add("good");
+        strings.add("boy");
+        final DuplicateOnWriteSimpleCollection<String> collection = DuplicateOnWriteSimpleCollection.create(strings);
         final DuplicateOnWriteSimpleCollection<String> modifiedCollection = collection.replace("bad", "good");
         for (final String element : modifiedCollection) {
             assertNotEquals("good", element);

@@ -63,7 +63,8 @@ final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
     }
 
     @Override
-    public BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders) {
+    @SafeVarargs
+    public final BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders) {
         return new BottomUpTreeBuilderImpl<>(helper, e, builders);
     }
 

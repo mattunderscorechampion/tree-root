@@ -31,7 +31,7 @@ import java.util.Comparator;
  * A comparator for all comparable objects.
  * @author Matt Champion on 06/09/14.
  */
-public final class ComparableComparator<C extends Comparable> implements Comparator<C> {
+public final class ComparableComparator<C extends Comparable<C>> implements Comparator<C> {
     @Override
     public int compare(C o1, C o2) {
         return o2.compareTo(o1);

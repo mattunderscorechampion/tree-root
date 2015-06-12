@@ -25,11 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities.iterators;
 
+import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * An iterator over object arrays that casts the objects to another class.
+ * An iterator over object arrays that casts the objects to another class. The next method may throw a
+ * ClassCastException if the wrong type of array is provided.
  * @author Matt Champion on 11/09/14.
  */
 public final class CastingArrayIterator<E> implements Iterator<E> {
@@ -46,6 +48,7 @@ public final class CastingArrayIterator<E> implements Iterator<E> {
         return pos < array.length;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public E next() {
         if (pos < array.length) {
@@ -59,5 +62,14 @@ public final class CastingArrayIterator<E> implements Iterator<E> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Create an iterator over an array known to be the correct type. Does not really cast.
+     * @param array The array
+     * @return The iterator
+     */
+    public CastingArrayIterator<E> create(E[] array) {
+        return new CastingArrayIterator<>(array);
     }
 }

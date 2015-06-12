@@ -46,5 +46,6 @@ public interface BottomUpTreeBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? ext
      * @return a new builder that creates a tree containing the element as the root and the trees returned by the
      * builders as children
      */
+    @SuppressWarnings("unchecked")
     BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders);
 }

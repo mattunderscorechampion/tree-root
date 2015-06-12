@@ -39,13 +39,14 @@ import java.util.*;
  */
 @Immutable
 public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollection<E> {
-    private final Object[] elements;
+    private final E[] elements;
 
+    @SuppressWarnings("unchecked")
     private DuplicateOnWriteSimpleCollection() {
-        elements = new Object[0];
+        elements = (E[])new Object[0];
     }
 
-    private DuplicateOnWriteSimpleCollection(Object[] collection) {
+    private DuplicateOnWriteSimpleCollection(E[] collection) {
         elements = collection;
     }
 
@@ -74,10 +75,17 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      * @param element the element to add
      * @return the modified collection
      */
+    @SuppressWarnings("unchecked")
     public DuplicateOnWriteSimpleCollection<E> add(E element) {
-        Object[] newElements = Arrays.copyOf(elements, elements.length + 1);
-        newElements[elements.length] = element;
-        return new DuplicateOnWriteSimpleCollection<>(newElements);
+        try {
+            final Class<E[]> elementArrayType = (Class<E[]>)Class.forName("[L" + element.getClass().getName() + ";");
+            E[] newElements = Arrays.copyOf(elements, elements.length + 1, elementArrayType);
+            newElements[elements.length] = element;
+            return new DuplicateOnWriteSimpleCollection<E>(newElements);
+        }
+        catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Array type cannot be found for element type");
+        }
     }
 
     /**
@@ -88,7 +96,7 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
     public DuplicateOnWriteSimpleCollection<E> remove(E element) {
         final List<E> tmpElements = new ArrayList<>(elements.length);
         boolean removed = false;
-        for (Object o : elements) {
+        for (E o : elements) {
             if (!removed && o.equals(element)) {
                 removed = true;
             }
@@ -111,6 +119,7 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      * @param oldElement the element to remove
      * @return the modified collection
      */
+    @SuppressWarnings("unchecked")
     public DuplicateOnWriteSimpleCollection<E> replace(E newElement, E oldElement) {
         final Object[] oldElements = elements;
         final List<E> tmpElements = new ArrayList<>(oldElements.length);
@@ -131,6 +140,11 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
         else {
             return this;
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <E> DuplicateOnWriteSimpleCollection<E> coerce(Object[] array) {
+        return new DuplicateOnWriteSimpleCollection<>((E[]) array);
     }
 
     /**
@@ -160,6 +174,6 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      * @return The new collection
      */
     public static <E> DuplicateOnWriteSimpleCollection<E> create(List<E> list) {
-        return new DuplicateOnWriteSimpleCollection<>(list.toArray());
+        return DuplicateOnWriteSimpleCollection.<E>coerce(list.toArray());
     }
 }
