@@ -77,3 +77,8 @@ comparable
 * Changed group ID
 
 ###0.0.9 - TBD
+
+* Introduced array iterator
+* Rely on default method for Iterator.remove when possible
+* Have EmptyIterator throw UnsupportedOperationException instead of IllegalStateException on remove
+* Address type safety of collections
