@@ -27,11 +27,13 @@ package com.mattunderscore.trees.base;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.mattunderscore.trees.tree.Node;
+
 /**
  * Abstract class for mutable nodes.
  * @author Matt Champion on 21/09/14.
  */
-public abstract class UnfixedNode<E> extends AbstractNode<E> {
+public abstract class UnfixedNode<E> implements Node<E> {
     protected final AtomicReference<E> elementReference = new AtomicReference<>();
 
     public UnfixedNode(E element) {

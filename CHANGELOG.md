@@ -82,3 +82,4 @@ comparable
 * Rely on default method for Iterator.remove when possible
 * Have EmptyIterator throw UnsupportedOperationException instead of IllegalStateException on remove
 * Address type safety of collections
+* Removed AbstractNode and moved implementation into default methods on the Node interface

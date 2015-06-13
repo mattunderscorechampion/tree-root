@@ -38,11 +38,6 @@ public interface Node<E> {
     E getElement();
 
     /**
-     * @return The class of the element stored in the node
-     */
-    Class<E> getElementClass();
-
-    /**
      * @return The number of child nodes
      */
     int getNumberOfChildren();
@@ -53,7 +48,17 @@ public interface Node<E> {
     Iterator<? extends Node<E>> childIterator();
 
     /**
+     * @return The class of the element stored in the node
+     */
+    @SuppressWarnings("unchecked")
+    default Class<? extends E> getElementClass() {
+        return (Class<? extends E>)getElement().getClass();
+    }
+
+    /**
      * @return {@code true} if the node is a leaf node
      */
-    boolean isLeaf();
+    default boolean isLeaf() {
+        return getNumberOfChildren() == 0;
+    }
 }

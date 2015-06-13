@@ -25,11 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.base;
 
+import com.mattunderscore.trees.tree.Node;
+
 /**
  * Abstract implementation of fixed element node.
  * @author Matt Champion on 21/09/14.
  */
-public abstract class FixedNode<E> extends AbstractNode<E> {
+public abstract class FixedNode<E> implements Node<E> {
     protected final E element;
 
     public FixedNode(E element) {
