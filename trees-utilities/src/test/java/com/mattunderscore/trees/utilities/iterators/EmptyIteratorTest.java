@@ -44,7 +44,7 @@ public final class EmptyIteratorTest {
 
 
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void remove() {
         final Iterator<String> iterator = EmptyIterator.get();
 

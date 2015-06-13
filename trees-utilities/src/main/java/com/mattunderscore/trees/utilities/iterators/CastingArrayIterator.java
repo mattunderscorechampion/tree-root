@@ -59,11 +59,6 @@ public final class CastingArrayIterator<E> implements Iterator<E> {
         }
     }
 
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
     /**
      * Create an iterator over an array known to be the correct type. Does not really cast.
      * @param array The array

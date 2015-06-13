@@ -50,7 +50,7 @@ public final class CastingArrayIteratorTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void remove() {
-        final Iterator<String> iterator = new SingletonIterator<>("a");
+        final Iterator<String> iterator = new CastingArrayIterator<>(new Object[] {"a"});
 
         iterator.remove();
     }
