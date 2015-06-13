@@ -25,11 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities.collections;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
+import java.util.Arrays;
+import java.util.Iterator;
+
 import net.jcip.annotations.Immutable;
 
-import java.util.*;
+import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
 
 /**
  * A collection that when modified returns a duplicate of the collection. The collection is backed by an array. The
@@ -39,14 +41,13 @@ import java.util.*;
  */
 @Immutable
 public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollection<E> {
-    private final E[] elements;
+    private final Object[] elements;
 
-    @SuppressWarnings("unchecked")
     private DuplicateOnWriteSimpleCollection() {
-        elements = (E[])new Object[0];
+        elements = new Object[0];
     }
 
-    private DuplicateOnWriteSimpleCollection(E[] collection) {
+    private DuplicateOnWriteSimpleCollection(Object[] collection) {
         elements = collection;
     }
 
@@ -75,17 +76,10 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      * @param element the element to add
      * @return the modified collection
      */
-    @SuppressWarnings("unchecked")
     public DuplicateOnWriteSimpleCollection<E> add(E element) {
-        try {
-            final Class<E[]> elementArrayType = (Class<E[]>)Class.forName("[L" + element.getClass().getName() + ";");
-            E[] newElements = Arrays.copyOf(elements, elements.length + 1, elementArrayType);
-            newElements[elements.length] = element;
-            return new DuplicateOnWriteSimpleCollection<E>(newElements);
-        }
-        catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Array type cannot be found for element type");
-        }
+        Object[] newElements = Arrays.copyOf(elements, elements.length + 1);
+        newElements[elements.length] = element;
+        return new DuplicateOnWriteSimpleCollection<>(newElements);
     }
 
     /**
@@ -94,19 +88,22 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      * @return the modified collection
      */
     public DuplicateOnWriteSimpleCollection<E> remove(E element) {
-        final List<E> tmpElements = new ArrayList<>(elements.length);
+        final Object[] tmpElements = new Object[elements.length];
         boolean removed = false;
-        for (E o : elements) {
-            if (!removed && o.equals(element)) {
+        int tmpArrayPos = 0;
+        for (Object currentElement : elements) {
+            if (!removed && currentElement.equals(element)) {
                 removed = true;
             }
             else {
-                tmpElements.add((E)o);
+                tmpElements[tmpArrayPos] = currentElement;
+                tmpArrayPos++;
             }
         }
 
         if (removed) {
-            return create(tmpElements);
+            final Object[] shrunkArray = Arrays.copyOf(tmpElements, tmpArrayPos);
+            return new DuplicateOnWriteSimpleCollection<>(shrunkArray);
         }
         else {
             return this;
@@ -115,36 +112,30 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
 
     /**
      * Replace an element in a new collection. If the old element is not present the collection is not changed.
+     * Replaces only the first element in the collection that matches.
      * @param newElement the element to add
      * @param oldElement the element to remove
      * @return the modified collection
      */
-    @SuppressWarnings("unchecked")
     public DuplicateOnWriteSimpleCollection<E> replace(E newElement, E oldElement) {
-        final Object[] oldElements = elements;
-        final List<E> tmpElements = new ArrayList<>(oldElements.length);
+        final Object[] newElements = new Object[elements.length];
         boolean removed = false;
-        for (Object o : oldElements) {
-            if (!removed && o.equals(oldElement)) {
+        for (int i = 0; i < elements.length; i++) {
+            if (!removed && elements[i].equals(oldElement)) {
+                newElements[i] = newElement;
                 removed = true;
-                tmpElements.add(newElement);
             }
             else {
-                tmpElements.add((E)o);
+                newElements[i] = elements[i];
             }
         }
 
         if (removed) {
-            return create(tmpElements);
+            return new DuplicateOnWriteSimpleCollection<>(newElements);
         }
         else {
             return this;
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <E> DuplicateOnWriteSimpleCollection<E> coerce(Object[] array) {
-        return new DuplicateOnWriteSimpleCollection<>((E[]) array);
     }
 
     /**
@@ -164,16 +155,6 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
      * @return The new collection
      */
     public static <E> DuplicateOnWriteSimpleCollection<E> create(E[] array) {
-        return new DuplicateOnWriteSimpleCollection<>(Arrays.copyOf(array, array.length));
-    }
-
-    /**
-     * Create a collection from a list. The elements are copied from the list and no references to the list are kept.
-     * @param list The list
-     * @param <E> The type of elements in the collection
-     * @return The new collection
-     */
-    public static <E> DuplicateOnWriteSimpleCollection<E> create(List<E> list) {
-        return DuplicateOnWriteSimpleCollection.<E>coerce(list.toArray());
+        return new DuplicateOnWriteSimpleCollection<>(Arrays.copyOf(array, array.length, Object[].class));
     }
 }
