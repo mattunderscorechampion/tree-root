@@ -42,7 +42,7 @@ import com.mattunderscore.trees.tree.Tree;
  * Implementation for converting a node to a tree by copying the subtree.
  * @author Matt Champion on 27/09/14.
  */
-public final class DelegateCopyingNodeToTreeConverter<E, N extends Node<E>, T extends Tree<E, N>, S extends Node<E>> implements NodeToTreeConverter<E, N, T, S>, SPISupportAwareComponent {
+public final class DelegateCopyingNodeToTreeConverter<E, N extends Node<E, N>, T extends Tree<E, N>, S extends Node<E, S>> implements NodeToTreeConverter<E, N, T, S>, SPISupportAwareComponent {
     private final Class<S> sourceClass;
     private final Class<T> targetClass;
     private volatile TreeBuilderFactory treeBuilderFactory;
@@ -54,17 +54,17 @@ public final class DelegateCopyingNodeToTreeConverter<E, N extends Node<E>, T ex
 
     @Override
     public T treeFromRootNode(S node) {
-        final TopDownTreeRootBuilder<E> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
-        final TopDownTreeBuilder<E> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
+        final TopDownTreeRootBuilder<E, N> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
+        final TopDownTreeBuilder<E, N> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
 
         copyChildren(treeBuilder, node);
         return treeBuilder.build(targetClass);
     }
 
     private void copyChildren(TopDownTreeBuilderAppender<E> appender, S node) {
-        final Iterator<S> iterator = (Iterator<S>)node.childIterator();
+        final Iterator<? extends S> iterator = node.childIterator();
         while (iterator.hasNext()) {
-            final S child = (S)iterator.next();
+            final S child = iterator.next();
             final TopDownTreeBuilderAppender<E> newAppender = appender.addChild(child.getElement());
             copyChildren(newAppender, child);
         }

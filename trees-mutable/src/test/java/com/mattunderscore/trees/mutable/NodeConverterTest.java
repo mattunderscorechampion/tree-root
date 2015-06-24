@@ -48,37 +48,37 @@ public final class NodeConverterTest {
 
       @Test
       public void convertToSelf() {
-            final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
-            final MutableTree<String, MutableNode<String>> tree = builder.root("a").build(MutableTreeImpl.class);
-            final MutableNode<String> root = tree.getRoot();
+            final TopDownTreeRootBuilder<String, ClosedMutableSettableNode<String>> builder = trees.treeBuilders().topDownBuilder();
+            final MutableTree<String, ClosedMutableSettableNode<String>> tree = builder.root("a").build(MutableTreeImpl.class);
+            final ClosedMutableSettableNode<String> root = tree.getRoot();
             assertTrue(root.isLeaf());
-            final MutableNode<String> depth1 = root.addChild("b");
+            final ClosedMutableSettableNode<String> depth1 = root.addChild("b");
             assertFalse(root.isLeaf());
             depth1.addChild("c");
 
             final NodeConverter<String> converter = new NodeConverter<>();
             converter.setSupport(new SPISupport());
 
-            final MutableTree<String, MutableTreeImpl<String>> convertedTree =
-                converter.treeFromRootNode((MutableTreeImpl<String>)root);
+            final MutableTree<String, ClosedMutableSettableNode<String>> convertedTree =
+                converter.treeFromRootNode(root);
 
-            final MutableNode<String> convertedRoot = convertedTree.getRoot();
+            final ClosedMutableSettableNode<String> convertedRoot = convertedTree.getRoot();
             assertEquals(1, convertedRoot.getNumberOfChildren());
-            final Iterator<? extends MutableNode<String>> iterator0 = convertedRoot.childIterator();
+            final Iterator<? extends ClosedMutableSettableNode<String>> iterator0 = convertedRoot.childIterator();
             assertTrue(iterator0.hasNext());
-            final MutableNode<String> child0 = iterator0.next();
+            final ClosedMutableSettableNode<String> child0 = iterator0.next();
             assertEquals("b", child0.getElement());
 
-            final Iterator<? extends MutableNode<String>> iterator1 = child0.childIterator();
+            final Iterator<? extends ClosedMutableSettableNode<String>> iterator1 = child0.childIterator();
             assertTrue(iterator1.hasNext());
-            final MutableNode<String> child1 = iterator1.next();
+            final ClosedMutableSettableNode<String> child1 = iterator1.next();
             assertEquals("c", child1.getElement());
             assertFalse(iterator1.hasNext());
 
             depth1.addChild("d");
-            final Iterator<? extends MutableNode<String>> iterator2 = child0.childIterator();
+            final Iterator<? extends ClosedMutableSettableNode<String>> iterator2 = child0.childIterator();
             assertTrue(iterator2.hasNext());
-            final MutableNode<String> child2 = iterator2.next();
+            final ClosedMutableSettableNode<String> child2 = iterator2.next();
             assertEquals("c", child2.getElement());
             assertFalse("Change to original tree should not be propagated to the converted tree", iterator2.hasNext());
       }

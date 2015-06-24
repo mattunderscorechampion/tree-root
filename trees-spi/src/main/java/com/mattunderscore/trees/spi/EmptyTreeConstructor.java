@@ -32,7 +32,7 @@ import com.mattunderscore.trees.tree.Tree;
  * Used to create empty trees.
  * @author Matt Champion on 13/08/14.
  */
-public interface EmptyTreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends TreeKeyedSPIComponent {
+public interface EmptyTreeConstructor<E, N extends Node<E, N>, T extends Tree<E, N>> extends TreeKeyedSPIComponent {
 
     T build();
 }

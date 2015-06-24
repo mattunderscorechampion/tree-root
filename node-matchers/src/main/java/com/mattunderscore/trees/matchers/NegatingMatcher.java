@@ -46,7 +46,7 @@ public final class NegatingMatcher<E> implements NodeMatcher<E> {
     }
 
     @Override
-    public <T extends Node<E>> boolean matches(T node) {
+    public <N extends Node<? extends E, ? extends N>> boolean matches(N node) {
         return !matcher.matches(node);
     }
 

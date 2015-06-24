@@ -34,5 +34,5 @@ import com.mattunderscore.trees.tree.Tree;
  * the sorting tree.
  * @author Matt Champion on 06/09/14.
  */
-public interface SortedTreeBuilder<E> extends OrganisedTreeBuilder<E, Tree<E, Node<E>>> {
+public interface SortedTreeBuilder<E, N extends Node<E, N>> extends OrganisedTreeBuilder<E, N, Tree<E, N>> {
 }

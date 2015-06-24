@@ -43,7 +43,7 @@ public final class BreadthFirstWalker {
     public BreadthFirstWalker() {
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
+    public <E, N extends Node<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
@@ -62,15 +62,15 @@ public final class BreadthFirstWalker {
         }
     }
 
-    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(List<N> currentLevel, Walker<N> walker) throws Done {
+    private <E, N extends Node<E, N>> void accept(List<N> currentLevel, Walker<N> walker) throws Done {
         final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
         for (final N node : currentLevel) {
             if (!walker.onNext(node)) {
                 throw new Done();
             }
-            final Iterator<? extends Node<E>> iterator = node.childIterator();
+            final Iterator<? extends N> iterator = node.childIterator();
             while (iterator.hasNext()) {
-                nextLevel.add((N) iterator.next());
+                nextLevel.add(iterator.next());
             }
         }
 

@@ -34,6 +34,7 @@ import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.DefaultElementWalker;
+import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -54,39 +55,39 @@ public final class CompleteExample {
     }
 
     public void createTree(Trees trees) {
-        final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-        final Tree<String, Node<String>> tree = builder.create("a",
+        final BottomUpTreeBuilder<String, ClosedNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final Tree<String, ClosedNode<String>> tree = builder.create("a",
                 builder.create("b"),
                 builder.create("c"))
-            .build(new TypeKey<Tree<String, Node<String>>>(){});
+            .build(new TypeKey<Tree<String, ClosedNode<String>>>(){});
 
         nodeSelector(trees, tree);
         treeSelector(trees, tree);
 
-        final BottomUpTreeBuilder<Integer> intBuilder = trees.treeBuilders().bottomUpBuilder();
-        final Tree<Integer, Node<Integer>> intTree = intBuilder.create(3,
+        final BottomUpTreeBuilder<Integer, ClosedNode<Integer>> intBuilder = trees.treeBuilders().bottomUpBuilder();
+        final Tree<Integer, ClosedNode<Integer>> intTree = intBuilder.create(3,
                 intBuilder.create(7),
                 intBuilder.create(9))
-            .build(new TypeKey<Tree<Integer, Node<Integer>>>(){});
+            .build(new TypeKey<Tree<Integer, ClosedNode<Integer>>>(){});
         sum(trees, intTree);
     }
 
-    public void nodeSelector(Trees trees, Tree<String, Node<String>> tree) {
+    public void nodeSelector(Trees trees, Tree<String, ClosedNode<String>> tree) {
         final NodeSelectorFactory selectorFactory = trees.nodeSelectors();
         final NodeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
-        final Iterator<Node<String>> iterator = selector.select(tree);
+        final Iterator<? extends ClosedNode<String>> iterator = selector.select(tree);
     }
 
-    public void treeSelector(Trees trees, Tree<String, Node<String>> tree) {
+    public void treeSelector(Trees trees, Tree<String, ClosedNode<String>> tree) {
         final TreeSelectorFactory selectorFactory = trees.treeSelectors();
         final TreeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
-        final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
+        final Iterator<Tree<String, ClosedNode<String>>> iterator = selector.select(tree);
     }
 
     /**
      * Sum all the values in an integer tree.
      */
-    public void sum(Trees trees, Tree<Integer, Node<Integer>> tree) {
+    public void sum(Trees trees, Tree<Integer, ClosedNode<Integer>> tree) {
         final SumWalker walker = new SumWalker();
         trees.treeWalkers().walkElementsInOrder(tree, walker);
     }

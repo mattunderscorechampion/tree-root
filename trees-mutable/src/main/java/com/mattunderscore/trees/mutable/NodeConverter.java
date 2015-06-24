@@ -30,7 +30,7 @@ package com.mattunderscore.trees.mutable;
  * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E> extends AbstractCopyingNodeConverter<E, MutableTreeImpl<E>, MutableTree<E, MutableTreeImpl<E>>, MutableTreeImpl<E>> {
+public final class NodeConverter<E> extends AbstractCopyingNodeConverter<E, ClosedMutableSettableNode<E>, MutableTreeImpl<E>, ClosedMutableSettableNode<E>> {
     public NodeConverter() {
         super();
     }

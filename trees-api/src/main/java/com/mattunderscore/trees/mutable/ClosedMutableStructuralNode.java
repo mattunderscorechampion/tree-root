@@ -25,35 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import java.util.Iterator;
-
-import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
-
 /**
- * Abstract implementation of {@link com.mattunderscore.trees.spi.TreeConverter} for
- * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
- * @author Matt Champion on 28/01/15.
+ * @author Matt Champion on 13/06/2015
  */
-abstract class AbstractConverter<E> implements TreeConverter<E, MutableTreeImpl<E>> {
-
-    @Override
-    public final MutableTreeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
-        final Node<E> root = sourceTree.getRoot();
-        final MutableTreeImpl<E> newTree = new MutableTreeImpl<>(root.getElement());
-        final Iterator<? extends Node<E>> iterator = root.childIterator();
-        while (iterator.hasNext()) {
-            duplicate(newTree, iterator.next());
-        }
-        return newTree;
-    }
-
-    private void duplicate(MutableTreeImpl<E> newParent, Node<E> sourceChild) {
-        final MutableTreeImpl<E> newChild = (MutableTreeImpl<E>) newParent.addChild(sourceChild.getElement());
-        final Iterator<? extends Node<E>> iterator = sourceChild.childIterator();
-        while (iterator.hasNext()) {
-            duplicate(newChild, iterator.next());
-        }
-    }
+public interface ClosedMutableStructuralNode<E> extends MutableStructuralNode<E, ClosedMutableStructuralNode<E>> {
 }

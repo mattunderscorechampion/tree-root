@@ -27,12 +27,14 @@ package com.mattunderscore.trees.examples;
 
 import java.util.Iterator;
 
+import com.mattunderscore.trees.mutable.ClosedMutableNode;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.traversal.DefaultElementWalker;
 import com.mattunderscore.trees.traversal.DefaultTreeWalker;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
+import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -41,14 +43,14 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion
  */
 public final class TraversalExamples {
-    public void nodeIterator(TreeIteratorFactory iterators, MutableTree<String, MutableNode<String>> tree) {
-        final Iterator<MutableNode<String>> iterator = iterators.breadthFirstIterator(tree);
+    public void nodeIterator(TreeIteratorFactory iterators, MutableTree<String, ClosedMutableNode<String>> tree) {
+        final Iterator<ClosedMutableNode<String>> iterator = iterators.breadthFirstIterator(tree);
         while (iterator.hasNext()) {
-            final Node<String> node = iterator.next();
+            final ClosedMutableNode<String> node = iterator.next();
         }
     }
 
-    public void elementIterator(TreeIteratorFactory iterators, Tree<String, Node<String>> tree) {
+    public void elementIterator(TreeIteratorFactory iterators, Tree<String, ClosedNode<String>> tree) {
         final Iterator<String> iterator = iterators.breadthFirstElementsIterator(tree);
         while (iterator.hasNext()) {
             final String element = iterator.next();
@@ -56,14 +58,14 @@ public final class TraversalExamples {
         }
     }
 
-    public void iterateAsSubtypeOfNode(TreeIteratorFactory iterators, MutableTree<String, MutableNode<String>> tree) {
-        final Iterator<Node<String>> iterator = iterators.breadthFirstIterator(tree);
+    public void iterateAsSubtypeOfNode(TreeIteratorFactory iterators, MutableTree<String, ClosedMutableNode<String>> tree) {
+        final Iterator<ClosedMutableNode<String>> iterator = iterators.breadthFirstIterator(tree);
         while (iterator.hasNext()) {
-            final Node<String> node = iterator.next();
+            final ClosedMutableNode<String> node = iterator.next();
         }
     }
 
-    public void elementWalker(TreeWalkerFactory walkers, Tree<String, Node<String>> tree) {
+    public void elementWalker(TreeWalkerFactory walkers, Tree<String, ClosedNode<String>> tree) {
         walkers.walkElementsInOrder(tree, new DefaultElementWalker<String>() {
             @Override
             public boolean onNext(String element) {
@@ -73,30 +75,30 @@ public final class TraversalExamples {
         });
     }
 
-    public void elementTreeWalker(TreeWalkerFactory walkers, Tree<String, Node<String>> tree) {
-        walkers.walkPreOrder(tree, new DefaultTreeWalker<Node<String>>() {
+    public void elementTreeWalker(TreeWalkerFactory walkers, Tree<String, ClosedNode<String>> tree) {
+        walkers.walkPreOrder(tree, new DefaultTreeWalker<ClosedNode<String>>() {
             @Override
             public void onStarted() {
                 System.out.print("(");
             }
 
             @Override
-            public void onNode(Node<String> node) {
+            public void onNode(ClosedNode<String> node) {
                 System.out.print(node.getElement());
             }
 
             @Override
-            public void onNodeChildrenStarted(Node<String> node) {
+            public void onNodeChildrenStarted(ClosedNode<String> node) {
                 System.out.print(" (");
             }
 
             @Override
-            public void onNodeChildrenRemaining(Node<String> node) {
+            public void onNodeChildrenRemaining(ClosedNode<String> node) {
                 System.out.print(" ");
             }
 
             @Override
-            public void onNodeChildrenCompleted(Node<String> node) {
+            public void onNodeChildrenCompleted(ClosedNode<String> node) {
                 System.out.print(")");
             }
 

@@ -31,5 +31,5 @@ import com.mattunderscore.trees.tree.Tree;
  * A binary tree.
  * @author Matt Champion on 06/09/14.
  */
-public interface BinaryTree<E, N extends BinaryTreeNode<E>> extends Tree<E, N> {
+public interface BinaryTree<E, N extends BinaryTreeNode<E, N>> extends Tree<E, N> {
 }

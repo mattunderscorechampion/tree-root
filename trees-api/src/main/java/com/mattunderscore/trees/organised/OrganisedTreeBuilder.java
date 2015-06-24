@@ -34,11 +34,11 @@ import com.mattunderscore.trees.tree.Tree;
  * of elements. Used to created sorted or balanced trees.
  * @author Matt Champion on 30/08/14.
  */
-public interface OrganisedTreeBuilder<E, T extends Tree<E, ? extends Node<E>>> extends BaseTreeBuilder<E, T> {
+public interface OrganisedTreeBuilder<E, N extends Node<E, N>, T extends Tree<E, N>> extends BaseTreeBuilder<E, N, T> {
 
     /**
      * @param element an element to include in the tree
      * @return a new builder that creates a balanced tree containing the element
      */
-    OrganisedTreeBuilder<E, T> addElement(E element);
+    OrganisedTreeBuilder<E, N, T> addElement(E element);
 }

@@ -32,19 +32,19 @@ import com.mattunderscore.trees.tree.Tree;
  * Builder used to create the root of a new tree or an empty tree.
  * @author Matt Champion on 07/08/14.
  */
-public interface TopDownTreeRootBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? extends Node<E>>> {
+public interface TopDownTreeRootBuilder<E, N extends Node<E, N>> extends BaseTreeBuilder<E, N, Tree<E, N>> {
 
     /**
      * @param e root element
      * @return Builder for a non-empty tree
      */
-    TopDownTreeBuilder<E> root(E e);
+    TopDownTreeBuilder<E, N> root(E e);
 
     /**
      * Builder used to create a non-empty tree.
      * @param <S> The element type of the tree that will be built
      */
-    interface TopDownTreeBuilder<S> extends BaseTreeBuilder<S, Tree<S, ? extends Node<S>>>, TopDownTreeBuilderAppender<S> {
+    interface TopDownTreeBuilder<S, U extends Node<S, U>> extends BaseTreeBuilder<S,U, Tree<S, U>>, TopDownTreeBuilderAppender<S> {
     }
 
     /**

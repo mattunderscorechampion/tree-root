@@ -27,11 +27,12 @@ package com.mattunderscore.trees.linked.tree;
 
 import java.util.Iterator;
 
+import net.jcip.annotations.NotThreadSafe;
+
 import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.mutable.MutableStructuralNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -39,15 +40,13 @@ import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
-import net.jcip.annotations.NotThreadSafe;
 
 /**
  * A simple tree implementation. Commonly used for temporary trees.
  * @author Matt Champion on 07/08/14.
  */
 @NotThreadSafe
-public final class LinkedTree<E> extends AbstractSettableNode<E> implements MutableTree<E, LinkedTree<E>>,
-        MutableNode<E>, MutableStructuralNode<E> {
+public final class LinkedTree<E> extends AbstractSettableNode<E, ClosedMutableSettableStructuredNode<E>> implements MutableTree<E, ClosedMutableSettableStructuredNode<E>>, ClosedMutableSettableStructuredNode<E> {
     private final ArrayListSimpleCollection<LinkedTree<E>> children;
 
     public LinkedTree(E root) {
@@ -55,6 +54,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
         children = new ArrayListSimpleCollection<>();
     }
 
+    @SuppressWarnings("unchecked")
     private LinkedTree(E root, LinkedTree[] subtrees) {
         super(root);
         children = new ArrayListSimpleCollection<>();
@@ -106,7 +106,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
     }
 
     @Override
-    public boolean removeChild(MutableNode<E> child) {
+    public boolean removeChild(ClosedMutableSettableStructuredNode<E> child) {
         return child != null && child.getClass().equals(getClass()) && children.remove((LinkedTree<E>)child);
     }
 
@@ -126,10 +126,10 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
         return children.iterator();
     }
 
-    public final static class NodeConverter<E> implements NodeToTreeConverter<E, LinkedTree<E>, LinkedTree<E>, LinkedTree<E>> {
+    public final static class NodeConverter<E> implements NodeToTreeConverter<E, ClosedMutableSettableStructuredNode<E>, LinkedTree<E>, ClosedMutableSettableStructuredNode<E>> {
         @Override
-        public LinkedTree<E> treeFromRootNode(LinkedTree<E> node) {
-            return node;
+        public LinkedTree<E> treeFromRootNode(ClosedMutableSettableStructuredNode<E> node) {
+            return (LinkedTree<E>)node;
         }
 
         @Override
@@ -138,10 +138,11 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
         }
     }
 
-    public final static class Constructor<E> implements TreeConstructor<E, LinkedTree<E>> {
+    public final static class Constructor<E> implements TreeConstructor<E, ClosedMutableSettableStructuredNode<E>, LinkedTree<E>> {
 
         @Override
-        public LinkedTree<E> build(E e, LinkedTree<E>... subtrees) {
+        @SafeVarargs
+        public final LinkedTree<E> build(E e, LinkedTree<E>... subtrees) {
             return new LinkedTree<>(e, subtrees);
         }
 
@@ -151,7 +152,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
         }
     }
 
-    public final static class EmptyConstructor<E> implements EmptyTreeConstructor<E, LinkedTree<E>> {
+    public final static class EmptyConstructor<E> implements EmptyTreeConstructor<E, ClosedMutableSettableStructuredNode<E>, LinkedTree<E>> {
 
         @Override
         public LinkedTree<E> build() {
@@ -164,12 +165,12 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
         }
     }
 
-    public final static class Converter<E> implements TreeConverter<E, LinkedTree<E>> {
+    public final static class Converter<E> implements TreeConverter<E, ClosedMutableSettableStructuredNode<E>, LinkedTree<E>> {
         @Override
-        public LinkedTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {
-            final Node<E> root = sourceTree.getRoot();
+        public <S extends Node<E, S>> LinkedTree<E> build(Tree<E, S> sourceTree) {
+            final S root = sourceTree.getRoot();
             final LinkedTree<E> newTree = new LinkedTree<>(root.getElement());
-            final Iterator<? extends Node<E>> iterator = root.childIterator();
+            final Iterator<? extends S> iterator = root.childIterator();
             while (iterator.hasNext()) {
                 duplicate(newTree, iterator.next());
             }
@@ -181,9 +182,9 @@ public final class LinkedTree<E> extends AbstractSettableNode<E> implements Muta
             return LinkedTree.class;
         }
 
-        private void duplicate(LinkedTree<E> newParent, Node<E> sourceChild) {
-            final LinkedTree<E> newChild = (LinkedTree<E>) newParent.addChild(sourceChild.getElement());
-            final Iterator<? extends Node<E>> iterator = sourceChild.childIterator();
+        private <S extends Node<E, S>> void duplicate(LinkedTree<E> newParent, S sourceChild) {
+            final LinkedTree<E> newChild = newParent.addChild(sourceChild.getElement());
+            final Iterator<? extends S> iterator = sourceChild.childIterator();
             while (iterator.hasNext()) {
                 duplicate(newChild, iterator.next());
             }

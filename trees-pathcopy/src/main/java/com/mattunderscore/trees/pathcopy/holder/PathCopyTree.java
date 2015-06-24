@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Path copy tree that uses node holders.
  * @author Matt Champion on 14/11/14.
  */
-public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
+public final class PathCopyTree<E> implements MutableTree<E, PathCopyNode<E>> {
     private final AtomicReference<Holder<E>> holderRef;
 
     PathCopyTree() {
@@ -48,7 +48,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     }
 
     @Override
-    public MutableNode<E> setRoot(E root) {
+    public PathCopyNode<E> setRoot(E root) {
         final Holder<E> holder = new PathCopyRootHolder<>();
         final PathCopyNode<E> node = new PathCopyNode<>(holder, root);
         holder.set(node);
@@ -57,7 +57,7 @@ public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     }
 
     @Override
-    public MutableNode<E> getRoot() {
+    public PathCopyNode<E> getRoot() {
         final Holder<E> node = holderRef.get();
         if (node == null) {
             return null;

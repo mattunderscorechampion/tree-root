@@ -28,6 +28,7 @@ package com.mattunderscore.trees.examples;
 import java.util.ServiceLoader;
 
 import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -58,8 +59,8 @@ public final class ExamplesEntryPoint {
         System.out.println("General examples:");
         final ImmutableTreeExamples immutableTreeExamples = new ImmutableTreeExamples();
         final TraversalExamples traversalExamples = new TraversalExamples();
-        final Tree<String, Node<String>> tree = immutableTreeExamples.createTreeFromTheBottomUp(trees.treeBuilders().<String>bottomUpBuilder());
-        immutableTreeExamples.createTreeFromTopDown(trees.treeBuilders().<String>topDownBuilder());
+        final Tree<String, ClosedNode<String>> tree = immutableTreeExamples.createTreeFromTheBottomUp(trees.treeBuilders().<String, ClosedNode<String>>bottomUpBuilder());
+        immutableTreeExamples.createTreeFromTopDown(trees.treeBuilders().<String, ClosedNode<String>>topDownBuilder());
 
         traversalExamples.elementTreeWalker(trees.treeWalkers(), tree);
     }

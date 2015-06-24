@@ -25,17 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.tree.Tree;
-
 /**
- * Implementation of {@link com.mattunderscore.trees.spi.TreeConstructor} for
- * {@link com.mattunderscore.trees.mutable.MutableTree}.
- * @author Matt Champion on 28/01/15.
+ * @author Matt Champion on 13/06/2015
  */
-public final class DefaultConstructor<E> extends AbstractConstructor<E> {
-
-    @Override
-    public Class<? extends Tree> forClass() {
-        return MutableTree.class;
-    }
+public interface ClosedMutableSettableNode<E> extends MutableNode<E, ClosedMutableSettableNode<E>>, SettableNode<E, ClosedMutableSettableNode<E>> {
 }

@@ -51,10 +51,11 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     public <E> TreeSelector<E> newSelector(final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
         return new TreeSelector<E>() {
             @Override
-            public <N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
-                final Node<E> root = tree.getRoot();
+            public <N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
+                final N root = tree.getRoot();
                 if (matcher.matches(root)) {
-                    return new SingletonIterator<>(helper.<E, N, T, Node<E>>nodeToTree(root));
+                    final T newTree = helper.<E, N, T, N>nodeToTree(root);
+                    return new SingletonIterator<>(newTree);
                 }
                 else {
                     return EmptyIterator.get();
@@ -62,7 +63,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
             }
 
             @Override
-            public <N extends Node<E>, T extends Tree<E, N>, O extends Node<E>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
+            public <N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>, O extends Node<E, O>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
                 throw new UnsupportedOperationException("Not yet implemented");
             }
         };
@@ -72,24 +73,24 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     public <E> TreeSelector<E> newSelector(final TreeSelector<E> selector, final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
         return new TreeSelector<E>() {
             @Override
-            public <N extends Node<E>, T extends Tree<E, N>> Iterator<T> select(T tree) {
+            public <N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
                 final Iterator<T> parents = selector.select(tree);
                 return new TreeIterator<>(parents, matcher);
             }
 
             @Override
-            public <N extends Node<E>, T extends Tree<E, N>, O extends Node<E>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
+            public <N extends Node<E,? extends N>, T extends Tree<E, ? extends N>, O extends Node<E, O>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
                 throw new UnsupportedOperationException("Not yet implemented");
             }
         };
     }
 
-    private final class TreeIterator<E, N extends Node<E>, T extends Tree<E, N>> extends PrefetchingIterator<T> {
+    private final class TreeIterator<E, N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>> extends PrefetchingIterator<T> {
         private final Iterator<T> parents;
-        private final NodeMatcher matcher;
-        private Iterator<N> possibles;
+        private final NodeMatcher<E> matcher;
+        private Iterator<? extends N> possibles;
 
-        public TreeIterator(Iterator<T> parents, NodeMatcher matcher) {
+        public TreeIterator(Iterator<T> parents, NodeMatcher<E> matcher) {
             this.parents = parents;
             this.matcher = matcher;
         }
@@ -97,13 +98,13 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
         protected T calculateNext() {
             if (possibles == null) {
                 final N next = parents.next().getRoot();
-                possibles = (Iterator<N>)next.childIterator();
+                possibles = next.childIterator();
             }
 
             if (possibles.hasNext()) {
                 final N possible = possibles.next();
                 if (matcher.matches(possible)) {
-                    return helper.<E, N, T, Node<E>>nodeToTree(possible);
+                    return helper.<E, N, T, N>nodeToTree(possible);
                 } else {
                     return calculateNext();
                 }

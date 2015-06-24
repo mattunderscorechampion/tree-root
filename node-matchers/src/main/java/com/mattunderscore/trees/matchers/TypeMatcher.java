@@ -45,7 +45,7 @@ public final class TypeMatcher implements NodeMatcher<Object> {
     }
 
     @Override
-    public <T extends Node<Object>> boolean matches(T node) {
+    public <N extends Node<?, ? extends N>> boolean matches(N node) {
         return type.equals(node.getElementClass());
     }
 

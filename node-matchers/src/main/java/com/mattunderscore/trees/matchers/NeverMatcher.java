@@ -39,7 +39,7 @@ public final class NeverMatcher<E> implements NodeMatcher<E> {
     private static final NodeMatcher<?> INSTANCE = new NeverMatcher<>();
 
     @Override
-    public <T extends Node<E>> boolean matches(T node) {
+    public <N extends Node<? extends E, ? extends N>> boolean matches(N node) {
         return false;
     }
 

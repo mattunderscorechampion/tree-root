@@ -25,20 +25,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.traversers;
 
-import com.mattunderscore.trees.spi.IteratorRemoveHandler;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
+
 /**
  * @author Matt Champion on 05/09/14.
  */
-public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
+public final class BreadthFirstIterator<E , N extends Node<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private Iterator<N> currentLayer;
     private List<N> nextLayer;
 
@@ -58,7 +58,7 @@ public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E,
                 next = currentLayer.next();
             } while (next == null);
 
-            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
+            final Iterator<? extends N> iterator = next.childIterator();
             while (iterator.hasNext()) {
                 nextLayer.add(iterator.next());
             }
@@ -73,7 +73,7 @@ public final class BreadthFirstIterator<E , N extends Node<E>, T extends Tree<E,
                 next = currentLayer.next();
             } while (next == null);
 
-            final Iterator<N> iterator = (Iterator<N>)next.childIterator();
+            final Iterator<? extends N> iterator = next.childIterator();
             while (iterator.hasNext()) {
                 nextLayer.add(iterator.next());
             }

@@ -29,6 +29,7 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.Matchers;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 import com.mattunderscore.trees.tree.Node;
 
 /**
@@ -57,7 +58,7 @@ public final class MatcherUtilities {
 
         @Override
         public boolean matches(Object o) {
-            final Node<String> node = (Node<String>)o;
+            final ClosedMutableSettableStructuredNode<String> node = (ClosedMutableSettableStructuredNode<String>)o;
             return element.equals(node.getElement());
         }
     }

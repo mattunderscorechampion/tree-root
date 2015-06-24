@@ -70,7 +70,7 @@ public final class BinarySearchTreeTest {
 
     @Test
     public void construction() {
-        final SortingTreeBuilder<String> builder = trees.treeBuilders().sortingTreeBuilder();
+        final SortingTreeBuilder<String, ClosedBinaryTreeNode<String>> builder = trees.treeBuilders().sortingTreeBuilder();
         final BinarySearchTree<String> tree = builder
             .addElement("b")
             .addElement("a")

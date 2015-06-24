@@ -45,7 +45,7 @@ public final class ConjunctionMatcher<E> implements NodeMatcher<E> {
     }
 
     @Override
-    public <T extends Node<E>> boolean matches(T node) {
+    public <N extends Node<? extends E, ? extends N>> boolean matches(N node) {
         return matcher0.matches(node) && matcher1.matches(node);
     }
 

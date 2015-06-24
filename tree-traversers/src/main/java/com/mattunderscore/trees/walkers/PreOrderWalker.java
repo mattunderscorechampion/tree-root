@@ -41,7 +41,7 @@ public final class PreOrderWalker {
     public PreOrderWalker() {
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
+    public <E, N extends Node<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
@@ -58,13 +58,13 @@ public final class PreOrderWalker {
         }
     }
 
-    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, Walker<N> walker) throws Done {
-        final Iterator<? extends Node<E>> iterator = node.childIterator();
+    private <E, N extends Node<E, N>> void accept(N node, Walker<N> walker) throws Done {
+        final Iterator<? extends N> iterator = node.childIterator();
         if (!walker.onNext(node)) {
             throw new Done();
         }
         while (iterator.hasNext()) {
-            final N child = (N)iterator.next();
+            final N child = iterator.next();
             accept(child, walker);
         }
     }

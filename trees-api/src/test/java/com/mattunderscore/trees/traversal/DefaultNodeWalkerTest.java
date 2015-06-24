@@ -1,13 +1,13 @@
 package com.mattunderscore.trees.traversal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.ClosedNode;
 
 public class DefaultNodeWalkerTest {
-    private final Walker<Node<String>> walker = new DefaultNodeWalker<String, Node<String>>() {
+    private final Walker<ClosedNode<String>> walker = new DefaultNodeWalker<String, ClosedNode<String>>() {
     };
 
     @Test

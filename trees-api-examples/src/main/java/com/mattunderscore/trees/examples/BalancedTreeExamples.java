@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.organised.OrganisedTreeBuilder;
 import com.mattunderscore.trees.tree.Tree;
@@ -35,12 +36,12 @@ import com.mattunderscore.trees.balanced.BalancingTree;
  * @author Matt Champion on 30/08/14.
  */
 public final class BalancedTreeExamples {
-    public void balancedTreeExample(OrganisedTreeBuilder<String, Tree<String, Node<String>>> builder) {
-        final BalancingTree<String> tree = builder
+    public void balancedTreeExample(OrganisedTreeBuilder<String, ClosedNode<String>, Tree<String, ClosedNode<String>>> builder) {
+        final BalancingTree<String, ClosedNode<String>> tree = builder
             .addElement("a")
             .addElement("b")
             .addElement("c")
-            .build(new TypeKey<BalancingTree<String>>(){});
+            .build(new TypeKey<BalancingTree<String, ClosedNode<String>>>(){});
         tree
             .addElement("c")
             .addElement("d");

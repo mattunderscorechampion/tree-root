@@ -38,43 +38,46 @@ import java.lang.reflect.Array;
  * @author Matt Champion on 13/08/14.
  */
 @Immutable
-final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
+final class BottomUpTreeBuilderImpl<E, N extends Node<E, N>> implements BottomUpTreeBuilder<E, N> {
     private final SPISupport helper;
     private final E root;
-    private final BottomUpTreeBuilder<E>[] children;
+    private final BottomUpTreeBuilder<E, N>[] children;
 
+    @SuppressWarnings("unchecked")
     public BottomUpTreeBuilderImpl(SPISupport helper) {
         this(helper, null, new BottomUpTreeBuilder[0]);
     }
 
+    @SuppressWarnings("unchecked")
     private BottomUpTreeBuilderImpl(SPISupport helper, E e) {
         this(helper, e, new BottomUpTreeBuilder[0]);
     }
 
-    private BottomUpTreeBuilderImpl(SPISupport helper, E e, BottomUpTreeBuilder[] builders) {
+    private BottomUpTreeBuilderImpl(SPISupport helper, E e, BottomUpTreeBuilder<E, N>[] builders) {
         this.helper = helper;
         root = e;
         children = builders;
     }
 
     @Override
-    public BottomUpTreeBuilder<E> create(E e) {
+    public BottomUpTreeBuilder<E, N> create(E e) {
         return new BottomUpTreeBuilderImpl<>(helper, e);
     }
 
     @Override
     @SafeVarargs
-    public final BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders) {
+    public final BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N>... builders) {
         return new BottomUpTreeBuilderImpl<>(helper, e, builders);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <T extends Tree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         if (root == null) {
             return helper.createEmptyTree(klass);
         }
         else {
-            final T[] subtrees = (T[])Array.newInstance(klass, children.length);
+            final T[] subtrees = (T[])Array.newInstance(helper.lookupConcreteType(klass), children.length);
             for (int i = 0; i < children.length; i++) {
                 subtrees[i] = children[i].build(klass);
             }
@@ -83,7 +86,7 @@ final class BottomUpTreeBuilderImpl<E> implements BottomUpTreeBuilder<E> {
     }
 
     @Override
-    public <T extends Tree<E, ? extends Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+    public <T extends Tree<E, N>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
         return build(type.getType());
     }
 }

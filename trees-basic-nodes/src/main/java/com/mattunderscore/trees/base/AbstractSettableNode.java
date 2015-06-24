@@ -31,7 +31,7 @@ import com.mattunderscore.trees.mutable.SettableNode;
  * Abstract settable node implementation.
  * @author Matt Champion
  */
-public abstract class AbstractSettableNode<E> extends UnfixedNode<E> implements SettableNode<E> {
+public abstract class AbstractSettableNode<E, N extends SettableNode<E, ? extends N>> extends UnfixedNode<E, N> implements SettableNode<E, N> {
 
     public AbstractSettableNode(E element) {
         super(element);

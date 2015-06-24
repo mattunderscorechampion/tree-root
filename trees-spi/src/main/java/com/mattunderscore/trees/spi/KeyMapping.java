@@ -23,20 +23,16 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
-
-import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+package com.mattunderscore.trees.spi;
 
 /**
- * Abstract implementation of {@link com.mattunderscore.trees.spi.TreeConstructor} for
- * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
- * @author Matt Champion on 28/01/15.
+ * @author Matt Champion on 14/06/2015
  */
-abstract class AbstractConstructor<E> implements TreeConstructor<E, MutableTree<E, MutableNode<E>>> {
+public interface KeyMapping<T> extends SPIComponent {
+    /**
+     * @return The concrete type
+     */
+    Class<? extends T> getConcreteClass();
 
-    @Override
-    public final MutableTree<E, MutableNode<E>> build(E e, MutableTree<E, MutableNode<E>>... subtrees) {
-        return new MutableTreeImpl(e, new FixedUncheckedSimpleCollection<E>(subtrees));
-    }
+    Class<T> forClass();
 }

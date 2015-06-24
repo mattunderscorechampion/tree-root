@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
+import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import org.junit.Test;
@@ -36,19 +37,19 @@ public final class DefaultRemovalHandlerTest {
 
     @Test
     public void testIsSupported() {
-        final IteratorRemoveHandler<String, Node<String>, Tree<String, Node<String>>> handler = new DefaultRemovalHandler<>();
+        final IteratorRemoveHandler<String, ClosedNode<String>, Tree<String, ClosedNode<String>>> handler = new DefaultRemovalHandler<>();
         assertFalse(handler.isSupported());
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void testRemove() throws Exception {
-        final IteratorRemoveHandler<String, Node<String>, Tree<String, Node<String>>> handler = new DefaultRemovalHandler<>();
+        final IteratorRemoveHandler<String, ClosedNode<String>, Tree<String, ClosedNode<String>>> handler = new DefaultRemovalHandler<>();
         handler.remove(null, null);
     }
 
     @Test
     public void testForClass() throws Exception {
-        final IteratorRemoveHandler<String, Node<String>, Tree<String, Node<String>>> handler = new DefaultRemovalHandler<>();
+        final IteratorRemoveHandler<String, ClosedNode<String>, Tree<String, ClosedNode<String>>> handler = new DefaultRemovalHandler<>();
         assertNull(handler.forClass());
     }
 }

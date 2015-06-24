@@ -32,8 +32,8 @@ import com.mattunderscore.trees.tree.Tree;
  * Converts a tree of one type to another.
  * @author Matt Champion on 15/08/14.
  */
-public interface TreeConverter<E, T extends Tree<E, ? extends Node<E>>> extends TreeKeyedSPIComponent {
+public interface TreeConverter<E, N extends Node<E, N>, T extends Tree<E, N>> extends TreeKeyedSPIComponent {
 
-    T build(Tree<E, ? extends Node<E>> sourceTree);
+    <S extends Node<E, S>> T build(Tree<E, S> sourceTree);
 
 }

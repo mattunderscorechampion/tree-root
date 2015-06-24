@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.immutable;
 
 import com.mattunderscore.trees.spi.TreeConstructor;
+import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -34,10 +35,12 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.immutable.TreeNodeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-abstract class AbstractConstructor<E> implements TreeConstructor<E, Tree<E, Node<E>>> {
+abstract class AbstractConstructor<E> implements TreeConstructor<E, ClosedNode<E>, TreeNodeImpl<E>> {
 
+    @SafeVarargs
     @Override
-    public final Tree<E, Node<E>> build(E e, Tree<E, Node<E>>... subtrees) {
+    @SuppressWarnings("unchecked")
+    public final TreeNodeImpl<E> build(E e, TreeNodeImpl<E>... subtrees) {
         return new TreeNodeImpl(e, subtrees);
     }
 }

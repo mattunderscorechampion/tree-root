@@ -25,14 +25,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.TreeConstructor} for
  * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class Constructor<E> extends AbstractConstructor<E> {
+public final class Constructor<E> implements TreeConstructor<E, ClosedMutableNode<E>, MutableTree<E, ClosedMutableNode<E>>> {
+    @Override
+    public final MutableTree<E, ClosedMutableNode<E>> build(E e, MutableTree<E, ClosedMutableNode<E>>... subtrees) {
+        return new MutableTreeImpl(e, new FixedUncheckedSimpleCollection<E>(subtrees));
+    }
 
     @Override
     public Class<? extends Tree> forClass() {

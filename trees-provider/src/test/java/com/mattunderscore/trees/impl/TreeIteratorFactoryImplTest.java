@@ -35,6 +35,7 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 
 /**
@@ -49,14 +50,14 @@ public final class TreeIteratorFactoryImplTest {
       public static void setUp() {
             final Trees trees = new TreesImpl();
             iteratorFactory = trees.treeIterators();
-            final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
+            final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
             tree = builder.create("root", builder.create("a", builder.create("c")), builder.create("b"))
                 .build(LinkedTree.<String>typeKey());
       }
 
       @Test
       public void preOrderIterator() {
-            final Iterator<LinkedTree<String>> iterator = iteratorFactory.preOrderIterator(tree);
+            final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = iteratorFactory.preOrderIterator(tree);
             assertEquals("root", iterator.next().getElement());
             assertEquals("a", iterator.next().getElement());
             assertEquals("c", iterator.next().getElement());
@@ -74,7 +75,7 @@ public final class TreeIteratorFactoryImplTest {
 
       @Test
       public void postOrderIterator() {
-            final Iterator<LinkedTree<String>> iterator = iteratorFactory.postOrderIterator(tree);
+            final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = iteratorFactory.postOrderIterator(tree);
             assertEquals("c", iterator.next().getElement());
             assertEquals("a", iterator.next().getElement());
             assertEquals("b", iterator.next().getElement());
@@ -92,7 +93,7 @@ public final class TreeIteratorFactoryImplTest {
 
       @Test
       public void inOrderIterator() {
-            final Iterator<LinkedTree<String>> iterator = iteratorFactory.inOrderIterator(tree);
+            final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = iteratorFactory.inOrderIterator(tree);
             assertEquals("c", iterator.next().getElement());
             assertEquals("a", iterator.next().getElement());
             assertEquals("root", iterator.next().getElement());
@@ -110,7 +111,7 @@ public final class TreeIteratorFactoryImplTest {
 
       @Test
       public void breadthFirstIterator() {
-            final Iterator<LinkedTree<String>> iterator = iteratorFactory.breadthFirstIterator(tree);
+            final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = iteratorFactory.breadthFirstIterator(tree);
             assertEquals("root", iterator.next().getElement());
             assertEquals("a", iterator.next().getElement());
             assertEquals("b", iterator.next().getElement());

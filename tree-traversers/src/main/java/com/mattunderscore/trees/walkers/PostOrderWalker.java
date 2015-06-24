@@ -41,7 +41,7 @@ public final class PostOrderWalker {
     public PostOrderWalker() {
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, Walker<N> walker) {
+    public <E, N extends Node<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
@@ -58,10 +58,10 @@ public final class PostOrderWalker {
         }
     }
 
-    private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, Walker<N> walker) throws Done {
-        final Iterator<? extends Node<E>> iterator = node.childIterator();
+    private <E, N extends Node<E, N>> void accept(N node, Walker<N> walker) throws Done {
+        final Iterator<? extends N> iterator = node.childIterator();
         while (iterator.hasNext()) {
-            accept((N)iterator.next(), walker);
+            accept(iterator.next(), walker);
         }
         if (!walker.onNext(node)) {
             throw new Done();

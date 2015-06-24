@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Node;
  * Wrap and binary node to create a binary tree.
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
+public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E, N>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
 
     public BinaryTreeWrapper() {
         super();
@@ -43,7 +43,7 @@ public final class BinaryTreeWrapper<E, N extends BinaryTreeNode<E>> extends Abs
         super(root);
     }
 
-    public static final class NodeConverter<E, N extends BinaryTreeNode<E>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>, N> {
+    public static final class NodeConverter<E, N extends BinaryTreeNode<E, N>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>, N> {
 
         @Override
         public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {

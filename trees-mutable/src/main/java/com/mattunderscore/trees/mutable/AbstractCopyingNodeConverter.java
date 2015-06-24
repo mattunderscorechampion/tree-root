@@ -25,22 +25,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
 /**
  * Abstract copying node converter that captures the source and target types from the supertype and delegates to a
  * copying node converter.
  * @author Matt Champion
  */
-public abstract class AbstractCopyingNodeConverter<E, N extends Node<E>, T extends Tree<E, N>, S extends Node<E>> implements NodeToTreeConverter<E, N, T, S>, SPISupportAwareComponent {
-    private final DelegateCopyingNodeToTreeConverter<E, N, T, S> delegateConverter;
+public abstract class AbstractCopyingNodeConverter<E, N extends Node<E, N>, T extends Tree<E, N>, S extends Node<E, S>> implements NodeToTreeConverter<E, N, T, S>, SPISupportAwareComponent {
+    private final DelegateCopyingNodeToTreeConverter<E, ? extends N, T, S> delegateConverter;
 
     public AbstractCopyingNodeConverter() {
         final Class<S> sourceType;

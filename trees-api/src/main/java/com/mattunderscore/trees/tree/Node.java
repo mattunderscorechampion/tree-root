@@ -29,9 +29,10 @@ import java.util.Iterator;
 
 /**
  * Represents a node of the tree.
+ *
  * @author Matt Champion on 08/08/14.
  */
-public interface Node<E> {
+public interface Node<E, N extends Node<E, ? extends N>> {
     /**
      * @return The element stored in the node
      */
@@ -45,14 +46,14 @@ public interface Node<E> {
     /**
      * @return Iterator for children
      */
-    Iterator<? extends Node<E>> childIterator();
+    Iterator<? extends N> childIterator();
 
     /**
      * @return The class of the element stored in the node
      */
     @SuppressWarnings("unchecked")
     default Class<? extends E> getElementClass() {
-        return (Class<? extends E>)getElement().getClass();
+        return (Class<? extends E>) getElement().getClass();
     }
 
     /**

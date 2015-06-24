@@ -56,9 +56,9 @@ import com.mattunderscore.trees.tree.Tree;
 @RunWith(Parameterized.class)
 public final class NodeSelectorTest {
     private static final Trees trees = new TreesImpl();
-    private final Class<? extends Tree<String, Node<String>>> treeClass;
+    private final Class treeClass;
 
-    public NodeSelectorTest(Class<? extends Tree<String, Node<String>>> treeClass) {
+    public NodeSelectorTest(Class<Tree<String, ? extends Node<String, ?>>> treeClass) {
         this.treeClass = treeClass;
     }
 
@@ -76,34 +76,34 @@ public final class NodeSelectorTest {
 
     @Test
     public void select() {
-        final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("A");
+        final TopDownTreeRootBuilder<String, ? extends Node<String, ?>> builder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ? extends Node<String, ?>> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
-        final Tree<String, Node<String>> tree = nodeApp0.build(treeClass);
+        final Tree<String, ? extends Node<String, ?>> tree = nodeApp0.build(treeClass);
 
         final NodeSelectorFactory selectorFactory = trees.nodeSelectors();
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("A");
         final NodeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
-        final Iterator<? extends Node<String>> nodeIterator0 = selector0.select(tree);
+        final Iterator<? extends Node<String, ?>> nodeIterator0 = selector0.select(tree);
         Assert.assertTrue(nodeIterator0.hasNext());
         Assert.assertEquals("A", nodeIterator0.next().getElement());
         Assert.assertFalse(nodeIterator0.hasNext());
 
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("B");
         final NodeSelector<String> selector1 = selectorFactory.newSelector(selector0, matcher1);
-        final Iterator<? extends Node<String>> nodeIterator1 = selector1.select(tree);
+        final Iterator<? extends Node<String, ?>> nodeIterator1 = selector1.select(tree);
         Assert.assertTrue(nodeIterator1.hasNext());
         Assert.assertEquals("B", nodeIterator1.next().getElement());
         Assert.assertFalse(nodeIterator1.hasNext());
 
         final NodeMatcher<String> matcher2 = new EqualityMatcher<>("C");
         final NodeSelector<String> selector2 = selectorFactory.newSelector(selector1, matcher2);
-        final Iterator<? extends Node<String>> nodeIterator2 = selector2.select(tree);
+        final Iterator<? extends Node<String, ?>> nodeIterator2 = selector2.select(tree);
         Assert.assertFalse(nodeIterator2.hasNext());
 
         final NodeSelector<String> selector3 = selectorFactory.newSelector(selector0, matcher2);
-        final Iterator<? extends Node<String>> nodeIterator3 = selector3.select(tree);
+        final Iterator<? extends Node<String, ?>> nodeIterator3 = selector3.select(tree);
         Assert.assertTrue(nodeIterator3.hasNext());
         Assert.assertEquals("C", nodeIterator3.next().getElement());
         Assert.assertFalse(nodeIterator3.hasNext());

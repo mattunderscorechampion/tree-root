@@ -42,7 +42,7 @@ public interface TreeIteratorFactory {
      * @param <T> The tree type
      * @return An {@link Iterator} that returns nodes in pre-order
      */
-    <E, N extends Node<E>, T extends Tree<E, ? extends N>> Iterator<N> preOrderIterator(T tree);
+    <E, N extends Node<E, N>, T extends Tree<E, N>> Iterator<N> preOrderIterator(T tree);
 
     /**
      * @param tree The tree to iterate over
@@ -51,7 +51,7 @@ public interface TreeIteratorFactory {
      * @param <T> The tree type
      * @return An {@link Iterator} that returns nodes in in-order
      */
-    <E, N extends Node<E>, T extends Tree<E, ? extends N>> Iterator<N> inOrderIterator(T tree);
+    <E, N extends Node<E, N>, T extends Tree<E, N>> Iterator<N> inOrderIterator(T tree);
 
     /**
      * @param tree The tree to iterate over
@@ -60,7 +60,7 @@ public interface TreeIteratorFactory {
      * @param <T> The tree type
      * @return An {@link Iterator} that returns nodes in post-order
      */
-    <E, N extends Node<E>, T extends Tree<E, ? extends N>> Iterator<N> postOrderIterator(T tree);
+    <E, N extends Node<E, N>, T extends Tree<E, N>> Iterator<N> postOrderIterator(T tree);
 
     /**
      * @param tree The tree to iterate over
@@ -69,7 +69,7 @@ public interface TreeIteratorFactory {
      * @param <T> The tree type
      * @return An {@link Iterator} that returns nodes in breadth first order
      */
-    <E, N extends Node<E>, T extends Tree<E, ? extends N>> Iterator<N> breadthFirstIterator(T tree);
+    <E, N extends Node<E, N>, T extends Tree<E, N>> Iterator<N> breadthFirstIterator(T tree);
 
     /**
      * @param tree The tree to iterate over
@@ -77,7 +77,7 @@ public interface TreeIteratorFactory {
      * @param <N> The node type
      * @return An {@link Iterator} that returns elements in pre-order
      */
-    <E, N extends Node<E>> Iterator<E> preOrderElementsIterator(Tree<E, N> tree);
+    <E, N extends Node<E, N>> Iterator<E> preOrderElementsIterator(Tree<E, N> tree);
 
     /**
      * @param tree The tree to iterate over
@@ -85,7 +85,7 @@ public interface TreeIteratorFactory {
      * @param <N> The node type
      * @return An {@link Iterator} that returns elements in in-order
      */
-    <E, N extends Node<E>> Iterator<E> inOrderElementsIterator(Tree<E, N> tree);
+    <E, N extends Node<E, N>> Iterator<E> inOrderElementsIterator(Tree<E, N> tree);
 
     /**
      * @param tree The tree to iterate over
@@ -93,7 +93,7 @@ public interface TreeIteratorFactory {
      * @param <N> The node type
      * @return An {@link Iterator} that returns elements in post-order
      */
-    <E, N extends Node<E>> Iterator<E> postOrderElementsIterator(Tree<E, N> tree);
+    <E, N extends Node<E, N>> Iterator<E> postOrderElementsIterator(Tree<E, N> tree);
 
     /**
      * @param tree The tree to iterate over
@@ -101,5 +101,5 @@ public interface TreeIteratorFactory {
      * @param <N> The node type
      * @return An {@link Iterator} that returns elements in breadth first order
      */
-    <E, N extends Node<E>> Iterator<E> breadthFirstElementsIterator(Tree<E, N> tree);
+    <E, N extends Node<E, N>> Iterator<E> breadthFirstElementsIterator(Tree<E, N> tree);
 }

@@ -35,8 +35,8 @@ public interface NodeMatcher<E> {
 
     /**
      * @param node The node to test
-     * @param <T> The type of the node
+     * @param <N> The type of the node
      * @return {@code true} if the node matches
      */
-    <T extends Node<E>> boolean matches(T node);
+    <N extends Node<? extends E, ? extends N>> boolean matches(N node);
 }

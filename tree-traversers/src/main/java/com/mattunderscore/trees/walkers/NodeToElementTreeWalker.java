@@ -32,7 +32,7 @@ import com.mattunderscore.trees.tree.Node;
  * A Node tree walker that unwraps the elements and passes them to a delegated element tree walker.
  * @author Matt Champion on 31/01/15
  */
-public final class NodeToElementTreeWalker<E, N extends Node<E>> implements TreeWalker<N> {
+public final class NodeToElementTreeWalker<E, N extends Node<E, N>> implements TreeWalker<N> {
       private final TreeWalker<E> delegateTreeWalker;
 
       public NodeToElementTreeWalker(TreeWalker<E> delegateTreeWalker) {

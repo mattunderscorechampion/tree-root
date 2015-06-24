@@ -34,7 +34,7 @@ import com.mattunderscore.trees.tree.Tree;
 /**
  * @author Matt Champion on 15/08/14.
  */
-final class TopDownTreeRootBuilderImpl<E> implements TopDownTreeRootBuilder<E> {
+final class TopDownTreeRootBuilderImpl<E, N extends Node<E, N>> implements TopDownTreeRootBuilder<E, N> {
     private final SPISupport helper;
 
     public TopDownTreeRootBuilderImpl(SPISupport helper) {
@@ -42,17 +42,17 @@ final class TopDownTreeRootBuilderImpl<E> implements TopDownTreeRootBuilder<E> {
     }
 
     @Override
-    public TopDownTreeBuilder<E> root(E e) {
+    public TopDownTreeBuilder<E, N> root(E e) {
         return new TopDownTreeBuilderImpl<>(helper, e);
     }
 
     @Override
-    public <T extends Tree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         return helper.createEmptyTree(klass);
     }
 
     @Override
-    public <T extends Tree<E, ? extends Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+    public <T extends Tree<E, N>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
         return build(type.getType());
     }
 }

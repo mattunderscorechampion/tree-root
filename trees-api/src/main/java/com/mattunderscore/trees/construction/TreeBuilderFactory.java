@@ -25,11 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.construction;
 
+import java.util.Comparator;
+
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
-
-import java.util.Comparator;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * Factory for tree builders.
@@ -41,14 +42,14 @@ public interface TreeBuilderFactory {
      * @param <E> The element type of the tree
      * @return Top down tree builder
      */
-    <E> TopDownTreeRootBuilder<E> topDownBuilder();
+    <E, N extends Node<E, N>> TopDownTreeRootBuilder<E, N> topDownBuilder();
 
     /**
      * Obtain a {@link BottomUpTreeBuilder}.
      * @param <E> The element type of the tree
      * @return Bottom up tree builder
      */
-    <E> BottomUpTreeBuilder<E> bottomUpBuilder();
+    <E, N extends Node<E, N>> BottomUpTreeBuilder<E, N> bottomUpBuilder();
 
     /**
      * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorting trees.
@@ -56,7 +57,7 @@ public interface TreeBuilderFactory {
      * @param <E> The element type of the tree
      * @return Sorting tree builder
      */
-    <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator);
+    <E, N extends Node<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder(Comparator<E> comparator);
 
     /**
      * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorting trees. Uses the
@@ -64,7 +65,7 @@ public interface TreeBuilderFactory {
      * @param <E> The element type of the tree
      * @return Sorting tree builder
      */
-    <E extends Comparable<E>> SortingTreeBuilder<E> sortingTreeBuilder();
+    <E extends Comparable<E>, N extends Node<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder();
 
     /**
      * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorted trees. The
@@ -74,7 +75,7 @@ public interface TreeBuilderFactory {
      * @param <E> The element type of the tree
      * @return Sorted tree builder
      */
-    <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm);
+    <E, N extends Node<E, N>> SortedTreeBuilder<E, N> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm);
 
     /**
      * Obtain an {@link com.mattunderscore.trees.organised.OrganisedTreeBuilder} that creates sorted trees. The
@@ -84,5 +85,5 @@ public interface TreeBuilderFactory {
      * @param <E> The element type of the tree
      * @return Sorted tree builder
      */
-    <E extends Comparable<E>> SortedTreeBuilder<E> sortedTreeBuilder(SortingAlgorithm algorithm);
+    <E extends Comparable<E>, N extends Node<E, N>> SortedTreeBuilder<E, N> sortedTreeBuilder(SortingAlgorithm algorithm);
 }

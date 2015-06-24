@@ -34,13 +34,13 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyTree}.
  * @author Matt Champion on 28/01/15.
  */
-public final class Converter<E> implements TreeConverter<E, PathCopyTree<E>> {
-    private final NodeConverter<E> converter = new NodeConverter<>();
+public final class Converter<E> implements TreeConverter<E, PathCopyNode<E>, PathCopyTree<E>> {
+    private final NodeConverter converter = new NodeConverter();
 
     @Override
-    public PathCopyTree<E> build(Tree<E, ? extends Node<E>> sourceTree) {
-        final Node<E> root = sourceTree.getRoot();
-        return converter.treeFromRootNode(root);
+    public <S extends Node<E, S>> PathCopyTree<E> build(Tree<E, S> sourceTree) {
+        final S root = sourceTree.getRoot();
+        return converter.treeFromRootNode((S)root);
     }
 
     @Override

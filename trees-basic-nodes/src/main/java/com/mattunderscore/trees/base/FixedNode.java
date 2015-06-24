@@ -31,7 +31,7 @@ import com.mattunderscore.trees.tree.Node;
  * Abstract implementation of fixed element node.
  * @author Matt Champion on 21/09/14.
  */
-public abstract class FixedNode<E> implements Node<E> {
+public abstract class FixedNode<E, N extends Node<E, ? extends N>> implements Node<E, N> {
     protected final E element;
 
     public FixedNode(E element) {

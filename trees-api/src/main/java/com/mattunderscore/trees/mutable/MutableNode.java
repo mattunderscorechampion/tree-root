@@ -25,9 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import java.util.Iterator;
-
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.NodeAppender;
 import com.mattunderscore.trees.tree.Node;
 
@@ -35,15 +32,11 @@ import com.mattunderscore.trees.tree.Node;
  * Represents a mutable node of a tree.
  * @author Matt Champion on 08/08/14.
  */
-public interface MutableNode<E> extends Node<E>, NodeAppender<E, MutableNode<E>>
-{
-    @Override
-    Iterator<? extends MutableNode<E>> childIterator();
-
+public interface MutableNode<E, N extends MutableNode<E, N>> extends Node<E, N>, NodeAppender<E, N> {
     /**
      * Remove the node if it is a child of the recipient
      * @param child the node to remove
      * @return {@code true} if the node was removed
      */
-    boolean removeChild(MutableNode<E> child);
+    boolean removeChild(N child);
 }

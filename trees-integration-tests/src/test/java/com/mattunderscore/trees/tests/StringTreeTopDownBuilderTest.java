@@ -54,9 +54,9 @@ import java.util.Iterator;
 @RunWith(Parameterized.class)
 public final class StringTreeTopDownBuilderTest {
     private static final Trees trees = new TreesImpl();
-    private final Class<? extends Tree<String, Node<String>>> treeClass;
+    private final Class treeClass;
 
-    public StringTreeTopDownBuilderTest(Class<? extends Tree<String, Node<String>>> treeClass) {
+    public StringTreeTopDownBuilderTest(Class<? extends Tree<String, ? extends Node<String, ?>>> treeClass) {
         this.treeClass = treeClass;
     }
 
@@ -74,30 +74,30 @@ public final class StringTreeTopDownBuilderTest {
 
     @Test
     public void build() {
-        final TopDownTreeRootBuilder<String> builder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> nodeApp0 = builder.root("a");
+        final TopDownTreeRootBuilder<String, ? extends Node<String, ?>> builder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ? extends Node<String, ?>> nodeApp0 = builder.root("a");
         final NodeAppender<String, ?> nodeApp1 = nodeApp0.addChild("b");
         nodeApp1.addChild("c");
         nodeApp0.addChild("d");
-        final Tree<String, Node<String>> tree = nodeApp0.build(treeClass);
+        final Tree<String, ? extends Node<String, ?>> tree = nodeApp0.build(treeClass);
 
-        final Node<String> root = tree.getRoot();
+        final Node<String, ?> root = tree.getRoot();
         Assert.assertEquals(String.class, root.getElementClass());
         Assert.assertEquals("a", root.getElement());
-        final Iterator<? extends Node<String>> iterator0 = root.childIterator();
+        final Iterator<? extends Node<String, ?>> iterator0 = root.childIterator();
         Assert.assertEquals(2, root.getNumberOfChildren());
         Assert.assertEquals("a", root.getElement());
         Assert.assertTrue(iterator0.hasNext());
-        final Node<String> bNode = iterator0.next();
+        final Node<String, ?> bNode = iterator0.next();
         Assert.assertTrue(iterator0.hasNext());
-        final Node<String> dNode = iterator0.next();
+        final Node<String, ?> dNode = iterator0.next();
         Assert.assertFalse(iterator0.hasNext());
         Assert.assertEquals("b", bNode.getElement());
         Assert.assertEquals("d", dNode.getElement());
         Assert.assertEquals(1, bNode.getNumberOfChildren());
-        final Iterator<? extends Node<String>> iterator1 = bNode.childIterator();
+        final Iterator<? extends Node<String, ?>> iterator1 = bNode.childIterator();
         Assert.assertTrue(iterator1.hasNext());
-        final Node<String> cNode = iterator1.next();
+        final Node<String, ?> cNode = iterator1.next();
         Assert.assertFalse(iterator1.hasNext());
         Assert.assertEquals("c", cNode.getElement());
     }

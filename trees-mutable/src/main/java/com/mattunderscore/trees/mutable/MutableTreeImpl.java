@@ -25,14 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
+import net.jcip.annotations.GuardedBy;
+
 import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
-import net.jcip.annotations.GuardedBy;
-
-import java.util.Arrays;
-import java.util.Iterator;
 
 /**
  * Initial attempt at thread safety is base on copy on mutation. When a child node is added or removed a shallow copy
@@ -43,7 +44,7 @@ import java.util.Iterator;
  * parent but seen first.</p>
  * @author Matt Champion on 15/07/14.
  */
-public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements MutableTree<E, MutableNode<E>>, MutableNode<E> {
+public final class MutableTreeImpl<E> extends AbstractSettableNode<E, ClosedMutableSettableNode<E>> implements MutableTree<E, ClosedMutableSettableNode<E>>, ClosedMutableSettableNode<E> {
     @GuardedBy("this")
     private SimpleCollection<MutableTreeImpl<E>> elementList;
 
@@ -80,7 +81,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
     }
 
     @Override
-    public boolean removeChild(MutableNode<E> child) {
+    public boolean removeChild(ClosedMutableSettableNode<E> child) {
         if (child == null) {
             return false;
         }
@@ -92,7 +93,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
             int j = 0;
             final Iterator<MutableTreeImpl<E>> iterator = oldList.structuralIterator();
             while (iterator.hasNext()) {
-                final MutableNode<E> currentNode = iterator.next();
+                final ClosedMutableSettableNode<E> currentNode = iterator.next();
                 if (child != currentNode) {
                     searchArray[j] = currentNode;
                     j++;
@@ -138,8 +139,8 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E> implements
      * @param <E> The element type
      * @return The type key
      */
-    public static <E> TypeKey<MutableTree<E, MutableNode<E>>> typeKey() {
-        return new TypeKey<MutableTree<E, MutableNode<E>>>() {};
+    public static <E> TypeKey<MutableTree<E, ClosedMutableSettableNode<E>>> typeKey() {
+        return new TypeKey<MutableTree<E, ClosedMutableSettableNode<E>>>() {};
     }
 
     @Override

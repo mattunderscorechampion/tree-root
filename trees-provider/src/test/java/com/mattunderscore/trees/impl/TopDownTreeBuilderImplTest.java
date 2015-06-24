@@ -27,6 +27,7 @@ package com.mattunderscore.trees.impl;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 
 import org.junit.Test;
 
@@ -40,7 +41,7 @@ public class TopDownTreeBuilderImplTest {
 
     @Test
     public void buildEmpty() {
-        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
+        final TopDownTreeRootBuilderImpl<String, ClosedMutableSettableStructuredNode<String>> builder = new TopDownTreeRootBuilderImpl<>(helper);
         final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
         assertNull(tree.getRoot());
         assertTrue(tree.isEmpty());
@@ -48,8 +49,8 @@ public class TopDownTreeBuilderImplTest {
 
     @Test
     public void buildLeaf() {
-        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("ROOT");
+        final TopDownTreeRootBuilderImpl<String, ClosedMutableSettableStructuredNode<String>> builder = new TopDownTreeRootBuilderImpl<>(helper);
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder0 = builder.root("ROOT");
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
         assertEquals("ROOT", tree.getRoot().getElement());
@@ -59,8 +60,8 @@ public class TopDownTreeBuilderImplTest {
 
     @Test
     public void buildSimple() {
-        final TopDownTreeRootBuilderImpl<String> builder = new TopDownTreeRootBuilderImpl<>(helper);
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String> builder0 = builder.root("ROOT");
+        final TopDownTreeRootBuilderImpl<String, ClosedMutableSettableStructuredNode<String>> builder = new TopDownTreeRootBuilderImpl<>(helper);
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder0 = builder.root("ROOT");
         builder0.addChild("a");
         builder0.addChild("b");
 

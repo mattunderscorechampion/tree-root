@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Node;
  * Abstract class for mutable nodes.
  * @author Matt Champion on 21/09/14.
  */
-public abstract class UnfixedNode<E> implements Node<E> {
+public abstract class UnfixedNode<E, N extends Node<E, ? extends N>> implements Node<E, N> {
     protected final AtomicReference<E> elementReference = new AtomicReference<>();
 
     public UnfixedNode(E element) {

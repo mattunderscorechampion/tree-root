@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Tree;
  * Base implementation of all tree builders.
  * @author Matt Champion on 07/08/14.
  */
-public interface BaseTreeBuilder<E, B extends Tree<E, ? extends Node<E>>> {
+public interface BaseTreeBuilder<E, N extends Node<E, N>, B extends Tree<E, N>> {
     /**
      * Create a new tree of the type provided.
      * @param klass The class of the tree to create

@@ -37,12 +37,12 @@ public interface TreeRestructurer extends SPIComponent {
      * @param newRoot sets a node as the new root
      * @return the previous root
      */
-    Node<?> setRoot(Node<?> newRoot);
+    Node<?, ?> setRoot(Node<?, ?> newRoot);
 
     /**
      * @param node the node to move
      * @param newParent the new parent of the node
      */
-    void moveNode(Node<?> node, Node<?> newParent);
+    void moveNode(Node<?, ?> node, Node<?, ?> newParent);
 
 }
