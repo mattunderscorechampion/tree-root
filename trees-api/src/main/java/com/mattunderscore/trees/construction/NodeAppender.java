@@ -28,12 +28,12 @@ package com.mattunderscore.trees.construction;
 /**
  * @author Matt Champion on 08/08/14.
  */
-public interface NodeAppender<E, T extends NodeAppender<E, T>> {
+public interface NodeAppender<E, N extends NodeAppender<E, N>> {
 
     /**
      * Add a child
      * @param e The element of the child to add
      * @return A node appender for the child
      */
-    T addChild(E e);
+    N addChild(E e);
 }

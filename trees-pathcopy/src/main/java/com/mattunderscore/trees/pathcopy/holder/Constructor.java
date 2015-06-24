@@ -38,15 +38,15 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyTree}.
  * @author Matt Champion on 28/01/15.
  */
-public final class Constructor<E> implements TreeConstructor<E, PathCopyTree<E>> {
+public final class Constructor<E> implements TreeConstructor<E, PathCopyNode<E>, PathCopyTree<E>> {
 
     @Override
     public PathCopyTree<E> build(E e, PathCopyTree<E>[] subtrees) {
         final PathCopyTree<E> tree = new PathCopyTree<>();
-        final MutableNode<E> root = tree.setRoot(e);
+        final PathCopyNode<E> root = tree.setRoot(e);
         for (PathCopyTree<E> subtree : subtrees) {
-            final Node<E> subRoot = subtree.getRoot();
-            final MutableNode<E> newSubRoot = root.addChild(subRoot.getElement());
+            final PathCopyNode<E> subRoot = subtree.getRoot();
+            final PathCopyNode<E> newSubRoot = root.addChild(subRoot.getElement());
             copyChildren(newSubRoot, subRoot);
         }
         return tree;
@@ -57,11 +57,11 @@ public final class Constructor<E> implements TreeConstructor<E, PathCopyTree<E>>
         return PathCopyTree.class;
     }
 
-    private void copyChildren(MutableNode<E> newParent, Node<E> parent) {
-        final Iterator<? extends Node<E>> iterator = parent.childIterator();
+    private void copyChildren(PathCopyNode<E> newParent, PathCopyNode<E> parent) {
+        final Iterator<? extends PathCopyNode<E>> iterator = parent.childIterator();
         while (iterator.hasNext()) {
-            final Node<E> child = iterator.next();
-            final MutableNode<E> newChild = newParent.addChild(child.getElement());
+            final PathCopyNode<E> child = iterator.next();
+            final PathCopyNode<E> newChild = newParent.addChild(child.getElement());
             copyChildren(newChild, child);
         }
     }

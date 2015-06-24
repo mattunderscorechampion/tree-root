@@ -25,17 +25,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.spi.KeyMapping;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.spi.EmptyTreeConstructor} for
- * {@link com.mattunderscore.trees.mutable.MutableTree}.
- * @author Matt Champion on 28/01/15.
+ * @author Matt Champion on 22/06/2015
  */
-public final class DefaultEmptyConstructor<E> extends AbstractEmptyConstructor<E> {
+public class MutableTreeImplKeyMapping implements KeyMapping<MutableTree> {
+    @Override
+    public Class<? extends MutableTree> getConcreteClass() {
+        return MutableTreeImpl.class;
+    }
 
     @Override
-    public Class<? extends Tree> forClass() {
+    public Class<MutableTree> forClass() {
         return MutableTree.class;
     }
 }

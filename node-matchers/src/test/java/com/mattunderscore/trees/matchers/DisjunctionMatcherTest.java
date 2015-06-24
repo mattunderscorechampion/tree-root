@@ -29,14 +29,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.matchers.AlwaysMatcher;
-import com.mattunderscore.trees.matchers.DisjunctionMatcher;
-import com.mattunderscore.trees.matchers.EqualityMatcher;
-import com.mattunderscore.trees.matchers.NeverMatcher;
-import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.tree.Node;
 import org.junit.Test;
+
+import com.mattunderscore.trees.base.ImmutableNode;
+import com.mattunderscore.trees.selection.NodeMatcher;
+import com.mattunderscore.trees.tree.ClosedNode;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * Unit tests for DisjunctionMatcher.
@@ -90,7 +88,7 @@ public final class DisjunctionMatcherTest {
 
     @Test
     public void matches() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
+        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>("a", new Object[0]) {};
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
@@ -100,7 +98,7 @@ public final class DisjunctionMatcherTest {
 
     @Test
     public void leftMatches() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
+        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>("a", new Object[0]) {};
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher1 = new NeverMatcher<>();
         final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
@@ -110,7 +108,7 @@ public final class DisjunctionMatcherTest {
 
     @Test
     public void rightMatches() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
+        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>("a", new Object[0]) {};
         final NodeMatcher<String> matcher0 = new NeverMatcher<>();
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("a");
         final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);
@@ -120,7 +118,7 @@ public final class DisjunctionMatcherTest {
 
     @Test
     public void neitherMatches() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
+        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>("a", new Object[0]) {};
         final NodeMatcher<String> matcher0 = new NeverMatcher<>();
         final NodeMatcher<String> matcher1 = new EqualityMatcher<>("b");
         final NodeMatcher<String> matcher = new DisjunctionMatcher<>(matcher0, matcher1);

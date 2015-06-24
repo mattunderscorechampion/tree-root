@@ -29,7 +29,7 @@ package com.mattunderscore.trees.tree;
  * Interface for objects that are aware of the trees they are associated with.
  * @author Matt Champion on 12/10/14.
  */
-public interface TreeAware<E, N extends Node<E>, T extends Tree<E, N>> {
+public interface TreeAware<E, N extends Node<E, N>, T extends Tree<E, N>> {
     /**
      * @return The tree.
      */

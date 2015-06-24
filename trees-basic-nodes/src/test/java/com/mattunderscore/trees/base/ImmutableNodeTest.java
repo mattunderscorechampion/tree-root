@@ -28,6 +28,7 @@ package com.mattunderscore.trees.base;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
@@ -40,7 +41,8 @@ import org.junit.Test;
 public final class ImmutableNodeTest {
     @Test
     public void test0() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
+        final Node<String, ClosedMutableSettableStructuredNode<String>> node =
+            new ImmutableNode<String, ClosedMutableSettableStructuredNode<String>>("a", new Object[0]) {};
         assertEquals("a", node.getElement());
         assertEquals(String.class, node.getElementClass());
         assertTrue(node.isLeaf());
@@ -48,7 +50,8 @@ public final class ImmutableNodeTest {
 
     @Test
     public void test1() {
-        final Node<String> node = new ImmutableNode<String>("a", new ImmutableNode[0]) {};
+        final Node<String, ClosedMutableSettableStructuredNode<String>> node =
+            new ImmutableNode<String, ClosedMutableSettableStructuredNode<String>>("a", new ImmutableNode[0]) {};
         assertEquals("a", node.getElement());
         assertEquals(String.class, node.getElementClass());
         assertTrue(node.isLeaf());
@@ -56,9 +59,10 @@ public final class ImmutableNodeTest {
 
     @Test
     public void test2() {
-        final Node<String> node = new ImmutableNode<String>(
-            "a",
-            DuplicateOnWriteSimpleCollection.<ImmutableNode<String>>create()) {};
+        final Node<String, ClosedMutableSettableStructuredNode<String>> node =
+            new ImmutableNode<String, ClosedMutableSettableStructuredNode<String>>(
+                "a",
+                DuplicateOnWriteSimpleCollection.create()) {};
         assertEquals("a", node.getElement());
         assertEquals(String.class, node.getElementClass());
         assertTrue(node.isLeaf());

@@ -29,7 +29,7 @@ package com.mattunderscore.trees.tree;
  * Represents a tree.
  * @author Matt Champion on 08/08/14.
  */
-public interface Tree<E, N extends Node<E>> {
+public interface Tree<E, N extends Node<E, N>> {
 
     /**
      * @return the root node of the tree or null if the tree is empty

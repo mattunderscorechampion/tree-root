@@ -30,6 +30,7 @@ import java.util.Iterator;
 import net.jcip.annotations.NotThreadSafe;
 
 import com.mattunderscore.trees.base.FixedNode;
+import com.mattunderscore.trees.binary.ClosedMutableBinaryTreeNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
@@ -40,10 +41,11 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
  * @author Matt Champion on 06/09/14.
  */
 @NotThreadSafe
-public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements MutableBinaryTreeNode<E> {
+public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, ClosedMutableBinaryTreeNode<E>> implements ClosedMutableBinaryTreeNode<E> {
     private MutableBinaryTreeNodeImpl<E> left;
     private MutableBinaryTreeNodeImpl<E> right;
-    private final MutableBinaryTreeNodeImpl[] children = new MutableBinaryTreeNodeImpl[2];
+    @SuppressWarnings("unchecked")
+    private final MutableBinaryTreeNodeImpl<E>[] children = new MutableBinaryTreeNodeImpl[2];
 
     public MutableBinaryTreeNodeImpl(E element) {
         super(element);
@@ -58,12 +60,12 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
     }
 
     @Override
-    public MutableBinaryTreeNodeImpl<E> setLeft(E element) {
+    public ClosedMutableBinaryTreeNode<E> setLeft(E element) {
         return setInternalLeft(new MutableBinaryTreeNodeImpl<>(element));
     }
 
     @Override
-    public MutableBinaryTreeNodeImpl<E> setRight(E element) {
+    public ClosedMutableBinaryTreeNode<E> setRight(E element) {
         return setInternalRight(new MutableBinaryTreeNodeImpl<>(element));
     }
 
@@ -80,12 +82,12 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
     }
 
     @Override
-    public synchronized MutableBinaryTreeNodeImpl<E> getLeft() {
+    public synchronized ClosedMutableBinaryTreeNode<E> getLeft() {
         return left;
     }
 
     @Override
-    public synchronized MutableBinaryTreeNodeImpl<E> getRight() {
+    public synchronized ClosedMutableBinaryTreeNode<E> getRight() {
         return right;
     }
 
@@ -111,15 +113,15 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
             return new CastingArrayIterator<>(children);
         }
         else if (children[0] != null) {
-            return new SingletonIterator<>((MutableBinaryTreeNodeImpl<E>)children[0]);
+            return new SingletonIterator<>(children[0]);
         }
         else {
-            return new SingletonIterator<>((MutableBinaryTreeNodeImpl<E>)children[1]);
+            return new SingletonIterator<>(children[1]);
         }
     }
 
     @Override
-    public Iterator<? extends MutableBinaryTreeNode<E>> childStructuralIterator() {
+    public Iterator<? extends MutableBinaryTreeNodeImpl<E>> childStructuralIterator() {
         return new CastingArrayIterator<>(children);
     }
 
@@ -129,7 +131,7 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E> implements 
             throw new IndexOutOfBoundsException();
         }
         else {
-            return (MutableBinaryTreeNodeImpl<E>)children[nChild];
+            return children[nChild];
         }
     }
 

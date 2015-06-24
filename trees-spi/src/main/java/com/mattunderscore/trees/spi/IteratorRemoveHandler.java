@@ -32,7 +32,7 @@ import com.mattunderscore.trees.tree.Tree;
  * Handle the removal of a node through an iterator.
  * @author Matt Champion on 15/09/14.
  */
-public interface IteratorRemoveHandler<E, N extends Node<E>, T extends Tree<E, ? extends N>> extends SPIComponent {
+public interface IteratorRemoveHandler<E, N extends Node<E, N>, T extends Tree<E, N>> extends SPIComponent {
     boolean isSupported();
 
     void remove(T tree, N node);

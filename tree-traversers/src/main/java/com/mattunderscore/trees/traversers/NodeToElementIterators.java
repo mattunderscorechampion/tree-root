@@ -34,9 +34,9 @@ import java.util.Iterator;
  * An element iterator that delegates to a Node iterator and unwraps the return to an element.
  * @author Matt Champion on 10/09/14.
  */
-public final class NodeToElementIterators<E, N extends Node<E>> extends ConvertingIterator<E, N> {
+public final class NodeToElementIterators<E, N extends Node<E, N>> extends ConvertingIterator<E, N> {
 
-    public NodeToElementIterators(Iterator<N> delegatedIterator) {
+    public NodeToElementIterators(Iterator<? extends N> delegatedIterator) {
         super(delegatedIterator);
     }
 
@@ -44,5 +44,4 @@ public final class NodeToElementIterators<E, N extends Node<E>> extends Converti
     protected E convert(N n) {
         return n.getElement();
     }
-
 }

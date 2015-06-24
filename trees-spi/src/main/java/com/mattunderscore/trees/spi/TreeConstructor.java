@@ -32,7 +32,7 @@ import com.mattunderscore.trees.tree.Tree;
  * Used to create trees from the bottom up.
  * @author Matt Champion on 06/08/14.
  */
-public interface TreeConstructor<E, T extends Tree<E, ? extends Node<E>>> extends TreeKeyedSPIComponent {
+public interface TreeConstructor<E, N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>> extends TreeKeyedSPIComponent {
 
     T build(E e, T[] subtrees);
 

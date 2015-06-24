@@ -32,13 +32,13 @@ import com.mattunderscore.trees.tree.Tree;
  * Builder used to create the an empty tree or a non-empty tree.
  * @author Matt Champion on 07/08/14.
  */
-public interface BottomUpTreeBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? extends Node<E>>> {
+public interface BottomUpTreeBuilder<E, N extends Node<E, N>> extends BaseTreeBuilder<E, N, Tree<E, N>> {
 
     /**
      * @param e the root node
      * @return a new builder that creates a tree containing a single node
      */
-    BottomUpTreeBuilder<E> create(E e);
+    BottomUpTreeBuilder<E, N> create(E e);
 
     /**
      * @param e the root node
@@ -47,5 +47,5 @@ public interface BottomUpTreeBuilder<E> extends BaseTreeBuilder<E, Tree<E, ? ext
      * builders as children
      */
     @SuppressWarnings("unchecked")
-    BottomUpTreeBuilder<E> create(E e, BottomUpTreeBuilder<E>... builders);
+    BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N>... builders);
 }

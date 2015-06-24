@@ -36,7 +36,7 @@ import java.util.Stack;
 /**
  * @author Matt Champion on 03/09/14.
  */
-public final class PostOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
+public final class PostOrderIterator<E , N extends Node<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private final Stack<State<E, N>> parents = new Stack<>();
     private N current;
 
@@ -76,13 +76,13 @@ public final class PostOrderIterator<E , N extends Node<E>, T extends Tree<E, ? 
         throw new NoSuchElementException();
     }
 
-    private static final class State<E, N extends Node<E>> {
+    private static final class State<E, N extends Node<E, N>> {
         private final N node;
-        private final Iterator<N> iterator;
+        private final Iterator<? extends N> iterator;
 
         public State(N node) {
             this.node = node;
-            this.iterator = (Iterator<N>)node.childIterator();
+            this.iterator = node.childIterator();
         }
     }
 }

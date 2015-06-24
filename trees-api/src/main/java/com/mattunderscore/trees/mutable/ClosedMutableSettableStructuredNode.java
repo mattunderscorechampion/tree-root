@@ -25,17 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.tree.Tree;
-
 /**
- * Implementation of {@link com.mattunderscore.trees.spi.TreeConverter} for
- * {@link com.mattunderscore.trees.mutable.MutableTree}.
- * @author Matt Champion on 28/01/15.
+ * @author Matt Champion on 13/06/2015
  */
-public final class DefaultConverter<E> extends AbstractConverter<E> {
-
-    @Override
-    public Class<? extends Tree> forClass() {
-        return MutableTree.class;
-    }
+public interface ClosedMutableSettableStructuredNode<E> extends MutableNode<E, ClosedMutableSettableStructuredNode<E>>, MutableStructuralNode<E, ClosedMutableSettableStructuredNode<E>>, SettableNode<E, ClosedMutableSettableStructuredNode<E>> {
 }

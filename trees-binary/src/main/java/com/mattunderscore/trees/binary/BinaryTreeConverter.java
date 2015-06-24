@@ -34,23 +34,23 @@ import com.mattunderscore.trees.tree.Tree;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTree<E, BinaryTreeNode<E>>> {
+public final class BinaryTreeConverter<E> implements TreeConverter<E, ClosedBinaryTreeNode<E>, BinaryTree<E, ClosedBinaryTreeNode<E>>> {
     @Override
-    public BinaryTree<E, BinaryTreeNode<E>> build(Tree<E, ? extends Node<E>> sourceTree) {
-        final Node<E> root = sourceTree.getRoot();
-        return new BinaryTreeWrapper<E, BinaryTreeNode<E>>(duplicate(root));
+    public <S extends Node<E, S>> BinaryTree<E, ClosedBinaryTreeNode<E>> build(Tree<E, S> sourceTree) {
+        final S root = sourceTree.getRoot();
+        return new BinaryTreeWrapper<>(duplicate(root));
     }
 
     @Override
     public Class<? extends Tree> forClass() {
-        return BinaryTree.class;
+        return BinaryTreeWrapper.class;
     }
 
-    private BinaryTreeNodeImpl<E> duplicate(Node<E> sourceChild) {
-        final Iterator<? extends Node<E>> children = sourceChild.childIterator();
+    private <S extends Node<E, S>> BinaryTreeNodeImpl<E> duplicate(S sourceChild) {
+        final Iterator<? extends S> children = sourceChild.childIterator();
         if (children.hasNext()) {
-            final Node<E> left = children.next();
-            Node<E> right = null;
+            final S left = children.next();
+            S right = null;
             if (children.hasNext()) {
                 right = children.next();
             }

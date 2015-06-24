@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import java.util.Iterator;
+
+import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -32,7 +36,26 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class Converter<E> extends AbstractConverter<E> {
+public final class Converter<E> implements TreeConverter<E, ClosedMutableSettableNode<E>, MutableTreeImpl<E>> {
+
+    @Override
+    public final <S extends Node<E, S>> MutableTreeImpl<E> build(Tree<E, S> sourceTree) {
+        final S root = sourceTree.getRoot();
+        final MutableTreeImpl<E> newTree = new MutableTreeImpl<>(root.getElement());
+        final Iterator<? extends S> iterator = root.childIterator();
+        while (iterator.hasNext()) {
+            duplicate(newTree, iterator.next());
+        }
+        return newTree;
+    }
+
+    private <S extends Node<E, S>> void duplicate(MutableTreeImpl<E> newParent, S sourceChild) {
+        final MutableTreeImpl<E> newChild = newParent.addChild(sourceChild.getElement());
+        final Iterator<? extends S> iterator = sourceChild.childIterator();
+        while (iterator.hasNext()) {
+            duplicate(newChild, iterator.next());
+        }
+    }
 
     @Override
     public Class<? extends Tree> forClass() {

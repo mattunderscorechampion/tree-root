@@ -33,11 +33,11 @@ import com.mattunderscore.trees.organised.MutableOrganisedTree;
  * @param <E> the type of elements in the tree.
  * @author Matt Champion on 30/08/14.
  */
-public interface BalancingTree<E> extends MutableOrganisedTree<E, Node<E>> {
+public interface BalancingTree<E, N extends Node<E, N>> extends MutableOrganisedTree<E, N> {
     /**
      * Add an element to the tree at the next balanced position
      * @param element the element to add
      * @return the balancing tree
      */
-    BalancingTree<E> addElement(E element);
+    BalancingTree<E, N> addElement(E element);
 }

@@ -33,23 +33,14 @@ import com.mattunderscore.trees.tree.StructuralNode;
  * A binary tree node.
  * @author Matt Champion on 06/09/14.
  */
-public interface BinaryTreeNode<E> extends StructuralNode<E> {
+public interface BinaryTreeNode<E, N extends BinaryTreeNode<E, N>> extends StructuralNode<E, N> {
     /**
      * @return The left subtree
      */
-    BinaryTreeNode<E> getLeft();
+    N getLeft();
 
     /**
      * @return The right subtree
      */
-    BinaryTreeNode<E> getRight();
-
-    @Override
-    Iterator<? extends BinaryTreeNode<E>> childIterator();
-
-    @Override
-    Iterator<? extends BinaryTreeNode<E>> childStructuralIterator();
-
-    @Override
-    BinaryTreeNode<E> getChild(int nChild);
+    N getRight();
 }

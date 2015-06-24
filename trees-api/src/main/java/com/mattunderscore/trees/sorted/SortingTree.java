@@ -32,5 +32,5 @@ import com.mattunderscore.trees.tree.Node;
  * A mutable, organised tree that sorts the elements passed to it.
  * @author Matt Champion on 06/09/14.
  */
-public interface SortingTree<E, N extends Node<E>> extends MutableOrganisedTree<E, N> {
+public interface SortingTree<E, N extends Node<E, N>> extends MutableOrganisedTree<E, N> {
 }

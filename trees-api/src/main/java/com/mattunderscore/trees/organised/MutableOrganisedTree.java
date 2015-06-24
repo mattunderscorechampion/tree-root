@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Tree;
  * of elements. Used to created sorted or balancing trees.
  * @author Matt Champion on 06/09/14.
  */
-public interface MutableOrganisedTree<E, N extends Node<E>> extends Tree<E, N> {
+public interface MutableOrganisedTree<E, N extends Node<E, N>> extends Tree<E, N> {
     /**
      * Add an element to the tree at the next position
      * @param element the element to add

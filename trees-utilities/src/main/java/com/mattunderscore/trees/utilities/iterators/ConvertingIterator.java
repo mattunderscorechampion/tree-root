@@ -32,9 +32,9 @@ import java.util.Iterator;
  * @author Matt Champion on 13/09/14.
  */
 public abstract class ConvertingIterator<E, T> implements Iterator<E> {
-    private final Iterator<T> delegate;
+    private final Iterator<? extends T> delegate;
 
-    protected ConvertingIterator(Iterator<T> delegate) {
+    protected ConvertingIterator(Iterator<? extends T> delegate) {
         this.delegate = delegate;
     }
 

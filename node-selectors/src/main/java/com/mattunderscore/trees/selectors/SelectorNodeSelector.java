@@ -46,8 +46,9 @@ public final class SelectorNodeSelector<E> implements NodeSelector<E> {
     }
 
     @Override
-    public <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) {
-        final Iterator<N> startingPoints = baseSelector.select(tree);
-        return new NodeSelectionIterator<>(new NodeChildrenIterator<>(startingPoints, new AlwaysMatcher<>()), extensionSelector);
+    public <N extends Node<? extends E, ? extends N>> Iterator<? extends N> select(Tree<? extends E, ? extends N> tree) {
+        final Iterator<? extends N> startingPoints = baseSelector.select(tree);
+        final Iterator<? extends N> children = new NodeChildrenIterator<>(startingPoints, new AlwaysMatcher<>());
+        return new NodeSelectionIterator<>(children, extensionSelector);
     }
 }

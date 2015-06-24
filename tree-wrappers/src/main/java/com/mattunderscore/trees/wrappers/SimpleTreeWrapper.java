@@ -32,7 +32,7 @@ import com.mattunderscore.trees.tree.Node;
  * be turned into a tree when it is required for the API. Allows any type of node to be wrapped.
  * @author Matt Champion on 28/09/14.
  */
-public final class SimpleTreeWrapper<E, N extends Node<E>> extends AbstractTreeWrapper<E, N> {
+public final class SimpleTreeWrapper<E, N extends Node<? extends E, ? extends N>> extends AbstractTreeWrapper<E, N> {
     public SimpleTreeWrapper(N root) {
         super(root);
     }

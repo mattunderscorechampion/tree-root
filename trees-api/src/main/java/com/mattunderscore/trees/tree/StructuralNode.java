@@ -31,21 +31,18 @@ import java.util.Iterator;
  * Node that has children in specific places.
  * @author Matt Champion on 31/01/15
  */
-public interface StructuralNode<E> extends Node<E> {
-    @Override
-    Iterator<? extends StructuralNode<E>> childIterator();
-
+public interface StructuralNode<E, N extends StructuralNode<E, N>> extends Node<E, N> {
     /**
      * An iterator over the structure of the children. If there is an empty place where an element
      * might be but is not then the iterator will return null.
      * @return Structural iterator
      */
-    Iterator<? extends StructuralNode<E>> childStructuralIterator();
+    Iterator<? extends N> childStructuralIterator();
 
     /**
      * Get the nth child node.
      * @param nChild The nth value
      * @return The node
      */
-    StructuralNode<E> getChild(int nChild);
+    N getChild(int nChild);
 }

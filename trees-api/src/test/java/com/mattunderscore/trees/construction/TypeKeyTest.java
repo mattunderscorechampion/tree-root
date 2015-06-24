@@ -29,10 +29,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import com.mattunderscore.trees.tree.ClosedNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Unit tests for TypeKey.
@@ -42,7 +43,7 @@ public final class TypeKeyTest {
 
     @Test
     public void type0() {
-        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
+        final TypeKey<Tree<String, ClosedNode<String>>> key0 = new TypeKey<Tree<String, ClosedNode<String>>>() { };
 
         assertEquals(Tree.class, key0.getType());
     }
@@ -63,7 +64,7 @@ public final class TypeKeyTest {
 
     @Test
     public void testToString() {
-        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
+        final TypeKey<Tree<String, ClosedNode<String>>> key0 = new TypeKey<Tree<String, ClosedNode<String>>>() { };
 
         assertTrue(key0.toString().startsWith("TypeKey"));
         assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
@@ -71,8 +72,8 @@ public final class TypeKeyTest {
 
     @Test
     public void equals0() {
-        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
-        final TypeKey<Tree<String, Node<String>>> key1 = new TypeKey<Tree<String, Node<String>>>() { };
+        final TypeKey<Tree<String, ClosedNode<String>>> key0 = new TypeKey<Tree<String, ClosedNode<String>>>() { };
+        final TypeKey<Tree<String, ClosedNode<String>>> key1 = new TypeKey<Tree<String, ClosedNode<String>>>() { };
 
         assertTrue(key0.equals(key1));
         assertTrue(key1.equals(key0));
@@ -81,7 +82,7 @@ public final class TypeKeyTest {
 
     @Test
     public void equals1() {
-        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
+        final TypeKey<Tree<String, ClosedNode<String>>> key0 = new TypeKey<Tree<String, ClosedNode<String>>>() { };
 
         assertTrue(key0.equals(key0));
         assertEquals(key0.hashCode(), key0.hashCode());
@@ -90,30 +91,30 @@ public final class TypeKeyTest {
     @Ignore("The types of the parameters of the tree are erased")
     @Test
     public void notEquals0() {
-        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
-        final TypeKey<Tree<Integer, Node<Integer>>> key1 = new TypeKey<Tree<Integer, Node<Integer>>>() { };
+        final TypeKey<Tree<String, ClosedNode<String>>> key0 = new TypeKey<Tree<String, ClosedNode<String>>>() { };
+        final TypeKey<Tree<Integer, ClosedNode<Integer>>> key1 = new TypeKey<Tree<Integer, ClosedNode<Integer>>>() { };
 
         assertFalse(key0.equals(key1));
     }
 
     @Test
     public void notEquals1() {
-        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
+        final TypeKey<Tree<String, ClosedNode<String>>> key0 = new TypeKey<Tree<String, ClosedNode<String>>>() { };
 
         assertFalse(key0.equals(null));
     }
 
     @Test
     public void notEquals2() {
-        final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
+        final TypeKey<Tree<String, ClosedNode<String>>> key0 = new TypeKey<Tree<String, ClosedNode<String>>>() { };
 
         assertFalse(key0.equals(new Object()));
     }
 
-    public static final class TestTree implements Tree<String, Node<String>> {
+    public static final class TestTree implements Tree<String, ClosedNode<String>> {
 
         @Override
-        public Node<String> getRoot() {
+        public ClosedNode<String> getRoot() {
             return null;
         }
 

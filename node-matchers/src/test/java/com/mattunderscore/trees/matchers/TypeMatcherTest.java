@@ -29,11 +29,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.matchers.TypeMatcher;
-import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.tree.Node;
 import org.junit.Test;
+
+import com.mattunderscore.trees.base.ImmutableNode;
+import com.mattunderscore.trees.selection.NodeMatcher;
+import com.mattunderscore.trees.tree.ClosedNode;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * Unit tests for TestMatcher.
@@ -43,22 +44,22 @@ public final class TypeMatcherTest {
 
     @Test
     public void testMatches() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
-        final NodeMatcher matcher = new TypeMatcher(String.class);
+        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>("a", new Object[0]) {};
+        final TypeMatcher matcher = new TypeMatcher(String.class);
         assertTrue(matcher.matches(node));
     }
 
     @Test
     public void testNotMatches() {
-        final Node<String> node = new ImmutableNode<String>("a", new Object[0]) {};
-        final NodeMatcher matcher = new TypeMatcher(Integer.class);
+        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>("a", new Object[0]) {};
+        final TypeMatcher matcher = new TypeMatcher(Integer.class);
         assertFalse(matcher.matches(node));
     }
 
     @Test
     public void testEquals() {
-        final NodeMatcher matcher0 = new TypeMatcher(String.class);
-        final NodeMatcher matcher1 = new TypeMatcher(String.class);
+        final TypeMatcher matcher0 = new TypeMatcher(String.class);
+        final TypeMatcher matcher1 = new TypeMatcher(String.class);
 
         assertTrue(matcher0.equals(matcher1));
         assertTrue(matcher1.equals(matcher0));
@@ -67,22 +68,22 @@ public final class TypeMatcherTest {
 
     @Test
     public void testNotEquals0() {
-        final NodeMatcher matcher0 = new TypeMatcher(String.class);
-        final NodeMatcher matcher1 = new TypeMatcher(Integer.class);
+        final TypeMatcher matcher0 = new TypeMatcher(String.class);
+        final TypeMatcher matcher1 = new TypeMatcher(Integer.class);
 
         assertFalse(matcher0.equals(matcher1));
     }
 
     @Test
     public void testNotEquals1() {
-        final NodeMatcher matcher0 = new TypeMatcher(String.class);
+        final TypeMatcher matcher0 = new TypeMatcher(String.class);
 
         assertFalse(matcher0.equals(null));
     }
 
     @Test
     public void testNotEquals2() {
-        final NodeMatcher matcher0 = new TypeMatcher(String.class);
+        final TypeMatcher matcher0 = new TypeMatcher(String.class);
 
         assertFalse(matcher0.equals(new Object()));
     }

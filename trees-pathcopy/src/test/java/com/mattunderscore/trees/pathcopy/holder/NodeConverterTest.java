@@ -47,23 +47,23 @@ public final class NodeConverterTest {
 
       @Test
       public void convertToSelf() {
-            final BottomUpTreeBuilder<Object> builder = trees.treeBuilders().bottomUpBuilder();
+            final BottomUpTreeBuilder<String, PathCopyNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
             final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.class);
 
-            final NodeConverter<String> converter = new NodeConverter<>();
+            final NodeConverter<String, PathCopyNode<String>> converter = new NodeConverter<>();
 
             final PathCopyTree<String> convertedTree =
                 converter.treeFromRootNode(tree.getRoot());
 
-            final MutableNode<String> convertedRoot = convertedTree.getRoot();
+            final PathCopyNode<String> convertedRoot = convertedTree.getRoot();
             assertEquals(2, convertedRoot.getNumberOfChildren());
-            final Iterator<? extends MutableNode<String>> iterator = convertedRoot.childIterator();
+            final Iterator<? extends PathCopyNode<String>> iterator = convertedRoot.childIterator();
             assertTrue(iterator.hasNext());
-            final MutableNode<String> child0 = iterator.next();
+            final PathCopyNode<String> child0 = iterator.next();
             assertEquals("b", child0.getElement());
 
             assertTrue(iterator.hasNext());
-            final MutableNode<String> child1 = iterator.next();
+            final PathCopyNode<String> child1 = iterator.next();
             assertEquals("c", child1.getElement());
             assertFalse(iterator.hasNext());
       }

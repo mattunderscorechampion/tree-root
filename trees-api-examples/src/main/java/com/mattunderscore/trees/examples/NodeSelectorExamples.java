@@ -25,7 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
+import com.mattunderscore.trees.mutable.ClosedMutableNode;
 import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.Tree;
@@ -36,15 +38,15 @@ import java.util.Iterator;
  * @author Matt Champion on 08/08/14.
  */
 public final class NodeSelectorExamples {
-    public void selectorExample(NodeSelector<String> selector, Tree<String, Node<String>> tree) {
-        final Iterator<Node<String>> iterator = selector.select(tree);
+    public void selectorExample(NodeSelector<String> selector, Tree<String, ClosedNode<String>> tree) {
+        final Iterator<? extends ClosedNode<String>> iterator = selector.select(tree);
         while (iterator.hasNext()) {
-            final Node<String> node = iterator.next();
+            final ClosedNode<String> node = iterator.next();
             System.out.println(node.getElement());
         }
     }
 
-    public void selectorExampleOnMutableTree(NodeSelector<String> selector, Tree<String, MutableNode<String>> tree) {
-        final Iterator<MutableNode<String>> iterator = selector.select(tree);
+    public void selectorExampleOnMutableTree(NodeSelector<String> selector, Tree<String, ClosedMutableNode<String>> tree) {
+        final Iterator<? extends ClosedMutableNode<String>> iterator = selector.select(tree);
     }
 }

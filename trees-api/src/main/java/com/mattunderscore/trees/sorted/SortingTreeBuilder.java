@@ -32,5 +32,5 @@ import com.mattunderscore.trees.tree.Node;
  * Builder used to create sorting trees.
  * @author Matt Champion on 07/09/14.
  */
-public interface SortingTreeBuilder<E> extends OrganisedTreeBuilder<E, SortingTree<E, ? extends Node<E>>> {
+public interface SortingTreeBuilder<E, N extends Node<E, N>> extends OrganisedTreeBuilder<E, N, SortingTree<E, N>> {
 }

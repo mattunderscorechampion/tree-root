@@ -37,7 +37,7 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 31/01/15
  */
 public final class PreOrderTreeWalkerDriver {
-      public <E, N extends Node<E>, T extends Tree<E, N>> void accept(T tree, TreeWalker<N> walker) {
+      public <E, N extends Node<E, N>> void accept(Tree<E, N> tree, TreeWalker<N> walker) {
             walker.onStarted();
             if (tree.isEmpty()) {
                   walker.onCompleted();
@@ -49,13 +49,13 @@ public final class PreOrderTreeWalkerDriver {
             }
       }
 
-      private <E, N extends Node<E>, T extends Tree<E, N>> void accept(N node, TreeWalker<N> walker) {
+      private <E, N extends Node<E, N>> void accept(N node, TreeWalker<N> walker) {
             walker.onNode(node);
-            final Iterator<? extends Node<E>> iterator = node.childIterator();
+            final Iterator<? extends N> iterator = node.childIterator();
             if (iterator.hasNext()) {
                   walker.onNodeChildrenStarted(node);
                   while (iterator.hasNext()) {
-                        final N child = (N) iterator.next();
+                        final N child = iterator.next();
                         accept(child, walker);
 
                         if (iterator.hasNext()) {

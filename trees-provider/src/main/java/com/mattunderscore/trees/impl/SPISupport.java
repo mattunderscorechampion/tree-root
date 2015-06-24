@@ -25,12 +25,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.spi.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ServiceLoader;
 
-import java.util.*;
+import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.spi.DefaultRemovalHandler;
+import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
+import com.mattunderscore.trees.spi.KeyMapping;
+import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.spi.SPIComponent;
+import com.mattunderscore.trees.spi.TreeConstructor;
+import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * SPI support class. Loads service implementations to provide extensibility and allows access to the correct
@@ -44,8 +55,12 @@ public final class SPISupport {
     private final Map<Class<?>, NodeToTreeConverter> converters;
     private final Map<Class<?>, EmptySortedTreeConstructor> sortedEmptyConverters;
     private final Map<Class<?>, IteratorRemoveHandler> iteratorRemoveHandlers;
+    private final Map<Class<?>, KeyMapping> keyMappings;
 
     public SPISupport() {
+        keyMappings = new HashMap<>();
+        populateLookupMap(keyMappings, KeyMapping.class);
+
         treeConverters = new HashMap<>();
         populateLookupMap(treeConverters, TreeConverter.class);
 
@@ -73,9 +88,9 @@ public final class SPISupport {
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, T extends Tree<E, ? extends Node<E>>> T createEmptyTree(Class<T> klass) throws OperationNotSupportedForType {
-        final EmptyTreeConstructor<E, T> constructor =
-                (EmptyTreeConstructor<E, T>)performLookup(emptyConstructors, EmptyTreeConstructor.class, klass);
+    @SuppressWarnings("unchecked")
+    public <E, N extends Node<E, N>, T extends Tree<E, N>> T createEmptyTree(Class<T> klass) throws OperationNotSupportedForType {
+        final EmptyTreeConstructor<E, N, T> constructor = performLookup(emptyConstructors, EmptyTreeConstructor.class, klass);
         return constructor.build();
     }
 
@@ -87,9 +102,9 @@ public final class SPISupport {
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, T extends Tree<E, ? extends Node<E>>> T createEmptyTree(Class<T> klass, Comparator<E> comparator) throws OperationNotSupportedForType {
-        final EmptySortedTreeConstructor<E, T> constructor =
-                (EmptySortedTreeConstructor<E, T>)performLookup(sortedEmptyConverters, EmptySortedTreeConstructor.class, klass);
+    @SuppressWarnings("unchecked")
+    public <E, N extends Node<E, N>, T extends Tree<E, N>> T createEmptyTree(Class<T> klass, Comparator<E> comparator) throws OperationNotSupportedForType {
+        final EmptySortedTreeConstructor<E, N, T> constructor = performLookup(sortedEmptyConverters, EmptySortedTreeConstructor.class, klass);
         return constructor.build(comparator);
     }
 
@@ -103,9 +118,9 @@ public final class SPISupport {
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, T extends Tree<E, ? extends Node<E>>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
-        final TreeConstructor<E, T> constructor =
-                (TreeConstructor<E, T>)performLookup(treeConstructors, TreeConstructor.class, klass);
+    @SuppressWarnings("unchecked")
+    public <E, N extends Node<E, N>, T extends Tree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
+        final TreeConstructor<E, N, T> constructor = performLookup(treeConstructors, TreeConstructor.class, klass);
         return constructor.build(e, subtrees);
     }
 
@@ -118,9 +133,9 @@ public final class SPISupport {
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, T extends Tree<E, ? extends Node<E>>> T convertTree(Class<T> klass, Tree<E, ? extends Node<E>> sourceTree) throws OperationNotSupportedForType {
-        final TreeConverter<E, T> converter =
-                (TreeConverter<E, T>)performLookup(treeConverters, TreeConverter.class, klass);
+    @SuppressWarnings("unchecked")
+    public <E, N extends Node<E, N>, S extends Node<E, S>, T extends Tree<E, N>> T convertTree(Class<T> klass, Tree<E, S> sourceTree) throws OperationNotSupportedForType {
+        final TreeConverter<E, N, T> converter = performLookup(treeConverters, TreeConverter.class, klass);
         return converter.build(sourceTree);
     }
 
@@ -133,14 +148,15 @@ public final class SPISupport {
      * @return
      * @throws OperationNotSupportedForType
      */
-    public <E, N extends Node<E>, T extends Tree<E, N>, S extends Node<E>> T nodeToTree(S node) throws OperationNotSupportedForType {
+    @SuppressWarnings("unchecked")
+    public <E, N extends Node<E,? extends N>, T extends Tree<E, ? extends N>, S extends Node<E, ? extends S>> T nodeToTree(S node) throws OperationNotSupportedForType {
         final Class<? extends Node> klass = node.getClass();
-        final NodeToTreeConverter<E, N, T, S> converter =
-                (NodeToTreeConverter<E, N, T, S>)performLookup(converters, NodeToTreeConverter.class, klass);
+        final NodeToTreeConverter<E, N, T, S> converter = performLookup(converters, NodeToTreeConverter.class, klass);
         return converter.treeFromRootNode(node);
     }
 
-    public <E, N extends Node<E>, T extends Tree<E, ? extends N>> IteratorRemoveHandler<E, N, T> lookupHandler(T tree) {
+    @SuppressWarnings("unchecked")
+    public <E, N extends Node<E, N>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> lookupHandler(T tree) {
         final Class<? extends Tree> keyClass = tree.getClass();
         final IteratorRemoveHandler<E, N, T> handler = iteratorRemoveHandlers.get(keyClass);
         if (handler == null) {
@@ -168,6 +184,19 @@ public final class SPISupport {
     }
 
     /**
+     * @param key A key
+     * @return The concrete type used by the key
+     */
+    @SuppressWarnings("unchecked")
+    public <T> Class<? extends T> lookupConcreteType(Class<T> key) {
+        final KeyMapping<T> mapping = keyMappings.get(key);
+        if (mapping != null) {
+            return mapping.getConcreteClass();
+        }
+        return key;
+    }
+
+    /**
      * @param componentMap lookup map
      * @param componentClass type of component returned by lookup
      * @param keyClass lookup key
@@ -175,7 +204,7 @@ public final class SPISupport {
      * @return instance of SPI component
      */
     private <C> C performLookup(Map<Class<?>, C> componentMap, Class<C> componentClass, Class<?> keyClass) {
-        final C result = componentMap.get(keyClass);
+        final C result = componentMap.get(lookupConcreteType(keyClass));
         if (result == null) {
             throw new OperationNotSupportedForType(keyClass, componentClass);
         }

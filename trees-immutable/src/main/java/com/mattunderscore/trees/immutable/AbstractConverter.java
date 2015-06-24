@@ -29,6 +29,7 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -37,22 +38,24 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.immutable.TreeNodeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-abstract class AbstractConverter<E> implements TreeConverter<E, TreeNodeImpl<E>> {
+abstract class AbstractConverter<E> implements TreeConverter<E, ClosedNode<E>, Tree<E, ClosedNode<E>>> {
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final TreeNodeImpl<E> build(Tree<E, ? extends Node<E>> sourceTree) {
-        final Node<E> root = sourceTree.getRoot();
-        return new TreeNodeImpl(root.getElement(), duplicateChildren(root));
+    public final <S extends Node<E, S>> Tree<E, ClosedNode<E>> build(Tree<E, S> sourceTree) {
+        final S root = sourceTree.getRoot();
+        final TreeNodeImpl<E>[] newChildren = duplicateChildren(root);
+        return new TreeNodeImpl(root.getElement(), newChildren);
     }
 
-    private Object[] duplicateChildren(Node<E> parent) {
+    private <S extends Node<E, S>> TreeNodeImpl<E>[] duplicateChildren(Node<E, S> parent) {
         @SuppressWarnings("unchecked")
-        final Object[] newChildren = new Object[parent.getNumberOfChildren()];
+        final TreeNodeImpl<E>[] newChildren = new TreeNodeImpl[parent.getNumberOfChildren()];
         int i = 0;
-        final Iterator<? extends Node<E>> iterator = parent.childIterator();
+        final Iterator<? extends Node<E, S>> iterator = parent.childIterator();
         while (iterator.hasNext()) {
-            final Node<E> sourceChild = iterator.next();
-            final Object[] newGrandChildren = duplicateChildren(sourceChild);
+            final Node<E, S> sourceChild = iterator.next();
+            final TreeNodeImpl[] newGrandChildren = duplicateChildren(sourceChild);
             newChildren[i] = new TreeNodeImpl<>(sourceChild.getElement(), newGrandChildren);
             i++;
         }

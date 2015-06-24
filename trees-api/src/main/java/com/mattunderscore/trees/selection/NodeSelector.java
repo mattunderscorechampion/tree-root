@@ -44,5 +44,5 @@ public interface NodeSelector<E> {
      * @return An {@link java.util.Iterator} over the selected nodes
      * @throws OperationNotSupportedForType if the type of the tree cannot be iterated
      */
-    <N extends Node<E>> Iterator<N> select(Tree<E, N> tree) throws OperationNotSupportedForType;
+    <N extends Node<? extends E, ? extends N>> Iterator<? extends N> select(Tree<? extends E, ? extends N> tree) throws OperationNotSupportedForType;
 }

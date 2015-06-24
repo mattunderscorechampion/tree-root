@@ -39,7 +39,7 @@ import java.util.Stack;
  * @author Matt Champion on 17/08/14.
  */
 @NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
+public final class PreOrderIterator<E , N extends Node<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private final Stack<N> parents = new Stack<>();
     private N current;
 
@@ -49,12 +49,13 @@ public final class PreOrderIterator<E , N extends Node<E>, T extends Tree<E, ? e
         parents.push(current);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected N calculateNext() throws NoSuchElementException {
         if (!parents.isEmpty()) {
             final N n = current;
             final N[] reversed = (N[]) Array.newInstance(n.getClass(), n.getNumberOfChildren());
-            final Iterator<N> childIterator = (Iterator<N>)n.childIterator();
+            final Iterator<? extends N> childIterator = n.childIterator();
             for (int i = n.getNumberOfChildren() - 1; i >= 0; i--) {
                 reversed[i] = childIterator.next();
             }

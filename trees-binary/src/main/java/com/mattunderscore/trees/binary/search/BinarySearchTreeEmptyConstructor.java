@@ -27,13 +27,14 @@ package com.mattunderscore.trees.binary.search;
 
 import java.util.Comparator;
 
+import com.mattunderscore.trees.binary.ClosedBinaryTreeNode;
 import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * @author Matt Champion on 06/09/14.
  */
-public final class BinarySearchTreeEmptyConstructor<E> implements EmptySortedTreeConstructor<E, BinarySearchTree<E>> {
+public final class BinarySearchTreeEmptyConstructor<E> implements EmptySortedTreeConstructor<E, ClosedBinaryTreeNode<E>, BinarySearchTree<E>> {
     @Override
     public BinarySearchTree<E> build(Comparator<E> comparator) {
         return new BinarySearchTree<>(comparator);

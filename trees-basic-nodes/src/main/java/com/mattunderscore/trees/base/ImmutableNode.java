@@ -35,10 +35,10 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
 /** 
  * @author Matt Champion on 21/09/14.
  */
-public abstract class ImmutableNode<E> extends FixedNode<E> {
-    protected final SimpleCollection<? extends ImmutableNode<E>> children;
+public abstract class ImmutableNode<E, N extends Node<E, ? extends N>> extends FixedNode<E, N> {
+    protected final SimpleCollection<N> children;
 
-    public ImmutableNode(E element, ImmutableNode<E>[] childNodes) {
+    public ImmutableNode(E element, ImmutableNode<E, N>[] childNodes) {
         super(element);
         children = new FixedUncheckedSimpleCollection<>(childNodes);
     }
@@ -48,7 +48,7 @@ public abstract class ImmutableNode<E> extends FixedNode<E> {
         children = new FixedUncheckedSimpleCollection<>(childNodes);
     }
 
-    public ImmutableNode(E element, DuplicateOnWriteSimpleCollection<? extends ImmutableNode<E>> children) {
+    public ImmutableNode(E element, DuplicateOnWriteSimpleCollection<N> children) {
         super(element);
         this.children = children;
     }
@@ -59,7 +59,7 @@ public abstract class ImmutableNode<E> extends FixedNode<E> {
     }
 
     @Override
-    public Iterator<? extends ImmutableNode<E>> childIterator() {
+    public Iterator<? extends N> childIterator() {
         return children.iterator();
     }
 }

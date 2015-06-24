@@ -34,16 +34,7 @@ import com.mattunderscore.trees.tree.StructuralNode;
  * Mutable structural node. Unlike {@link MutableNode} child nodes are placed at specific positions.
  * @author Matt Champion on 30/01/15
  */
-public interface MutableStructuralNode<E> extends StructuralNode<E> {
-      @Override
-      Iterator<? extends MutableStructuralNode<E>> childIterator();
-
-      @Override
-      Iterator<? extends MutableStructuralNode<E>> childStructuralIterator();
-
-      @Override
-      MutableStructuralNode<E> getChild(int nChild);
-
+public interface MutableStructuralNode<E, N extends MutableStructuralNode<E, N>> extends StructuralNode<E, N> {
       /**
        * Set the nth child node.
        * <p>
@@ -52,5 +43,5 @@ public interface MutableStructuralNode<E> extends StructuralNode<E> {
        * @param element The element
        * @return The new node
        */
-      MutableStructuralNode<E> setChild(int nChild, E element);
+      N setChild(int nChild, E element);
 }

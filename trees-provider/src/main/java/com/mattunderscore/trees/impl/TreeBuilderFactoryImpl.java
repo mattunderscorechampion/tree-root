@@ -31,6 +31,7 @@ import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 
 import java.util.Comparator;
@@ -50,33 +51,35 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
         bottomUpTreeBuilder = new BottomUpTreeBuilderImpl(support);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <E> TopDownTreeRootBuilder<E> topDownBuilder() {
+    public <E, N extends Node<E, N>> TopDownTreeRootBuilder<E, N> topDownBuilder() {
         return topDownTreeRootBuilder;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public <E> BottomUpTreeBuilder<E> bottomUpBuilder() {
+    public <E, N extends Node<E, N>> BottomUpTreeBuilder<E, N> bottomUpBuilder() {
         return bottomUpTreeBuilder;
     }
 
     @Override
-    public <E> SortingTreeBuilder<E> sortingTreeBuilder(Comparator<E> comparator) {
+    public <E, N extends Node<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder(Comparator<E> comparator) {
         return new SortingTreeBuilderImpl<>(support, comparator);
     }
 
     @Override
-    public <E extends Comparable<E>> SortingTreeBuilder<E> sortingTreeBuilder() {
+    public <E extends Comparable<E>, N extends Node<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder() {
         return new SortingTreeBuilderImpl<>(support, new ComparableComparator<E>());
     }
 
     @Override
-    public <E> SortedTreeBuilder<E> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm) {
+    public <E, N extends Node<E, N>> SortedTreeBuilder<E, N> sortedTreeBuilder(Comparator<E> comparator, SortingAlgorithm algorithm) {
         throw new UnsupportedOperationException("Sorting algorithms not yet implemented");
     }
 
     @Override
-    public <E extends Comparable<E>> SortedTreeBuilder<E> sortedTreeBuilder(SortingAlgorithm algorithm) {
+    public <E extends Comparable<E>, N extends Node<E, N>> SortedTreeBuilder<E, N> sortedTreeBuilder(SortingAlgorithm algorithm) {
         return sortedTreeBuilder(new ComparableComparator<E>(), algorithm);
     }
 }

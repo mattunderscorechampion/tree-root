@@ -39,7 +39,7 @@ import java.util.Stack;
  * @author Matt Champion on 22/08/14.
  */
 @NotThreadSafe
-public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, ? extends N>> extends RemoveHandlerIterator<E, N, T> {
+public final class InOrderIterator<E , N extends Node<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private final Stack<State<E, N>> parents = new Stack<>();
     private N current;
 
@@ -75,17 +75,19 @@ public final class InOrderIterator<E , N extends Node<E>, T extends Tree<E, ? ex
         throw new NoSuchElementException();
     }
 
-    private static final class State<E, N extends Node<E>> {
+    private static final class State<E, N extends Node<E, N>> {
         private final N node;
-        private final Iterator<N> iterator;
+        private final Iterator<? extends N> iterator;
 
+        @SuppressWarnings("unchecked")
         public State(N node) {
             this.node = node;
             if (node instanceof StructuralNode) {
-                this.iterator = (Iterator<N>) ((StructuralNode) node).childStructuralIterator();
+                final StructuralNode structuralNode = (StructuralNode)node;
+                this.iterator = structuralNode.childStructuralIterator();
             }
             else {
-                this.iterator = (Iterator<N>) node.childIterator();
+                this.iterator = node.childIterator();
             }
         }
     }

@@ -29,11 +29,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.matchers.IdentityMatcher;
-import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.tree.Node;
 import org.junit.Test;
+
+import com.mattunderscore.trees.base.ImmutableNode;
+import com.mattunderscore.trees.selection.NodeMatcher;
+import com.mattunderscore.trees.tree.ClosedNode;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * Unit tests for IdentityMatcher.
@@ -43,14 +44,14 @@ public final class IdentityMatcherTest {
     @Test
     public void matches() {
         final String element = "a";
-        final Node<String> node = new ImmutableNode<String>(element, new Object[0]) {};
+        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>(element, new Object[0]) {};
         final NodeMatcher<String> matcher = new IdentityMatcher<>(element);
         assertTrue(matcher.matches(node));
     }
 
     @Test
     public void notMatches() {
-        final Node<String> node = new ImmutableNode<String>(new String("a"), new Object[0]) {};
+        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>(new String("a"), new Object[0]) {};
         final NodeMatcher<String> matcher = new IdentityMatcher<>(new String("a"));
         assertFalse(matcher.matches(node));
     }

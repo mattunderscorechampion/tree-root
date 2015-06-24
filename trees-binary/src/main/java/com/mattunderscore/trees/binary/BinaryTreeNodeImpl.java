@@ -40,7 +40,7 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
  * Binary tree node implementation.
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryTreeNode<E> {
+public final class BinaryTreeNodeImpl<E> extends FixedNode<E, ClosedBinaryTreeNode<E>> implements ClosedBinaryTreeNode<E> {
     private final BinaryTreeNodeImpl<E> left;
     private final BinaryTreeNodeImpl<E> right;
 
@@ -118,23 +118,23 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
         return left == null && right == null;
     }
 
-    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, BinaryTreeWrapper<E, BinaryTreeNodeImpl<E>>> {
+    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, ClosedBinaryTreeNode<E>, BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>>> {
 
         @Override
-        public BinaryTreeWrapper<E, BinaryTreeNodeImpl<E>> build() {
+        public BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>> build() {
             return new BinaryTreeWrapper<>();
         }
 
         @Override
         public Class<? extends Tree> forClass() {
-            return BinaryTree.class;
+            return BinaryTreeWrapper.class;
         }
     }
 
-    public static final class BinaryTreeConstructor<E> implements TreeConstructor<E, Tree<E, BinaryTreeNodeImpl<E>>> {
+    public static final class BinaryTreeConstructor<E> implements TreeConstructor<E, ClosedBinaryTreeNode<E>, BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>>> {
 
         @Override
-        public BinaryTreeWrapper<E, BinaryTreeNodeImpl<E>> build(E e, Tree<E, BinaryTreeNodeImpl<E>>[] subtrees) {
+        public BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>> build(E e, BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>>[] subtrees) {
             if (subtrees.length > 2) {
                 throw new IllegalStateException("A binary tree cannot have more than two children");
             }
@@ -143,10 +143,10 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
             BinaryTreeNodeImpl<E> right = null;
 
             if (subtrees.length > 0) {
-                left = subtrees[0].getRoot();
+                left = (BinaryTreeNodeImpl<E>)subtrees[0].getRoot();
             }
             if (subtrees.length > 1) {
-                right = subtrees[1].getRoot();
+                right = (BinaryTreeNodeImpl<E>)subtrees[1].getRoot();
             }
 
             final BinaryTreeNodeImpl<E> root = new BinaryTreeNodeImpl<>(e, left, right);
@@ -155,11 +155,11 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E> implements BinaryT
 
         @Override
         public Class<? extends Tree> forClass() {
-            return BinaryTree.class;
+            return BinaryTreeWrapper.class;
         }
     }
 
-    public static <E> TypeKey<BinaryTree<E, BinaryTreeNode<E>>> typeKey() {
-        return new TypeKey<BinaryTree<E, BinaryTreeNode<E>>>() {};
+    public static <E> TypeKey<BinaryTree<E, ClosedBinaryTreeNode<E>>> typeKey() {
+        return new TypeKey<BinaryTree<E, ClosedBinaryTreeNode<E>>>() {};
     }
 }

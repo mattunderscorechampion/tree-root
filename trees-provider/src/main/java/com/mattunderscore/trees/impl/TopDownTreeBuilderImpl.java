@@ -38,7 +38,7 @@ import net.jcip.annotations.NotThreadSafe;
  * @author Matt Champion on 15/08/14.
  */
 @NotThreadSafe
-final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E> {
+final class TopDownTreeBuilderImpl<E, N extends Node<E, N>> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E, N> {
     private final SPISupport helper;
     private final LinkedTree<E> tree;
 
@@ -48,12 +48,12 @@ final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownT
     }
 
     @Override
-    public <T extends Tree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         return helper.convertTree(klass, tree);
     }
 
     @Override
-    public <T extends Tree<E, ? extends Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+    public <T extends Tree<E, N>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
         return build(type.getType());
     }
 
@@ -63,10 +63,10 @@ final class TopDownTreeBuilderImpl<E> implements TopDownTreeRootBuilder.TopDownT
     }
 
     @NotThreadSafe
-    private static final class Appender<S> implements TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> {
-        private final MutableNode<S> root;
+    private static final class Appender<S, U extends MutableNode<S, U>> implements TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> {
+        private final MutableNode<S, U> root;
 
-        public Appender(MutableNode<S> root) {
+        public Appender(MutableNode<S, U> root) {
             this.root = root;
         }
 

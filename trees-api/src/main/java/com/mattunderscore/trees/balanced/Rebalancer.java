@@ -42,7 +42,7 @@ public interface Rebalancer {
      * @param <T> the type of tree
      * @return A balanced copy of a tree
      */
-    <E, N extends Node<E>, T extends Tree<E, N>> T rebalance(T tree);
+    <E, N extends Node<E, N>, T extends Tree<E, N>> T rebalance(T tree);
 
     /**
      * @param tree The tree to rebalance
@@ -50,5 +50,5 @@ public interface Rebalancer {
      * @param <N> the type of node
      * @param <T> the type of tree
      */
-    <E, N extends MutableNode<E>, T extends MutableTree<E, N>> void rebalanceInPlace(T tree);
+    <E, N extends MutableNode<E, N>, T extends MutableTree<E, N>> void rebalanceInPlace(T tree);
 }

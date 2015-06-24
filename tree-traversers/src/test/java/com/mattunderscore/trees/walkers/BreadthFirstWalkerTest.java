@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
@@ -27,7 +28,7 @@ public final class BreadthFirstWalkerTest {
     private static LinkedTree<String> emptyTree;
 
     @Mock
-    private Walker<LinkedTree<String>> nodeWalker;
+    private Walker<ClosedMutableSettableStructuredNode<String>> nodeWalker;
     @Mock
     private Walker<String> elementWalker;
     private InOrder elementOrder;
@@ -35,7 +36,7 @@ public final class BreadthFirstWalkerTest {
 
     @BeforeClass
     public static void setUpClass() {
-        final TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final TreeConstructor<String, ClosedMutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "f",
             new LinkedTree[]{

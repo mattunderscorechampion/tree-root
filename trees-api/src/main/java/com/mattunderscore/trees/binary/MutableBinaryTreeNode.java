@@ -31,39 +31,19 @@ import java.util.Iterator;
  * A mutable binary tree
  * @author Matt Champion on 06/09/14.
  */
-public interface MutableBinaryTreeNode<E> extends BinaryTreeNode<E> {
+public interface MutableBinaryTreeNode<E, N extends MutableBinaryTreeNode<E, N>> extends BinaryTreeNode<E, N> {
 
     /**
      * Set the left subtree. Replaces the existing value
      * @param left The new element
      * @return The newly added node
      */
-    MutableBinaryTreeNode<E> setLeft(E left);
+    N setLeft(E left);
 
     /**
      * Set the left subtree. Replaces the existing value
      * @param right The new element
      * @return The newly added node
      */
-    MutableBinaryTreeNode<E> setRight(E right);
-
-    /**
-     * @return The left subtree
-     */
-    MutableBinaryTreeNode<E> getLeft();
-
-    /**
-     * @return The right subtree
-     */
-    MutableBinaryTreeNode<E> getRight();
-
-    @Override
-    Iterator<? extends MutableBinaryTreeNode<E>> childIterator();
-
-    @Override
-    Iterator<? extends MutableBinaryTreeNode<E>> childStructuralIterator();
-
-    @Override
-    MutableBinaryTreeNode<E> getChild(int nChild);
-
+    N setRight(E right);
 }

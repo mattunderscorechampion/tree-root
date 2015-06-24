@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public final class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
+public final class SortingTreeBuilderImpl<E, N extends Node<E, N>> implements SortingTreeBuilder<E, N> {
     private final SPISupport helper;
     private final Comparator<E> comparator;
     private final List<E> elements = new ArrayList<>();
@@ -49,13 +49,13 @@ public final class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
     }
 
     @Override
-    public SortingTreeBuilder<E> addElement(E element) {
+    public SortingTreeBuilder<E, N> addElement(E element) {
         elements.add(element);
         return this;
     }
 
     @Override
-    public <T extends SortingTree<E, ? extends Node<E>>> T build(Class<T> klass) throws OperationNotSupportedForType {
+    public <T extends SortingTree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         final T tree = helper.createEmptyTree(klass, comparator);
         for (final E element : elements) {
             tree.addElement(element);
@@ -64,7 +64,7 @@ public final class SortingTreeBuilderImpl<E> implements SortingTreeBuilder<E> {
     }
 
     @Override
-    public <T extends SortingTree<E, ? extends Node<E>>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
+    public <T extends SortingTree<E, N>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
         return build(type.getType());
     }
 }

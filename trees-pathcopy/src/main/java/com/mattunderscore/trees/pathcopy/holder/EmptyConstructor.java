@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyTree}.
  * @author Matt Champion on 28/01/15.
  */
-public final class EmptyConstructor<E> implements EmptyTreeConstructor<E, PathCopyTree<E>> {
+public final class EmptyConstructor<E> implements EmptyTreeConstructor<E, PathCopyNode<E>, PathCopyTree<E>> {
     @Override
     public PathCopyTree<E> build() {
         return new PathCopyTree<>();

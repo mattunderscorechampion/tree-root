@@ -30,15 +30,14 @@ import static org.junit.Assert.assertFalse;
 
 import java.util.Iterator;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.DefaultRemovalHandler;
 import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -46,13 +45,13 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 05/09/14.
  */
 public final class BreadthFirstIteratorTest {
-    private static Tree<String, ? extends Node<String>> tree;
-    private Iterator<? extends Node<String>> iterator;
+    private static Tree<String, ClosedMutableSettableStructuredNode<String>> tree;
+    private Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator;
     private Iterator<String> elementIterator;
 
     @BeforeClass
     public static void setUpTree() {
-        final TreeConstructor<String, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final TreeConstructor<String, ClosedMutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "f",
             new LinkedTree[]{
@@ -87,7 +86,7 @@ public final class BreadthFirstIteratorTest {
     @Before
     public void setUp() {
         iterator = new BreadthFirstIterator<>(tree, new DefaultRemovalHandler<>());
-        elementIterator = new NodeToElementIterators<>((Iterator<Node<String>>)iterator);
+        elementIterator = new NodeToElementIterators<>(iterator);
     }
 
     @Test

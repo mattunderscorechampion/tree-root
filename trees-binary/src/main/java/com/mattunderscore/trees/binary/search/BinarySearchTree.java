@@ -28,18 +28,18 @@ package com.mattunderscore.trees.binary.search;
 import java.util.Comparator;
 
 import com.mattunderscore.trees.binary.BinaryTree;
-import com.mattunderscore.trees.binary.BinaryTreeNode;
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.binary.ClosedBinaryTreeNode;
+import com.mattunderscore.trees.binary.ClosedMutableBinaryTreeNode;
 import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeNodeImpl;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.sorted.SortingTree;
 
 /**
  * @author Matt Champion on 06/09/14.
  */
-public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E>>, SortingTree<E, BinaryTreeNode<E>> {
+public final class BinarySearchTree<E> implements BinaryTree<E, ClosedBinaryTreeNode<E>>, SortingTree<E, ClosedBinaryTreeNode<E>> {
     private final Comparator<E> comparator;
-    private MutableBinaryTreeNodeImpl root;
+    private MutableBinaryTreeNodeImpl<E> root;
 
     public BinarySearchTree(Comparator<E> comparator) {
         this.comparator = comparator;
@@ -48,7 +48,7 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
     @Override
     public synchronized BinarySearchTree<E> addElement(E element) {
         if (isEmpty()) {
-            root = new MutableBinaryTreeNodeImpl(element);
+            root = new MutableBinaryTreeNodeImpl<>(element);
         }
         else {
             addTo(root, element);
@@ -56,10 +56,10 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
         return this;
     }
 
-    private void addTo(MutableBinaryTreeNode<E> node, E element) {
+    private void addTo(ClosedMutableBinaryTreeNode<E> node, E element) {
         final int comparison = comparator.compare(node.getElement(), element);
         if (comparison < 0) {
-            final MutableBinaryTreeNode<E> left = node.getLeft();
+            final ClosedMutableBinaryTreeNode<E> left = node.getLeft();
             if (left == null) {
                 node.setLeft(element);
             }
@@ -68,7 +68,7 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
             }
         }
         else {
-            final MutableBinaryTreeNode<E> right = node.getRight();
+            final ClosedMutableBinaryTreeNode<E> right = node.getRight();
             if (right == null) {
                 node.setRight(element);
             }
@@ -79,8 +79,8 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
     }
 
     @Override
-    public synchronized BinaryTreeNode<E> getRoot() {
-        return root;
+    public synchronized ClosedBinaryTreeNode<E> getRoot() {
+        return new WrappedBinaryNode<>(root);
     }
 
     @Override

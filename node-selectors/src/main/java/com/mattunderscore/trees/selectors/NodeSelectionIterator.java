@@ -38,12 +38,12 @@ import com.mattunderscore.trees.wrappers.SimpleTreeWrapper;
  * @param <E> The element type
  * @param <N> The node type
  */
-final class NodeSelectionIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
-    private final Iterator<N> startingPoints;
+final class NodeSelectionIterator<E, N extends Node<? extends E, ? extends N>> extends PrefetchingIterator<N> {
+    private final Iterator<? extends N> startingPoints;
     private final NodeSelector<E> selector;
-    private Iterator<N> currentEndPoints;
+    private Iterator<? extends N> currentEndPoints;
 
-    public NodeSelectionIterator(Iterator<N> startingPoints, NodeSelector<E> selector) {
+    public NodeSelectionIterator(Iterator<? extends N> startingPoints, NodeSelector<E> selector) {
         this.startingPoints = startingPoints;
         this.selector = selector;
     }
@@ -54,7 +54,7 @@ final class NodeSelectionIterator<E, N extends Node<E>> extends PrefetchingItera
             // but as this is a read only selection/traversal operation no properties should be violated.
             // Additionally it should not be permitted to return copies of the nodes you are selecting as they are
             // not found in the tree you are selecting from violating the principle of least surprise..
-            final Tree<E, N> tree = new SimpleTreeWrapper<>(startingPoints.next());
+            final Tree<? extends E, ? extends N> tree = new SimpleTreeWrapper<>(startingPoints.next());
             currentEndPoints = selector.select(tree);
         }
 

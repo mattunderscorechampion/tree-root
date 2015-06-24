@@ -33,6 +33,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 import com.mattunderscore.trees.walkers.NodeToElementWalker;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.Node;
@@ -45,7 +46,7 @@ public final class NodeToElementWalkerTest {
     private Walker<String> walker;
 
     @Mock
-    private Node<String> node;
+    private ClosedMutableSettableStructuredNode<String> node;
 
     @Before
     public void setUp() {
@@ -56,21 +57,21 @@ public final class NodeToElementWalkerTest {
 
     @Test
     public void onEmpty() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
+        final NodeToElementWalker<String, ClosedMutableSettableStructuredNode<String>> elementWalker = new NodeToElementWalker<>(walker);
         elementWalker.onEmpty();
         Mockito.verify(walker).onEmpty();
     }
 
     @Test
     public void onCompleted() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
+        final NodeToElementWalker<String, ClosedMutableSettableStructuredNode<String>> elementWalker = new NodeToElementWalker<>(walker);
         elementWalker.onCompleted();
         Mockito.verify(walker).onCompleted();
     }
 
     @Test
     public void onNext() {
-        final NodeToElementWalker<String, Node<String>> elementWalker = new NodeToElementWalker<>(walker);
+        final NodeToElementWalker<String, ClosedMutableSettableStructuredNode<String>> elementWalker = new NodeToElementWalker<>(walker);
         elementWalker.onNext(node);
         Mockito.verify(walker).onNext("hello");
     }

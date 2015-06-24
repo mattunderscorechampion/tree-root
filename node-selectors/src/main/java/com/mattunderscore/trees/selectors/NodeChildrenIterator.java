@@ -36,12 +36,12 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
  * @param <E> The element type
  * @param <N> The node type
  */
-final class NodeChildrenIterator<E, N extends Node<E>> extends PrefetchingIterator<N> {
-    private final Iterator<N> parents;
+final class NodeChildrenIterator<E, N extends Node<? extends E, ? extends N>> extends PrefetchingIterator<N> {
+    private final Iterator<? extends N> parents;
     private final NodeMatcher<E> matcher;
-    private Iterator<N> possibles;
+    private Iterator<? extends N> possibles;
 
-    public NodeChildrenIterator(Iterator<N> parents, NodeMatcher<E> matcher) {
+    public NodeChildrenIterator(Iterator<? extends N> parents, NodeMatcher<E> matcher) {
         this.parents = parents;
         this.matcher = matcher;
     }
@@ -49,7 +49,7 @@ final class NodeChildrenIterator<E, N extends Node<E>> extends PrefetchingIterat
     protected N calculateNext() {
         if (possibles == null) {
             final N next = parents.next();
-            possibles = (Iterator<N>)next.childIterator();
+            possibles = next.childIterator();
         }
 
         if (possibles.hasNext()) {
