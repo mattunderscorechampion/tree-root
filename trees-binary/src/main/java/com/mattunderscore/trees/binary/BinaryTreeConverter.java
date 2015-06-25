@@ -34,9 +34,9 @@ import com.mattunderscore.trees.tree.Tree;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeConverter<E> implements TreeConverter<E, ClosedBinaryTreeNode<E>, BinaryTree<E, ClosedBinaryTreeNode<E>>> {
+public final class BinaryTreeConverter<E> implements TreeConverter<E, BinaryTreeNode<E>, BinaryTree<E, BinaryTreeNode<E>>> {
     @Override
-    public <S extends OpenNode<E, S>> BinaryTree<E, ClosedBinaryTreeNode<E>> build(Tree<E, S> sourceTree) {
+    public <S extends OpenNode<E, S>> BinaryTree<E, BinaryTreeNode<E>> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
         return new BinaryTreeWrapper<>(duplicate(root));
     }

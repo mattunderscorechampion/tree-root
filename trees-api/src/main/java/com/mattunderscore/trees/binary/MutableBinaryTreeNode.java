@@ -25,13 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
-import java.util.Iterator;
-
 /**
  * A mutable binary tree
  * @author Matt Champion on 06/09/14.
  */
-public interface MutableBinaryTreeNode<E, N extends MutableBinaryTreeNode<E, N>> extends BinaryTreeNode<E, N> {
+public interface MutableBinaryTreeNode<E, N extends MutableBinaryTreeNode<E, N>> extends OpenBinaryTreeNode<E, N> {
 
     /**
      * Set the left subtree. Replaces the existing value

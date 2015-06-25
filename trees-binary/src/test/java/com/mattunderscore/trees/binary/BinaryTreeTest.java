@@ -49,14 +49,14 @@ public final class BinaryTreeTest {
 
     @Test
     public void empty() {
-        final BottomUpTreeBuilder<String, ClosedBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-        final BinaryTree<String, ClosedBinaryTreeNode<String>> tree = builder.build(BinaryTreeNodeImpl.<String>typeKey());
+        final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BinaryTree<String, BinaryTreeNode<String>> tree = builder.build(BinaryTreeNodeImpl.<String>typeKey());
         assertTrue(tree.isEmpty());
     }
 
     @Test(expected = IllegalStateException.class)
     public void moreThanTwo() {
-        final BottomUpTreeBuilder<String, ClosedBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         builder.create("a",
             builder.create("b"),
             builder.create("c"),
@@ -66,8 +66,8 @@ public final class BinaryTreeTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void noChildren() {
-        final BottomUpTreeBuilder<String, ClosedBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-        final BinaryTree<String, ClosedBinaryTreeNode<String>> tree =
+        final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a").build(BinaryTreeNodeImpl.<String>typeKey());
 
         assertFalse(tree.isEmpty());
@@ -78,9 +78,9 @@ public final class BinaryTreeTest {
         assertNull(tree.getRoot().getRight());
         assertNull(tree.getRoot().getChild(0));
         assertNull(tree.getRoot().getChild(1));
-        final Iterator<? extends BinaryTreeNode<String, ClosedBinaryTreeNode<String>>> iterator = tree.getRoot().childIterator();
+        final Iterator<? extends OpenBinaryTreeNode<String, BinaryTreeNode<String>>> iterator = tree.getRoot().childIterator();
         assertFalse(iterator.hasNext());
-        final Iterator<? extends BinaryTreeNode<String, ClosedBinaryTreeNode<String>>> structuralIterator = tree.getRoot().childStructuralIterator();
+        final Iterator<? extends OpenBinaryTreeNode<String, BinaryTreeNode<String>>> structuralIterator = tree.getRoot().childStructuralIterator();
         assertNull(structuralIterator.next());
         assertNull(structuralIterator.next());
         assertFalse(structuralIterator.hasNext());
@@ -90,8 +90,8 @@ public final class BinaryTreeTest {
 
     @Test
     public void twoChildren() {
-        final BottomUpTreeBuilder<String, ClosedBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-        final BinaryTree<String, ClosedBinaryTreeNode<String>> tree =
+        final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
                 builder.create("b"),
                 builder.create("c")).build(BinaryTreeNodeImpl.<String>typeKey());
@@ -103,13 +103,13 @@ public final class BinaryTreeTest {
         assertEquals("b", tree.getRoot().getLeft().getElement());
         assertEquals("c", tree.getRoot().getRight().getElement());
 
-        final Iterator<? extends ClosedBinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
-        final ClosedBinaryTreeNode<String> left = iterator.next();
+        final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
+        final BinaryTreeNode<String> left = iterator.next();
         assertSame(left, tree.getRoot().getChild(0));
         assertSame(left, tree.getRoot().getLeft());
         assertTrue(left.isLeaf());
         assertEquals("b", left.getElement());
-        final ClosedBinaryTreeNode<String> right = iterator.next();
+        final BinaryTreeNode<String> right = iterator.next();
         assertSame(right, tree.getRoot().getChild(1));
         assertSame(right, tree.getRoot().getRight());
         assertTrue(right.isLeaf());
@@ -119,8 +119,8 @@ public final class BinaryTreeTest {
 
     @Test
     public void leftOnly() {
-        final BottomUpTreeBuilder<String, ClosedBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-        final BinaryTree<String, ClosedBinaryTreeNode<String>> tree =
+        final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
                     builder.create("b")).build(BinaryTreeNodeImpl.<String>typeKey());
 
@@ -133,8 +133,8 @@ public final class BinaryTreeTest {
         assertNull(tree.getRoot().getRight());
         assertNull(tree.getRoot().getChild(1));
 
-        final Iterator<? extends ClosedBinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
-        final ClosedBinaryTreeNode<String> left = iterator.next();
+        final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
+        final BinaryTreeNode<String> left = iterator.next();
         assertTrue(left.isLeaf());
         assertEquals("b", left.getElement());
         assertFalse(iterator.hasNext());
@@ -143,8 +143,8 @@ public final class BinaryTreeTest {
     @Ignore("Not sure how I want to build a binary tree with only a right child")
     @Test
     public void rightOnly() {
-        final BottomUpTreeBuilder<String, ClosedBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-        final BinaryTree<String, ClosedBinaryTreeNode<String>> tree =
+        final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
                     null,
                     builder.create("c")).build(BinaryTreeNodeImpl.<String>typeKey());
@@ -156,12 +156,12 @@ public final class BinaryTreeTest {
         assertNull(tree.getRoot().getLeft());
         assertEquals("c", tree.getRoot().getRight().getElement());
 
-        final Iterator<? extends ClosedBinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
-        final ClosedBinaryTreeNode<String> left = iterator.next();
+        final Iterator<? extends BinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
+        final BinaryTreeNode<String> left = iterator.next();
         assertNull(left);
         assertNull(tree.getRoot().getLeft());
         assertNull(tree.getRoot().getChild(0));
-        final ClosedBinaryTreeNode<String> right = iterator.next();
+        final BinaryTreeNode<String> right = iterator.next();
         assertTrue(right.isLeaf());
         assertEquals("c", right.getElement());
         assertSame(right, tree.getRoot().getRight());
@@ -171,13 +171,13 @@ public final class BinaryTreeTest {
 
     @Test
     public void topDownBuilder() {
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedBinaryTreeNode<String>> builder =
-            trees.treeBuilders().<String, ClosedBinaryTreeNode<String>>topDownBuilder().root("root");
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, BinaryTreeNode<String>> builder =
+            trees.treeBuilders().<String, BinaryTreeNode<String>>topDownBuilder().root("root");
         final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> child0 = builder.addChild("child0");
         builder.addChild("child1");
         child0.addChild("child2");
 
-        final BinaryTree<String, ClosedBinaryTreeNode<String>> tree = builder.build(BinaryTree.class);
+        final BinaryTree<String, BinaryTreeNode<String>> tree = builder.build(BinaryTree.class);
 
         assertEquals("root", tree.getRoot().getElement());
         assertEquals("child0", tree.getRoot().getLeft().getElement());

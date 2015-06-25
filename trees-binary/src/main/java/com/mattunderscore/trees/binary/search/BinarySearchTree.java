@@ -28,7 +28,7 @@ package com.mattunderscore.trees.binary.search;
 import java.util.Comparator;
 
 import com.mattunderscore.trees.binary.BinaryTree;
-import com.mattunderscore.trees.binary.ClosedBinaryTreeNode;
+import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.binary.ClosedMutableBinaryTreeNode;
 import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeNodeImpl;
 import com.mattunderscore.trees.construction.TypeKey;
@@ -37,7 +37,7 @@ import com.mattunderscore.trees.sorted.SortingTree;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public final class BinarySearchTree<E> implements BinaryTree<E, ClosedBinaryTreeNode<E>>, SortingTree<E, ClosedBinaryTreeNode<E>> {
+public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E>>, SortingTree<E, BinaryTreeNode<E>> {
     private final Comparator<E> comparator;
     private MutableBinaryTreeNodeImpl<E> root;
 
@@ -79,7 +79,7 @@ public final class BinarySearchTree<E> implements BinaryTree<E, ClosedBinaryTree
     }
 
     @Override
-    public synchronized ClosedBinaryTreeNode<E> getRoot() {
+    public synchronized BinaryTreeNode<E> getRoot() {
         return new WrappedBinaryNode<>(root);
     }
 
