@@ -25,22 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
-
 import java.util.concurrent.atomic.AtomicReference;
+
+import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.mutable.MutableTree;
 
 /**
  * Path copy tree that uses node holders.
  * @author Matt Champion on 14/11/14.
  */
-public final class PathCopyTree<E> implements MutableTree<E, PathCopyNode<E>> {
+public final class PathCopyTree<E> implements MutableTree<E, ClosedMutableNode<E>> {
     private final AtomicReference<Holder<E>> holderRef;
 
     PathCopyTree() {

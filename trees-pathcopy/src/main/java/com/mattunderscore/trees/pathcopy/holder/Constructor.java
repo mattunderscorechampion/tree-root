@@ -27,10 +27,8 @@ package com.mattunderscore.trees.pathcopy.holder;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.ClosedMutableNode;
 import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -38,7 +36,7 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyTree}.
  * @author Matt Champion on 28/01/15.
  */
-public final class Constructor<E> implements TreeConstructor<E, PathCopyNode<E>, PathCopyTree<E>> {
+public final class Constructor<E> implements TreeConstructor<E, ClosedMutableNode<E>, PathCopyTree<E>> {
 
     @Override
     public PathCopyTree<E> build(E e, PathCopyTree<E>[] subtrees) {
@@ -46,7 +44,7 @@ public final class Constructor<E> implements TreeConstructor<E, PathCopyNode<E>,
         final PathCopyNode<E> root = tree.setRoot(e);
         for (PathCopyTree<E> subtree : subtrees) {
             final PathCopyNode<E> subRoot = subtree.getRoot();
-            final PathCopyNode<E> newSubRoot = root.addChild(subRoot.getElement());
+            final ClosedMutableNode<E> newSubRoot = root.addChild(subRoot.getElement());
             copyChildren(newSubRoot, subRoot);
         }
         return tree;
@@ -57,11 +55,11 @@ public final class Constructor<E> implements TreeConstructor<E, PathCopyNode<E>,
         return PathCopyTree.class;
     }
 
-    private void copyChildren(PathCopyNode<E> newParent, PathCopyNode<E> parent) {
-        final Iterator<? extends PathCopyNode<E>> iterator = parent.childIterator();
+    private void copyChildren(ClosedMutableNode<E> newParent, ClosedMutableNode<E> parent) {
+        final Iterator<? extends ClosedMutableNode<E>> iterator = parent.childIterator();
         while (iterator.hasNext()) {
-            final PathCopyNode<E> child = iterator.next();
-            final PathCopyNode<E> newChild = newParent.addChild(child.getElement());
+            final ClosedMutableNode<E> child = iterator.next();
+            final ClosedMutableNode<E> newChild = newParent.addChild(child.getElement());
             copyChildren(newChild, child);
         }
     }

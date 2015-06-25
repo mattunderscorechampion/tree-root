@@ -36,7 +36,7 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.ClosedMutableNode;
 
 /**
  * Test for {@link NodeConverter}.
@@ -47,23 +47,23 @@ public final class NodeConverterTest {
 
       @Test
       public void convertToSelf() {
-            final BottomUpTreeBuilder<String, PathCopyNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+            final BottomUpTreeBuilder<String, ClosedMutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
             final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.class);
 
-            final NodeConverter<String, PathCopyNode<String>> converter = new NodeConverter<>();
+            final NodeConverter<String, ClosedMutableNode<String>> converter = new NodeConverter<>();
 
             final PathCopyTree<String> convertedTree =
                 converter.treeFromRootNode(tree.getRoot());
 
             final PathCopyNode<String> convertedRoot = convertedTree.getRoot();
             assertEquals(2, convertedRoot.getNumberOfChildren());
-            final Iterator<? extends PathCopyNode<String>> iterator = convertedRoot.childIterator();
+            final Iterator<? extends ClosedMutableNode<String>> iterator = convertedRoot.childIterator();
             assertTrue(iterator.hasNext());
-            final PathCopyNode<String> child0 = iterator.next();
+            final ClosedMutableNode<String> child0 = iterator.next();
             assertEquals("b", child0.getElement());
 
             assertTrue(iterator.hasNext());
-            final PathCopyNode<String> child1 = iterator.next();
+            final ClosedMutableNode<String> child1 = iterator.next();
             assertEquals("c", child1.getElement());
             assertFalse(iterator.hasNext());
       }

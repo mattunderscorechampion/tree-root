@@ -25,11 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
-
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
 /**
  * Node holder for child nodes.
@@ -69,7 +70,7 @@ final class PathCopyNodeHolder<E> implements Holder<E> {
         parent.lock();
         try {
             currentParent = parent.get();
-            final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> newChildren =
+            final DuplicateOnWriteSimpleCollection<ClosedMutableNode<E>> newChildren =
                     currentParent.getChildren().replace(newNode, currentNode);
             newParent = new PathCopyNode<>(parent, currentParent.getElement(), newChildren);
             parent.set(newParent);

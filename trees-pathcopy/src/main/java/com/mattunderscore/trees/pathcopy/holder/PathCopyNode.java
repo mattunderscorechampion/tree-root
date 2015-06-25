@@ -28,38 +28,38 @@ package com.mattunderscore.trees.pathcopy.holder;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.ClosedMutableNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
 /**
  * Path copy node that uses holders to propagate changes up.
  * @author Matt Champion on 14/11/14.
  */
-final class PathCopyNode<E> extends ImmutableNode<E, PathCopyNode<E>> implements MutableNode<E, PathCopyNode<E>> {
+final class PathCopyNode<E> extends ImmutableNode<E, ClosedMutableNode<E>> implements ClosedMutableNode<E> {
     private final Holder<E> holder;
 
     PathCopyNode(Holder<E> holder, E element) {
-        this(holder, element, DuplicateOnWriteSimpleCollection.<PathCopyNode<E>>create());
+        this(holder, element, DuplicateOnWriteSimpleCollection.<ClosedMutableNode<E>>create());
     }
 
-    PathCopyNode(Holder<E> holder, E element, DuplicateOnWriteSimpleCollection<PathCopyNode<E>> children) {
+    PathCopyNode(Holder<E> holder, E element, DuplicateOnWriteSimpleCollection<ClosedMutableNode<E>> children) {
         super(element, children);
         this.holder = holder;
     }
 
-    public DuplicateOnWriteSimpleCollection<PathCopyNode<E>> getChildren() {
-        return (DuplicateOnWriteSimpleCollection<PathCopyNode<E>>) children;
+    public DuplicateOnWriteSimpleCollection<ClosedMutableNode<E>> getChildren() {
+        return (DuplicateOnWriteSimpleCollection<ClosedMutableNode<E>>) children;
     }
 
     @Override
-    public boolean removeChild(PathCopyNode<E> child) {
+    public boolean removeChild(ClosedMutableNode<E> child) {
         final PathCopyNode<E> castChild = (PathCopyNode<E>)child;
         PathCopyNode<E> newParent = null;
         boolean modified = false;
         holder.lock();
         try {
-            final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> currentChildren = holder.get().getChildren();
-            final DuplicateOnWriteSimpleCollection<PathCopyNode<E>> modifiedChildren = currentChildren.remove(castChild);
+            final DuplicateOnWriteSimpleCollection<ClosedMutableNode<E>> currentChildren = holder.get().getChildren();
+            final DuplicateOnWriteSimpleCollection<ClosedMutableNode<E>> modifiedChildren = currentChildren.remove(castChild);
             if (modifiedChildren.size() != currentChildren.size()) {
                 newParent = new PathCopyNode<>(holder, element, modifiedChildren);
                 holder.set(newParent);
@@ -81,7 +81,7 @@ final class PathCopyNode<E> extends ImmutableNode<E, PathCopyNode<E>> implements
     }
 
     @Override
-    public PathCopyNode<E> addChild(E e) {
+    public ClosedMutableNode<E> addChild(E e) {
         final PathCopyNodeHolder<E> childHolder = new PathCopyNodeHolder<>(holder);
         final PathCopyNode<E> child = new PathCopyNode<>(childHolder, e);
         final PathCopyNode<E> currentParent;
@@ -102,7 +102,7 @@ final class PathCopyNode<E> extends ImmutableNode<E, PathCopyNode<E>> implements
     }
 
     @Override
-    public Iterator<PathCopyNode<E>> childIterator() {
+    public Iterator<ClosedMutableNode<E>> childIterator() {
         return children.iterator();
     }
 }
