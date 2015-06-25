@@ -48,7 +48,7 @@ public abstract class ExtendingNodeSelector<E> implements NodeSelector<E> {
     }
 
     @Override
-    public final <N extends Node<? extends E, ? extends N>> Iterator<? extends N> select(Tree<? extends E, ? extends N> tree) throws OperationNotSupportedForType {
+    public final <N extends Node<E, ? extends N>> Iterator<? extends N> select(Tree<E, ? extends N> tree) throws OperationNotSupportedForType {
         final Iterator<? extends N> iterator = baseSelector.select(tree);
         return new ConvertingIterator<>(iterator);
     }
@@ -60,13 +60,13 @@ public abstract class ExtendingNodeSelector<E> implements NodeSelector<E> {
      * @param <N> The node type
      * @return An iterator of the extended nodes
      */
-    protected abstract <N extends Node<? extends E, ? extends N>> Iterator<? extends N> getExtendingIterator(N nodeToExtendFrom);
+    protected abstract <N extends Node<E, ? extends N>> Iterator<? extends N> getExtendingIterator(N nodeToExtendFrom);
 
     /**
      * Iterator that converts from nodes returned to the base iterator to the nodes to return from this selector.
      * @param <N> The node type
      */
-    private final class ConvertingIterator<N extends Node<? extends E, ? extends N>> extends PrefetchingIterator<N> {
+    private final class ConvertingIterator<N extends Node<E, ? extends N>> extends PrefetchingIterator<N> {
         private final Iterator<? extends N> nodeIterator;
         private Iterator<? extends N> passedOfIterator;
 

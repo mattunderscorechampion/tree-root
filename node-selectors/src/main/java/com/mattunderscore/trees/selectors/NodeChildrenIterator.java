@@ -36,7 +36,7 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
  * @param <E> The element type
  * @param <N> The node type
  */
-final class NodeChildrenIterator<E, N extends Node<? extends E, ? extends N>> extends PrefetchingIterator<N> {
+final class NodeChildrenIterator<E, N extends Node<E, ? extends N>> extends PrefetchingIterator<N> {
     private final Iterator<? extends N> parents;
     private final NodeMatcher<E> matcher;
     private Iterator<? extends N> possibles;
