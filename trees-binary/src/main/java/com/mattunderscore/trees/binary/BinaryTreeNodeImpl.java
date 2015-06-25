@@ -40,7 +40,7 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
  * Binary tree node implementation.
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeNodeImpl<E> extends FixedNode<E, ClosedBinaryTreeNode<E>> implements ClosedBinaryTreeNode<E> {
+public final class BinaryTreeNodeImpl<E> extends FixedNode<E, BinaryTreeNode<E>> implements BinaryTreeNode<E> {
     private final BinaryTreeNodeImpl<E> left;
     private final BinaryTreeNodeImpl<E> right;
 
@@ -118,10 +118,10 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E, ClosedBinaryTreeNo
         return left == null && right == null;
     }
 
-    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, ClosedBinaryTreeNode<E>, BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>>> {
+    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, BinaryTreeNode<E>, BinaryTreeWrapper<E, BinaryTreeNode<E>>> {
 
         @Override
-        public BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>> build() {
+        public BinaryTreeWrapper<E, BinaryTreeNode<E>> build() {
             return new BinaryTreeWrapper<>();
         }
 
@@ -131,10 +131,10 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E, ClosedBinaryTreeNo
         }
     }
 
-    public static final class BinaryTreeConstructor<E> implements TreeConstructor<E, ClosedBinaryTreeNode<E>, BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>>> {
+    public static final class BinaryTreeConstructor<E> implements TreeConstructor<E, BinaryTreeNode<E>, BinaryTreeWrapper<E, BinaryTreeNode<E>>> {
 
         @Override
-        public BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>> build(E e, BinaryTreeWrapper<E, ClosedBinaryTreeNode<E>>[] subtrees) {
+        public BinaryTreeWrapper<E, BinaryTreeNode<E>> build(E e, BinaryTreeWrapper<E, BinaryTreeNode<E>>[] subtrees) {
             if (subtrees.length > 2) {
                 throw new IllegalStateException("A binary tree cannot have more than two children");
             }
@@ -159,7 +159,7 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E, ClosedBinaryTreeNo
         }
     }
 
-    public static <E> TypeKey<BinaryTree<E, ClosedBinaryTreeNode<E>>> typeKey() {
-        return new TypeKey<BinaryTree<E, ClosedBinaryTreeNode<E>>>() {};
+    public static <E> TypeKey<BinaryTree<E, BinaryTreeNode<E>>> typeKey() {
+        return new TypeKey<BinaryTree<E, BinaryTreeNode<E>>>() {};
     }
 }

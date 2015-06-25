@@ -25,34 +25,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
-import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.StructuralNode;
 
 /**
- * Wrap and binary node to create a binary tree.
+ * A binary tree node. This node is open, it accepts a generic parameter for the type of child nodes it has.
+ *
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeWrapper<E, N extends OpenBinaryTreeNode<E, N>> extends AbstractTreeWrapper<E, N> implements BinaryTree<E, N> {
+public interface OpenBinaryTreeNode<E, N extends OpenBinaryTreeNode<E, N>> extends StructuralNode<E, N> {
+    /**
+     * @return The left subtree
+     */
+    N getLeft();
 
-    public BinaryTreeWrapper() {
-        super();
-    }
-
-    public BinaryTreeWrapper(N root) {
-        super(root);
-    }
-
-    public static final class NodeConverter<E, N extends OpenBinaryTreeNode<E, N>> implements NodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>, N> {
-
-        @Override
-        public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {
-            return new BinaryTreeWrapper<>(node);
-        }
-
-        @Override
-        public Class<? extends OpenNode> forClass() {
-            return OpenBinaryTreeNode.class;
-        }
-    }
+    /**
+     * @return The right subtree
+     */
+    N getRight();
 }

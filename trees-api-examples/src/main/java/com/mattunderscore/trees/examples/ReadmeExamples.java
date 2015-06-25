@@ -29,7 +29,7 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.binary.ClosedBinaryTreeNode;
+import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.binary.search.BinarySearchTree;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
@@ -66,7 +66,7 @@ public final class ReadmeExamples {
         final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
         final Trees trees = serviceLoader.iterator().next();
 
-        final SortingTreeBuilder<Integer, ClosedBinaryTreeNode<Integer>> builder = trees.treeBuilders().sortingTreeBuilder();
+        final SortingTreeBuilder<Integer, BinaryTreeNode<Integer>> builder = trees.treeBuilders().sortingTreeBuilder();
         final BinarySearchTree<Integer> tree = builder
             .addElement(2)
             .addElement(1)

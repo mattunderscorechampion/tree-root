@@ -71,7 +71,7 @@ public final class BinarySearchTreeTest {
 
     @Test
     public void construction() {
-        final SortingTreeBuilder<String, ClosedBinaryTreeNode<String>> builder = trees.treeBuilders().sortingTreeBuilder();
+        final SortingTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().sortingTreeBuilder();
         final BinarySearchTree<String> tree = builder
             .addElement("b")
             .addElement("a")
@@ -96,7 +96,7 @@ public final class BinarySearchTreeTest {
 
         assertTrue(tree.isEmpty());
         tree.addElement("b");
-        final ClosedBinaryTreeNode<String> root = tree.getRoot();
+        final BinaryTreeNode<String> root = tree.getRoot();
         assertNull(root.getLeft());
         assertNull(root.getRight());
     }
