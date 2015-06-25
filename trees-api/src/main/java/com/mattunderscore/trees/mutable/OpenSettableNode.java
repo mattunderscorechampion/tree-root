@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2014 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,8 +25,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import com.mattunderscore.trees.tree.OpenNode;
+
 /**
- * @author Matt Champion on 13/06/2015
+ * A node that allows the element it contains to be modified without changing the structure of the tree. This node is
+ * open, it accepts a generic parameter for the type of child nodes it has.
+ *
+ * @author Matt Champion on 07/10/14.
  */
-public interface ClosedMutableSettableStructuredNode<E> extends OpenMutableNode<E, ClosedMutableSettableStructuredNode<E>>, MutableStructuralNode<E, ClosedMutableSettableStructuredNode<E>>, OpenSettableNode<E, ClosedMutableSettableStructuredNode<E>> {
+public interface OpenSettableNode<E, N extends OpenSettableNode<E, ? extends N>> extends OpenNode<E, N> {
+    /**
+     * Set the element of the node.
+     * @param element The new element
+     * @return The replaced element
+     */
+    E setElement(E element);
 }
