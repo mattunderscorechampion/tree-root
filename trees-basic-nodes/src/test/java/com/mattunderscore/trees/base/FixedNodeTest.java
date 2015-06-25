@@ -32,7 +32,7 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import com.mattunderscore.trees.mutable.ClosedSettableNode;
+import com.mattunderscore.trees.mutable.SettableNode;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 
 /**
@@ -40,14 +40,14 @@ import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
  * @author Matt Champion on 20/12/14
  */
 public final class FixedNodeTest {
-    private static final FixedNode<String, ClosedSettableNode<String>> NODE = new FixedNode<String, ClosedSettableNode<String>>("a") {
+    private static final FixedNode<String, SettableNode<String>> NODE = new FixedNode<String, SettableNode<String>>("a") {
         @Override
         public int getNumberOfChildren() {
             return 0;
         }
 
         @Override
-        public Iterator<? extends ClosedSettableNode<String>> childIterator() {
+        public Iterator<? extends SettableNode<String>> childIterator() {
             return new EmptyIterator<>();
         }
     };

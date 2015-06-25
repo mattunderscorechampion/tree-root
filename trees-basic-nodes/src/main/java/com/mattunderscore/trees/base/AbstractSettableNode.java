@@ -25,13 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.base;
 
-import com.mattunderscore.trees.mutable.SettableNode;
+import com.mattunderscore.trees.mutable.OpenSettableNode;
 
 /**
  * Abstract settable node implementation.
  * @author Matt Champion
  */
-public abstract class AbstractSettableNode<E, N extends SettableNode<E, ? extends N>> extends UnfixedNode<E, N> implements SettableNode<E, N> {
+public abstract class AbstractSettableNode<E, N extends OpenSettableNode<E, ? extends N>> extends UnfixedNode<E, N> implements OpenSettableNode<E, N> {
 
     public AbstractSettableNode(E element) {
         super(element);
