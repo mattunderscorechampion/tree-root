@@ -27,27 +27,17 @@ be matched without warnings about unchecked casts.
     final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
     final Trees trees = serviceLoader.iterator().next();
 
-    final BottomUpTreeBuilder<String> builder = trees.treeBuilders().bottomUpBuilder();
-    final Tree<String, Node<String>> tree = builder.create("a",
-            builder.create("b"),
-            builder.create("c"))
-        .build(new TypeKey<Tree<String, Node<String>>>(){});
+    final BottomUpTreeBuilder<String, ClosedMutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+    final Tree<String, ClosedMutableNode<String>> tree = builder.create("a",
+        builder.create("b"),
+        builder.create("c"))
+        .build(new TypeKey<Tree<String, ClosedMutableNode<String>>>(){});
 
-    trees.treeWalkers().walkElementsInOrder(tree, new Walker<String>() {
-        @Override
-        public void onEmpty() {
-            System.out.println("Empty");
-        }
-
+    trees.treeWalkers().walkElementsInOrder(tree, new DefaultElementWalker<String>() {
         @Override
         public boolean onNext(String node) {
             System.out.println("Element: " + node);
             return true;
-        }
-
-        @Override
-        public void onCompleted() {
-            System.out.println("Complete");
         }
     });
 
@@ -56,14 +46,13 @@ This example builds an immutable tree and walks over the elements in order, left
     Element: b
     Element: a
     Element: c
-    Complete
 
 ####Binary search tree example
 
     final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
     final Trees trees = serviceLoader.iterator().next();
 
-    final SortingTreeBuilder<Integer> builder = trees.treeBuilders().sortingTreeBuilder();
+    final SortingTreeBuilder<Integer, ClosedBinaryTreeNode<Integer>> builder = trees.treeBuilders().sortingTreeBuilder();
     final BinarySearchTree<Integer> tree = builder
         .addElement(2)
         .addElement(1)
