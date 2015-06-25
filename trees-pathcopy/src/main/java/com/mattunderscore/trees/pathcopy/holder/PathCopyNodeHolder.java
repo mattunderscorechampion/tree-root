@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
 /**
@@ -70,7 +70,7 @@ final class PathCopyNodeHolder<E> implements Holder<E> {
         parent.lock();
         try {
             currentParent = parent.get();
-            final DuplicateOnWriteSimpleCollection<ClosedMutableNode<E>> newChildren =
+            final DuplicateOnWriteSimpleCollection<MutableNode<E>> newChildren =
                     currentParent.getChildren().replace(newNode, currentNode);
             newParent = new PathCopyNode<>(parent, currentParent.getElement(), newChildren);
             parent.set(newParent);

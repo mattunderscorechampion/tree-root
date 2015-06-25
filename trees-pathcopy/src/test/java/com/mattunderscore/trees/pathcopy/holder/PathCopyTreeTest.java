@@ -35,7 +35,7 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 
@@ -45,7 +45,7 @@ import com.mattunderscore.trees.traversal.TreeIteratorFactory;
  */
 public final class PathCopyTreeTest {
     private static TreeIteratorFactory iterators;
-    private static BottomUpTreeBuilder<String, ClosedMutableNode<String>> builder;
+    private static BottomUpTreeBuilder<String, MutableNode<String>> builder;
 
     @BeforeClass
     public static void setUp() {
@@ -56,9 +56,9 @@ public final class PathCopyTreeTest {
 
     @Test
     public void test() {
-        final MutableTree<String, ClosedMutableNode<String>> tree = builder.build(PathCopyTree.typeKey());
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.typeKey());
         final Iterator<String> iterator0 = iterators.inOrderElementsIterator(tree);
-        final ClosedMutableNode<String> root = tree.setRoot("root");
+        final MutableNode<String> root = tree.setRoot("root");
         Assert.assertFalse(iterator0.hasNext());
         Assert.assertEquals(0, root.getNumberOfChildren());
 
@@ -73,14 +73,14 @@ public final class PathCopyTreeTest {
         Assert.assertFalse(iterator1.hasNext());
 
         final Iterator<String> iterator2 = iterators.inOrderElementsIterator(tree);
-        final ClosedMutableNode<String> newRoot = tree.setRoot("newRoot");
+        final MutableNode<String> newRoot = tree.setRoot("newRoot");
 
         Assert.assertTrue(iterator2.hasNext());
         Assert.assertEquals("child", iterator2.next());
         Assert.assertEquals("root", iterator2.next());
         Assert.assertFalse(iterator2.hasNext());
 
-        final ClosedMutableNode<String> newChild = newRoot.addChild("newChild");
+        final MutableNode<String> newChild = newRoot.addChild("newChild");
         final Iterator<String> iterator3 = iterators.inOrderElementsIterator(tree);
         Assert.assertTrue(tree.getRoot().removeChild(newChild));
         final Iterator<String> iterator4 = iterators.inOrderElementsIterator(tree);
@@ -98,50 +98,50 @@ public final class PathCopyTreeTest {
 
     @Test
     public void mutateTree() {
-        final MutableTree<String, ClosedMutableNode<String>> tree = builder.build(PathCopyTree.typeKey());
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.typeKey());
         tree.setRoot("a");
-        final ClosedMutableNode<String> root = tree.getRoot();
+        final MutableNode<String> root = tree.getRoot();
         Assert.assertTrue(root.isLeaf());
-        final ClosedMutableNode<String> depth1 = root.addChild("b");
+        final MutableNode<String> depth1 = root.addChild("b");
         Assert.assertFalse(tree.getRoot().isLeaf());
         depth1.addChild("c");
 
         Assert.assertEquals(1, tree.getRoot().getNumberOfChildren());
-        final Iterator<? extends ClosedMutableNode<String>> iterator0 = tree.getRoot().childIterator();
+        final Iterator<? extends MutableNode<String>> iterator0 = tree.getRoot().childIterator();
         Assert.assertTrue(iterator0.hasNext());
-        final ClosedMutableNode<String> child0 = iterator0.next();
+        final MutableNode<String> child0 = iterator0.next();
         Assert.assertEquals("b", child0.getElement());
 
-        final Iterator<? extends ClosedMutableNode<String>> iterator1 = child0.childIterator();
+        final Iterator<? extends MutableNode<String>> iterator1 = child0.childIterator();
         Assert.assertTrue(iterator1.hasNext());
-        final ClosedMutableNode<String> child1 = iterator1.next();
+        final MutableNode<String> child1 = iterator1.next();
         Assert.assertEquals("c", child1.getElement());
         Assert.assertFalse(iterator1.hasNext());
 
         depth1.addChild("d");
 
-        final Iterator<? extends ClosedMutableNode<String>> iterator2 = child0.childIterator();
+        final Iterator<? extends MutableNode<String>> iterator2 = child0.childIterator();
         Assert.assertTrue(iterator2.hasNext());
-        final ClosedMutableNode<String> child2 = iterator2.next();
+        final MutableNode<String> child2 = iterator2.next();
         Assert.assertEquals("c", child2.getElement());
         Assert.assertFalse(iterator2.hasNext());
 
-        final Iterator<? extends ClosedMutableNode<String>> iterator3 = tree.getRoot().childIterator().next().childIterator();
+        final Iterator<? extends MutableNode<String>> iterator3 = tree.getRoot().childIterator().next().childIterator();
         Assert.assertTrue(iterator3.hasNext());
-        final ClosedMutableNode<String> child4 = iterator3.next();
+        final MutableNode<String> child4 = iterator3.next();
         Assert.assertEquals("c", child4.getElement());
         Assert.assertTrue(iterator3.hasNext());
-        final ClosedMutableNode<String> child5 = iterator3.next();
+        final MutableNode<String> child5 = iterator3.next();
         Assert.assertEquals("d", child5.getElement());
         Assert.assertFalse(iterator3.hasNext());
     }
 
     @Test
     public void mergedMutations() {
-        final MutableTree<String, ClosedMutableNode<String>> tree = builder.build(PathCopyTree.typeKey());
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.typeKey());
         tree.setRoot("a");
-        final ClosedMutableNode<String> root = tree.getRoot();
-        final ClosedMutableNode<String> child0 = root.addChild("b");
+        final MutableNode<String> root = tree.getRoot();
+        final MutableNode<String> child0 = root.addChild("b");
         root.addChild("c");
 
         Assert.assertEquals(0, root.getNumberOfChildren());
@@ -150,39 +150,39 @@ public final class PathCopyTreeTest {
         child0.addChild("d");
         Assert.assertEquals(0, child0.getNumberOfChildren());
 
-        final ClosedMutableNode<String> childB = tree.getRoot().childIterator().next();
+        final MutableNode<String> childB = tree.getRoot().childIterator().next();
         Assert.assertEquals(1, childB.getNumberOfChildren());
         Assert.assertEquals("d", childB.childIterator().next().getElement());
     }
 
     @Test
     public void noRevertOfSetRoot() {
-        final MutableTree<String, ClosedMutableNode<String>> tree = builder.build(PathCopyTree.typeKey());
-        final ClosedMutableNode<String> rootA = tree.setRoot("a");
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.typeKey());
+        final MutableNode<String> rootA = tree.setRoot("a");
         tree.setRoot("root");
         rootA.addChild("b");
-        final ClosedMutableNode<String> currentRoot = tree.getRoot();
+        final MutableNode<String> currentRoot = tree.getRoot();
         Assert.assertEquals("root", currentRoot.getElement());
     }
 
     @Test
     public void unmergeableChanges() {
-        final MutableTree<String, ClosedMutableNode<String>> tree = builder.build(PathCopyTree.<String>typeKey());
-        final ClosedMutableNode<String> child = tree.setRoot("a").addChild("b");
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.<String>typeKey());
+        final MutableNode<String> child = tree.setRoot("a").addChild("b");
         Assert.assertTrue(tree.getRoot().removeChild(child));
-        final ClosedMutableNode<String> grandchild = child.addChild("c");
+        final MutableNode<String> grandchild = child.addChild("c");
         Assert.assertEquals("c", grandchild.getElement());
 
-        final ClosedMutableNode<String> root = tree.getRoot();
+        final MutableNode<String> root = tree.getRoot();
         Assert.assertEquals("a", root.getElement());
         Assert.assertEquals(0, root.getNumberOfChildren());
     }
 
     @Test
     public void removalsAreSuccessful() {
-        final MutableTree<String, ClosedMutableNode<String>> tree = builder.build(PathCopyTree.<String>typeKey());
-        final ClosedMutableNode<String> grandchild = tree.setRoot("a").addChild("b").addChild("c");
-        final ClosedMutableNode<String> child = tree.getRoot().childIterator().next();
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.<String>typeKey());
+        final MutableNode<String> grandchild = tree.setRoot("a").addChild("b").addChild("c");
+        final MutableNode<String> child = tree.getRoot().childIterator().next();
 
         Assert.assertTrue(tree.getRoot().removeChild(child));
         Assert.assertTrue(child.removeChild(grandchild));
@@ -191,8 +191,8 @@ public final class PathCopyTreeTest {
     @Ignore("Adding a new child should not prevent the removal of the now stale view")
     @Test
     public void removalsWorkWithStaleViews() {
-        final MutableTree<String, ClosedMutableNode<String>> tree = builder.build(PathCopyTree.<String>typeKey());
-        final ClosedMutableNode<String> child = tree.setRoot("a").addChild("b");
+        final MutableTree<String, MutableNode<String>> tree = builder.build(PathCopyTree.<String>typeKey());
+        final MutableNode<String> child = tree.setRoot("a").addChild("b");
         child.addChild("c");
 
         Assert.assertTrue(tree.getRoot().removeChild(child));

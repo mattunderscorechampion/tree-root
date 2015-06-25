@@ -78,19 +78,19 @@ public final class LinkedTreeTest {
         final ClosedMutableSettableStructuredNode<String> child0 = iterator0.next();
         assertEquals("b", child0.getElement());
 
-        final Iterator<? extends MutableNode<String, ?>> iterator1 = child0.childIterator();
+        final Iterator<? extends OpenMutableNode<String, ?>> iterator1 = child0.childIterator();
         assertTrue(iterator1.hasNext());
-        final MutableNode<String, ?> child1 = iterator1.next();
+        final OpenMutableNode<String, ?> child1 = iterator1.next();
         assertEquals("c", child1.getElement());
         assertFalse(iterator1.hasNext());
 
         depth1.addChild("d");
-        final Iterator<? extends MutableNode<String, ?>> iterator2 = child0.childIterator();
+        final Iterator<? extends OpenMutableNode<String, ?>> iterator2 = child0.childIterator();
         assertTrue(iterator2.hasNext());
-        final MutableNode<String, ?> child2 = iterator2.next();
+        final OpenMutableNode<String, ?> child2 = iterator2.next();
         assertEquals("c", child2.getElement());
         assertTrue(iterator2.hasNext());
-        final MutableNode<String, ?> child3 = iterator2.next();
+        final OpenMutableNode<String, ?> child3 = iterator2.next();
         assertEquals("d", child3.getElement());
         assertFalse(iterator2.hasNext());
     }
@@ -130,7 +130,7 @@ public final class LinkedTreeTest {
         right.removeChild(grandchild);
 
         // A new preorder iterator sees the new state of the tree
-        final Iterator<? extends MutableNode<String, ?>> newIterator = trees.treeIterators().preOrderIterator(tree);
+        final Iterator<? extends OpenMutableNode<String, ?>> newIterator = trees.treeIterators().preOrderIterator(tree);
         assertEquals("a", newIterator.next().getElement());
         assertEquals("g", newIterator.next().getElement());
         assertFalse(newIterator.hasNext());

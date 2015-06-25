@@ -27,7 +27,7 @@ package com.mattunderscore.trees.pathcopy.holder;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 
@@ -36,7 +36,7 @@ import com.mattunderscore.trees.tree.OpenNode;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyNode}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E, N extends OpenNode<E, N>> implements NodeToTreeConverter<E, ClosedMutableNode<E>, PathCopyTree<E>, N> {
+public final class NodeConverter<E, N extends OpenNode<E, N>> implements NodeToTreeConverter<E, MutableNode<E>, PathCopyTree<E>, N> {
 
     @Override
     public PathCopyTree<E> treeFromRootNode(N node) {
@@ -45,11 +45,11 @@ public final class NodeConverter<E, N extends OpenNode<E, N>> implements NodeToT
         return newTree;
     }
 
-    private void copyChildren(ClosedMutableNode<E> newParent, N parent) {
+    private void copyChildren(MutableNode<E> newParent, N parent) {
         final Iterator<? extends N> iterator = parent.childIterator();
         while (iterator.hasNext()) {
             final N child = iterator.next();
-            final ClosedMutableNode<E> newChild = newParent.addChild(child.getElement());
+            final MutableNode<E> newChild = newParent.addChild(child.getElement());
             copyChildren(newChild, child);
         }
     }

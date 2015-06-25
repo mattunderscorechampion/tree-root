@@ -27,7 +27,7 @@ package com.mattunderscore.trees.examples;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.traversal.DefaultElementWalker;
 import com.mattunderscore.trees.traversal.DefaultTreeWalker;
@@ -41,10 +41,10 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion
  */
 public final class TraversalExamples {
-    public void nodeIterator(TreeIteratorFactory iterators, MutableTree<String, ClosedMutableNode<String>> tree) {
-        final Iterator<ClosedMutableNode<String>> iterator = iterators.breadthFirstIterator(tree);
+    public void nodeIterator(TreeIteratorFactory iterators, MutableTree<String, MutableNode<String>> tree) {
+        final Iterator<MutableNode<String>> iterator = iterators.breadthFirstIterator(tree);
         while (iterator.hasNext()) {
-            final ClosedMutableNode<String> node = iterator.next();
+            final MutableNode<String> node = iterator.next();
         }
     }
 
@@ -56,10 +56,10 @@ public final class TraversalExamples {
         }
     }
 
-    public void iterateAsSubtypeOfNode(TreeIteratorFactory iterators, MutableTree<String, ClosedMutableNode<String>> tree) {
-        final Iterator<ClosedMutableNode<String>> iterator = iterators.breadthFirstIterator(tree);
+    public void iterateAsSubtypeOfNode(TreeIteratorFactory iterators, MutableTree<String, MutableNode<String>> tree) {
+        final Iterator<MutableNode<String>> iterator = iterators.breadthFirstIterator(tree);
         while (iterator.hasNext()) {
-            final ClosedMutableNode<String> node = iterator.next();
+            final MutableNode<String> node = iterator.next();
         }
     }
 

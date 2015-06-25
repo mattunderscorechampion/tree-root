@@ -25,13 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import java.util.Iterator;
-
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.StructuralNode;
 
 /**
- * Mutable structural node. Unlike {@link MutableNode} child nodes are placed at specific positions.
+ * Mutable structural node. Unlike {@link OpenMutableNode} child nodes are placed at specific positions.
  * @author Matt Champion on 30/01/15
  */
 public interface MutableStructuralNode<E, N extends MutableStructuralNode<E, N>> extends StructuralNode<E, N> {

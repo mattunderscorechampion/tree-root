@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
-import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -34,7 +34,7 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyTree}.
  * @author Matt Champion on 28/01/15.
  */
-public final class EmptyConstructor<E> implements EmptyTreeConstructor<E, ClosedMutableNode<E>, PathCopyTree<E>> {
+public final class EmptyConstructor<E> implements EmptyTreeConstructor<E, MutableNode<E>, PathCopyTree<E>> {
     @Override
     public PathCopyTree<E> build() {
         return new PathCopyTree<>();

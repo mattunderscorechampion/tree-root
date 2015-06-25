@@ -28,14 +28,14 @@ package com.mattunderscore.trees.pathcopy.holder;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 
 /**
  * Path copy tree that uses node holders.
  * @author Matt Champion on 14/11/14.
  */
-public final class PathCopyTree<E> implements MutableTree<E, ClosedMutableNode<E>> {
+public final class PathCopyTree<E> implements MutableTree<E, MutableNode<E>> {
     private final AtomicReference<Holder<E>> holderRef;
 
     PathCopyTree() {

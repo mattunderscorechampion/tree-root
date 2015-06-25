@@ -29,7 +29,7 @@ import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.mutable.MutableNode;
+import com.mattunderscore.trees.mutable.OpenMutableNode;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.NotThreadSafe;
@@ -63,10 +63,10 @@ final class TopDownTreeBuilderImpl<E, N extends OpenNode<E, N>> implements TopDo
     }
 
     @NotThreadSafe
-    private static final class Appender<S, U extends MutableNode<S, U>> implements TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> {
-        private final MutableNode<S, U> root;
+    private static final class Appender<S, U extends OpenMutableNode<S, U>> implements TopDownTreeRootBuilder.TopDownTreeBuilderAppender<S> {
+        private final OpenMutableNode<S, U> root;
 
-        public Appender(MutableNode<S, U> root) {
+        public Appender(OpenMutableNode<S, U> root) {
             this.root = root;
         }
 

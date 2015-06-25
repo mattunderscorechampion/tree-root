@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2014 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,23 +25,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+import com.mattunderscore.trees.construction.NodeAppender;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.spi.TreeConstructor} for
- * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
- * @author Matt Champion on 28/01/15.
+ * Represents a mutable node of a tree. This node is open, it accepts a generic parameter for the type of child nodes
+ * it has.
+ *
+ * @author Matt Champion on 08/08/14.
  */
-public final class Constructor<E> implements TreeConstructor<E, MutableNode<E>, MutableTree<E, MutableNode<E>>> {
-    @Override
-    public final MutableTree<E, MutableNode<E>> build(E e, MutableTree<E, MutableNode<E>>... subtrees) {
-        return new MutableTreeImpl(e, new FixedUncheckedSimpleCollection<E>(subtrees));
-    }
-
-    @Override
-    public Class<? extends Tree> forClass() {
-        return MutableTreeImpl.class;
-    }
+public interface OpenMutableNode<E, N extends OpenMutableNode<E, N>> extends OpenNode<E, N>, NodeAppender<E, N> {
+    /**
+     * Remove the node if it is a child of the recipient
+     * @param child the node to remove
+     * @return {@code true} if the node was removed
+     */
+    boolean removeChild(N child);
 }
