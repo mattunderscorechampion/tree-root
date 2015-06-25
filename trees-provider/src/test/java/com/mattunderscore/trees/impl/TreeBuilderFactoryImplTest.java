@@ -33,7 +33,7 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTree;
@@ -46,34 +46,34 @@ public class TreeBuilderFactoryImplTest {
 
     @Test
     public void testTopDownBuilder() {
-        final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
         assertTrue(tree.isEmpty());
     }
 
     @Test
     public void testBottomUpBuilder() {
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().topDownBuilder();
         final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
         assertTrue(tree.isEmpty());
     }
 
     @Test(expected = OperationNotSupportedForType.class)
     public void testSortingTreeBuilder() {
-        final SortingTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().sortingTreeBuilder();
-        builder.build(new TypeKey<SortingTree<String, ClosedMutableSettableStructuredNode<String>>>() {});
+        final SortingTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().sortingTreeBuilder();
+        builder.build(new TypeKey<SortingTree<String, MutableSettableStructuredNode<String>>>() {});
     }
 
     @Test(expected = OperationNotSupportedForType.class)
     public void testSortingTreeBuilderWithComparator() {
-        final SortingTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders()
+        final SortingTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders()
             .sortingTreeBuilder(new ComparableComparator<String>());
-        builder.build(new TypeKey<SortingTree<String, ClosedMutableSettableStructuredNode<String>>>() {});
+        builder.build(new TypeKey<SortingTree<String, MutableSettableStructuredNode<String>>>() {});
     }
 
     @Test(expected = UnsupportedOperationException.class) // Sorting algorithms not implemented
     public void testSortedTreeBuilder() {
-        final SortedTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders()
+        final SortedTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders()
             .sortedTreeBuilder(new ComparableComparator<String>(), new SortingAlgorithm() {
         });
     }

@@ -25,20 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.tree.StructuralNode;
-
 /**
- * Mutable structural node. Unlike {@link OpenMutableNode} child nodes are placed at specific positions.
- * @author Matt Champion on 30/01/15
+ * Mutable, settable, structural node. This node is closed, it specifies itself as the type of its child nodes. It i
+ * suitable for mutable, settable, structural nodes.
+ *
+ * @author Matt Champion on 13/06/2015
  */
-public interface MutableStructuralNode<E, N extends MutableStructuralNode<E, N>> extends StructuralNode<E, N> {
-      /**
-       * Set the nth child node.
-       * <p>
-       * Replaces any node already there.
-       * @param nChild The nth value
-       * @param element The element
-       * @return The new node
-       */
-      N setChild(int nChild, E element);
+public interface MutableSettableStructuredNode<E> extends OpenMutableStructuralNode<E, MutableSettableStructuredNode<E>>, OpenSettableNode<E, MutableSettableStructuredNode<E>> {
 }

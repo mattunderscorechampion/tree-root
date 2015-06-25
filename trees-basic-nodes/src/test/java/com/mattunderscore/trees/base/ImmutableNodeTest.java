@@ -28,7 +28,7 @@ package com.mattunderscore.trees.base;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 
@@ -41,8 +41,8 @@ import org.junit.Test;
 public final class ImmutableNodeTest {
     @Test
     public void test0() {
-        final OpenNode<String, ClosedMutableSettableStructuredNode<String>> node =
-            new ImmutableNode<String, ClosedMutableSettableStructuredNode<String>>("a", new Object[0]) {};
+        final OpenNode<String, MutableSettableStructuredNode<String>> node =
+            new ImmutableNode<String, MutableSettableStructuredNode<String>>("a", new Object[0]) {};
         assertEquals("a", node.getElement());
         assertEquals(String.class, node.getElementClass());
         assertTrue(node.isLeaf());
@@ -50,8 +50,8 @@ public final class ImmutableNodeTest {
 
     @Test
     public void test1() {
-        final OpenNode<String, ClosedMutableSettableStructuredNode<String>> node =
-            new ImmutableNode<String, ClosedMutableSettableStructuredNode<String>>("a", new ImmutableNode[0]) {};
+        final OpenNode<String, MutableSettableStructuredNode<String>> node =
+            new ImmutableNode<String, MutableSettableStructuredNode<String>>("a", new ImmutableNode[0]) {};
         assertEquals("a", node.getElement());
         assertEquals(String.class, node.getElementClass());
         assertTrue(node.isLeaf());
@@ -59,8 +59,8 @@ public final class ImmutableNodeTest {
 
     @Test
     public void test2() {
-        final OpenNode<String, ClosedMutableSettableStructuredNode<String>> node =
-            new ImmutableNode<String, ClosedMutableSettableStructuredNode<String>>(
+        final OpenNode<String, MutableSettableStructuredNode<String>> node =
+            new ImmutableNode<String, MutableSettableStructuredNode<String>>(
                 "a",
                 DuplicateOnWriteSimpleCollection.create()) {};
         assertEquals("a", node.getElement());

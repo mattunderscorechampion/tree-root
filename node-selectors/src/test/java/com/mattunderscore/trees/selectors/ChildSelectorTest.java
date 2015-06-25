@@ -33,7 +33,7 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.matchers.AlwaysMatcher;
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
@@ -43,11 +43,11 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 25/12/14
  */
 public final class ChildSelectorTest {
-    private static Tree<String, ClosedMutableSettableStructuredNode<String>> tree;
+    private static Tree<String, MutableSettableStructuredNode<String>> tree;
 
     @BeforeClass
     public static void setUpClass() {
-        final TreeConstructor<String, ClosedMutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final TreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "a",
             new LinkedTree[]{
@@ -63,7 +63,7 @@ public final class ChildSelectorTest {
     public void selectsChildren() {
         final NodeSelector<String> extendedSelector = new ChildSelector<>(new RootMatcherSelector<>(new AlwaysMatcher<>()));
 
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = extendedSelector.select(tree);
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = extendedSelector.select(tree);
         Assert.assertEquals("b", iterator.next().getElement());
         Assert.assertEquals("c", iterator.next().getElement());
         Assert.assertFalse(iterator.hasNext());

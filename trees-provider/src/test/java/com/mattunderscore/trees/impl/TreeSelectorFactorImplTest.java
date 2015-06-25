@@ -37,7 +37,7 @@ import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.matchers.AlwaysMatcher;
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.tree.Tree;
@@ -48,13 +48,13 @@ import com.mattunderscore.trees.tree.Tree;
  */
 public final class TreeSelectorFactorImplTest {
     private static TreeSelectorFactory factory;
-    private static Tree<String, ClosedMutableSettableStructuredNode<String>> tree;
+    private static Tree<String, MutableSettableStructuredNode<String>> tree;
 
     @BeforeClass
     public static void setUpClass() {
         final Trees trees = new TreesImpl();
         factory = trees.treeSelectors();
-        final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         tree = builder.create("a",
             builder.create("b"),
             builder.create("c")).build(LinkedTree.class);
@@ -63,8 +63,8 @@ public final class TreeSelectorFactorImplTest {
     @Test
     public void selectorFromMatcher() {
         final TreeSelector<String> selector = factory.newSelector(new AlwaysMatcher<>());
-        final Iterator<Tree<String, ClosedMutableSettableStructuredNode<String>>> iterator = selector.select(tree);
-        final Tree<String, ClosedMutableSettableStructuredNode<String>> selectedTree = iterator.next();
+        final Iterator<Tree<String, MutableSettableStructuredNode<String>>> iterator = selector.select(tree);
+        final Tree<String, MutableSettableStructuredNode<String>> selectedTree = iterator.next();
         assertEquals("a", selectedTree.getRoot().getElement());
         assertFalse(iterator.hasNext());
     }
@@ -73,10 +73,10 @@ public final class TreeSelectorFactorImplTest {
     public void selectorFromSelectorAndMatcher() {
         final TreeSelector<String> selector0 = factory.newSelector(new AlwaysMatcher<String>());
         final TreeSelector<String> selector1 = factory.newSelector(selector0, new AlwaysMatcher<String>());
-        final Iterator<Tree<String, ClosedMutableSettableStructuredNode<String>>> iterator = selector1.select(tree);
-        final Tree<String, ClosedMutableSettableStructuredNode<String>> selectedTree0 = iterator.next();
+        final Iterator<Tree<String, MutableSettableStructuredNode<String>>> iterator = selector1.select(tree);
+        final Tree<String, MutableSettableStructuredNode<String>> selectedTree0 = iterator.next();
         assertEquals("b", selectedTree0.getRoot().getElement());
-        final Tree<String, ClosedMutableSettableStructuredNode<String>> selectedTree1 = iterator.next();
+        final Tree<String, MutableSettableStructuredNode<String>> selectedTree1 = iterator.next();
         assertEquals("c", selectedTree1.getRoot().getElement());
         assertFalse(iterator.hasNext());
     }

@@ -36,7 +36,7 @@ import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -47,7 +47,7 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test
     public void buildEmpty() {
-        final BottomUpTreeBuilderImpl<String, ClosedMutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
         final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
         assertNull(tree.getRoot());
         assertTrue(tree.isEmpty());
@@ -55,8 +55,8 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test
     public void buildLeaf() {
-        final BottomUpTreeBuilderImpl<String, ClosedMutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
-        final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder0 = builder.create("ROOT");
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT");
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
         assertEquals("ROOT", tree.getRoot().getElement());
@@ -66,8 +66,8 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test
     public void buildSimple() {
-        final BottomUpTreeBuilderImpl<String, ClosedMutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
-        final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
             builder.create("a"),
             builder.create("b"));
 
@@ -79,8 +79,8 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test
     public void buildComplex() {
-        final BottomUpTreeBuilderImpl<String, ClosedMutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
-        final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
             builder.create("a",
                 builder.create("+",
                     builder.create("fah",
@@ -100,11 +100,11 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void failToBuild() {
-        final BottomUpTreeBuilderImpl<String, ClosedMutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
-        final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder0 = builder.create("ROOT");
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT");
         builder0.build(new TypeKey<FakeTree>() {});
     }
 
-    public interface FakeTree extends Tree<String, ClosedMutableSettableStructuredNode<String>> {
+    public interface FakeTree extends Tree<String, MutableSettableStructuredNode<String>> {
     }
 }

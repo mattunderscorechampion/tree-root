@@ -49,9 +49,9 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public final class LinkedTreeTest {
     private static final Trees trees = new TreesImpl();
-    private final Class<MutableTree<String, ClosedMutableSettableStructuredNode<String>>> treeClass;
+    private final Class<MutableTree<String, MutableSettableStructuredNode<String>>> treeClass;
 
-    public LinkedTreeTest(Class<MutableTree<String, ClosedMutableSettableStructuredNode<String>>> treeClass) {
+    public LinkedTreeTest(Class<MutableTree<String, MutableSettableStructuredNode<String>>> treeClass) {
         this.treeClass = treeClass;
     }
 
@@ -64,18 +64,18 @@ public final class LinkedTreeTest {
 
     @Test
     public void mutateTree() {
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().topDownBuilder();
-        final MutableTree<String, ClosedMutableSettableStructuredNode<String>> tree = builder.root("a").build(treeClass);
-        final ClosedMutableSettableStructuredNode<String> root = tree.getRoot();
+        final TopDownTreeRootBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().topDownBuilder();
+        final MutableTree<String, MutableSettableStructuredNode<String>> tree = builder.root("a").build(treeClass);
+        final MutableSettableStructuredNode<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
-        final ClosedMutableSettableStructuredNode<String> depth1 = root.addChild("b");
+        final MutableSettableStructuredNode<String> depth1 = root.addChild("b");
         assertFalse(root.isLeaf());
         depth1.addChild("c");
 
         assertEquals(1, root.getNumberOfChildren());
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator0 = root.childIterator();
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator0 = root.childIterator();
         assertTrue(iterator0.hasNext());
-        final ClosedMutableSettableStructuredNode<String> child0 = iterator0.next();
+        final MutableSettableStructuredNode<String> child0 = iterator0.next();
         assertEquals("b", child0.getElement());
 
         final Iterator<? extends OpenMutableNode<String, ?>> iterator1 = child0.childIterator();
@@ -102,31 +102,31 @@ public final class LinkedTreeTest {
     @Test
     public void mutationDuringTraversal() {
         // Create a simple tree
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder0 = builder.root("a");
+        final TopDownTreeRootBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.root("a");
         final NodeAppender<String, ?> appender0 = builder0.addChild("b");
         final NodeAppender<String, ?> appender1 = builder0.addChild("e");
         appender0.addChild("c");
         appender0.addChild("d");
         appender1.addChild("f");
-        final MutableTree<String, ClosedMutableSettableStructuredNode<String>> tree = builder0.build(treeClass);
+        final MutableTree<String, MutableSettableStructuredNode<String>> tree = builder0.build(treeClass);
 
         // Begin iterating over the tree
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);
-        final ClosedMutableSettableStructuredNode<String> root = iterator.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);
+        final MutableSettableStructuredNode<String> root = iterator.next();
         assertEquals("a", root.getElement());
         assertEquals("b", iterator.next().getElement());
 
         // Get the left and right nodes of the root, remove them and add a new child
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> childIterator = root.childIterator();
-        final ClosedMutableSettableStructuredNode<String> left = childIterator.next();
-        final ClosedMutableSettableStructuredNode<String> right = childIterator.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> childIterator = root.childIterator();
+        final MutableSettableStructuredNode<String> left = childIterator.next();
+        final MutableSettableStructuredNode<String> right = childIterator.next();
         root.removeChild(right);
         root.removeChild(left);
         root.addChild("g");
 
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> grandchildIterator = right.childIterator();
-        final ClosedMutableSettableStructuredNode<String> grandchild = grandchildIterator.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> grandchildIterator = right.childIterator();
+        final MutableSettableStructuredNode<String> grandchild = grandchildIterator.next();
         right.removeChild(grandchild);
 
         // A new preorder iterator sees the new state of the tree
@@ -145,18 +145,18 @@ public final class LinkedTreeTest {
 
     @Test(expected = NullPointerException.class)
     public void addNull() {
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableStructuredNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = rootBuilder.root("a");
-        final MutableTree<String, ClosedMutableSettableStructuredNode<String>> tree = builder.build(treeClass);
+        final TopDownTreeRootBuilder<String, MutableSettableStructuredNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, MutableSettableStructuredNode<String>> builder = rootBuilder.root("a");
+        final MutableTree<String, MutableSettableStructuredNode<String>> tree = builder.build(treeClass);
         tree.getRoot().addChild(null);
     }
 
     @Test
     public void remove() {
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableStructuredNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = rootBuilder.root("a");
-        final MutableTree<String, ClosedMutableSettableStructuredNode<String>> tree = builder.build(treeClass);
-        final ClosedMutableSettableStructuredNode<String> child = tree.getRoot().addChild("b");
+        final TopDownTreeRootBuilder<String, MutableSettableStructuredNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, MutableSettableStructuredNode<String>> builder = rootBuilder.root("a");
+        final MutableTree<String, MutableSettableStructuredNode<String>> tree = builder.build(treeClass);
+        final MutableSettableStructuredNode<String> child = tree.getRoot().addChild("b");
         assertTrue(tree.getRoot().removeChild(child));
         assertEquals(0, tree.getRoot().getNumberOfChildren());
     }
