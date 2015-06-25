@@ -278,9 +278,7 @@ _PathCopyTree_ - a path copy tree that uses a separate data structure for the ba
 
 ##Targeted Language
 
-The current target is Java 7. I know Java 8 is the latest version and the Streams API may be helpful for tree
-traversals. I maybe able to add some Java 8 specific extensions and I will move the target over to Java 8 towards EOL of
-Java 7.
+The current target is Java 8. Some Java 8 features are being used in the API.
 
 ##License
 
