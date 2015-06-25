@@ -47,7 +47,7 @@ public final class MutableBinaryTreeNodeConverterTest {
 
       @Test
       public void convertToSelf() {
-            final BottomUpTreeBuilder<String, ClosedMutableBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+            final BottomUpTreeBuilder<String, MutableBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
             final MutableBinaryTreeImpl<String> tree = builder.create("a", builder.create("b", builder.create("c")))
                 .build(MutableBinaryTreeImpl.typeKey());
 
@@ -56,16 +56,16 @@ public final class MutableBinaryTreeNodeConverterTest {
             final MutableBinaryTreeImpl<String> convertedTree =
                 converter.treeFromRootNode(tree.getRoot());
 
-            final ClosedMutableBinaryTreeNode<String> convertedRoot = convertedTree.getRoot();
+            final MutableBinaryTreeNode<String> convertedRoot = convertedTree.getRoot();
             assertEquals(1, convertedRoot.getNumberOfChildren());
-            final Iterator<? extends ClosedMutableBinaryTreeNode<String>> iterator0 = convertedRoot.childIterator();
+            final Iterator<? extends MutableBinaryTreeNode<String>> iterator0 = convertedRoot.childIterator();
             assertTrue(iterator0.hasNext());
-            final ClosedMutableBinaryTreeNode<String> child0 = iterator0.next();
+            final MutableBinaryTreeNode<String> child0 = iterator0.next();
             assertEquals("b", child0.getElement());
 
-            final Iterator<? extends ClosedMutableBinaryTreeNode<String>> iterator1 = child0.childIterator();
+            final Iterator<? extends MutableBinaryTreeNode<String>> iterator1 = child0.childIterator();
             assertTrue(iterator1.hasNext());
-            final ClosedMutableBinaryTreeNode<String> child1 = iterator1.next();
+            final MutableBinaryTreeNode<String> child1 = iterator1.next();
             assertEquals("c", child1.getElement());
             assertFalse(iterator1.hasNext());
       }

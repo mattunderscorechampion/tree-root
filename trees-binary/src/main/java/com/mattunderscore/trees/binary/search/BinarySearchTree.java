@@ -29,7 +29,7 @@ import java.util.Comparator;
 
 import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
-import com.mattunderscore.trees.binary.ClosedMutableBinaryTreeNode;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeNodeImpl;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.sorted.SortingTree;
@@ -56,10 +56,10 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
         return this;
     }
 
-    private void addTo(ClosedMutableBinaryTreeNode<E> node, E element) {
+    private void addTo(MutableBinaryTreeNode<E> node, E element) {
         final int comparison = comparator.compare(node.getElement(), element);
         if (comparison < 0) {
-            final ClosedMutableBinaryTreeNode<E> left = node.getLeft();
+            final MutableBinaryTreeNode<E> left = node.getLeft();
             if (left == null) {
                 node.setLeft(element);
             }
@@ -68,7 +68,7 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
             }
         }
         else {
-            final ClosedMutableBinaryTreeNode<E> right = node.getRight();
+            final MutableBinaryTreeNode<E> right = node.getRight();
             if (right == null) {
                 node.setRight(element);
             }

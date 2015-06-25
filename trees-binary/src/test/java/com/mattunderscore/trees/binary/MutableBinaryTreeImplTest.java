@@ -52,9 +52,9 @@ public final class MutableBinaryTreeImplTest {
 
             assertEquals("a", tree.getRoot().getElement());
 
-            final Iterator<? extends ClosedMutableBinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
-            final ClosedMutableBinaryTreeNode<String> left = iterator.next();
-            final ClosedMutableBinaryTreeNode<String> right = iterator.next();
+            final Iterator<? extends MutableBinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
+            final MutableBinaryTreeNode<String> left = iterator.next();
+            final MutableBinaryTreeNode<String> right = iterator.next();
             assertFalse(iterator.hasNext());
 
             assertEquals("b", left.getElement());
@@ -80,18 +80,18 @@ public final class MutableBinaryTreeImplTest {
             final MutableBinaryTreeImpl<String> tree = constructor.build("a", new MutableBinaryTreeImpl[]{leftSubtree, rightSubtree});
 
             assertEquals("a", tree.getRoot().getElement());
-            final ClosedMutableBinaryTreeNode<String> left = tree.getRoot().getLeft();
+            final MutableBinaryTreeNode<String> left = tree.getRoot().getLeft();
             assertNull(left.getLeft());
-            final ClosedMutableBinaryTreeNode<String> leftOfLeft = left.setLeft("d");
+            final MutableBinaryTreeNode<String> leftOfLeft = left.setLeft("d");
             assertEquals("d", left.getLeft().getElement());
             assertEquals(leftOfLeft, left.getLeft());
 
             assertNull(left.getRight());
-            final ClosedMutableBinaryTreeNode<String> rightOfLeft = left.setRight("e");
+            final MutableBinaryTreeNode<String> rightOfLeft = left.setRight("e");
             assertEquals("e", left.getRight().getElement());
             assertEquals(rightOfLeft, left.getRight());
 
-            final Iterator<? extends ClosedMutableBinaryTreeNode<String>> iterator = left.childIterator();
+            final Iterator<? extends MutableBinaryTreeNode<String>> iterator = left.childIterator();
             assertTrue(iterator.hasNext());
             assertEquals("d", iterator.next().getElement());
             assertEquals("e", iterator.next().getElement());
