@@ -65,6 +65,6 @@ public final class SortingTreeBuilderImpl<E, N extends OpenNode<E, N>> implement
 
     @Override
     public <T extends SortingTree<E, N>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
-        return build(type.getType());
+        return build(type.getTreeType());
     }
 }

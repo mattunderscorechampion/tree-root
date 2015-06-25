@@ -35,7 +35,9 @@ import java.lang.reflect.Type;
  * @author Matt Champion
  */
 public abstract class TypeKey<T extends Tree<?, ?>> {
-    private final Class<T> type;
+    private final Class<T> treeType;
+    private final Class<?> elementType;
+    private final Class<?> nodeType;
 
     @SuppressWarnings("unchecked")
     public TypeKey() {
@@ -43,18 +45,52 @@ public abstract class TypeKey<T extends Tree<?, ?>> {
         final Type treeType = concreteParameterizedType.getActualTypeArguments()[0];
         if (treeType instanceof ParameterizedType) {
             final ParameterizedType parameterizedType = (ParameterizedType) treeType;
-            type = (Class<T>) parameterizedType.getRawType();
+            this.treeType = (Class<T>) parameterizedType.getRawType();
+
+            final Type[] treeTypeArguments = parameterizedType.getActualTypeArguments();
+            if (treeTypeArguments.length == 2) {
+                final Type elementType = treeTypeArguments[0];
+                if (elementType instanceof ParameterizedType) {
+                    final ParameterizedType parameterizedElementType = (ParameterizedType) elementType;
+                    this.elementType = (Class<?>) parameterizedElementType.getRawType();
+                }
+                else if (elementType instanceof Class) {
+                    this.elementType = (Class<?>) elementType;
+                }
+                else {
+                    this.elementType = null;
+                }
+
+                final Type nodeType = treeTypeArguments[1];
+                if (nodeType instanceof ParameterizedType) {
+                    final ParameterizedType parameterizedNodeType = (ParameterizedType) nodeType;
+                    this.nodeType = (Class<?>) parameterizedNodeType.getRawType();
+                }
+                else if (nodeType instanceof Class) {
+                    this.nodeType = (Class<?>) nodeType;
+                }
+                else {
+                    this.nodeType = null;
+                }
+            }
+            else {
+                this.elementType = null;
+                this.nodeType = null;
+            }
         }
         else if (treeType instanceof Class) {
-            type = (Class<T>) treeType;
+            this.treeType = (Class<T>) treeType;
+
+            this.elementType = null;
+            this.nodeType = null;
         }
         else {
             throw new IllegalStateException("Unable to identify tree class");
         }
     }
 
-    public final Class<T> getType() {
-        return type;
+    public final Class<T> getTreeType() {
+        return treeType;
     }
 
     @Override
@@ -67,17 +103,35 @@ public abstract class TypeKey<T extends Tree<?, ?>> {
         }
         else {
             final TypeKey typeKey = (TypeKey) o;
-            return type.equals(typeKey.type);
+            return treeType.equals(typeKey.treeType) &&
+                ((elementType == null && typeKey.elementType == null) ||
+                    (elementType != null && elementType.equals(typeKey.elementType))) &&
+                ((nodeType == null && typeKey.nodeType == null) ||
+                    (nodeType != null && nodeType.equals(typeKey.nodeType)));
         }
     }
 
     @Override
     public final int hashCode() {
-        return type.hashCode();
+        int result = treeType.hashCode();
+        result = result * 31 + (elementType == null ? 0 : elementType.hashCode());
+        result = result * 31 + (nodeType == null ? 0 : nodeType.hashCode());
+        return result;
     }
 
     @Override
     public final String toString() {
-        return "TypeKey: " + type.getName();
+        if (elementType == null && nodeType == null) {
+            return "TypeKey: " + treeType.getName();
+        }
+        else if (nodeType == null) {
+            return "TypeKey: " + treeType.getName() + " : unknown : " + elementType.getName();
+        }
+        else if (elementType == null) {
+            return "TypeKey: " + treeType.getName() + " : " + nodeType.getName();
+        }
+        else {
+            return "TypeKey: " + treeType.getName() + " : " + nodeType.getName() + " : " + elementType.getName();
+        }
     }
 }
