@@ -47,8 +47,8 @@ public final class MutableTreeImplNodeConverter<E> implements NodeToTreeConverte
 
     @Override
     public MutableTreeImpl<E> treeFromRootNode(ClosedMutableSettableNode<E> node) {
-        final TopDownTreeRootBuilder<E, ClosedMutableNode<E>> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<E, ClosedMutableNode<E>> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
+        final TopDownTreeRootBuilder<E, MutableNode<E>> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<E, MutableNode<E>> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
 
         copyChildren(treeBuilder, node);
         return treeBuilder.build(MutableTreeImpl.class);

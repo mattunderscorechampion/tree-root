@@ -28,5 +28,5 @@ package com.mattunderscore.trees.mutable;
 /**
  * @author Matt Champion on 13/06/2015
  */
-public interface ClosedMutableSettableStructuredNode<E> extends MutableNode<E, ClosedMutableSettableStructuredNode<E>>, MutableStructuralNode<E, ClosedMutableSettableStructuredNode<E>>, SettableNode<E, ClosedMutableSettableStructuredNode<E>> {
+public interface ClosedMutableSettableStructuredNode<E> extends OpenMutableNode<E, ClosedMutableSettableStructuredNode<E>>, MutableStructuralNode<E, ClosedMutableSettableStructuredNode<E>>, SettableNode<E, ClosedMutableSettableStructuredNode<E>> {
 }

@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
-import com.mattunderscore.trees.mutable.ClosedMutableNode;
+import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.Tree;
@@ -44,7 +44,7 @@ public final class NodeSelectorExamples {
         }
     }
 
-    public void selectorExampleOnMutableTree(NodeSelector<String> selector, Tree<String, ClosedMutableNode<String>> tree) {
-        final Iterator<? extends ClosedMutableNode<String>> iterator = selector.select(tree);
+    public void selectorExampleOnMutableTree(NodeSelector<String> selector, Tree<String, MutableNode<String>> tree) {
+        final Iterator<? extends MutableNode<String>> iterator = selector.select(tree);
     }
 }

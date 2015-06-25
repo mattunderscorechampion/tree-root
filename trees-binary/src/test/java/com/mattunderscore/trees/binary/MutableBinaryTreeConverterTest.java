@@ -35,11 +35,9 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
-import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeNodeImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.mutable.ClosedMutableNode;
 import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 
 /**
