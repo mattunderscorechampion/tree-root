@@ -28,10 +28,12 @@ package com.mattunderscore.trees.tree;
 import java.util.Iterator;
 
 /**
- * Node that has children in specific places.
+ * Node that has children in specific places. This node is open, it accepts a generic parameter for the type of child
+ * nodes it has.
+ *
  * @author Matt Champion on 31/01/15
  */
-public interface StructuralNode<E, N extends StructuralNode<E, N>> extends OpenNode<E, N> {
+public interface OpenStructuralNode<E, N extends OpenStructuralNode<E, N>> extends OpenNode<E, N> {
     /**
      * An iterator over the structure of the children. If there is an empty place where an element
      * might be but is not then the iterator will return null.

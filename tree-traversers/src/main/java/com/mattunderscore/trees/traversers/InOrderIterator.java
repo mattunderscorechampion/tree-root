@@ -27,7 +27,7 @@ package com.mattunderscore.trees.traversers;
 
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.StructuralNode;
+import com.mattunderscore.trees.tree.OpenStructuralNode;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.NotThreadSafe;
 
@@ -82,8 +82,8 @@ public final class InOrderIterator<E , N extends OpenNode<E, N>, T extends Tree<
         @SuppressWarnings("unchecked")
         public State(N node) {
             this.node = node;
-            if (node instanceof StructuralNode) {
-                final StructuralNode structuralNode = (StructuralNode)node;
+            if (node instanceof OpenStructuralNode) {
+                final OpenStructuralNode structuralNode = (OpenStructuralNode)node;
                 this.iterator = structuralNode.childStructuralIterator();
             }
             else {
