@@ -32,6 +32,7 @@ import com.mattunderscore.trees.binary.ClosedMutableBinaryTreeNode;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 
 /**
+ * Wrap a ClosedMutableBinaryTreeNode as a ClosedBinaryTreeNode.
  * @author Matt Champion on 22/06/2015
  */
 public final class WrappedBinaryNode<E> implements ClosedBinaryTreeNode<E> {
@@ -43,12 +44,20 @@ public final class WrappedBinaryNode<E> implements ClosedBinaryTreeNode<E> {
 
     @Override
     public ClosedBinaryTreeNode<E> getLeft() {
-        return new WrappedBinaryNode<>(delegateNode.getLeft());
+        final ClosedMutableBinaryTreeNode<E> node = delegateNode.getLeft();
+        if (node != null) {
+            return new WrappedBinaryNode<>(node);
+        }
+        return null;
     }
 
     @Override
     public ClosedBinaryTreeNode<E> getRight() {
-        return new WrappedBinaryNode<>(delegateNode.getRight());
+        final ClosedMutableBinaryTreeNode<E> node = delegateNode.getRight();
+        if (node != null) {
+            return new WrappedBinaryNode<>(node);
+        }
+        return null;
     }
 
     @Override
@@ -58,7 +67,11 @@ public final class WrappedBinaryNode<E> implements ClosedBinaryTreeNode<E> {
 
     @Override
     public ClosedBinaryTreeNode<E> getChild(int nChild) {
-        return new WrappedBinaryNode<>(delegateNode.getChild(nChild));
+        final ClosedMutableBinaryTreeNode<E> node = delegateNode.getChild(nChild);
+        if (node != null) {
+            return new WrappedBinaryNode<>(node);
+        }
+        return null;
     }
 
     @Override
@@ -83,7 +96,10 @@ public final class WrappedBinaryNode<E> implements ClosedBinaryTreeNode<E> {
 
         @Override
         protected ClosedBinaryTreeNode<E> convert(ClosedMutableBinaryTreeNode<E> node) {
-            return new WrappedBinaryNode<>(node);
+            if (node != null) {
+                return new WrappedBinaryNode<>(node);
+            }
+            return null;
         }
     }
 }

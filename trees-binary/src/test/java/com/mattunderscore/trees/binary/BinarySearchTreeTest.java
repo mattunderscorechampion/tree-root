@@ -27,6 +27,7 @@ package com.mattunderscore.trees.binary;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Comparator;
@@ -86,5 +87,17 @@ public final class BinarySearchTreeTest {
         assertEquals("f", tree.getRoot().getRight().getRight().getElement());
         assertEquals("e", tree.getRoot().getRight().getRight().getLeft().getElement());
         assertEquals("d", tree.getRoot().getRight().getRight().getLeft().getLeft().getElement());
+    }
+
+    @Test
+    public void absentNodes() {
+        final Comparator<String> comparator = new ComparableComparator<>();
+        final BinarySearchTree<String> tree = new BinarySearchTree<>(comparator);
+
+        assertTrue(tree.isEmpty());
+        tree.addElement("b");
+        final ClosedBinaryTreeNode<String> root = tree.getRoot();
+        assertNull(root.getLeft());
+        assertNull(root.getRight());
     }
 }
