@@ -39,14 +39,14 @@ import java.util.Iterator;
  *
  * @author Matt Champion on 24/06/15.
  */
-public final class MutableTreeImplNodeConverter<E> implements NodeToTreeConverter<E, ClosedMutableSettableNode<E>, MutableTree<E, ClosedMutableSettableNode<E>>, ClosedMutableSettableNode<E>>, SPISupportAwareComponent {
+public final class MutableTreeImplNodeConverter<E> implements NodeToTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>, MutableSettableNode<E>>, SPISupportAwareComponent {
     private volatile TreeBuilderFactory treeBuilderFactory;
 
     public MutableTreeImplNodeConverter() {
     }
 
     @Override
-    public MutableTreeImpl<E> treeFromRootNode(ClosedMutableSettableNode<E> node) {
+    public MutableTreeImpl<E> treeFromRootNode(MutableSettableNode<E> node) {
         final TopDownTreeRootBuilder<E, MutableNode<E>> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<E, MutableNode<E>> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
 
@@ -54,17 +54,17 @@ public final class MutableTreeImplNodeConverter<E> implements NodeToTreeConverte
         return treeBuilder.build(MutableTreeImpl.class);
     }
 
-    private void copyChildren(TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> appender, ClosedMutableSettableNode<E> node) {
-        final Iterator<? extends ClosedMutableSettableNode<E>> iterator = node.childIterator();
+    private void copyChildren(TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> appender, MutableSettableNode<E> node) {
+        final Iterator<? extends MutableSettableNode<E>> iterator = node.childIterator();
         while (iterator.hasNext()) {
-            final ClosedMutableSettableNode<E> child = iterator.next();
+            final MutableSettableNode<E> child = iterator.next();
             final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> newAppender = appender.addChild(child.getElement());
             copyChildren(newAppender, child);
         }
     }
 
     @Override
-    public Class<? extends ClosedMutableSettableNode> forClass() {
+    public Class<? extends MutableSettableNode> forClass() {
         return MutableTreeImpl.class;
     }
 

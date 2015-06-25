@@ -37,7 +37,6 @@ import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.linked.tree.LinkedTree;
 
 /**
  * Test for {@link NodeConverter}.
@@ -48,37 +47,37 @@ public final class NodeConverterTest {
 
       @Test
       public void convertToSelf() {
-            final TopDownTreeRootBuilder<String, ClosedMutableSettableNode<String>> builder = trees.treeBuilders().topDownBuilder();
-            final MutableTree<String, ClosedMutableSettableNode<String>> tree = builder.root("a").build(MutableTreeImpl.class);
-            final ClosedMutableSettableNode<String> root = tree.getRoot();
+            final TopDownTreeRootBuilder<String, MutableSettableNode<String>> builder = trees.treeBuilders().topDownBuilder();
+            final MutableTree<String, MutableSettableNode<String>> tree = builder.root("a").build(MutableTreeImpl.class);
+            final MutableSettableNode<String> root = tree.getRoot();
             assertTrue(root.isLeaf());
-            final ClosedMutableSettableNode<String> depth1 = root.addChild("b");
+            final MutableSettableNode<String> depth1 = root.addChild("b");
             assertFalse(root.isLeaf());
             depth1.addChild("c");
 
             final NodeConverter<String> converter = new NodeConverter<>();
             converter.setSupport(new SPISupport());
 
-            final MutableTree<String, ClosedMutableSettableNode<String>> convertedTree =
+            final MutableTree<String, MutableSettableNode<String>> convertedTree =
                 converter.treeFromRootNode(root);
 
-            final ClosedMutableSettableNode<String> convertedRoot = convertedTree.getRoot();
+            final MutableSettableNode<String> convertedRoot = convertedTree.getRoot();
             assertEquals(1, convertedRoot.getNumberOfChildren());
-            final Iterator<? extends ClosedMutableSettableNode<String>> iterator0 = convertedRoot.childIterator();
+            final Iterator<? extends MutableSettableNode<String>> iterator0 = convertedRoot.childIterator();
             assertTrue(iterator0.hasNext());
-            final ClosedMutableSettableNode<String> child0 = iterator0.next();
+            final MutableSettableNode<String> child0 = iterator0.next();
             assertEquals("b", child0.getElement());
 
-            final Iterator<? extends ClosedMutableSettableNode<String>> iterator1 = child0.childIterator();
+            final Iterator<? extends MutableSettableNode<String>> iterator1 = child0.childIterator();
             assertTrue(iterator1.hasNext());
-            final ClosedMutableSettableNode<String> child1 = iterator1.next();
+            final MutableSettableNode<String> child1 = iterator1.next();
             assertEquals("c", child1.getElement());
             assertFalse(iterator1.hasNext());
 
             depth1.addChild("d");
-            final Iterator<? extends ClosedMutableSettableNode<String>> iterator2 = child0.childIterator();
+            final Iterator<? extends MutableSettableNode<String>> iterator2 = child0.childIterator();
             assertTrue(iterator2.hasNext());
-            final ClosedMutableSettableNode<String> child2 = iterator2.next();
+            final MutableSettableNode<String> child2 = iterator2.next();
             assertEquals("c", child2.getElement());
             assertFalse("Change to original tree should not be propagated to the converted tree", iterator2.hasNext());
       }

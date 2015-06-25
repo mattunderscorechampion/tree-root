@@ -26,7 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.mutable;
 
 /**
+ * Represents a mutable node of a tree. This node is closed, it specifies itself as the type of its child nodes. It is
+ * suitable for mutable, settable nodes.
+ *
  * @author Matt Champion on 13/06/2015
  */
-public interface ClosedMutableSettableNode<E> extends OpenMutableNode<E, ClosedMutableSettableNode<E>>, OpenSettableNode<E, ClosedMutableSettableNode<E>> {
+public interface MutableSettableNode<E> extends OpenMutableNode<E, MutableSettableNode<E>>, OpenSettableNode<E, MutableSettableNode<E>> {
 }

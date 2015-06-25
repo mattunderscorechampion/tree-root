@@ -48,9 +48,9 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public final class MutableTreeTest {
     private static final Trees trees = new TreesImpl();
-    private final Class<MutableTree<String, ClosedMutableSettableNode<String>>> treeClass;
+    private final Class<MutableTree<String, MutableSettableNode<String>>> treeClass;
 
-    public MutableTreeTest(Class<MutableTree<String, ClosedMutableSettableNode<String>>> treeClass) {
+    public MutableTreeTest(Class<MutableTree<String, MutableSettableNode<String>>> treeClass) {
         this.treeClass = treeClass;
     }
 
@@ -64,8 +64,8 @@ public final class MutableTreeTest {
 
     @Test
     public void mutateTree() {
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableNode<String>> builder = trees.treeBuilders().topDownBuilder();
-        final MutableTree<String, ClosedMutableSettableNode<String>> tree = builder.root("a").build(treeClass);
+        final TopDownTreeRootBuilder<String, MutableSettableNode<String>> builder = trees.treeBuilders().topDownBuilder();
+        final MutableTree<String, MutableSettableNode<String>> tree = builder.root("a").build(treeClass);
         final OpenMutableNode<String, ?> root = tree.getRoot();
         assertTrue(root.isLeaf());
         final OpenMutableNode<String, ?> depth1 = root.addChild("b");
@@ -102,31 +102,31 @@ public final class MutableTreeTest {
     @Test
     public void mutationDuringTraversal() {
         // Create a simple tree
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableNode<String>> builder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedMutableSettableNode<String>> builder0 = builder.root("a");
+        final TopDownTreeRootBuilder<String, MutableSettableNode<String>> builder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, MutableSettableNode<String>> builder0 = builder.root("a");
         final NodeAppender<String, ?> appender0 = builder0.addChild("b");
         final NodeAppender<String, ?> appender1 = builder0.addChild("e");
         appender0.addChild("c");
         appender0.addChild("d");
         appender1.addChild("f");
-        final MutableTree<String, ClosedMutableSettableNode<String>> tree = builder0.build(treeClass);
+        final MutableTree<String, MutableSettableNode<String>> tree = builder0.build(treeClass);
 
         // Begin iterating over the tree
-        final Iterator<? extends ClosedMutableSettableNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);
-        final ClosedMutableSettableNode<String> root = iterator.next();
+        final Iterator<? extends MutableSettableNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);
+        final MutableSettableNode<String> root = iterator.next();
         assertEquals("a", root.getElement());
         assertEquals("b", iterator.next().getElement());
 
         // Get the left and right nodes of the root, remove them and add a new child
-        final Iterator<? extends ClosedMutableSettableNode<String>> childIterator = root.childIterator();
-        final ClosedMutableSettableNode<String> left = childIterator.next();
-        final ClosedMutableSettableNode<String> right = childIterator.next();
+        final Iterator<? extends MutableSettableNode<String>> childIterator = root.childIterator();
+        final MutableSettableNode<String> left = childIterator.next();
+        final MutableSettableNode<String> right = childIterator.next();
         root.removeChild(right);
         root.removeChild(left);
         root.addChild("g");
 
-        final Iterator<? extends ClosedMutableSettableNode<String>> grandchildIterator = right.childIterator();
-        final ClosedMutableSettableNode<String> grandchild = grandchildIterator.next();
+        final Iterator<? extends MutableSettableNode<String>> grandchildIterator = right.childIterator();
+        final MutableSettableNode<String> grandchild = grandchildIterator.next();
         right.removeChild(grandchild);
 
         // A new preorder iterator sees the new state of the tree
@@ -145,18 +145,18 @@ public final class MutableTreeTest {
 
     @Test(expected = NullPointerException.class)
     public void addNull() {
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedMutableSettableNode<String>> builder = rootBuilder.root("a");
-        final MutableTree<String, ClosedMutableSettableNode<String>> tree = builder.build(treeClass);
+        final TopDownTreeRootBuilder<String, MutableSettableNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, MutableSettableNode<String>> builder = rootBuilder.root("a");
+        final MutableTree<String, MutableSettableNode<String>> tree = builder.build(treeClass);
         tree.getRoot().addChild(null);
     }
 
     @Test
     public void remove() {
-        final TopDownTreeRootBuilder<String, ClosedMutableSettableNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedMutableSettableNode<String>> builder = rootBuilder.root("a");
-        final MutableTree<String, ClosedMutableSettableNode<String>> tree = builder.build(treeClass);
-        final ClosedMutableSettableNode<String> child = tree.getRoot().addChild("b");
+        final TopDownTreeRootBuilder<String, MutableSettableNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, MutableSettableNode<String>> builder = rootBuilder.root("a");
+        final MutableTree<String, MutableSettableNode<String>> tree = builder.build(treeClass);
+        final MutableSettableNode<String> child = tree.getRoot().addChild("b");
         assertTrue(tree.getRoot().removeChild(child));
         assertEquals(0, tree.getRoot().getNumberOfChildren());
     }
