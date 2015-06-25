@@ -44,7 +44,7 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
  * parent but seen first.</p>
  * @author Matt Champion on 15/07/14.
  */
-public final class MutableTreeImpl<E> extends AbstractSettableNode<E, ClosedMutableSettableNode<E>> implements MutableTree<E, ClosedMutableSettableNode<E>>, ClosedMutableSettableNode<E> {
+public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSettableNode<E>> implements MutableTree<E, MutableSettableNode<E>>, MutableSettableNode<E> {
     @GuardedBy("this")
     private SimpleCollection<MutableTreeImpl<E>> elementList;
 
@@ -81,7 +81,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, ClosedMuta
     }
 
     @Override
-    public boolean removeChild(ClosedMutableSettableNode<E> child) {
+    public boolean removeChild(MutableSettableNode<E> child) {
         if (child == null) {
             return false;
         }
@@ -93,7 +93,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, ClosedMuta
             int j = 0;
             final Iterator<MutableTreeImpl<E>> iterator = oldList.structuralIterator();
             while (iterator.hasNext()) {
-                final ClosedMutableSettableNode<E> currentNode = iterator.next();
+                final MutableSettableNode<E> currentNode = iterator.next();
                 if (child != currentNode) {
                     searchArray[j] = currentNode;
                     j++;
@@ -139,8 +139,8 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, ClosedMuta
      * @param <E> The element type
      * @return The type key
      */
-    public static <E> TypeKey<MutableTree<E, ClosedMutableSettableNode<E>>> typeKey() {
-        return new TypeKey<MutableTree<E, ClosedMutableSettableNode<E>>>() {};
+    public static <E> TypeKey<MutableTree<E, MutableSettableNode<E>>> typeKey() {
+        return new TypeKey<MutableTree<E, MutableSettableNode<E>>>() {};
     }
 
     @Override

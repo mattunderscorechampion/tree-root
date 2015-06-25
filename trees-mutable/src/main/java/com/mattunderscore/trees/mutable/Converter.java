@@ -36,7 +36,7 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class Converter<E> implements TreeConverter<E, ClosedMutableSettableNode<E>, MutableTreeImpl<E>> {
+public final class Converter<E> implements TreeConverter<E, MutableSettableNode<E>, MutableTreeImpl<E>> {
 
     @Override
     public final <S extends OpenNode<E, S>> MutableTreeImpl<E> build(Tree<E, S> sourceTree) {

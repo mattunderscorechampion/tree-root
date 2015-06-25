@@ -30,8 +30,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 /**
  * @author Matt Champion on 04/05/15
@@ -39,7 +37,7 @@ import org.junit.runners.Parameterized;
 public final class MutableTreeImplTest {
     @Test
     public void emptyTree() {
-        final MutableTree<String, ClosedMutableSettableNode<String>> emptyTree = new MutableTreeImpl<>(null);
+        final MutableTree<String, MutableSettableNode<String>> emptyTree = new MutableTreeImpl<>(null);
 
         assertTrue(emptyTree.isEmpty());
         assertNull(emptyTree.getRoot());
@@ -47,7 +45,7 @@ public final class MutableTreeImplTest {
 
     @Test
     public void setRoot() {
-        final MutableTree<String, ClosedMutableSettableNode<String>> tree = new MutableTreeImpl<>(null);
+        final MutableTree<String, MutableSettableNode<String>> tree = new MutableTreeImpl<>(null);
 
         tree.setRoot("a");
         assertFalse(tree.isEmpty());
@@ -55,7 +53,7 @@ public final class MutableTreeImplTest {
 
     @Test
     public void removeNothing() {
-        final MutableTree<String, ClosedMutableSettableNode<String>> tree = new MutableTreeImpl<>(null);
+        final MutableTree<String, MutableSettableNode<String>> tree = new MutableTreeImpl<>(null);
         tree.setRoot("a");
 
         assertFalse(tree.getRoot().removeChild(null));
@@ -63,9 +61,9 @@ public final class MutableTreeImplTest {
 
     @Test
     public void removeFromWrongTree() {
-        final MutableTree<String, ClosedMutableSettableNode<String>> tree0 = new MutableTreeImpl<>(null);
+        final MutableTree<String, MutableSettableNode<String>> tree0 = new MutableTreeImpl<>(null);
         tree0.setRoot("a").addChild("b");
-        final MutableTree<String, ClosedMutableSettableNode<String>> tree1 = new MutableTreeImpl<>(null);
+        final MutableTree<String, MutableSettableNode<String>> tree1 = new MutableTreeImpl<>(null);
         tree1.setRoot("c");
 
         assertFalse(tree0.getRoot().removeChild(tree1.getRoot()));
