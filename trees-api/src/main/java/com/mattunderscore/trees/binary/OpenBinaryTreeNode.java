@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
-import com.mattunderscore.trees.tree.StructuralNode;
+import com.mattunderscore.trees.tree.OpenStructuralNode;
 
 /**
  * A binary tree node. This node is open, it accepts a generic parameter for the type of child nodes it has.
  *
  * @author Matt Champion on 06/09/14.
  */
-public interface OpenBinaryTreeNode<E, N extends OpenBinaryTreeNode<E, N>> extends StructuralNode<E, N> {
+public interface OpenBinaryTreeNode<E, N extends OpenBinaryTreeNode<E, N>> extends OpenStructuralNode<E, N> {
     /**
      * @return The left subtree
      */

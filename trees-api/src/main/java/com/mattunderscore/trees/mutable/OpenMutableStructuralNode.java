@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.tree.StructuralNode;
+import com.mattunderscore.trees.tree.OpenStructuralNode;
 
 /**
  * Mutable structural node. Unlike {@link OpenMutableNode} child nodes are placed at specific positions. This node is
@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.StructuralNode;
  *
  * @author Matt Champion on 30/01/15
  */
-public interface OpenMutableStructuralNode<E, N extends OpenMutableStructuralNode<E, N>> extends StructuralNode<E, N> {
+public interface OpenMutableStructuralNode<E, N extends OpenMutableStructuralNode<E, N>> extends OpenStructuralNode<E, N> {
     /**
      * Set the nth child node.
      * <p>
