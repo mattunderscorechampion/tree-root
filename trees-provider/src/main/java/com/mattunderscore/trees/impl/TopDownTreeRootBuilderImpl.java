@@ -53,6 +53,6 @@ final class TopDownTreeRootBuilderImpl<E, N extends OpenNode<E, N>> implements T
 
     @Override
     public <T extends Tree<E, N>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
-        return build(type.getType());
+        return build(type.getTreeType());
     }
 }

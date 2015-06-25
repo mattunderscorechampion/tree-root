@@ -45,21 +45,21 @@ public final class TypeKeyTest {
     public void type0() {
         final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
 
-        assertEquals(Tree.class, key0.getType());
+        assertEquals(Tree.class, key0.getTreeType());
     }
 
     @Test
     public void type1() {
         final TypeKey<TestTree> key0 = new TypeKey<TestTree>() { };
 
-        assertEquals(TestTree.class, key0.getType());
+        assertEquals(TestTree.class, key0.getTreeType());
     }
 
     @Test
     public void type2() {
         final TypeKey<TestTree> key0 = new TestTreeTypeKey();
 
-        assertEquals(TestTree.class, key0.getType());
+        assertEquals(TestTree.class, key0.getTreeType());
     }
 
     @Test
@@ -68,6 +68,8 @@ public final class TypeKeyTest {
 
         assertTrue(key0.toString().startsWith("TypeKey"));
         assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
+        assertTrue(key0.toString().contains(String.class.getSimpleName()));
+        assertTrue(key0.toString().contains(Node.class.getSimpleName()));
     }
 
     @Test
@@ -88,7 +90,6 @@ public final class TypeKeyTest {
         assertEquals(key0.hashCode(), key0.hashCode());
     }
 
-    @Ignore("The types of the parameters of the tree are erased")
     @Test
     public void notEquals0() {
         final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
