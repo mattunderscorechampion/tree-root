@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
+import com.mattunderscore.trees.mutable.ClosedMutableNode;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
@@ -34,7 +35,7 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyTree}.
  * @author Matt Champion on 28/01/15.
  */
-public final class Converter<E> implements TreeConverter<E, PathCopyNode<E>, PathCopyTree<E>> {
+public final class Converter<E> implements TreeConverter<E, ClosedMutableNode<E>, PathCopyTree<E>> {
     private final NodeConverter converter = new NodeConverter();
 
     @Override
