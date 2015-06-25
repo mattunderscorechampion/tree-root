@@ -27,7 +27,7 @@ package com.mattunderscore.trees.impl;
 
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.Immutable;
@@ -38,7 +38,7 @@ import java.lang.reflect.Array;
  * @author Matt Champion on 13/08/14.
  */
 @Immutable
-final class BottomUpTreeBuilderImpl<E, N extends Node<E, N>> implements BottomUpTreeBuilder<E, N> {
+final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements BottomUpTreeBuilder<E, N> {
     private final SPISupport helper;
     private final E root;
     private final BottomUpTreeBuilder<E, N>[] children;

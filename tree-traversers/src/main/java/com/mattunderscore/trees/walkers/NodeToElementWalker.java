@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.traversal.Walker;
 
 /**
  * A Node walker that unwraps the elements and passes them to a delegated element walker.
  * @author Matt Champion on 10/09/14.
  */
-public final class NodeToElementWalker<E, N extends Node<E, N>> implements Walker<N> {
+public final class NodeToElementWalker<E, N extends OpenNode<E, N>> implements Walker<N> {
     private final Walker<E> delegateWalker;
 
     public NodeToElementWalker(Walker<E> delegateWalker) {

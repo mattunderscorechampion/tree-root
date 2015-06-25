@@ -26,11 +26,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.sorted;
 
 import com.mattunderscore.trees.organised.OrganisedTreeBuilder;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Builder used to create sorting trees.
  * @author Matt Champion on 07/09/14.
  */
-public interface SortingTreeBuilder<E, N extends Node<E, N>> extends OrganisedTreeBuilder<E, N, SortingTree<E, N>> {
+public interface SortingTreeBuilder<E, N extends OpenNode<E, N>> extends OrganisedTreeBuilder<E, N, SortingTree<E, N>> {
 }

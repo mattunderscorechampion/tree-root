@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
@@ -46,7 +46,7 @@ public final class RootMatcherSelector<E> implements NodeSelector<E> {
     }
 
     @Override
-    public <N extends Node<E, ? extends N>> Iterator<? extends N> select(Tree<E, ? extends N> tree) {
+    public <N extends OpenNode<E, ? extends N>> Iterator<? extends N> select(Tree<E, ? extends N> tree) {
         final N root = tree.getRoot();
         if (matcher.matches(root)) {
             return new SingletonIterator<>(root);

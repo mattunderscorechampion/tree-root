@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Tree;
  * class is registered.
  * @author Matt Champion on 15/09/14.
  */
-public final class DefaultRemovalHandler<E, N extends Node<E, N>, T extends Tree<E, N>> implements IteratorRemoveHandler<E, N, T> {
+public final class DefaultRemovalHandler<E, N extends OpenNode<E, N>, T extends Tree<E, N>> implements IteratorRemoveHandler<E, N, T> {
     @Override
     public boolean isSupported() {
         return false;

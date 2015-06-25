@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Support for rearranging and restructuring trees.
@@ -37,12 +37,12 @@ public interface TreeRestructurer extends SPIComponent {
      * @param newRoot sets a node as the new root
      * @return the previous root
      */
-    Node<?, ?> setRoot(Node<?, ?> newRoot);
+    OpenNode<?, ?> setRoot(OpenNode<?, ?> newRoot);
 
     /**
      * @param node the node to move
      * @param newParent the new parent of the node
      */
-    void moveNode(Node<?, ?> node, Node<?, ?> newParent);
+    void moveNode(OpenNode<?, ?> node, OpenNode<?, ?> newParent);
 
 }

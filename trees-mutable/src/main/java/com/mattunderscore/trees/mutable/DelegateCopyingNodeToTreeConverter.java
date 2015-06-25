@@ -35,14 +35,14 @@ import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeB
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder.TopDownTreeBuilderAppender;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Implementation for converting a node to a tree by copying the subtree.
  * @author Matt Champion on 27/09/14.
  */
-public final class DelegateCopyingNodeToTreeConverter<E, N extends Node<E, N>, T extends Tree<E, N>, S extends Node<E, S>> implements NodeToTreeConverter<E, N, T, S>, SPISupportAwareComponent {
+public final class DelegateCopyingNodeToTreeConverter<E, N extends OpenNode<E, N>, T extends Tree<E, N>, S extends OpenNode<E, S>> implements NodeToTreeConverter<E, N, T, S>, SPISupportAwareComponent {
     private final Class<S> sourceClass;
     private final Class<T> targetClass;
     private volatile TreeBuilderFactory treeBuilderFactory;

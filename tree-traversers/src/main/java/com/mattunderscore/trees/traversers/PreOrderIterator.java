@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.traversers;
 
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.NotThreadSafe;
 
@@ -39,7 +39,7 @@ import java.util.Stack;
  * @author Matt Champion on 17/08/14.
  */
 @NotThreadSafe
-public final class PreOrderIterator<E , N extends Node<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
+public final class PreOrderIterator<E , N extends OpenNode<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private final Stack<N> parents = new Stack<>();
     private N current;
 

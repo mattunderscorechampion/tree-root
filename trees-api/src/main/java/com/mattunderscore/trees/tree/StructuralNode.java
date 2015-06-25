@@ -31,7 +31,7 @@ import java.util.Iterator;
  * Node that has children in specific places.
  * @author Matt Champion on 31/01/15
  */
-public interface StructuralNode<E, N extends StructuralNode<E, N>> extends Node<E, N> {
+public interface StructuralNode<E, N extends StructuralNode<E, N>> extends OpenNode<E, N> {
     /**
      * An iterator over the structure of the children. If there is an empty place where an element
      * might be but is not then the iterator will return null.

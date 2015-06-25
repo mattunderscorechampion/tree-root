@@ -38,7 +38,6 @@ import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
-import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 import org.junit.Test;
 

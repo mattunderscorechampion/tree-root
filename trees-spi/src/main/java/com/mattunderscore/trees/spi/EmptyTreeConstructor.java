@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Used to create empty trees.
  * @author Matt Champion on 13/08/14.
  */
-public interface EmptyTreeConstructor<E, N extends Node<E, N>, T extends Tree<E, N>> extends TreeKeyedSPIComponent {
+public interface EmptyTreeConstructor<E, N extends OpenNode<E, N>, T extends Tree<E, N>> extends TreeKeyedSPIComponent {
 
     T build();
 }

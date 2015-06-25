@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Used to create trees from the bottom up.
  * @author Matt Champion on 06/08/14.
  */
-public interface TreeConstructor<E, N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>> extends TreeKeyedSPIComponent {
+public interface TreeConstructor<E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> extends TreeKeyedSPIComponent {
 
     T build(E e, T[] subtrees);
 

@@ -27,10 +27,9 @@ package com.mattunderscore.trees.immutable;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -38,23 +37,23 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.immutable.TreeNodeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-abstract class AbstractConverter<E> implements TreeConverter<E, ClosedNode<E>, Tree<E, ClosedNode<E>>> {
+abstract class AbstractConverter<E> implements TreeConverter<E, Node<E>, Tree<E, Node<E>>> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <S extends Node<E, S>> Tree<E, ClosedNode<E>> build(Tree<E, S> sourceTree) {
+    public final <S extends OpenNode<E, S>> Tree<E, Node<E>> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
         final TreeNodeImpl<E>[] newChildren = duplicateChildren(root);
         return new TreeNodeImpl(root.getElement(), newChildren);
     }
 
-    private <S extends Node<E, S>> TreeNodeImpl<E>[] duplicateChildren(Node<E, S> parent) {
+    private <S extends OpenNode<E, S>> TreeNodeImpl<E>[] duplicateChildren(OpenNode<E, S> parent) {
         @SuppressWarnings("unchecked")
         final TreeNodeImpl<E>[] newChildren = new TreeNodeImpl[parent.getNumberOfChildren()];
         int i = 0;
-        final Iterator<? extends Node<E, S>> iterator = parent.childIterator();
+        final Iterator<? extends OpenNode<E, S>> iterator = parent.childIterator();
         while (iterator.hasNext()) {
-            final Node<E, S> sourceChild = iterator.next();
+            final OpenNode<E, S> sourceChild = iterator.next();
             final TreeNodeImpl[] newGrandChildren = duplicateChildren(sourceChild);
             newChildren[i] = new TreeNodeImpl<>(sourceChild.getElement(), newGrandChildren);
             i++;

@@ -37,7 +37,7 @@ import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 import org.junit.Assert;
@@ -58,7 +58,7 @@ public final class TreeSelectorTest {
     private static final Trees trees = new TreesImpl();
     private final Class treeClass;
 
-    public TreeSelectorTest(Class<? extends Tree<String, ? extends Node<String, ?>>> treeClass) {
+    public TreeSelectorTest(Class<? extends Tree<String, ? extends OpenNode<String, ?>>> treeClass) {
         this.treeClass = treeClass;
     }
 
@@ -76,11 +76,11 @@ public final class TreeSelectorTest {
 
     @Test
     public void select() {
-        final TopDownTreeRootBuilder<String, ? extends Node<String, ?>> builder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ? extends Node<String, ?>> nodeApp0 = builder.root("A");
+        final TopDownTreeRootBuilder<String, ? extends OpenNode<String, ?>> builder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ? extends OpenNode<String, ?>> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
-        final Tree<String, ? extends Node<String, ?>> tree = nodeApp0.build(treeClass);
+        final Tree<String, ? extends OpenNode<String, ?>> tree = nodeApp0.build(treeClass);
 
         final TreeSelectorFactory selectorFactory = trees.treeSelectors();
         final NodeMatcher<String> matcher0 = new EqualityMatcher<>("A");

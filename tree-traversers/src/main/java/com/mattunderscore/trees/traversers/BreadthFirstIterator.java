@@ -31,14 +31,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 
 /**
  * @author Matt Champion on 05/09/14.
  */
-public final class BreadthFirstIterator<E , N extends Node<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
+public final class BreadthFirstIterator<E , N extends OpenNode<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private Iterator<N> currentLayer;
     private List<N> nextLayer;
 

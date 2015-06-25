@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.matchers;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.selection.NodeMatcher;
 
 import net.jcip.annotations.Immutable;
@@ -45,7 +45,7 @@ public final class DisjunctionMatcher<E> implements NodeMatcher<E> {
     }
 
     @Override
-    public <N extends Node<? extends E, ? extends N>> boolean matches(N node) {
+    public <N extends OpenNode<? extends E, ? extends N>> boolean matches(N node) {
         return matcher0.matches(node) || matcher1.matches(node);
     }
 

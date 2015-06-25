@@ -33,7 +33,7 @@ import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
 
@@ -56,7 +56,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Close
         }
 
         @Override
-        public Class<? extends Node> forClass() {
+        public Class<? extends OpenNode> forClass() {
             return MutableBinaryTreeNodeImpl.class;
         }
     }
@@ -103,7 +103,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Close
 
     public static final class Converter<E> implements TreeConverter<E, ClosedMutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
         @Override
-        public <S extends Node<E, S>> MutableBinaryTreeImpl<E> build(Tree<E, S> sourceTree) {
+        public <S extends OpenNode<E, S>> MutableBinaryTreeImpl<E> build(Tree<E, S> sourceTree) {
             final S root = sourceTree.getRoot();
             return new MutableBinaryTreeImpl<>(duplicate(root));
         }
@@ -113,7 +113,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Close
             return MutableBinaryTreeImpl.class;
         }
 
-        private <S extends Node<E, S>> MutableBinaryTreeNodeImpl<E> duplicate(S sourceChild) {
+        private <S extends OpenNode<E, S>> MutableBinaryTreeNodeImpl<E> duplicate(S sourceChild) {
             final Iterator<? extends S> children = sourceChild.childIterator();
             if (children.hasNext()) {
                 final S left = children.next();

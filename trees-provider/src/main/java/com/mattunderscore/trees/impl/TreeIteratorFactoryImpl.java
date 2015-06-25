@@ -34,7 +34,7 @@ import com.mattunderscore.trees.traversers.PostOrderIterator;
 import com.mattunderscore.trees.traversers.PreOrderIterator;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -49,46 +49,46 @@ public final class TreeIteratorFactoryImpl implements TreeIteratorFactory {
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> Iterator<N> preOrderIterator(T tree) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Iterator<N> preOrderIterator(T tree) {
         final IteratorRemoveHandler<E, N, T> handler = support.lookupHandler(tree);
         return new PreOrderIterator<>(tree, handler);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> Iterator<N> inOrderIterator(T tree) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Iterator<N> inOrderIterator(T tree) {
         final IteratorRemoveHandler<E, N, T> handler = support.lookupHandler(tree);
         return new InOrderIterator<>(tree, handler);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> Iterator<N> postOrderIterator(T tree) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Iterator<N> postOrderIterator(T tree) {
         final IteratorRemoveHandler<E, N, T> handler = support.lookupHandler(tree);
         return new PostOrderIterator<>(tree, handler);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> Iterator<N> breadthFirstIterator(T tree) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Iterator<N> breadthFirstIterator(T tree) {
         final IteratorRemoveHandler<E, N, T> handler = support.lookupHandler(tree);
         return new BreadthFirstIterator<>(tree, handler);
     }
 
     @Override
-    public <E, N extends Node<E, N>> Iterator<E> preOrderElementsIterator(Tree<E, N> tree) {
+    public <E, N extends OpenNode<E, N>> Iterator<E> preOrderElementsIterator(Tree<E, N> tree) {
         return new NodeToElementIterators<>(new PreOrderIterator<>(tree, support.lookupHandler(tree)));
     }
 
     @Override
-    public <E, N extends Node<E, N>> Iterator<E> inOrderElementsIterator(Tree<E, N> tree) {
+    public <E, N extends OpenNode<E, N>> Iterator<E> inOrderElementsIterator(Tree<E, N> tree) {
         return new NodeToElementIterators<>(new InOrderIterator<>(tree, support.lookupHandler(tree)));
     }
 
     @Override
-    public <E, N extends Node<E, N>> Iterator<E> postOrderElementsIterator(Tree<E, N> tree) {
+    public <E, N extends OpenNode<E, N>> Iterator<E> postOrderElementsIterator(Tree<E, N> tree) {
         return new NodeToElementIterators<>(new PostOrderIterator<>(tree, support.lookupHandler(tree)));
     }
 
     @Override
-    public <E, N extends Node<E, N>> Iterator<E> breadthFirstElementsIterator(Tree<E, N> tree) {
+    public <E, N extends OpenNode<E, N>> Iterator<E> breadthFirstElementsIterator(Tree<E, N> tree) {
         return new NodeToElementIterators<>(new BreadthFirstIterator<>(tree, support.lookupHandler(tree)));
     }
 }

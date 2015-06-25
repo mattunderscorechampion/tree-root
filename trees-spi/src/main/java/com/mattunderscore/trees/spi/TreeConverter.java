@@ -25,15 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Converts a tree of one type to another.
  * @author Matt Champion on 15/08/14.
  */
-public interface TreeConverter<E, N extends Node<E, N>, T extends Tree<E, N>> extends TreeKeyedSPIComponent {
+public interface TreeConverter<E, N extends OpenNode<E, N>, T extends Tree<E, N>> extends TreeKeyedSPIComponent {
 
-    <S extends Node<E, S>> T build(Tree<E, S> sourceTree);
+    <S extends OpenNode<E, S>> T build(Tree<E, S> sourceTree);
 
 }

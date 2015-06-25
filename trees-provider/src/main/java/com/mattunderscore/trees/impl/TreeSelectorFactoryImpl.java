@@ -29,7 +29,7 @@ import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
@@ -51,7 +51,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     public <E> TreeSelector<E> newSelector(final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
         return new TreeSelector<E>() {
             @Override
-            public <N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
+            public <N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
                 final N root = tree.getRoot();
                 if (matcher.matches(root)) {
                     final T newTree = helper.<E, N, T, N>nodeToTree(root);
@@ -63,7 +63,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
             }
 
             @Override
-            public <N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>, O extends Node<E, O>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
+            public <N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>, O extends OpenNode<E, O>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
                 throw new UnsupportedOperationException("Not yet implemented");
             }
         };
@@ -73,19 +73,19 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     public <E> TreeSelector<E> newSelector(final TreeSelector<E> selector, final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
         return new TreeSelector<E>() {
             @Override
-            public <N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
+            public <N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
                 final Iterator<T> parents = selector.select(tree);
                 return new TreeIterator<>(parents, matcher);
             }
 
             @Override
-            public <N extends Node<E,? extends N>, T extends Tree<E, ? extends N>, O extends Node<E, O>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
+            public <N extends OpenNode<E,? extends N>, T extends Tree<E, ? extends N>, O extends OpenNode<E, O>, U extends Tree<E, O>> Iterator<U> select(T tree, Class<U> newTreeType) throws OperationNotSupportedForType {
                 throw new UnsupportedOperationException("Not yet implemented");
             }
         };
     }
 
-    private final class TreeIterator<E, N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>> extends PrefetchingIterator<T> {
+    private final class TreeIterator<E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> extends PrefetchingIterator<T> {
         private final Iterator<T> parents;
         private final NodeMatcher<E> matcher;
         private Iterator<? extends N> possibles;

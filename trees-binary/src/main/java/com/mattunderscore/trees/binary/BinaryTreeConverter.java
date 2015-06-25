@@ -28,7 +28,7 @@ package com.mattunderscore.trees.binary;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -36,7 +36,7 @@ import com.mattunderscore.trees.tree.Tree;
  */
 public final class BinaryTreeConverter<E> implements TreeConverter<E, ClosedBinaryTreeNode<E>, BinaryTree<E, ClosedBinaryTreeNode<E>>> {
     @Override
-    public <S extends Node<E, S>> BinaryTree<E, ClosedBinaryTreeNode<E>> build(Tree<E, S> sourceTree) {
+    public <S extends OpenNode<E, S>> BinaryTree<E, ClosedBinaryTreeNode<E>> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
         return new BinaryTreeWrapper<>(duplicate(root));
     }
@@ -46,7 +46,7 @@ public final class BinaryTreeConverter<E> implements TreeConverter<E, ClosedBina
         return BinaryTreeWrapper.class;
     }
 
-    private <S extends Node<E, S>> BinaryTreeNodeImpl<E> duplicate(S sourceChild) {
+    private <S extends OpenNode<E, S>> BinaryTreeNodeImpl<E> duplicate(S sourceChild) {
         final Iterator<? extends S> children = sourceChild.childIterator();
         if (children.hasNext()) {
             final S left = children.next();

@@ -25,13 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * A node that allows the element it contains to be modified without changing the structure of the tree.
  * @author Matt Champion on 07/10/14.
  */
-public interface SettableNode<E, N extends SettableNode<E, ? extends N>> extends Node<E, N> {
+public interface SettableNode<E, N extends SettableNode<E, ? extends N>> extends OpenNode<E, N> {
     /**
      * Set the element of the node.
      * @param element The new element

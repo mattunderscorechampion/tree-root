@@ -31,17 +31,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**

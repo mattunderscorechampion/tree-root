@@ -9,9 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
-import com.mattunderscore.trees.walkers.NodeToElementTreeWalker;
 import com.mattunderscore.trees.traversal.TreeWalker;
-import com.mattunderscore.trees.tree.Node;
 
 public class NodeToElementTreeWalkerTest {
     @Mock

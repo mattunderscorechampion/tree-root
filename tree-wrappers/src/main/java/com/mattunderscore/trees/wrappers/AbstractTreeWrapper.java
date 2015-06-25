@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.wrappers;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Abstract implementation of a tree wrapper.
  * @author Matt Champion on 06/09/14.
  */
-public abstract class AbstractTreeWrapper<E, N extends Node<E, ? extends N>> implements Tree<E, N> {
+public abstract class AbstractTreeWrapper<E, N extends OpenNode<E, ? extends N>> implements Tree<E, N> {
     private final N root;
 
     protected AbstractTreeWrapper() {

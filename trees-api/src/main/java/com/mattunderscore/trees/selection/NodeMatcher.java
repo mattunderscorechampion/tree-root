@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selection;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Matches a node.
@@ -38,5 +38,5 @@ public interface NodeMatcher<E> {
      * @param <N> The type of the node
      * @return {@code true} if the node matches
      */
-    <N extends Node<? extends E, ? extends N>> boolean matches(N node);
+    <N extends OpenNode<? extends E, ? extends N>> boolean matches(N node);
 }

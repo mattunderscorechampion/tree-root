@@ -28,14 +28,14 @@ package com.mattunderscore.trees.base;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
 import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
 
 /** 
  * @author Matt Champion on 21/09/14.
  */
-public abstract class ImmutableNode<E, N extends Node<E, ? extends N>> extends FixedNode<E, N> {
+public abstract class ImmutableNode<E, N extends OpenNode<E, ? extends N>> extends FixedNode<E, N> {
     protected final SimpleCollection<N> children;
 
     public ImmutableNode(E element, ImmutableNode<E, N>[] childNodes) {

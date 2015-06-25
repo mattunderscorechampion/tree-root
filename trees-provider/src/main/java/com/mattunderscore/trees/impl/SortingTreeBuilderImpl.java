@@ -29,7 +29,7 @@ import com.mattunderscore.trees.*;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public final class SortingTreeBuilderImpl<E, N extends Node<E, N>> implements SortingTreeBuilder<E, N> {
+public final class SortingTreeBuilderImpl<E, N extends OpenNode<E, N>> implements SortingTreeBuilder<E, N> {
     private final SPISupport helper;
     private final Comparator<E> comparator;
     private final List<E> elements = new ArrayList<>();

@@ -26,13 +26,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.mutable;
 
 import com.mattunderscore.trees.construction.NodeAppender;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Represents a mutable node of a tree.
  * @author Matt Champion on 08/08/14.
  */
-public interface MutableNode<E, N extends MutableNode<E, N>> extends Node<E, N>, NodeAppender<E, N> {
+public interface MutableNode<E, N extends MutableNode<E, N>> extends OpenNode<E, N>, NodeAppender<E, N> {
     /**
      * Remove the node if it is a child of the recipient
      * @param child the node to remove

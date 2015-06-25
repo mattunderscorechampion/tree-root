@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.traversal;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -41,7 +41,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, Walker<N> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, Walker<N> walker);
 
     /**
      * Traverse the tree in order.
@@ -51,7 +51,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkInOrder(T tree, Walker<N> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkInOrder(T tree, Walker<N> walker);
 
     /**
      * Traverse the tree in post order.
@@ -61,7 +61,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkPostOrder(T tree, Walker<N> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPostOrder(T tree, Walker<N> walker);
 
     /**
      * Traverse the tree in breadth first order.
@@ -71,7 +71,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker);
 
     /**
      * Traverse the tree elements in preorder.
@@ -81,7 +81,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, Walker<E> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, Walker<E> walker);
 
     /**
      * Traverse the tree elements in order.
@@ -91,7 +91,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsInOrder(T tree, Walker<E> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsInOrder(T tree, Walker<E> walker);
 
     /**
      * Traverse the tree elements in post order.
@@ -101,7 +101,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsPostOrder(T tree, Walker<E> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPostOrder(T tree, Walker<E> walker);
 
     /**
      * Traverse the tree elements in breadth first order.
@@ -111,7 +111,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker);
 
     /**
      * Traverse the tree in preorder.
@@ -121,7 +121,7 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<N> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<N> walker);
 
     /**
      * Traverse the tree elements in preorder.
@@ -131,6 +131,6 @@ public interface TreeWalkerFactory {
      * @param <N> Node type
      * @param <T> Tree type
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, TreeWalker<E> walker);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, TreeWalker<E> walker);
 
 }

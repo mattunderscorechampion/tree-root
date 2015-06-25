@@ -25,18 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.immutable;
 
-import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.NodeToTreeConverter} for
  * {@link com.mattunderscore.trees.immutable.TreeNodeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E, S extends Node<E, ? extends S>> implements NodeToTreeConverter<E, ClosedNode<E>, TreeNodeImpl<E>, S> {
+public final class NodeConverter<E, S extends OpenNode<E, ? extends S>> implements NodeToTreeConverter<E, Node<E>, TreeNodeImpl<E>, S> {
 
     @SuppressWarnings("unchecked")
     @Override
@@ -45,7 +43,7 @@ public final class NodeConverter<E, S extends Node<E, ? extends S>> implements N
     }
 
     @Override
-    public Class<? extends Node> forClass() {
+    public Class<? extends OpenNode> forClass() {
         return TreeNodeImpl.class;
     }
 }

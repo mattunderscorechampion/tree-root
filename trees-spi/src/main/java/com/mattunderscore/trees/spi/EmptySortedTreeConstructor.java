@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 import java.util.Comparator;
@@ -33,7 +33,7 @@ import java.util.Comparator;
 /**
  * @author Matt Champion on 06/09/14.
  */
-public interface EmptySortedTreeConstructor<E, N extends Node<E, N>, T extends Tree<E, N>> extends TreeKeyedSPIComponent {
+public interface EmptySortedTreeConstructor<E, N extends OpenNode<E, N>, T extends Tree<E, N>> extends TreeKeyedSPIComponent {
 
     T build(Comparator<E> comparator);
 }

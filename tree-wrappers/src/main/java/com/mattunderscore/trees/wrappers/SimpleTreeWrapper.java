@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.wrappers;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Simple implementation of a tree wrapper. This will not correctly support the properties of trees but allows a node to
  * be turned into a tree when it is required for the API. Allows any type of node to be wrapped.
  * @author Matt Champion on 28/09/14.
  */
-public final class SimpleTreeWrapper<E, N extends Node<E, ? extends N>> extends AbstractTreeWrapper<E, N> {
+public final class SimpleTreeWrapper<E, N extends OpenNode<E, ? extends N>> extends AbstractTreeWrapper<E, N> {
     public SimpleTreeWrapper(N root) {
         super(root);
     }

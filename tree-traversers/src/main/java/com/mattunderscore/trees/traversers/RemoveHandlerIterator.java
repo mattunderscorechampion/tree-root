@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.traversers;
 
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
@@ -34,7 +34,7 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
  * Iterator that provides support for removing elements from trees.
  * @author Matt Champion on 15/09/14.
  */
-public abstract class RemoveHandlerIterator<E, N extends Node<E, N>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
+public abstract class RemoveHandlerIterator<E, N extends OpenNode<E, N>, T extends Tree<E, N>> extends PrefetchingIterator<N> {
     private final T tree;
     private final IteratorRemoveHandler<E, N, T> handler;
 

@@ -26,14 +26,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.construction;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Base implementation of all tree builders.
  * @author Matt Champion on 07/08/14.
  */
-public interface BaseTreeBuilder<E, N extends Node<E, N>, B extends Tree<E, N>> {
+public interface BaseTreeBuilder<E, N extends OpenNode<E, N>, B extends Tree<E, N>> {
     /**
      * Create a new tree of the type provided.
      * @param klass The class of the tree to create

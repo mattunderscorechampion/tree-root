@@ -27,7 +27,7 @@ package com.mattunderscore.trees.pathcopy.holder;
 
 import com.mattunderscore.trees.mutable.ClosedMutableNode;
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -39,7 +39,7 @@ public final class Converter<E> implements TreeConverter<E, ClosedMutableNode<E>
     private final NodeConverter converter = new NodeConverter();
 
     @Override
-    public <S extends Node<E, S>> PathCopyTree<E> build(Tree<E, S> sourceTree) {
+    public <S extends OpenNode<E, S>> PathCopyTree<E> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
         return converter.treeFromRootNode((S)root);
     }
