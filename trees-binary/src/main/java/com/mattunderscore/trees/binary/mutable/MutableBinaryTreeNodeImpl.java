@@ -30,7 +30,6 @@ import java.util.Iterator;
 import net.jcip.annotations.NotThreadSafe;
 
 import com.mattunderscore.trees.base.FixedNode;
-import com.mattunderscore.trees.binary.ClosedMutableBinaryTreeNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
@@ -41,7 +40,7 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
  * @author Matt Champion on 06/09/14.
  */
 @NotThreadSafe
-public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, ClosedMutableBinaryTreeNode<E>> implements ClosedMutableBinaryTreeNode<E> {
+public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, MutableBinaryTreeNode<E>> implements MutableBinaryTreeNode<E> {
     private MutableBinaryTreeNodeImpl<E> left;
     private MutableBinaryTreeNodeImpl<E> right;
     @SuppressWarnings("unchecked")
@@ -60,12 +59,12 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, ClosedMutab
     }
 
     @Override
-    public ClosedMutableBinaryTreeNode<E> setLeft(E element) {
+    public MutableBinaryTreeNode<E> setLeft(E element) {
         return setInternalLeft(new MutableBinaryTreeNodeImpl<>(element));
     }
 
     @Override
-    public ClosedMutableBinaryTreeNode<E> setRight(E element) {
+    public MutableBinaryTreeNode<E> setRight(E element) {
         return setInternalRight(new MutableBinaryTreeNodeImpl<>(element));
     }
 
@@ -82,12 +81,12 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, ClosedMutab
     }
 
     @Override
-    public synchronized ClosedMutableBinaryTreeNode<E> getLeft() {
+    public synchronized MutableBinaryTreeNode<E> getLeft() {
         return left;
     }
 
     @Override
-    public synchronized ClosedMutableBinaryTreeNode<E> getRight() {
+    public synchronized MutableBinaryTreeNode<E> getRight() {
         return right;
     }
 

@@ -45,8 +45,8 @@ public final class BinaryTreeIteratorTest {
 
     @Test
     public void preorder() {
-        final Tree<String, ClosedMutableBinaryTreeNode<String>> tree = createTree();
-        final Iterator<ClosedMutableBinaryTreeNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);
+        final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
+        final Iterator<MutableBinaryTreeNode<String>> iterator = trees.treeIterators().preOrderIterator(tree);
         assertEquals("f", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("a", iterator.next().getElement());
@@ -61,8 +61,8 @@ public final class BinaryTreeIteratorTest {
 
     @Test
     public void inorder() {
-        final Tree<String, ClosedMutableBinaryTreeNode<String>> tree = createTree();
-        final Iterator<ClosedMutableBinaryTreeNode<String>> iterator = trees.treeIterators().inOrderIterator(tree);
+        final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
+        final Iterator<MutableBinaryTreeNode<String>> iterator = trees.treeIterators().inOrderIterator(tree);
         assertEquals("a", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
@@ -77,8 +77,8 @@ public final class BinaryTreeIteratorTest {
 
     @Test
     public void postorder() {
-        final Tree<String, ClosedMutableBinaryTreeNode<String>> tree = createTree();
-        final Iterator<ClosedMutableBinaryTreeNode<String>> iterator = trees.treeIterators().postOrderIterator(tree);
+        final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
+        final Iterator<MutableBinaryTreeNode<String>> iterator = trees.treeIterators().postOrderIterator(tree);
         assertEquals("a", iterator.next().getElement());
         assertEquals("c", iterator.next().getElement());
         assertEquals("e", iterator.next().getElement());
@@ -93,8 +93,8 @@ public final class BinaryTreeIteratorTest {
 
     @Test
     public void breadthfirst() {
-        final Tree<String, ClosedMutableBinaryTreeNode<String>> tree = createTree();
-        final Iterator<ClosedMutableBinaryTreeNode<String>> iterator = trees.treeIterators().breadthFirstIterator(tree);
+        final Tree<String, MutableBinaryTreeNode<String>> tree = createTree();
+        final Iterator<MutableBinaryTreeNode<String>> iterator = trees.treeIterators().breadthFirstIterator(tree);
         assertEquals("f", iterator.next().getElement());
         assertEquals("b", iterator.next().getElement());
         assertEquals("g", iterator.next().getElement());
@@ -107,17 +107,17 @@ public final class BinaryTreeIteratorTest {
         assertFalse(iterator.hasNext());
     }
 
-    private static Tree<String, ClosedMutableBinaryTreeNode<String>> createTree() {
-        final Tree<String, ClosedMutableBinaryTreeNode<String>> tree = trees.treeBuilders().<String, ClosedMutableBinaryTreeNode<String>>topDownBuilder()
+    private static Tree<String, MutableBinaryTreeNode<String>> createTree() {
+        final Tree<String, MutableBinaryTreeNode<String>> tree = trees.treeBuilders().<String, MutableBinaryTreeNode<String>>topDownBuilder()
             .root("f").build(MutableBinaryTreeImpl.<String>typeKey());
-        final ClosedMutableBinaryTreeNode<String> f = tree.getRoot();
-        final ClosedMutableBinaryTreeNode<String> b = f.setLeft("b");
+        final MutableBinaryTreeNode<String> f = tree.getRoot();
+        final MutableBinaryTreeNode<String> b = f.setLeft("b");
         b.setLeft("a");
-        final ClosedMutableBinaryTreeNode<String> d = b.setRight("d");
+        final MutableBinaryTreeNode<String> d = b.setRight("d");
         d.setLeft("c");
         d.setRight("e");
-        final ClosedMutableBinaryTreeNode<String> g = f.setRight("g");
-        final ClosedMutableBinaryTreeNode<String> h = g.setRight("i");
+        final MutableBinaryTreeNode<String> g = f.setRight("g");
+        final MutableBinaryTreeNode<String> h = g.setRight("i");
         h.setLeft("h");
         return tree;
     }

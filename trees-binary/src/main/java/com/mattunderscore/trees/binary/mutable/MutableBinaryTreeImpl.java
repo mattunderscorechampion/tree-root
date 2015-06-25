@@ -27,7 +27,7 @@ package com.mattunderscore.trees.binary.mutable;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.binary.ClosedMutableBinaryTreeNode;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
@@ -40,18 +40,18 @@ import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
 /**
  * @author Matt Champion on 08/09/14.
  */
-public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, ClosedMutableBinaryTreeNode<E>> {
+public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, MutableBinaryTreeNode<E>> {
     private MutableBinaryTreeImpl() {
         super();
     }
 
-    private MutableBinaryTreeImpl(ClosedMutableBinaryTreeNode<E> root) {
+    private MutableBinaryTreeImpl(MutableBinaryTreeNode<E> root) {
         super(root);
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, ClosedMutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>, ClosedMutableBinaryTreeNode<E>> {
+    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>, MutableBinaryTreeNode<E>> {
         @Override
-        public MutableBinaryTreeImpl<E> treeFromRootNode(ClosedMutableBinaryTreeNode<E> node) {
+        public MutableBinaryTreeImpl<E> treeFromRootNode(MutableBinaryTreeNode<E> node) {
             return new MutableBinaryTreeImpl<>(node);
         }
 
@@ -61,7 +61,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Close
         }
     }
 
-    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, ClosedMutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
+    public static final class EmptyConstructor<E> implements EmptyTreeConstructor<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
         @Override
         public MutableBinaryTreeImpl<E> build() {
             return new MutableBinaryTreeImpl<>();
@@ -73,7 +73,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Close
         }
     }
 
-    public static final class Constructor<E> implements TreeConstructor<E, ClosedMutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
+    public static final class Constructor<E> implements TreeConstructor<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
 
         @Override
         public MutableBinaryTreeImpl<E> build(E e, MutableBinaryTreeImpl<E>[] subtrees) {
@@ -101,7 +101,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Close
         }
     }
 
-    public static final class Converter<E> implements TreeConverter<E, ClosedMutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
+    public static final class Converter<E> implements TreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
         @Override
         public <S extends OpenNode<E, S>> MutableBinaryTreeImpl<E> build(Tree<E, S> sourceTree) {
             final S root = sourceTree.getRoot();

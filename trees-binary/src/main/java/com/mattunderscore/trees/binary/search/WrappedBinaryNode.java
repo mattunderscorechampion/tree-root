@@ -28,7 +28,7 @@ package com.mattunderscore.trees.binary.search;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.binary.BinaryTreeNode;
-import com.mattunderscore.trees.binary.ClosedMutableBinaryTreeNode;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 
 /**
@@ -36,15 +36,15 @@ import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
  * @author Matt Champion on 22/06/2015
  */
 public final class WrappedBinaryNode<E> implements BinaryTreeNode<E> {
-    private final ClosedMutableBinaryTreeNode<E> delegateNode;
+    private final MutableBinaryTreeNode<E> delegateNode;
 
-    public WrappedBinaryNode(ClosedMutableBinaryTreeNode<E> node) {
+    public WrappedBinaryNode(MutableBinaryTreeNode<E> node) {
         delegateNode = node;
     }
 
     @Override
     public BinaryTreeNode<E> getLeft() {
-        final ClosedMutableBinaryTreeNode<E> node = delegateNode.getLeft();
+        final MutableBinaryTreeNode<E> node = delegateNode.getLeft();
         if (node != null) {
             return new WrappedBinaryNode<>(node);
         }
@@ -53,7 +53,7 @@ public final class WrappedBinaryNode<E> implements BinaryTreeNode<E> {
 
     @Override
     public BinaryTreeNode<E> getRight() {
-        final ClosedMutableBinaryTreeNode<E> node = delegateNode.getRight();
+        final MutableBinaryTreeNode<E> node = delegateNode.getRight();
         if (node != null) {
             return new WrappedBinaryNode<>(node);
         }
@@ -67,7 +67,7 @@ public final class WrappedBinaryNode<E> implements BinaryTreeNode<E> {
 
     @Override
     public BinaryTreeNode<E> getChild(int nChild) {
-        final ClosedMutableBinaryTreeNode<E> node = delegateNode.getChild(nChild);
+        final MutableBinaryTreeNode<E> node = delegateNode.getChild(nChild);
         if (node != null) {
             return new WrappedBinaryNode<>(node);
         }
@@ -89,13 +89,13 @@ public final class WrappedBinaryNode<E> implements BinaryTreeNode<E> {
         return new WrappingIterator<>(delegateNode.childIterator());
     }
 
-    private static final class WrappingIterator<E> extends ConvertingIterator<BinaryTreeNode<E>, ClosedMutableBinaryTreeNode<E>> {
-        protected WrappingIterator(Iterator<? extends ClosedMutableBinaryTreeNode<E>> delegate) {
+    private static final class WrappingIterator<E> extends ConvertingIterator<BinaryTreeNode<E>, MutableBinaryTreeNode<E>> {
+        protected WrappingIterator(Iterator<? extends MutableBinaryTreeNode<E>> delegate) {
             super(delegate);
         }
 
         @Override
-        protected BinaryTreeNode<E> convert(ClosedMutableBinaryTreeNode<E> node) {
+        protected BinaryTreeNode<E> convert(MutableBinaryTreeNode<E> node) {
             if (node != null) {
                 return new WrappedBinaryNode<>(node);
             }
