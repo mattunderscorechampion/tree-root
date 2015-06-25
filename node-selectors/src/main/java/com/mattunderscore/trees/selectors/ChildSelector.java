@@ -42,7 +42,7 @@ public final class ChildSelector<E> extends ExtendingNodeSelector<E> {
     }
 
     @Override
-    protected final <N extends Node<? extends E, ? extends N>> Iterator<? extends N> getExtendingIterator(N nodeToExtendFrom) {
+    protected final <N extends Node<E, ? extends N>> Iterator<? extends N> getExtendingIterator(N nodeToExtendFrom) {
         return nodeToExtendFrom.childIterator();
     }
 }

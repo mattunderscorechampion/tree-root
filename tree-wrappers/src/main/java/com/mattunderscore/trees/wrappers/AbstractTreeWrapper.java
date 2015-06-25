@@ -32,7 +32,7 @@ import com.mattunderscore.trees.tree.Tree;
  * Abstract implementation of a tree wrapper.
  * @author Matt Champion on 06/09/14.
  */
-public abstract class AbstractTreeWrapper<E, N extends Node<? extends E, ? extends N>> implements Tree<E, N> {
+public abstract class AbstractTreeWrapper<E, N extends Node<E, ? extends N>> implements Tree<E, N> {
     private final N root;
 
     protected AbstractTreeWrapper() {
