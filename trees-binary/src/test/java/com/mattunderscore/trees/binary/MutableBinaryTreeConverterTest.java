@@ -38,7 +38,7 @@ import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 
 /**
  * Test for {@link MutableBinaryTreeImpl.NodeConverter}.
@@ -74,7 +74,7 @@ public class MutableBinaryTreeConverterTest {
 
       @Test
       public void convertFromLinkedTree0() {
-            final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+            final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
             final LinkedTree<String> tree = builder.create("a", builder.create("b", builder.create("c")))
                 .build(LinkedTree.typeKey());
 
@@ -99,7 +99,7 @@ public class MutableBinaryTreeConverterTest {
 
       @Test
       public void convertFromLinkedTree1() {
-            final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+            final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
             final LinkedTree<String> tree = builder.create("a", builder.create("b"), builder.create("c"))
                 .build(LinkedTree.typeKey());
 
@@ -123,7 +123,7 @@ public class MutableBinaryTreeConverterTest {
 
       @Test(expected = IllegalStateException.class)
       public void badConversion() {
-            final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+            final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
             final LinkedTree<String> tree = builder.create("a", builder.create("b"), builder.create("c"), builder.create("c"))
                 .build(LinkedTree.typeKey());
 

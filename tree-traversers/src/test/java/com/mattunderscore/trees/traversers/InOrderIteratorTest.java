@@ -35,7 +35,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.DefaultRemovalHandler;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
@@ -45,15 +45,15 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 23/08/14.
  */
 public final class InOrderIteratorTest {
-    private static Tree<String, ClosedMutableSettableStructuredNode<String>> tree;
-    private static Tree<String, ClosedMutableSettableStructuredNode<String>> emptyTree;
-    private Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator;
-    private Iterator<? extends ClosedMutableSettableStructuredNode<String>> emptyIterator;
+    private static Tree<String, MutableSettableStructuredNode<String>> tree;
+    private static Tree<String, MutableSettableStructuredNode<String>> emptyTree;
+    private Iterator<? extends MutableSettableStructuredNode<String>> iterator;
+    private Iterator<? extends MutableSettableStructuredNode<String>> emptyIterator;
     private Iterator<String> elementIterator;
 
     @BeforeClass
     public static void setUpTree() {
-        final TreeConstructor<String, ClosedMutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final TreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "f",
             new LinkedTree[]{

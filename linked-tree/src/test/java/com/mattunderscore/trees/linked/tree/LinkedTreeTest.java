@@ -36,7 +36,7 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 
@@ -45,7 +45,7 @@ public final class LinkedTreeTest {
 
     @Before
     public void setUp() {
-        final TreeConstructor<String, ClosedMutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final TreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "a",
             new LinkedTree[] {
@@ -63,9 +63,9 @@ public final class LinkedTreeTest {
         assertNotNull(tree.getRoot());
         assertFalse(tree.getRoot().isLeaf());
         assertEquals(2, tree.getRoot().getNumberOfChildren());
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = tree.childIterator();
-        final ClosedMutableSettableStructuredNode<String> child0 = iterator.next();
-        final ClosedMutableSettableStructuredNode<String> child1 = iterator.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = tree.childIterator();
+        final MutableSettableStructuredNode<String> child0 = iterator.next();
+        final MutableSettableStructuredNode<String> child1 = iterator.next();
 
         assertTrue(child0.isLeaf());
         assertTrue(child1.isLeaf());
@@ -77,13 +77,13 @@ public final class LinkedTreeTest {
     @Test
     public void add() {
         assertNotNull(tree.getRoot());
-        final ClosedMutableSettableStructuredNode<String> newNode = tree.getRoot().addChild("d");
+        final MutableSettableStructuredNode<String> newNode = tree.getRoot().addChild("d");
 
         assertEquals(3, tree.getRoot().getNumberOfChildren());
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = tree.childIterator();
-        final ClosedMutableSettableStructuredNode<String> child0 = iterator.next();
-        final ClosedMutableSettableStructuredNode<String> child1 = iterator.next();
-        final ClosedMutableSettableStructuredNode<String> child2 = iterator.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = tree.childIterator();
+        final MutableSettableStructuredNode<String> child0 = iterator.next();
+        final MutableSettableStructuredNode<String> child1 = iterator.next();
+        final MutableSettableStructuredNode<String> child2 = iterator.next();
 
         assertEquals("d", child2.getElement());
     }
@@ -92,17 +92,17 @@ public final class LinkedTreeTest {
     public void remove() {
         assertNotNull(tree.getRoot());
         assertEquals(2, tree.getRoot().getNumberOfChildren());
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator0 = tree.childIterator();
-        final ClosedMutableSettableStructuredNode<String> child0 = iterator0.next();
-        final ClosedMutableSettableStructuredNode<String> child1 = iterator0.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator0 = tree.childIterator();
+        final MutableSettableStructuredNode<String> child0 = iterator0.next();
+        final MutableSettableStructuredNode<String> child1 = iterator0.next();
 
         assertEquals("b", child0.getElement());
         assertEquals("c", child1.getElement());
         assertFalse(iterator0.hasNext());
         assertTrue(tree.getRoot().removeChild(child0));
 
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator1 = tree.childIterator();
-        final ClosedMutableSettableStructuredNode<String> child2 = iterator1.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator1 = tree.childIterator();
+        final MutableSettableStructuredNode<String> child2 = iterator1.next();
         assertEquals("c", child2.getElement());
         assertFalse(iterator1.hasNext());
     }
@@ -153,7 +153,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void emptyConstructor() {
-        final EmptyTreeConstructor<String, ClosedMutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.EmptyConstructor<>();
+        final EmptyTreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.EmptyConstructor<>();
         final LinkedTree<String> emptyTree = constructor.build();
         assertTrue(emptyTree.isEmpty());
         assertNull(emptyTree.getRoot());
@@ -169,9 +169,9 @@ public final class LinkedTreeTest {
         assertNotNull(newTree.getRoot());
         assertFalse(newTree.getRoot().isLeaf());
         assertEquals(2, newTree.getRoot().getNumberOfChildren());
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = newTree.childIterator();
-        final ClosedMutableSettableStructuredNode<String> child0 = iterator.next();
-        final ClosedMutableSettableStructuredNode<String> child1 = iterator.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = newTree.childIterator();
+        final MutableSettableStructuredNode<String> child0 = iterator.next();
+        final MutableSettableStructuredNode<String> child1 = iterator.next();
 
         assertTrue(child0.isLeaf());
         assertTrue(child1.isLeaf());
@@ -204,9 +204,9 @@ public final class LinkedTreeTest {
         assertNotNull(newTree.getRoot());
         assertFalse(newTree.getRoot().isLeaf());
         assertEquals(2, newTree.getRoot().getNumberOfChildren());
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = newTree.childIterator();
-        final ClosedMutableSettableStructuredNode<String> child0 = iterator.next();
-        final ClosedMutableSettableStructuredNode<String> child1 = iterator.next();
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = newTree.childIterator();
+        final MutableSettableStructuredNode<String> child0 = iterator.next();
+        final MutableSettableStructuredNode<String> child1 = iterator.next();
 
         assertTrue(child0.isLeaf());
         assertTrue(child1.isLeaf());

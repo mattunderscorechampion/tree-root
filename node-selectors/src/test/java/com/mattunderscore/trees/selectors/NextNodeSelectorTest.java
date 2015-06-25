@@ -12,7 +12,7 @@ import org.junit.Test;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.matchers.NeverMatcher;
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
@@ -22,12 +22,12 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 25/12/14
  */
 public final class NextNodeSelectorTest {
-    private static Tree<String, ClosedMutableSettableStructuredNode<String>> tree;
+    private static Tree<String, MutableSettableStructuredNode<String>> tree;
 
     @BeforeClass
     public static void setUpClass() {
-        final TreeConstructor<String, ClosedMutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
-        final Tree<String, ? extends ClosedMutableSettableStructuredNode<String>> aTree = constructor.build(
+        final TreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final Tree<String, ? extends MutableSettableStructuredNode<String>> aTree = constructor.build(
             "a",
             new LinkedTree[]{
                 constructor.build(
@@ -36,7 +36,7 @@ public final class NextNodeSelectorTest {
                 constructor.build(
                     "c",
                     new LinkedTree[]{})});
-        tree = (Tree<String, ClosedMutableSettableStructuredNode<String>>) aTree;
+        tree = (Tree<String, MutableSettableStructuredNode<String>>) aTree;
     }
 
     @Test
@@ -44,7 +44,7 @@ public final class NextNodeSelectorTest {
         final NodeSelector<String> selector = new NextNodeSelector<>(
             new RootMatcherSelector<>(new AlwaysMatcher<>()),
             new AlwaysMatcher<>());
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = selector.select(tree);
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = selector.select(tree);
 
         assertTrue(iterator.hasNext());
         assertEquals("b", iterator.next().getElement());
@@ -57,7 +57,7 @@ public final class NextNodeSelectorTest {
         final NodeSelector<String> selector = new NextNodeSelector<>(
             new RootMatcherSelector<>(new AlwaysMatcher<>()),
             new NeverMatcher<>());
-        final Iterator<? extends ClosedMutableSettableStructuredNode<String>> iterator = selector.select(tree);
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = selector.select(tree);
 
         assertFalse(iterator.hasNext());
     }

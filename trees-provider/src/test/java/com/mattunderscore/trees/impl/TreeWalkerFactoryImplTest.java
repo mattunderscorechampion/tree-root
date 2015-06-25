@@ -33,7 +33,7 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
+import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.traversal.Walker;
@@ -46,35 +46,35 @@ public final class TreeWalkerFactoryImplTest {
     public static void setUp() {
         final Trees trees = new TreesImpl();
         walkerFactory = trees.treeWalkers();
-        final BottomUpTreeBuilder<String, ClosedMutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         tree = builder.create("root", builder.create("a", builder.create("c")), builder.create("b"))
             .build(LinkedTree.<String>typeKey());
     }
 
     @Test
     public void testWalkPreOrder() {
-        final TestWalker<ClosedMutableSettableStructuredNode<String>> walker = new TestWalker<>();
+        final TestWalker<MutableSettableStructuredNode<String>> walker = new TestWalker<>();
         walkerFactory.walkPreOrder(tree, walker);
         assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkInOrder() {
-        final TestWalker<ClosedMutableSettableStructuredNode<String>> walker = new TestWalker<>();
+        final TestWalker<MutableSettableStructuredNode<String>> walker = new TestWalker<>();
         walkerFactory.walkInOrder(tree, walker);
         assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkPostOrder() {
-        final TestWalker<ClosedMutableSettableStructuredNode<String>> walker = new TestWalker<>();
+        final TestWalker<MutableSettableStructuredNode<String>> walker = new TestWalker<>();
         walkerFactory.walkPostOrder(tree, walker);
         assertEquals(4, walker.count);
     }
 
     @Test
     public void testWalkBreadthFirst() {
-        final TestWalker<ClosedMutableSettableStructuredNode<String>> walker = new TestWalker<>();
+        final TestWalker<MutableSettableStructuredNode<String>> walker = new TestWalker<>();
         walkerFactory.walkBreadthFirst(tree, walker);
         assertEquals(4, walker.count);
     }
@@ -109,7 +109,7 @@ public final class TreeWalkerFactoryImplTest {
 
     @Test
     public void testWalkTreePreOrder() {
-        final TestTreeWalker<ClosedMutableSettableStructuredNode<String>> walker = new TestTreeWalker<>();
+        final TestTreeWalker<MutableSettableStructuredNode<String>> walker = new TestTreeWalker<>();
         walkerFactory.walkPreOrder(tree, walker);
         assertEquals(4, walker.count);
     }
