@@ -236,9 +236,10 @@ return iterators over either nodes or trees.
 
 ##Simple Collection
 
-I have created a SimpleCollection extending Iterable. I had intended to reply on the Collections API for this and for a
-time considered returning an Iterable to represent the children. However I found that I wanted to iterate over the 
-children without nulls and occasionally with nulls to represent the empty branches.
+I have created a SimpleCollection extending Iterable. I had intended to rely on the Collections API for this and for a
+time considered returning an Iterable to represent the children. All the interfaces of the Collections API expose
+mutator methods, which is undesirable. I generally want to iterate over the children without nulls however nulls are
+occasionally needed to represent the empty branches.
 
 The SimpleCollection provides a pair of methods for getting iterators and a pair of methods for getting some idea of
 the size of the collection. It does not provide indexed access to its elements or methods for modifying the collection,
