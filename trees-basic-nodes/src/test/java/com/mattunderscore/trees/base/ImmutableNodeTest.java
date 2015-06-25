@@ -51,7 +51,7 @@ public final class ImmutableNodeTest {
     @Test
     public void test1() {
         final OpenNode<String, MutableSettableStructuredNode<String>> node =
-            new ImmutableNode<String, MutableSettableStructuredNode<String>>("a", new ImmutableNode[0]) {};
+            new TestImmutableNode();
         assertEquals("a", node.getElement());
         assertEquals(String.class, node.getElementClass());
         assertTrue(node.isLeaf());
@@ -66,5 +66,11 @@ public final class ImmutableNodeTest {
         assertEquals("a", node.getElement());
         assertEquals(String.class, node.getElementClass());
         assertTrue(node.isLeaf());
+    }
+
+    private static class TestImmutableNode extends ImmutableNode<String, MutableSettableStructuredNode<String>> {
+        public TestImmutableNode() {
+            super("a", new TestImmutableNode[0]);
+        }
     }
 }
