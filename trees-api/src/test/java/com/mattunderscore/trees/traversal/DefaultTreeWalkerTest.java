@@ -5,8 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class DefaultTreeWalkerTest {
-    private static final DefaultTreeWalker WALKER = new DefaultTreeWalker() {
-    };
+    private static final DefaultTreeWalker<String> WALKER = new DefaultTreeWalker<String>() {};
 
     @Test
     public void testOnStarted() throws Exception {
