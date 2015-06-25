@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.organised;
 
 import com.mattunderscore.trees.construction.BaseTreeBuilder;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -34,7 +34,7 @@ import com.mattunderscore.trees.tree.Tree;
  * of elements. Used to created sorted or balanced trees.
  * @author Matt Champion on 30/08/14.
  */
-public interface OrganisedTreeBuilder<E, N extends Node<E, N>, T extends Tree<E, N>> extends BaseTreeBuilder<E, N, T> {
+public interface OrganisedTreeBuilder<E, N extends OpenNode<E, N>, T extends Tree<E, N>> extends BaseTreeBuilder<E, N, T> {
 
     /**
      * @param element an element to include in the tree

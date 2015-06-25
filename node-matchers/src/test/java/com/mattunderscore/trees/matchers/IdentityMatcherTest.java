@@ -33,8 +33,8 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Unit tests for IdentityMatcher.
@@ -44,14 +44,14 @@ public final class IdentityMatcherTest {
     @Test
     public void matches() {
         final String element = "a";
-        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>(element, new Object[0]) {};
+        final OpenNode<String, Node<String>> node = new ImmutableNode<String, Node<String>>(element, new Object[0]) {};
         final NodeMatcher<String> matcher = new IdentityMatcher<>(element);
         assertTrue(matcher.matches(node));
     }
 
     @Test
     public void notMatches() {
-        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>(new String("a"), new Object[0]) {};
+        final OpenNode<String, Node<String>> node = new ImmutableNode<String, Node<String>>(new String("a"), new Object[0]) {};
         final NodeMatcher<String> matcher = new IdentityMatcher<>(new String("a"));
         assertFalse(matcher.matches(node));
     }

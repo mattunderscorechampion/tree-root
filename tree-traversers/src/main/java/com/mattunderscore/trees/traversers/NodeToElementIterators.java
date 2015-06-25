@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.traversers;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
 
 import java.util.Iterator;
@@ -34,7 +34,7 @@ import java.util.Iterator;
  * An element iterator that delegates to a Node iterator and unwraps the return to an element.
  * @author Matt Champion on 10/09/14.
  */
-public final class NodeToElementIterators<E, N extends Node<E, N>> extends ConvertingIterator<E, N> {
+public final class NodeToElementIterators<E, N extends OpenNode<E, N>> extends ConvertingIterator<E, N> {
 
     public NodeToElementIterators(Iterator<? extends N> delegatedIterator) {
         super(delegatedIterator);

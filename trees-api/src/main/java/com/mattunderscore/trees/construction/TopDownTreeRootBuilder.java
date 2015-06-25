@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.construction;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Builder used to create the root of a new tree or an empty tree.
  * @author Matt Champion on 07/08/14.
  */
-public interface TopDownTreeRootBuilder<E, N extends Node<E, N>> extends BaseTreeBuilder<E, N, Tree<E, N>> {
+public interface TopDownTreeRootBuilder<E, N extends OpenNode<E, N>> extends BaseTreeBuilder<E, N, Tree<E, N>> {
 
     /**
      * @param e root element
@@ -44,7 +44,7 @@ public interface TopDownTreeRootBuilder<E, N extends Node<E, N>> extends BaseTre
      * Builder used to create a non-empty tree.
      * @param <S> The element type of the tree that will be built
      */
-    interface TopDownTreeBuilder<S, U extends Node<S, U>> extends BaseTreeBuilder<S,U, Tree<S, U>>, TopDownTreeBuilderAppender<S> {
+    interface TopDownTreeBuilder<S, U extends OpenNode<S, U>> extends BaseTreeBuilder<S,U, Tree<S, U>>, TopDownTreeBuilderAppender<S> {
     }
 
     /**

@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.sorted;
 
 import com.mattunderscore.trees.organised.OrganisedTreeBuilder;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -34,5 +34,5 @@ import com.mattunderscore.trees.tree.Tree;
  * the sorting tree.
  * @author Matt Champion on 06/09/14.
  */
-public interface SortedTreeBuilder<E, N extends Node<E, N>> extends OrganisedTreeBuilder<E, N, Tree<E, N>> {
+public interface SortedTreeBuilder<E, N extends OpenNode<E, N>> extends OrganisedTreeBuilder<E, N, Tree<E, N>> {
 }

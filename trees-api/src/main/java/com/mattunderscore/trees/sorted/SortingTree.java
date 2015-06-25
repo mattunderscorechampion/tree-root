@@ -26,11 +26,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.sorted;
 
 import com.mattunderscore.trees.organised.MutableOrganisedTree;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * A mutable, organised tree that sorts the elements passed to it.
  * @author Matt Champion on 06/09/14.
  */
-public interface SortingTree<E, N extends Node<E, N>> extends MutableOrganisedTree<E, N> {
+public interface SortingTree<E, N extends OpenNode<E, N>> extends MutableOrganisedTree<E, N> {
 }

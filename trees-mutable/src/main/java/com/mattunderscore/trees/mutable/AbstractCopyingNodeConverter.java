@@ -31,7 +31,7 @@ import java.lang.reflect.Type;
 import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -39,7 +39,7 @@ import com.mattunderscore.trees.tree.Tree;
  * copying node converter.
  * @author Matt Champion
  */
-public abstract class AbstractCopyingNodeConverter<E, N extends Node<E, N>, T extends Tree<E, N>, S extends Node<E, S>> implements NodeToTreeConverter<E, N, T, S>, SPISupportAwareComponent {
+public abstract class AbstractCopyingNodeConverter<E, N extends OpenNode<E, N>, T extends Tree<E, N>, S extends OpenNode<E, S>> implements NodeToTreeConverter<E, N, T, S>, SPISupportAwareComponent {
     private final DelegateCopyingNodeToTreeConverter<E, ? extends N, T, S> delegateConverter;
 
     public AbstractCopyingNodeConverter() {

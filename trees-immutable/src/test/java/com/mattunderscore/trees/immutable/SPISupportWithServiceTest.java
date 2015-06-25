@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.immutable;
 
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.tree.Tree;
@@ -44,11 +43,11 @@ public final class SPISupportWithServiceTest {
     @Test
     public void test0() {
         final TopDownTreeRootBuilder builder = trees.treeBuilders().topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ClosedNode<String>> nodeApp0 = builder.root("A");
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, Node<String>> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
-        final Tree<String, ClosedNode<String>> tree0 = nodeApp0.build(TreeNodeImpl.<String>typeKey());
-        final Tree<String, ClosedNode<String>> tree1 = new NodeConverter<String, ClosedNode<String>>().treeFromRootNode(tree0.getRoot());
+        final Tree<String, Node<String>> tree0 = nodeApp0.build(TreeNodeImpl.<String>typeKey());
+        final Tree<String, Node<String>> tree1 = new NodeConverter<String, Node<String>>().treeFromRootNode(tree0.getRoot());
         assertSame(tree0, tree1);
     }
 }

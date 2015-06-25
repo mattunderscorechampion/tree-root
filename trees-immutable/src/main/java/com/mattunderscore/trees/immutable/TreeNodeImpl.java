@@ -29,7 +29,6 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.Immutable;
@@ -39,7 +38,7 @@ import net.jcip.annotations.Immutable;
  * @author Matt Champion on 10/06/14.
  */
 @Immutable
-public final class TreeNodeImpl<E> extends ImmutableNode<E, ClosedNode<E>> implements Tree<E, ClosedNode<E>>, ClosedNode<E> {
+public final class TreeNodeImpl<E> extends ImmutableNode<E, Node<E>> implements Tree<E, Node<E>>, Node<E> {
 
     @SuppressWarnings("unchecked")
     TreeNodeImpl(E element, TreeNodeImpl[] children) {
@@ -66,12 +65,12 @@ public final class TreeNodeImpl<E> extends ImmutableNode<E, ClosedNode<E>> imple
      * @param <E> The element type
      * @return The type key
      */
-    public static <E> TypeKey<? extends Tree<E, ClosedNode<E>>> typeKey() {
+    public static <E> TypeKey<? extends Tree<E, Node<E>>> typeKey() {
         return new TypeKey<TreeNodeImpl<E>>() {};
     }
 
     @Override
-    public Iterator<? extends ClosedNode<E>> childIterator() {
+    public Iterator<? extends Node<E>> childIterator() {
         return children.iterator();
     }
 }

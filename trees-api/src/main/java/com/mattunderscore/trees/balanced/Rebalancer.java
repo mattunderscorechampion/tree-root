@@ -27,7 +27,7 @@ package com.mattunderscore.trees.balanced;
 
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -42,7 +42,7 @@ public interface Rebalancer {
      * @param <T> the type of tree
      * @return A balanced copy of a tree
      */
-    <E, N extends Node<E, N>, T extends Tree<E, N>> T rebalance(T tree);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> T rebalance(T tree);
 
     /**
      * @param tree The tree to rebalance

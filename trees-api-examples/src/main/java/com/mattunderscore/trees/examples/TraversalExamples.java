@@ -28,13 +28,11 @@ package com.mattunderscore.trees.examples;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.mutable.ClosedMutableNode;
-import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.traversal.DefaultElementWalker;
 import com.mattunderscore.trees.traversal.DefaultTreeWalker;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -50,7 +48,7 @@ public final class TraversalExamples {
         }
     }
 
-    public void elementIterator(TreeIteratorFactory iterators, Tree<String, ClosedNode<String>> tree) {
+    public void elementIterator(TreeIteratorFactory iterators, Tree<String, Node<String>> tree) {
         final Iterator<String> iterator = iterators.breadthFirstElementsIterator(tree);
         while (iterator.hasNext()) {
             final String element = iterator.next();
@@ -65,7 +63,7 @@ public final class TraversalExamples {
         }
     }
 
-    public void elementWalker(TreeWalkerFactory walkers, Tree<String, ClosedNode<String>> tree) {
+    public void elementWalker(TreeWalkerFactory walkers, Tree<String, Node<String>> tree) {
         walkers.walkElementsInOrder(tree, new DefaultElementWalker<String>() {
             @Override
             public boolean onNext(String element) {
@@ -75,30 +73,30 @@ public final class TraversalExamples {
         });
     }
 
-    public void elementTreeWalker(TreeWalkerFactory walkers, Tree<String, ClosedNode<String>> tree) {
-        walkers.walkPreOrder(tree, new DefaultTreeWalker<ClosedNode<String>>() {
+    public void elementTreeWalker(TreeWalkerFactory walkers, Tree<String, Node<String>> tree) {
+        walkers.walkPreOrder(tree, new DefaultTreeWalker<Node<String>>() {
             @Override
             public void onStarted() {
                 System.out.print("(");
             }
 
             @Override
-            public void onNode(ClosedNode<String> node) {
+            public void onNode(Node<String> node) {
                 System.out.print(node.getElement());
             }
 
             @Override
-            public void onNodeChildrenStarted(ClosedNode<String> node) {
+            public void onNodeChildrenStarted(Node<String> node) {
                 System.out.print(" (");
             }
 
             @Override
-            public void onNodeChildrenRemaining(ClosedNode<String> node) {
+            public void onNodeChildrenRemaining(Node<String> node) {
                 System.out.print(" ");
             }
 
             @Override
-            public void onNodeChildrenCompleted(ClosedNode<String> node) {
+            public void onNodeChildrenCompleted(Node<String> node) {
                 System.out.print(")");
             }
 

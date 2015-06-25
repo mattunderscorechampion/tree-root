@@ -29,14 +29,14 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.mutable.ClosedMutableNode;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.NodeToTreeConverter} for
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyNode}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E, N extends Node<E, N>> implements NodeToTreeConverter<E, ClosedMutableNode<E>, PathCopyTree<E>, N> {
+public final class NodeConverter<E, N extends OpenNode<E, N>> implements NodeToTreeConverter<E, ClosedMutableNode<E>, PathCopyTree<E>, N> {
 
     @Override
     public PathCopyTree<E> treeFromRootNode(N node) {
@@ -55,7 +55,7 @@ public final class NodeConverter<E, N extends Node<E, N>> implements NodeToTreeC
     }
 
     @Override
-    public Class<? extends Node> forClass() {
+    public Class<? extends OpenNode> forClass() {
         return PathCopyNode.class;
     }
 }

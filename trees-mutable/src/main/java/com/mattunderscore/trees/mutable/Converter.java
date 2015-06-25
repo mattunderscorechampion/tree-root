@@ -28,7 +28,7 @@ package com.mattunderscore.trees.mutable;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -39,7 +39,7 @@ import com.mattunderscore.trees.tree.Tree;
 public final class Converter<E> implements TreeConverter<E, ClosedMutableSettableNode<E>, MutableTreeImpl<E>> {
 
     @Override
-    public final <S extends Node<E, S>> MutableTreeImpl<E> build(Tree<E, S> sourceTree) {
+    public final <S extends OpenNode<E, S>> MutableTreeImpl<E> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
         final MutableTreeImpl<E> newTree = new MutableTreeImpl<>(root.getElement());
         final Iterator<? extends S> iterator = root.childIterator();
@@ -49,7 +49,7 @@ public final class Converter<E> implements TreeConverter<E, ClosedMutableSettabl
         return newTree;
     }
 
-    private <S extends Node<E, S>> void duplicate(MutableTreeImpl<E> newParent, S sourceChild) {
+    private <S extends OpenNode<E, S>> void duplicate(MutableTreeImpl<E> newParent, S sourceChild) {
         final MutableTreeImpl<E> newChild = newParent.addChild(sourceChild.getElement());
         final Iterator<? extends S> iterator = sourceChild.childIterator();
         while (iterator.hasNext()) {

@@ -30,10 +30,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import org.junit.Test;
 
 /**
@@ -43,7 +42,7 @@ import org.junit.Test;
 public final class AlwaysMatcherTest {
     @Test
     public void matches() {
-        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>("a", new Object[0]) {};
+        final OpenNode<String, Node<String>> node = new ImmutableNode<String, Node<String>>("a", new Object[0]) {};
         final NodeMatcher<String> matcher = AlwaysMatcher.create();
         assertTrue(matcher.matches(node));
     }

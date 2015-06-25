@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.mattunderscore.trees.tree.Node;
-
 public class DefaultElementWalkerTest {
     private final Walker<String> walker = new DefaultElementWalker<String>() {
     };

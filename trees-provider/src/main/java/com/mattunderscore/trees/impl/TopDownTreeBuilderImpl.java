@@ -30,7 +30,7 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.NotThreadSafe;
 
@@ -38,7 +38,7 @@ import net.jcip.annotations.NotThreadSafe;
  * @author Matt Champion on 15/08/14.
  */
 @NotThreadSafe
-final class TopDownTreeBuilderImpl<E, N extends Node<E, N>> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E, N> {
+final class TopDownTreeBuilderImpl<E, N extends OpenNode<E, N>> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E, N> {
     private final SPISupport helper;
     private final LinkedTree<E> tree;
 

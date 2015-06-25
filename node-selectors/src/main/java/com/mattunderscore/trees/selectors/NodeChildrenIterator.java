@@ -28,7 +28,7 @@ package com.mattunderscore.trees.selectors;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 /**
@@ -36,7 +36,7 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
  * @param <E> The element type
  * @param <N> The node type
  */
-final class NodeChildrenIterator<E, N extends Node<E, ? extends N>> extends PrefetchingIterator<N> {
+final class NodeChildrenIterator<E, N extends OpenNode<E, ? extends N>> extends PrefetchingIterator<N> {
     private final Iterator<? extends N> parents;
     private final NodeMatcher<E> matcher;
     private Iterator<? extends N> possibles;

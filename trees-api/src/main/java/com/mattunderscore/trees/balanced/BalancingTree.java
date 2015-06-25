@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.balanced;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.organised.MutableOrganisedTree;
 
 /**
@@ -33,7 +33,7 @@ import com.mattunderscore.trees.organised.MutableOrganisedTree;
  * @param <E> the type of elements in the tree.
  * @author Matt Champion on 30/08/14.
  */
-public interface BalancingTree<E, N extends Node<E, N>> extends MutableOrganisedTree<E, N> {
+public interface BalancingTree<E, N extends OpenNode<E, N>> extends MutableOrganisedTree<E, N> {
     /**
      * Add an element to the tree at the next balanced position
      * @param element the element to add

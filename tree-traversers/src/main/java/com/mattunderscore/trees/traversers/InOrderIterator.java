@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.traversers;
 
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.StructuralNode;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.NotThreadSafe;
@@ -39,7 +39,7 @@ import java.util.Stack;
  * @author Matt Champion on 22/08/14.
  */
 @NotThreadSafe
-public final class InOrderIterator<E , N extends Node<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
+public final class InOrderIterator<E , N extends OpenNode<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
     private final Stack<State<E, N>> parents = new Stack<>();
     private N current;
 
@@ -75,7 +75,7 @@ public final class InOrderIterator<E , N extends Node<E, N>, T extends Tree<E, N
         throw new NoSuchElementException();
     }
 
-    private static final class State<E, N extends Node<E, N>> {
+    private static final class State<E, N extends OpenNode<E, N>> {
         private final N node;
         private final Iterator<? extends N> iterator;
 

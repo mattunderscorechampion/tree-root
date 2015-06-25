@@ -30,7 +30,6 @@ import org.mockito.Matchers;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
-import com.mattunderscore.trees.tree.Node;
 
 /**
  * Utilities for matching arguments of mocked walkers and tree walkers.

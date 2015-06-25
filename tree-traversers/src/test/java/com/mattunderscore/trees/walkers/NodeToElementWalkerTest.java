@@ -34,9 +34,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.mattunderscore.trees.mutable.ClosedMutableSettableStructuredNode;
-import com.mattunderscore.trees.walkers.NodeToElementWalker;
 import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.tree.Node;
 
 /**
  * @author Matt Champion on 26/02/15

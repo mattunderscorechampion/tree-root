@@ -29,7 +29,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -38,12 +38,12 @@ import com.mattunderscore.trees.tree.Tree;
 public final class OperationNotSupportedForTypeTest {
       @Test(expected = OperationNotSupportedForType.class)
       public void test() throws Exception {
-            final Exception e = new OperationNotSupportedForType(Tree.class, Node.class);
+            final Exception e = new OperationNotSupportedForType(Tree.class, OpenNode.class);
             assertEquals(
                 "Operation not supported. Type " +
                     Tree.class.getName() +
                     " not supported for " +
-                    Node.class.getName(),
+                    OpenNode.class.getName(),
                 e.getMessage());
             throw e;
       }

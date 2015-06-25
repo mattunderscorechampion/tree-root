@@ -28,7 +28,7 @@ package com.mattunderscore.trees.walkers;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.Immutable;
 
@@ -41,7 +41,7 @@ public final class PostOrderWalker {
     public PostOrderWalker() {
     }
 
-    public <E, N extends Node<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
@@ -58,7 +58,7 @@ public final class PostOrderWalker {
         }
     }
 
-    private <E, N extends Node<E, N>> void accept(N node, Walker<N> walker) throws Done {
+    private <E, N extends OpenNode<E, N>> void accept(N node, Walker<N> walker) throws Done {
         final Iterator<? extends N> iterator = node.childIterator();
         while (iterator.hasNext()) {
             accept(iterator.next(), walker);

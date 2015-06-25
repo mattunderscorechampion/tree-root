@@ -37,7 +37,7 @@ import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
 
@@ -133,7 +133,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, ClosedMutableSe
         }
 
         @Override
-        public Class<? extends Node> forClass() {
+        public Class<? extends OpenNode> forClass() {
             return LinkedTree.class;
         }
     }
@@ -167,7 +167,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, ClosedMutableSe
 
     public final static class Converter<E> implements TreeConverter<E, ClosedMutableSettableStructuredNode<E>, LinkedTree<E>> {
         @Override
-        public <S extends Node<E, S>> LinkedTree<E> build(Tree<E, S> sourceTree) {
+        public <S extends OpenNode<E, S>> LinkedTree<E> build(Tree<E, S> sourceTree) {
             final S root = sourceTree.getRoot();
             final LinkedTree<E> newTree = new LinkedTree<>(root.getElement());
             final Iterator<? extends S> iterator = root.childIterator();
@@ -182,7 +182,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, ClosedMutableSe
             return LinkedTree.class;
         }
 
-        private <S extends Node<E, S>> void duplicate(LinkedTree<E> newParent, S sourceChild) {
+        private <S extends OpenNode<E, S>> void duplicate(LinkedTree<E> newParent, S sourceChild) {
             final LinkedTree<E> newChild = newParent.addChild(sourceChild.getElement());
             final Iterator<? extends S> iterator = sourceChild.childIterator();
             while (iterator.hasNext()) {

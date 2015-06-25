@@ -26,10 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import com.mattunderscore.trees.mutable.ClosedMutableNode;
-import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.selection.TreeSelector;
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -39,8 +37,8 @@ import java.util.Iterator;
  * @author Matt Champion on 08/08/14.
  */
 public final class TreeSelectorExamples {
-    public void selectorExample(TreeSelector<String> selector, Tree<String, ClosedNode<String>> tree) {
-        final Iterator<Tree<String, ClosedNode<String>>> iterator = selector.select(tree);
+    public void selectorExample(TreeSelector<String> selector, Tree<String, Node<String>> tree) {
+        final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
     }
 
     public void selectorExampleOnMutableTree(TreeSelector<String> selector, MutableTree<String, ClosedMutableNode<String>> tree) {

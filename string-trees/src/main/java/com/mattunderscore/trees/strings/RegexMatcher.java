@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.strings;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import net.jcip.annotations.Immutable;
 
@@ -45,7 +45,7 @@ public final class RegexMatcher implements NodeMatcher<String> {
     }
 
     @Override
-    public <N extends Node<? extends String,? extends N>> boolean matches(N node) {
+    public <N extends OpenNode<? extends String,? extends N>> boolean matches(N node) {
         final Matcher matcher = value.matcher(node.getElement());
         return matcher.matches();
     }

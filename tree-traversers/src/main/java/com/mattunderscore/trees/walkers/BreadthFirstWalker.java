@@ -30,7 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.Immutable;
 
@@ -43,7 +43,7 @@ public final class BreadthFirstWalker {
     public BreadthFirstWalker() {
     }
 
-    public <E, N extends Node<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
@@ -62,7 +62,7 @@ public final class BreadthFirstWalker {
         }
     }
 
-    private <E, N extends Node<E, N>> void accept(List<N> currentLevel, Walker<N> walker) throws Done {
+    private <E, N extends OpenNode<E, N>> void accept(List<N> currentLevel, Walker<N> walker) throws Done {
         final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
         for (final N node : currentLevel) {
             if (!walker.onNext(node)) {

@@ -33,13 +33,13 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.tree.ClosedNode;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 public final class NeverMatcherTest {
     @Test
     public void matches() {
-        final Node<String, ClosedNode<String>> node = new ImmutableNode<String, ClosedNode<String>>("a", new Object[0]) {};
+        final OpenNode<String, Node<String>> node = new ImmutableNode<String, Node<String>>("a", new Object[0]) {};
         final NodeMatcher<String> matcher = new NeverMatcher<>();
         assertFalse(matcher.matches(node));
     }

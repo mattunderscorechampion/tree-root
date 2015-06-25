@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -34,7 +34,7 @@ import com.mattunderscore.trees.tree.Tree;
  * tree.
  * @author Matt Champion on 12/08/14.
  */
-public interface NodeToTreeConverter<E, N extends Node<E, ? extends N>, T extends Tree<E, ? extends N>, S extends Node<E, ? extends S>> extends NodeKeyedSPIComponent {
+public interface NodeToTreeConverter<E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>, S extends OpenNode<E, ? extends S>> extends NodeKeyedSPIComponent {
     /**
      * @param node The node to convert
      * @return The tree

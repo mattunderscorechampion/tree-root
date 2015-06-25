@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2014 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,31 +23,43 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.selectors;
+package com.mattunderscore.trees.tree;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.selection.NodeSelector;
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.Tree;
-
 /**
- * Selector that applies a matcher to the child nodes selected by another selector.
- * @param <E> The element type
+ * Represents a node of the tree. This node is open, it accepts a generic parameter for the type of child nodes it has.
+ *
+ * @author Matt Champion on 08/08/14.
  */
-public final class NextNodeSelector<E> implements NodeSelector<E> {
-    private final NodeSelector<E> selector;
-    private final NodeMatcher<E> matcher;
+public interface OpenNode<E, N extends OpenNode<E, ? extends N>> {
+    /**
+     * @return The element stored in the node
+     */
+    E getElement();
 
-    public NextNodeSelector(NodeSelector<E> selector, NodeMatcher<E> matcher) {
-        this.selector = selector;
-        this.matcher = matcher;
+    /**
+     * @return The number of child nodes
+     */
+    int getNumberOfChildren();
+
+    /**
+     * @return Iterator for children
+     */
+    Iterator<? extends N> childIterator();
+
+    /**
+     * @return The class of the element stored in the node
+     */
+    @SuppressWarnings("unchecked")
+    default Class<? extends E> getElementClass() {
+        return (Class<? extends E>) getElement().getClass();
     }
 
-    @Override
-    public <N extends OpenNode<E, ? extends N>> Iterator<? extends N> select(Tree<E, ? extends N> tree) {
-        final Iterator<? extends N> parents = selector.select(tree);
-        return new NodeChildrenIterator<>(parents, matcher);
+    /**
+     * @return {@code true} if the node is a leaf node
+     */
+    default boolean isLeaf() {
+        return getNumberOfChildren() == 0;
     }
 }

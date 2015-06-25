@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.selectors;
 
 import com.mattunderscore.trees.selection.NodeSelector;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 import java.util.Iterator;
 
@@ -42,7 +42,7 @@ public final class ChildSelector<E> extends ExtendingNodeSelector<E> {
     }
 
     @Override
-    protected final <N extends Node<E, ? extends N>> Iterator<? extends N> getExtendingIterator(N nodeToExtendFrom) {
+    protected final <N extends OpenNode<E, ? extends N>> Iterator<? extends N> getExtendingIterator(N nodeToExtendFrom) {
         return nodeToExtendFrom.childIterator();
     }
 }

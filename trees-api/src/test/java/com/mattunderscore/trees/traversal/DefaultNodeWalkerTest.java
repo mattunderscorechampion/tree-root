@@ -4,10 +4,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.mattunderscore.trees.tree.ClosedNode;
+import com.mattunderscore.trees.tree.Node;
 
 public class DefaultNodeWalkerTest {
-    private final Walker<ClosedNode<String>> walker = new DefaultNodeWalker<String, ClosedNode<String>>() {
+    private final Walker<Node<String>> walker = new DefaultNodeWalker<String, Node<String>>() {
     };
 
     @Test

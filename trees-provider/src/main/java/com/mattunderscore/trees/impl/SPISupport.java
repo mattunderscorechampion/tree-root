@@ -40,7 +40,7 @@ import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.SPIComponent;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -89,7 +89,7 @@ public final class SPISupport {
      * @throws OperationNotSupportedForType
      */
     @SuppressWarnings("unchecked")
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> T createEmptyTree(Class<T> klass) throws OperationNotSupportedForType {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> T createEmptyTree(Class<T> klass) throws OperationNotSupportedForType {
         final EmptyTreeConstructor<E, N, T> constructor = performLookup(emptyConstructors, EmptyTreeConstructor.class, klass);
         return constructor.build();
     }
@@ -103,7 +103,7 @@ public final class SPISupport {
      * @throws OperationNotSupportedForType
      */
     @SuppressWarnings("unchecked")
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> T createEmptyTree(Class<T> klass, Comparator<E> comparator) throws OperationNotSupportedForType {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> T createEmptyTree(Class<T> klass, Comparator<E> comparator) throws OperationNotSupportedForType {
         final EmptySortedTreeConstructor<E, N, T> constructor = performLookup(sortedEmptyConverters, EmptySortedTreeConstructor.class, klass);
         return constructor.build(comparator);
     }
@@ -119,7 +119,7 @@ public final class SPISupport {
      * @throws OperationNotSupportedForType
      */
     @SuppressWarnings("unchecked")
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> T newTreeFrom(Class<T> klass, E e, T[] subtrees) throws OperationNotSupportedForType {
         final TreeConstructor<E, N, T> constructor = performLookup(treeConstructors, TreeConstructor.class, klass);
         return constructor.build(e, subtrees);
     }
@@ -134,7 +134,7 @@ public final class SPISupport {
      * @throws OperationNotSupportedForType
      */
     @SuppressWarnings("unchecked")
-    public <E, N extends Node<E, N>, S extends Node<E, S>, T extends Tree<E, N>> T convertTree(Class<T> klass, Tree<E, S> sourceTree) throws OperationNotSupportedForType {
+    public <E, N extends OpenNode<E, N>, S extends OpenNode<E, S>, T extends Tree<E, N>> T convertTree(Class<T> klass, Tree<E, S> sourceTree) throws OperationNotSupportedForType {
         final TreeConverter<E, N, T> converter = performLookup(treeConverters, TreeConverter.class, klass);
         return converter.build(sourceTree);
     }
@@ -149,14 +149,14 @@ public final class SPISupport {
      * @throws OperationNotSupportedForType
      */
     @SuppressWarnings("unchecked")
-    public <E, N extends Node<E,? extends N>, T extends Tree<E, ? extends N>, S extends Node<E, ? extends S>> T nodeToTree(S node) throws OperationNotSupportedForType {
-        final Class<? extends Node> klass = node.getClass();
+    public <E, N extends OpenNode<E,? extends N>, T extends Tree<E, ? extends N>, S extends OpenNode<E, ? extends S>> T nodeToTree(S node) throws OperationNotSupportedForType {
+        final Class<? extends OpenNode> klass = node.getClass();
         final NodeToTreeConverter<E, N, T, S> converter = performLookup(converters, NodeToTreeConverter.class, klass);
         return converter.treeFromRootNode(node);
     }
 
     @SuppressWarnings("unchecked")
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> lookupHandler(T tree) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> lookupHandler(T tree) {
         final Class<? extends Tree> keyClass = tree.getClass();
         final IteratorRemoveHandler<E, N, T> handler = iteratorRemoveHandlers.get(keyClass);
         if (handler == null) {

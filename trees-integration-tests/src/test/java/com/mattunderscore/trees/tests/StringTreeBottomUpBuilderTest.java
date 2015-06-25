@@ -42,7 +42,7 @@ import com.mattunderscore.trees.immutable.TreeNodeImpl;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableTreeImpl;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -55,7 +55,7 @@ public class StringTreeBottomUpBuilderTest {
     private static final Trees trees = new TreesImpl();
     private final Class treeClass;
 
-    public StringTreeBottomUpBuilderTest(Class<? extends Tree<String, ? extends Node<String, ?>>> treeClass) {
+    public StringTreeBottomUpBuilderTest(Class<? extends Tree<String, ? extends OpenNode<String, ?>>> treeClass) {
         this.treeClass = treeClass;
     }
 
@@ -73,27 +73,27 @@ public class StringTreeBottomUpBuilderTest {
 
     @Test
     public void build() {
-        final BottomUpTreeBuilder<String, ? extends Node<String, ?>> builder = trees.treeBuilders().bottomUpBuilder();
-        final Tree<String, ? extends Node<String, ?>> tree = builder.create("a", new BottomUpTreeBuilder[] {
+        final BottomUpTreeBuilder<String, ? extends OpenNode<String, ?>> builder = trees.treeBuilders().bottomUpBuilder();
+        final Tree<String, ? extends OpenNode<String, ?>> tree = builder.create("a", new BottomUpTreeBuilder[] {
                 builder.create("b", new BottomUpTreeBuilder[] {
                         builder.create("c")}), builder.create("d")}).build(treeClass);
 
-        final Node<String, ?> root = tree.getRoot();
+        final OpenNode<String, ?> root = tree.getRoot();
         Assert.assertEquals(String.class, root.getElementClass());
         Assert.assertEquals("a", root.getElement());
-        final Iterator<? extends Node<String, ?>> iterator0 = root.childIterator();
+        final Iterator<? extends OpenNode<String, ?>> iterator0 = root.childIterator();
         Assert.assertEquals(2, root.getNumberOfChildren());
         Assert.assertEquals("a", root.getElement());
         Assert.assertTrue(iterator0.hasNext());
-        final Node<String, ?> bNode = iterator0.next();
+        final OpenNode<String, ?> bNode = iterator0.next();
         Assert.assertTrue(iterator0.hasNext());
-        final Node<String, ?> dNode = iterator0.next();
+        final OpenNode<String, ?> dNode = iterator0.next();
         Assert.assertFalse(iterator0.hasNext());
         Assert.assertEquals("b", bNode.getElement());
         Assert.assertEquals("d", dNode.getElement());
-        final Iterator<? extends Node<String, ?>> iterator1 = bNode.childIterator();
+        final Iterator<? extends OpenNode<String, ?>> iterator1 = bNode.childIterator();
         Assert.assertTrue(iterator1.hasNext());
-        final Node<String, ?> cNode = iterator1.next();
+        final OpenNode<String, ?> cNode = iterator1.next();
         Assert.assertFalse(iterator1.hasNext());
         Assert.assertEquals("c", cNode.getElement());
     }

@@ -30,7 +30,7 @@ import net.jcip.annotations.Immutable;
 import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.walkers.BreadthFirstWalker;
 import com.mattunderscore.trees.walkers.InOrderWalker;
@@ -60,56 +60,56 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, Walker<N> walker) {
         preOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkInOrder(T tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkInOrder(T tree, Walker<N> walker) {
         inOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkPostOrder(T tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPostOrder(T tree, Walker<N> walker) {
         postOrderWalker.accept(tree, walker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker) {
         breadthFirstWalker.accept(tree, walker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, Walker<E> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
         preOrderWalker.accept(tree, nodeWalker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsInOrder(T tree, Walker<E> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsInOrder(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
         inOrderWalker.accept(tree, nodeWalker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsPostOrder(T tree, Walker<E> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPostOrder(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
         postOrderWalker.accept(tree, nodeWalker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
         breadthFirstWalker.accept(tree, nodeWalker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<N> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<N> walker) {
         preOrderTreeWalkerDriver.accept(tree, walker);
     }
 
     @Override
-    public <E, N extends Node<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, TreeWalker<E> walker) {
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, TreeWalker<E> walker) {
         final TreeWalker<N> nodeWalker = new NodeToElementTreeWalker<>(walker);
         preOrderTreeWalkerDriver.accept(tree, nodeWalker);
     }

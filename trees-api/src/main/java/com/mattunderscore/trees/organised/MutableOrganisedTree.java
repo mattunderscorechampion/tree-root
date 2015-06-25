@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.organised;
 
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -33,7 +33,7 @@ import com.mattunderscore.trees.tree.Tree;
  * of elements. Used to created sorted or balancing trees.
  * @author Matt Champion on 06/09/14.
  */
-public interface MutableOrganisedTree<E, N extends Node<E, N>> extends Tree<E, N> {
+public interface MutableOrganisedTree<E, N extends OpenNode<E, N>> extends Tree<E, N> {
     /**
      * Add an element to the tree at the next position
      * @param element the element to add

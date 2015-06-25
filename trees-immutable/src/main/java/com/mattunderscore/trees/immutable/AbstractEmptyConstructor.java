@@ -26,14 +26,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.immutable;
 
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.tree.ClosedNode;
+import com.mattunderscore.trees.tree.Node;
 
 /**
  * Abstract implementation of {@link com.mattunderscore.trees.spi.EmptyTreeConstructor} for
  * {@link com.mattunderscore.trees.immutable.TreeNodeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-abstract class AbstractEmptyConstructor<E> implements EmptyTreeConstructor<E, ClosedNode<E>, TreeNodeImpl<E>> {
+abstract class AbstractEmptyConstructor<E> implements EmptyTreeConstructor<E, Node<E>, TreeNodeImpl<E>> {
 
     @SuppressWarnings("unchecked")
     @Override
