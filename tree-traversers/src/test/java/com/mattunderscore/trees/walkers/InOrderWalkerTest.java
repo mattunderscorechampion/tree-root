@@ -16,7 +16,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
-import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.traversal.Walker;
 
 public final class InOrderWalkerTest {
@@ -33,36 +32,27 @@ public final class InOrderWalkerTest {
 
     @BeforeClass
     public static void setUpClass() {
-        final TreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final LinkedTree.Constructor<String> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "f",
-            new LinkedTree[]{
+            constructor.build(
+                "b",
                 constructor.build(
-                    "b",
-                    new LinkedTree[]{
-                        constructor.build(
-                            "a",
-                            new LinkedTree[]{}),
-                        constructor.build(
-                            "d",
-                            new LinkedTree[]{
-                                constructor.build(
-                                    "c",
-                                    new LinkedTree[]{}),
-                                constructor.build(
-                                    "e",
-                                    new LinkedTree[]{})
-                            })
-                    }),
+                    "a"),
                 constructor.build(
-                    "i",
-                    new LinkedTree[]{
-                        constructor.build(
-                            "h",
-                            new LinkedTree[]{
-                                constructor.build(
-                                    "g",
-                                    new LinkedTree[]{})})})});
+                    "d",
+                    constructor.build(
+                        "c"),
+                    constructor.build(
+                        "e")
+                )
+            ),
+            constructor.build(
+                "i",
+                constructor.build(
+                    "h",
+                    constructor.build(
+                        "g"))));
 
         emptyTree = new LinkedTree.EmptyConstructor<String>().build();
 
