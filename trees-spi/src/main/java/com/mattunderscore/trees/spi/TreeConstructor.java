@@ -34,6 +34,6 @@ import com.mattunderscore.trees.tree.Tree;
  */
 public interface TreeConstructor<E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> extends TreeKeyedSPIComponent {
 
-    T build(E e, T[] subtrees);
+    T build(E e, T... subtrees);
 
 }

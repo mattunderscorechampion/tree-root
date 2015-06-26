@@ -45,16 +45,13 @@ public final class LinkedTreeTest {
 
     @Before
     public void setUp() {
-        final TreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final LinkedTree.Constructor<String> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "a",
-            new LinkedTree[] {
                 constructor.build(
-                    "b",
-                    new LinkedTree[] {}),
+                    "b"),
                 constructor.build(
-                    "c",
-                    new LinkedTree[] {})});
+                    "c"));
     }
 
     @Test
@@ -78,6 +75,7 @@ public final class LinkedTreeTest {
     public void add() {
         assertNotNull(tree.getRoot());
         final MutableSettableStructuredNode<String> newNode = tree.getRoot().addChild("d");
+        assertEquals("d", newNode.getElement());
 
         assertEquals(3, tree.getRoot().getNumberOfChildren());
         final Iterator<? extends MutableSettableStructuredNode<String>> iterator = tree.childIterator();
@@ -85,6 +83,8 @@ public final class LinkedTreeTest {
         final MutableSettableStructuredNode<String> child1 = iterator.next();
         final MutableSettableStructuredNode<String> child2 = iterator.next();
 
+        assertEquals("b", child0.getElement());
+        assertEquals("c", child1.getElement());
         assertEquals("d", child2.getElement());
     }
 
