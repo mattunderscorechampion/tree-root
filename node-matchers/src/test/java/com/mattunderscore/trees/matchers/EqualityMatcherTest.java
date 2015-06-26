@@ -68,8 +68,8 @@ public final class EqualityMatcherTest {
 
     @Test
     public void testNotEquals0() {
-        final NodeMatcher<String> matcher0 = new EqualityMatcher("a");
-        final NodeMatcher<String> matcher1 = new EqualityMatcher("b");
+        final NodeMatcher<String> matcher0 = new EqualityMatcher<>("a");
+        final NodeMatcher<String> matcher1 = new EqualityMatcher<>("b");
 
         assertFalse(matcher0.equals(matcher1));
     }
