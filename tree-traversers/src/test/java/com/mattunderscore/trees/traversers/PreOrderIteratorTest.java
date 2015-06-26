@@ -37,7 +37,6 @@ import org.junit.Test;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.DefaultRemovalHandler;
-import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -51,36 +50,27 @@ public final class PreOrderIteratorTest {
 
     @BeforeClass
     public static void setUpTree() {
-        final TreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+        final LinkedTree.Constructor<String> constructor = new LinkedTree.Constructor<>();
         tree = constructor.build(
             "f",
-            new LinkedTree[]{
                 constructor.build(
                     "b",
-                    new LinkedTree[]{
                         constructor.build(
-                            "a",
-                            new LinkedTree[]{}),
+                            "a"),
                         constructor.build(
                             "d",
-                            new LinkedTree[]{
                                 constructor.build(
-                                    "c",
-                                    new LinkedTree[]{}),
+                                    "c"),
                                 constructor.build(
-                                    "e",
-                                    new LinkedTree[]{})
-                            })
-                    }),
+                                    "e")
+                            )
+                    ),
                 constructor.build(
                     "i",
-                    new LinkedTree[]{
                         constructor.build(
                             "h",
-                            new LinkedTree[]{
                                 constructor.build(
-                                    "g",
-                                    new LinkedTree[]{})})})});
+                                    "g"))));
     }
 
     @Before
