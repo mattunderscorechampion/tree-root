@@ -51,16 +51,13 @@ public final class SelectorNodeSelectorTest {
 
       @BeforeClass
       public static void setUpClass() {
-            final TreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.Constructor<>();
+            final LinkedTree.Constructor<String> constructor = new LinkedTree.Constructor<>();
             tree = constructor.build(
                 "a",
-                new LinkedTree[]{
-                    constructor.build(
-                        "b",
-                        new LinkedTree[]{}),
-                    constructor.build(
-                        "c",
-                        new LinkedTree[]{})});
+                constructor.build(
+                    "b"),
+                constructor.build(
+                    "c"));
       }
 
       @Test
