@@ -42,7 +42,7 @@ public final class SPISupportWithServiceTest {
 
     @Test
     public void test0() {
-        final TopDownTreeRootBuilder builder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder<String, Node<String>> builder = trees.treeBuilders().topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String, Node<String>> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
