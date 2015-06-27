@@ -33,6 +33,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
@@ -46,36 +47,46 @@ public final class TreeNodeImplTest {
 
     @Test
     public void topDownEmpty0() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().topDownBuilder().build(Tree.class);
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>topDownBuilder()
+            .build(new TypeKey<Tree<String, Node<String>>>() {});
         assertTrue(tree.isEmpty());
         assertNull(tree.getRoot());
     }
 
     @Test
     public void topDownEmpty1() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().topDownBuilder().build(TreeNodeImpl.class);
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>topDownBuilder()
+            .build(TreeNodeImpl.<String>typeKey());
         assertTrue(tree.isEmpty());
         assertNull(tree.getRoot());
     }
 
     @Test
     public void bottomUpEmpty0() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().bottomUpBuilder().build(Tree.class);
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>bottomUpBuilder()
+            .build(new TypeKey<Tree<String, Node<String>>>() {});
         assertTrue(tree.isEmpty());
         assertNull(tree.getRoot());
     }
 
     @Test
     public void bottomUpEmpty1() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().bottomUpBuilder().build(TreeNodeImpl.class);
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>bottomUpBuilder()
+            .build(TreeNodeImpl.<String>typeKey());
         assertTrue(tree.isEmpty());
         assertNull(tree.getRoot());
     }
 
     @Test
     public void singleNodeTree0() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().topDownBuilder()
-            .root("root").build(TreeNodeImpl.class);
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>topDownBuilder()
+            .root("root")
+            .build(TreeNodeImpl.<String>typeKey());
         assertFalse(tree.isEmpty());
         final Node<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
@@ -86,8 +97,10 @@ public final class TreeNodeImplTest {
 
     @Test
     public void singleNodeTree1() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().bottomUpBuilder()
-            .create("root").build(TreeNodeImpl.class);
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>bottomUpBuilder()
+            .create("root")
+            .build(TreeNodeImpl.<String>typeKey());
         assertFalse(tree.isEmpty());
         final Node<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
@@ -98,8 +111,10 @@ public final class TreeNodeImplTest {
 
     @Test
     public void singleNodeTree2() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().topDownBuilder()
-            .root("root").build(Tree.class);
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>topDownBuilder()
+            .root("root")
+            .build(new TypeKey<Tree<String, Node<String>>>() {});
         assertFalse(tree.isEmpty());
         final Node<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
@@ -110,8 +125,10 @@ public final class TreeNodeImplTest {
 
     @Test
     public void singleNodeTree3() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().bottomUpBuilder()
-            .create("root").build(Tree.class);
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>bottomUpBuilder()
+            .create("root")
+            .build(new TypeKey<Tree<String, Node<String>>>() {});
         assertFalse(tree.isEmpty());
         final Node<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
@@ -122,8 +139,10 @@ public final class TreeNodeImplTest {
 
     @Test
     public void singleNodeTree4() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().<String, Node<String>>topDownBuilder()
-            .root("root").build(TreeNodeImpl.<String>typeKey());
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>topDownBuilder()
+            .root("root")
+            .build(TreeNodeImpl.<String>typeKey());
         assertFalse(tree.isEmpty());
         final Node<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
@@ -134,8 +153,10 @@ public final class TreeNodeImplTest {
 
     @Test
     public void singleNodeTree5() {
-        final Tree<String, Node<String>> tree = trees.treeBuilders().<String, Node<String>>bottomUpBuilder()
-            .create("root").build(TreeNodeImpl.<String>typeKey());
+        final Tree<String, Node<String>> tree = trees.treeBuilders()
+            .<String, Node<String>>bottomUpBuilder()
+            .create("root")
+            .build(TreeNodeImpl.<String>typeKey());
         assertFalse(tree.isEmpty());
         final Node<String> root = tree.getRoot();
         assertTrue(root.isLeaf());
