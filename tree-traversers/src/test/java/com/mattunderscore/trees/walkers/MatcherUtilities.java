@@ -30,6 +30,7 @@ import org.mockito.Matchers;
 
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Utilities for matching arguments of mocked walkers and tree walkers.
@@ -48,7 +49,11 @@ public final class MatcherUtilities {
         return Matchers.argThat(new ElementMatcher(element));
     }
 
-    public static final class ElementMatcher extends ArgumentMatcher<LinkedTree<String>> {
+    public static LinkedTree<String> linkedTreeTypeMatcher() {
+        return Matchers.argThat(new TypeSafeMatcher());
+    }
+
+    private static final class ElementMatcher extends ArgumentMatcher<LinkedTree<String>> {
         private final String element;
 
         public ElementMatcher(String element) {
@@ -57,8 +62,20 @@ public final class MatcherUtilities {
 
         @Override
         public boolean matches(Object o) {
-            final MutableSettableStructuredNode<String> node = (MutableSettableStructuredNode<String>)o;
-            return element.equals(node.getElement());
+            if (o instanceof MutableSettableStructuredNode) {
+                final MutableSettableStructuredNode<?> node = (MutableSettableStructuredNode<?>) o;
+                return element.equals(node.getElement());
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    private static final class TypeSafeMatcher extends ArgumentMatcher<LinkedTree<String>> {
+        @Override
+        public boolean matches(Object o) {
+            return o instanceof LinkedTree;
         }
     }
 }
