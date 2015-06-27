@@ -25,14 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
-
-import java.util.Iterator;
 
 /**
  * Implementation for converting a node to a tree by copying the subtree.
@@ -47,11 +47,11 @@ public final class MutableTreeImplNodeConverter<E> implements NodeToTreeConverte
 
     @Override
     public MutableTreeImpl<E> treeFromRootNode(MutableSettableNode<E> node) {
-        final TopDownTreeRootBuilder<E, MutableNode<E>> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<E, MutableNode<E>> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
+        final TopDownTreeRootBuilder<E, MutableSettableNode<E>> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<E, MutableSettableNode<E>> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
 
         copyChildren(treeBuilder, node);
-        return treeBuilder.build(MutableTreeImpl.class);
+        return treeBuilder.build(MutableTreeImpl.<E>typeKey());
     }
 
     private void copyChildren(TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> appender, MutableSettableNode<E> node) {

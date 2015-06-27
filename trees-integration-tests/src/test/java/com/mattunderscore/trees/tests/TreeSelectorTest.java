@@ -25,12 +25,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.tests;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.immutable.TreeNodeImpl;
-import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.immutable.TreeNodeImpl;
+import com.mattunderscore.trees.impl.TreesImpl;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableTreeImpl;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
@@ -39,15 +48,6 @@ import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Tests the application of tree selectors.
@@ -80,6 +80,7 @@ public final class TreeSelectorTest {
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ? extends OpenNode<String, ?>> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
+        @SuppressWarnings("unchecked")
         final Tree<String, ? extends OpenNode<String, ?>> tree = nodeApp0.build(treeClass);
 
         final TreeSelectorFactory selectorFactory = trees.treeSelectors();

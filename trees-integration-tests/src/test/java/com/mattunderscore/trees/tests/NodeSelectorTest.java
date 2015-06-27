@@ -35,14 +35,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.immutable.TreeNodeImpl;
-import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
+import com.mattunderscore.trees.impl.TreesImpl;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableTreeImpl;
+import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
@@ -80,6 +80,7 @@ public final class NodeSelectorTest {
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String, ? extends OpenNode<String, ?>> nodeApp0 = builder.root("A");
         nodeApp0.addChild("B");
         nodeApp0.addChild("C");
+        @SuppressWarnings("unchecked")
         final Tree<String, ? extends OpenNode<String, ?>> tree = nodeApp0.build(treeClass);
 
         final NodeSelectorFactory selectorFactory = trees.nodeSelectors();

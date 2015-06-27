@@ -37,6 +37,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
@@ -58,10 +59,10 @@ public final class BinaryTreeTest {
     public void moreThanTwo() {
         final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         builder.create("a",
-            builder.create("b"),
-            builder.create("c"),
-            builder.create("d"))
-                .build(BinaryTreeNodeImpl.<String>typeKey());
+                builder.create("b"),
+                builder.create("c"),
+                builder.create("d"))
+            .build(BinaryTreeNodeImpl.<String>typeKey());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -93,8 +94,9 @@ public final class BinaryTreeTest {
         final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
-                builder.create("b"),
-                builder.create("c")).build(BinaryTreeNodeImpl.<String>typeKey());
+                    builder.create("b"),
+                    builder.create("c"))
+                .build(BinaryTreeNodeImpl.<String>typeKey());
 
         assertFalse(tree.isEmpty());
         assertEquals("a", tree.getRoot().getElement());
@@ -122,7 +124,8 @@ public final class BinaryTreeTest {
         final BottomUpTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
-                    builder.create("b")).build(BinaryTreeNodeImpl.<String>typeKey());
+                    builder.create("b"))
+            .build(BinaryTreeNodeImpl.<String>typeKey());
 
         assertFalse(tree.isEmpty());
         assertEquals("a", tree.getRoot().getElement());
@@ -147,7 +150,8 @@ public final class BinaryTreeTest {
         final BinaryTree<String, BinaryTreeNode<String>> tree =
             builder.create("a",
                     null,
-                    builder.create("c")).build(BinaryTreeNodeImpl.<String>typeKey());
+                    builder.create("c"))
+                .build(BinaryTreeNodeImpl.<String>typeKey());
 
         assertFalse(tree.isEmpty());
         assertEquals("a", tree.getRoot().getElement());
@@ -177,7 +181,7 @@ public final class BinaryTreeTest {
         builder.addChild("child1");
         child0.addChild("child2");
 
-        final BinaryTree<String, BinaryTreeNode<String>> tree = builder.build(BinaryTree.class);
+        final BinaryTree<String, BinaryTreeNode<String>> tree = builder.build(new TypeKey<BinaryTree<String, BinaryTreeNode<String>>>() {});
 
         assertEquals("root", tree.getRoot().getElement());
         assertEquals("child0", tree.getRoot().getLeft().getElement());

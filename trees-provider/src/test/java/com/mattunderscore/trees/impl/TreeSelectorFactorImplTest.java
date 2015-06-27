@@ -56,8 +56,9 @@ public final class TreeSelectorFactorImplTest {
         factory = trees.treeSelectors();
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         tree = builder.create("a",
-            builder.create("b"),
-            builder.create("c")).build(LinkedTree.class);
+                builder.create("b"),
+                builder.create("c"))
+            .build(LinkedTree.typeKey());
     }
 
     @Test
