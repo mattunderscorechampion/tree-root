@@ -55,5 +55,5 @@ public interface NodeSelectorFactory {
      * @param <E> the element type of the tree
      * @return a new selector
      */
-    <E> NodeSelector newSelector(NodeSelector<E> baseSelector, NodeSelector<E> extensionSelector);
+    <E> NodeSelector<E> newSelector(NodeSelector<E> baseSelector, NodeSelector<E> extensionSelector);
 }
