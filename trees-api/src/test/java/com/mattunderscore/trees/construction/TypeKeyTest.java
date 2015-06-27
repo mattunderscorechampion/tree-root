@@ -78,8 +78,6 @@ public final class TypeKeyTest {
 
         assertTrue(key0.toString().startsWith("TypeKey"));
         assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
-        assertTrue(key0.toString().contains(String.class.getSimpleName()));
-        assertTrue(key0.toString().contains(Node.class.getSimpleName()));
         assertTrue(key0.toString().contains(TestTree.class.getSimpleName()));
     }
 
@@ -89,8 +87,6 @@ public final class TypeKeyTest {
 
         assertTrue(key0.toString().startsWith("TypeKey"));
         assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
-        assertTrue(key0.toString().contains(String.class.getSimpleName()));
-        assertTrue(key0.toString().contains(Node.class.getSimpleName()));
         assertTrue(key0.toString().contains(OtherTestTree.class.getSimpleName()));
     }
 
@@ -100,7 +96,6 @@ public final class TypeKeyTest {
 
         assertTrue(key0.toString().startsWith("TypeKey"));
         assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
-        assertTrue(key0.toString().contains(Node.class.getSimpleName()));
         assertTrue(key0.toString().contains(OtherTestTree.class.getSimpleName()));
     }
 
