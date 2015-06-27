@@ -63,13 +63,45 @@ public final class TypeKeyTest {
     }
 
     @Test
-    public void testToString() {
+    public void testToString0() {
         final TypeKey<Tree<String, Node<String>>> key0 = new TypeKey<Tree<String, Node<String>>>() { };
 
         assertTrue(key0.toString().startsWith("TypeKey"));
         assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
         assertTrue(key0.toString().contains(String.class.getSimpleName()));
         assertTrue(key0.toString().contains(Node.class.getSimpleName()));
+    }
+
+    @Test
+    public void testToString1() {
+        final TypeKey<TestTree> key0 = new TypeKey<TestTree>() { };
+
+        assertTrue(key0.toString().startsWith("TypeKey"));
+        assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
+        assertTrue(key0.toString().contains(String.class.getSimpleName()));
+        assertTrue(key0.toString().contains(Node.class.getSimpleName()));
+        assertTrue(key0.toString().contains(TestTree.class.getSimpleName()));
+    }
+
+    @Test
+    public void testToString2() {
+        final TypeKey<? extends Tree<String, Node<String>>> key0 = new TypeKey<OtherTestTree<String>>() { };
+
+        assertTrue(key0.toString().startsWith("TypeKey"));
+        assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
+        assertTrue(key0.toString().contains(String.class.getSimpleName()));
+        assertTrue(key0.toString().contains(Node.class.getSimpleName()));
+        assertTrue(key0.toString().contains(OtherTestTree.class.getSimpleName()));
+    }
+
+    @Test
+    public void testToString3() {
+        final TypeKey<? extends Tree<String, Node<String>>> key0 = OtherTestTree.typeKey();
+
+        assertTrue(key0.toString().startsWith("TypeKey"));
+        assertTrue(key0.toString().contains(TypeKey.class.getSimpleName()));
+        assertTrue(key0.toString().contains(Node.class.getSimpleName()));
+        assertTrue(key0.toString().contains(OtherTestTree.class.getSimpleName()));
     }
 
     @Test
@@ -122,6 +154,23 @@ public final class TypeKeyTest {
         @Override
         public boolean isEmpty() {
             return false;
+        }
+    }
+
+    public static final class OtherTestTree<E> implements Tree<E, Node<E>> {
+
+        @Override
+        public Node<E> getRoot() {
+            return null;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        public static <E> TypeKey<OtherTestTree<E>> typeKey() {
+            return new TypeKey<OtherTestTree<E>>() { };
         }
     }
 
