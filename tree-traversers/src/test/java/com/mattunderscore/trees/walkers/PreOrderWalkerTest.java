@@ -1,6 +1,8 @@
 package com.mattunderscore.trees.walkers;
 
 import static com.mattunderscore.trees.walkers.MatcherUtilities.linkedTreeElementMatcher;
+import static com.mattunderscore.trees.walkers.MatcherUtilities.linkedTreeTypeMatcher;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -86,7 +88,7 @@ public final class PreOrderWalkerTest {
 
     @Test
     public void elements() {
-        when(elementWalker.onNext(Matchers.isA(String.class))).thenReturn(true);
+        when(elementWalker.onNext(isA(String.class))).thenReturn(true);
         walker.accept(tree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onNext("f");
         elementOrder.verify(elementWalker).onNext("b");
@@ -104,7 +106,7 @@ public final class PreOrderWalkerTest {
 
     @Test
     public void firstElement() {
-        when(elementWalker.onNext(Matchers.isA(String.class))).thenReturn(false);
+        when(elementWalker.onNext(isA(String.class))).thenReturn(false);
         walker.accept(tree, new NodeToElementWalker<>(elementWalker));
         verify(elementWalker).onNext("f");
         verifyNoMoreInteractions(elementWalker);
@@ -112,7 +114,7 @@ public final class PreOrderWalkerTest {
 
     @Test
     public void firstTwoElements() {
-        when(elementWalker.onNext(Matchers.isA(String.class))).thenReturn(true, false);
+        when(elementWalker.onNext(isA(String.class))).thenReturn(true, false);
         walker.accept(tree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onNext("f");
         elementOrder.verify(elementWalker).onNext("b");
@@ -122,7 +124,7 @@ public final class PreOrderWalkerTest {
 
     @Test
     public void nodes() {
-        when(nodeWalker.onNext(Matchers.isA(LinkedTree.class))).thenReturn(true);
+        when(nodeWalker.onNext(linkedTreeTypeMatcher())).thenReturn(true);
         walker.accept(tree, nodeWalker);
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("f"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("b"));
