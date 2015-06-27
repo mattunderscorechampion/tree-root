@@ -139,8 +139,8 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
      * @param <E> The element type
      * @return The type key
      */
-    public static <E> TypeKey<MutableTree<E, MutableSettableNode<E>>> typeKey() {
-        return new TypeKey<MutableTree<E, MutableSettableNode<E>>>() {};
+    public static <E> TypeKey<MutableTreeImpl<E>> typeKey() {
+        return new TypeKey<MutableTreeImpl<E>>() {};
     }
 
     @Override

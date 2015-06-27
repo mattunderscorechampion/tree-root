@@ -25,26 +25,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.tests;
 
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.construction.NodeAppender;
-import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.immutable.TreeNodeImpl;
-import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
-import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.mutable.MutableTreeImpl;
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.Tree;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.construction.NodeAppender;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.immutable.TreeNodeImpl;
+import com.mattunderscore.trees.impl.TreesImpl;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.mutable.MutableTree;
+import com.mattunderscore.trees.mutable.MutableTreeImpl;
+import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
+import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Tests for top down builders.
@@ -79,6 +79,7 @@ public final class StringTreeTopDownBuilderTest {
         final NodeAppender<String, ?> nodeApp1 = nodeApp0.addChild("b");
         nodeApp1.addChild("c");
         nodeApp0.addChild("d");
+        @SuppressWarnings("unchecked")
         final Tree<String, ? extends OpenNode<String, ?>> tree = nodeApp0.build(treeClass);
 
         final OpenNode<String, ?> root = tree.getRoot();

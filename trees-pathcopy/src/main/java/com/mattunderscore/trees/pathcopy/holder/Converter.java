@@ -36,12 +36,12 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 28/01/15.
  */
 public final class Converter<E> implements TreeConverter<E, MutableNode<E>, PathCopyTree<E>> {
-    private final NodeConverter converter = new NodeConverter();
+    private final NodeConverter converter = new NodeConverter<>();
 
     @Override
     public <S extends OpenNode<E, S>> PathCopyTree<E> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
-        return converter.treeFromRootNode((S)root);
+        return converter.treeFromRootNode(root);
     }
 
     @Override

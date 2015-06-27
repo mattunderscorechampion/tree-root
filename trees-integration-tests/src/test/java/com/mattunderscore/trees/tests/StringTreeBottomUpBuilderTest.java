@@ -35,10 +35,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.linked.tree.LinkedTree;
-import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.immutable.TreeNodeImpl;
+import com.mattunderscore.trees.impl.TreesImpl;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableTreeImpl;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
@@ -74,6 +74,7 @@ public class StringTreeBottomUpBuilderTest {
     @Test
     public void build() {
         final BottomUpTreeBuilder<String, ? extends OpenNode<String, ?>> builder = trees.treeBuilders().bottomUpBuilder();
+        @SuppressWarnings("unchecked")
         final Tree<String, ? extends OpenNode<String, ?>> tree = builder.create("a", new BottomUpTreeBuilder[] {
                 builder.create("b", new BottomUpTreeBuilder[] {
                         builder.create("c")}), builder.create("d")}).build(treeClass);

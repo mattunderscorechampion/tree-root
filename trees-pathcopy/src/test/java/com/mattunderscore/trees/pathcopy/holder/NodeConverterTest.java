@@ -48,7 +48,7 @@ public final class NodeConverterTest {
       @Test
       public void convertToSelf() {
             final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-            final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.class);
+            final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.typeKey());
 
             final NodeConverter<String, MutableNode<String>> converter = new NodeConverter<>();
 
