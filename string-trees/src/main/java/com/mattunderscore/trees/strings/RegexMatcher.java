@@ -45,7 +45,7 @@ public final class RegexMatcher implements NodeMatcher<String> {
     }
 
     @Override
-    public <N extends OpenNode<? extends String,? extends N>> boolean matches(N node) {
+    public boolean matches(OpenNode<? extends String, ?> node) {
         final Matcher matcher = value.matcher(node.getElement());
         return matcher.matches();
     }

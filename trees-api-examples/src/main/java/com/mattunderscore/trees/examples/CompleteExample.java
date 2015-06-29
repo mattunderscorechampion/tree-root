@@ -71,15 +71,21 @@ public final class CompleteExample {
         sum(trees, intTree);
     }
 
+    public void lambdaMatcher(Trees trees, Tree<String, Node<String>> tree) {
+        final NodeSelectorFactory selectorFactory = trees.nodeSelectors();
+        final NodeSelector<String> selector = selectorFactory.newSelector((node -> "good".equals(node.getElement())));
+        final Iterator<? extends Node<String>> iterator = selector.select(tree);
+    }
+
     public void nodeSelector(Trees trees, Tree<String, Node<String>> tree) {
         final NodeSelectorFactory selectorFactory = trees.nodeSelectors();
-        final NodeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
+        final NodeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher<>("a"));
         final Iterator<? extends Node<String>> iterator = selector.select(tree);
     }
 
     public void treeSelector(Trees trees, Tree<String, Node<String>> tree) {
         final TreeSelectorFactory selectorFactory = trees.treeSelectors();
-        final TreeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher("a"));
+        final TreeSelector<String> selector = selectorFactory.newSelector(new EqualityMatcher<>("a"));
         final Iterator<Tree<String, Node<String>>> iterator = selector.select(tree);
     }
 

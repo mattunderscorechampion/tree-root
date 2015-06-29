@@ -46,7 +46,7 @@ public final class EqualityMatcher<E> implements NodeMatcher<E> {
     }
 
     @Override
-    public <N extends OpenNode<? extends E, ? extends N>> boolean matches(N node) {
+    public boolean matches(OpenNode<? extends E, ?> node) {
         return value.equals(node.getElement());
     }
 

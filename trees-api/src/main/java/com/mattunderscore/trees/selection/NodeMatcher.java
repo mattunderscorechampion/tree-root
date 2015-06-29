@@ -31,12 +31,12 @@ import com.mattunderscore.trees.tree.OpenNode;
  * Matches a node.
  * @author Matt Champion on 11/08/14.
  */
+@FunctionalInterface
 public interface NodeMatcher<E> {
 
     /**
      * @param node The node to test
-     * @param <N> The type of the node
      * @return {@code true} if the node matches
      */
-    <N extends OpenNode<? extends E, ? extends N>> boolean matches(N node);
+    boolean matches(OpenNode<? extends E, ?> node);
 }
