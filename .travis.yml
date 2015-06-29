@@ -8,4 +8,4 @@ branches:
     - master
 
 after_success:
-  mvn coveralls:report
+  mvn clean test coveralls:report
