@@ -25,10 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
+import java.util.Iterator;
+import java.util.ServiceLoader;
+
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
@@ -36,9 +39,6 @@ import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.DefaultElementWalker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
-
-import java.util.Iterator;
-import java.util.ServiceLoader;
 
 /**
  * @author Matt Champion on 16/08/14.

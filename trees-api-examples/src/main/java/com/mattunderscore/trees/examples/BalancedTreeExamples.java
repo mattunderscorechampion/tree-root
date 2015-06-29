@@ -25,11 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
-import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.organised.OrganisedTreeBuilder;
-import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.balanced.BalancingTree;
+import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.organised.OrganisedTreeBuilder;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * @author Matt Champion on 30/08/14.
