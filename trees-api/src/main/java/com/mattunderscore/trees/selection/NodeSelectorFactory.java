@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selection;
 
+import java.util.function.Predicate;
+
+import com.mattunderscore.trees.tree.OpenNode;
+
 /**
  * Factory for node selectors.
  * @author Matt Champion on 16/08/14.
@@ -39,6 +43,14 @@ public interface NodeSelectorFactory {
     <E> NodeSelector<E> newSelector(NodeMatcher<E> matcher);
 
     /**
+     * Create a node selector for the root node.
+     * @param predicate a predicate
+     * @param <E> the element type of the tree
+     * @return a new selector
+     */
+    <E> NodeSelector<E> newSelector(Predicate<OpenNode<? extends E, ?>> predicate);
+
+    /**
      * Create a node selector for the children of another node selector.
      * @param selector a base selector
      * @param matcher a matcher
@@ -46,6 +58,15 @@ public interface NodeSelectorFactory {
      * @return a new selector
      */
     <E> NodeSelector<E> newSelector(NodeSelector<E> selector, NodeMatcher<E> matcher);
+
+    /**
+     * Create a node selector for the children of another node selector.
+     * @param selector a base selector
+     * @param predicate a predicate
+     * @param <E> the element type of the tree
+     * @return a new selector
+     */
+    <E> NodeSelector<E> newSelector(NodeSelector<E> selector, Predicate<OpenNode<? extends E, ?>> predicate);
 
     /**
      * Create a node selector that extends another selector. The extension selector selects from the selected nodes of

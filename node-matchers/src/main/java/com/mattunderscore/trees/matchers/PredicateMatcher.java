@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,51 +23,48 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl;
+package com.mattunderscore.trees.matchers;
 
 import java.util.function.Predicate;
 
-import com.mattunderscore.trees.matchers.PredicateMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
-import com.mattunderscore.trees.selection.NodeSelector;
-import com.mattunderscore.trees.selection.NodeSelectorFactory;
-import com.mattunderscore.trees.selectors.NextNodeSelector;
-import com.mattunderscore.trees.selectors.RootMatcherSelector;
-import com.mattunderscore.trees.selectors.SelectorNodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
 
 /**
- * Factory for node selectors.
- * @author Matt Champion on 25/06/14.
+ * NodeMatcher that wraps a predicate.
+ * @author Matt Champion on 29/06/2015
  */
-final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
+public final class PredicateMatcher<E> implements NodeMatcher<E> {
+    private final Predicate<OpenNode<? extends E, ?>> predicate;
 
-    public NodeSelectorFactoryImpl() {
+    public PredicateMatcher(Predicate<OpenNode<? extends E, ?>> predicate) {
+        this.predicate = predicate;
     }
 
     @Override
-    public <E> NodeSelector<E> newSelector(final NodeMatcher<E> matcher) {
-        return new RootMatcherSelector<>(matcher);
+    public boolean matches(OpenNode<? extends E, ?> node) {
+        return predicate.test(node);
     }
 
     @Override
-    public <E> NodeSelector<E> newSelector(Predicate<OpenNode<? extends E, ?>> predicate) {
-        return new RootMatcherSelector<>(new PredicateMatcher<>(predicate));
+    public boolean equals(Object o) {
+        if (o ==  null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            final PredicateMatcher matcher = (PredicateMatcher)o;
+            return matcher.predicate.equals(predicate);
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
-    public <E> NodeSelector<E> newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
-        return new NextNodeSelector<>(selector, matcher);
+    public int hashCode() {
+        return predicate.hashCode();
     }
-
-    @Override
-    public <E> NodeSelector<E> newSelector(NodeSelector<E> selector, Predicate<OpenNode<? extends E, ?>> predicate) {
-        return new NextNodeSelector<>(selector, new PredicateMatcher<>(predicate));
-    }
-
-    @Override
-    public <E> NodeSelector<E> newSelector(final NodeSelector<E> baseSelector, final NodeSelector<E> extensionSelector) {
-        return new SelectorNodeSelector<>(baseSelector, extensionSelector);
-    }
-
 }
