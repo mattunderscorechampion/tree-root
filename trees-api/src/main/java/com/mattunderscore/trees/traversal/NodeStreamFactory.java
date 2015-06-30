@@ -31,7 +31,7 @@ import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Factory for streams.
+ * Factory for streams of nodes over trees.
  * @author Matt Champion on 29/06/2015
  */
 public interface NodeStreamFactory {

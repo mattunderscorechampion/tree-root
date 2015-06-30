@@ -31,6 +31,7 @@ import com.mattunderscore.trees.tree.Tree;
 import java.util.Iterator;
 
 /**
+ * Factory for iterators of nodes and elements over trees.
  * @author Matt Champion on 08/08/14.
  */
 public interface TreeIteratorFactory {
