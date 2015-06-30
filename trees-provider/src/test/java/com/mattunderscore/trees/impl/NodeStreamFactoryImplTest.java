@@ -13,6 +13,7 @@ import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.NodeStreamFactory;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Unit tests for NodeStreamFactoryImpl.
@@ -32,7 +33,7 @@ public final class NodeStreamFactoryImplTest {
     }
 
     @Test
-    public void preOrderIterator() {
+    public void preOrderStream() {
         final List<? extends MutableSettableStructuredNode<String>> list = streamFactory
             .preOrderStream(tree)
             .collect(Collectors.toList());
@@ -44,7 +45,7 @@ public final class NodeStreamFactoryImplTest {
     }
 
     @Test
-    public void postOrderIterator() {
+    public void postOrderStream() {
         final List<? extends MutableSettableStructuredNode<String>> list = streamFactory
             .postOrderStream(tree)
             .collect(Collectors.toList());
@@ -55,7 +56,7 @@ public final class NodeStreamFactoryImplTest {
     }
 
     @Test
-    public void inOrderIterator() {
+    public void inOrderStream() {
         final List<? extends MutableSettableStructuredNode<String>> list = streamFactory
             .inOrderStream(tree)
             .collect(Collectors.toList());
@@ -66,7 +67,7 @@ public final class NodeStreamFactoryImplTest {
     }
 
     @Test
-    public void breadthFirstIterator() {
+    public void breadthFirstStream() {
         final List<? extends MutableSettableStructuredNode<String>> list = streamFactory
             .breadthFirstStream(tree)
             .collect(Collectors.toList());
@@ -74,5 +75,18 @@ public final class NodeStreamFactoryImplTest {
         assertEquals("a", list.get(1).getElement());
         assertEquals("b", list.get(2).getElement());
         assertEquals("c", list.get(3).getElement());
+    }
+
+    @Test
+    public void preOrderElementStream() {
+        final List<? extends String> list = streamFactory
+            .preOrderStream(tree)
+            .map(OpenNode::getElement)
+            .collect(Collectors.toList());
+        assertEquals(4, list.size());
+        assertEquals("root", list.get(0));
+        assertEquals("a", list.get(1));
+        assertEquals("c", list.get(2));
+        assertEquals("b", list.get(3));
     }
 }

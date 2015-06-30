@@ -25,46 +25,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.examples;
 
-import java.util.ServiceLoader;
-
-import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.traversal.NodeStreamFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Entry point for examples module.
- * @author Matt Champion on 29/01/15
+ * Examples using streams.
+ * @author Matt Champion on 30/06/2015
  */
-public final class ExamplesEntryPoint {
-    private ExamplesEntryPoint() {
+public final class StreamExamples {
+    public StreamExamples() {
     }
 
-    /**
-     * Entry point.
-     * @param args Command line arguments
-     */
-    public static void main(String[] args) {
-        System.out.println("Readme Examples:");
-        final ReadmeExamples readmeExamples = new ReadmeExamples();
-        System.out.println("Immutable tree example:");
-        readmeExamples.immutableTree();
-
-        System.out.println("Binary search tree example:");
-        readmeExamples.binarySearchTree();
-
-        final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
-        final Trees trees = serviceLoader.iterator().next();
-
-        System.out.println("General examples:");
-        final ImmutableTreeExamples immutableTreeExamples = new ImmutableTreeExamples();
-        final TraversalExamples traversalExamples = new TraversalExamples();
-        final Tree<String, Node<String>> tree = immutableTreeExamples.createTreeFromTheBottomUp(trees.treeBuilders().<String, Node<String>>bottomUpBuilder());
-        immutableTreeExamples.createTreeFromTopDown(trees.treeBuilders().<String, Node<String>>topDownBuilder());
-
-        traversalExamples.elementTreeWalker(trees.treeWalkers(), tree);
-
-        System.out.println("Stream examples");
-        final StreamExamples streamExamples = new StreamExamples();
-        streamExamples.streamElements(trees.nodeStreams(), tree);
+    public void streamElements(NodeStreamFactory nodeStreamFactory, Tree<String, Node<String>> tree) {
+        // Print the elements of tree in-order
+        nodeStreamFactory
+            .inOrderStream(tree)
+            .map(Node::getElement)
+            .forEach(System.out::println);
     }
 }
