@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.sorted;
 
+import java.util.Comparator;
+
 import com.mattunderscore.trees.organised.MutableOrganisedTree;
 import com.mattunderscore.trees.tree.OpenNode;
 
@@ -33,4 +35,8 @@ import com.mattunderscore.trees.tree.OpenNode;
  * @author Matt Champion on 06/09/14.
  */
 public interface SortingTree<E, N extends OpenNode<E, N>> extends MutableOrganisedTree<E, N> {
+    /**
+     * @return The comparator used by the tree
+     */
+    Comparator<E> getComparator();
 }

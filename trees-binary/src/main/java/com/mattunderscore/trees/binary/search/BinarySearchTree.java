@@ -96,4 +96,9 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
     public static <E> TypeKey<BinarySearchTree<E>> typeKey() {
         return new TypeKey<BinarySearchTree<E>>() {};
     }
+
+    @Override
+    public Comparator<E> getComparator() {
+        return comparator;
+    }
 }

@@ -90,6 +90,29 @@ public final class BinarySearchTreeTest {
     }
 
     @Test
+    public void comparableComparator() {
+        final SortingTreeBuilder<String, BinaryTreeNode<String>> builder = trees.treeBuilders().sortingTreeBuilder();
+        final BinarySearchTree<String> tree = builder
+            .addElement("b")
+            .addElement("a")
+            .build(BinarySearchTree.<String>typeKey());
+
+        assertTrue(tree.getComparator() instanceof ComparableComparator);
+    }
+
+    @Test
+    public void comparator() {
+        final Comparator<String> lyingComparator = (s0, s1) -> 0;
+        final BinarySearchTree<String> tree = trees.treeBuilders()
+            .<String, BinaryTreeNode<String>>sortingTreeBuilder(lyingComparator)
+            .addElement("b")
+            .addElement("a")
+            .build(BinarySearchTree.<String>typeKey());
+
+        assertEquals(lyingComparator, tree.getComparator());
+    }
+
+    @Test
     public void absentNodes() {
         final Comparator<String> comparator = new ComparableComparator<>();
         final BinarySearchTree<String> tree = new BinarySearchTree<>(comparator);
