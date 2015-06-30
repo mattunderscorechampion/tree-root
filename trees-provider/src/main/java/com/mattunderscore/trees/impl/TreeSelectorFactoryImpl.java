@@ -25,9 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.matchers.PredicateMatcher;
-import com.mattunderscore.trees.selection.NodeMatcher;
+import java.util.Iterator;
+import java.util.function.Predicate;
+
+import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -35,9 +36,6 @@ import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
-
-import java.util.Iterator;
-import java.util.function.Predicate;
 
 /**
  * @author Matt Champion on 29/06/14.
@@ -50,12 +48,12 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     }
 
     @Override
-    public <E> TreeSelector<E> newSelector(final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
+    public <E> TreeSelector<E> newSelector(Predicate<OpenNode<? extends E, ?>> predicate) {
         return new TreeSelector<E>() {
             @Override
             public <N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
                 final N root = tree.getRoot();
-                if (matcher.matches(root)) {
+                if (predicate.test(root)) {
                     final T newTree = helper.<E, N, T, N>nodeToTree(root);
                     return new SingletonIterator<>(newTree);
                 }
@@ -72,17 +70,12 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     }
 
     @Override
-    public <E> TreeSelector<E> newSelector(Predicate<OpenNode<? extends E, ?>> predicate) {
-        return newSelector(new PredicateMatcher<>(predicate));
-    }
-
-    @Override
-    public <E> TreeSelector<E> newSelector(final TreeSelector<E> selector, final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
+    public <E> TreeSelector<E> newSelector(TreeSelector<E> selector, Predicate<OpenNode<? extends E, ?>> predicate) {
         return new TreeSelector<E>() {
             @Override
             public <N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
                 final Iterator<T> parents = selector.select(tree);
-                return new TreeIterator<>(parents, matcher);
+                return new TreeIterator<>(parents, predicate);
             }
 
             @Override
@@ -92,19 +85,14 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
         };
     }
 
-    @Override
-    public <E> TreeSelector<E> newSelector(TreeSelector<E> selector, Predicate<OpenNode<? extends E, ?>> predicate) {
-        return newSelector(selector, new PredicateMatcher<>(predicate));
-    }
-
     private final class TreeIterator<E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> extends PrefetchingIterator<T> {
         private final Iterator<T> parents;
-        private final NodeMatcher<E> matcher;
+        private final Predicate<OpenNode<? extends E, ?>> predicate;
         private Iterator<? extends N> possibles;
 
-        public TreeIterator(Iterator<T> parents, NodeMatcher<E> matcher) {
+        public TreeIterator(Iterator<T> parents, Predicate<OpenNode<? extends E, ?>> predicate) {
             this.parents = parents;
-            this.matcher = matcher;
+            this.predicate = predicate;
         }
 
         protected T calculateNext() {
@@ -115,7 +103,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
 
             if (possibles.hasNext()) {
                 final N possible = possibles.next();
-                if (matcher.matches(possible)) {
+                if (predicate.test(possible)) {
                     return helper.<E, N, T, N>nodeToTree(possible);
                 } else {
                     return calculateNext();

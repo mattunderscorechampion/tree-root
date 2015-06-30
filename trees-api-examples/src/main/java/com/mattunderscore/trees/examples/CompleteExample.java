@@ -32,7 +32,6 @@ import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.matchers.EqualityMatcher;
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
@@ -74,8 +73,7 @@ public final class CompleteExample {
 
     public void lambdaMatcher(Trees trees, Tree<String, Node<String>> tree) {
         final NodeSelectorFactory selectorFactory = trees.nodeSelectors();
-        final NodeMatcher<String> matcher = (node -> "good".equals(node.getElement()));
-        final NodeSelector<String> selector = selectorFactory.newSelector(matcher);
+        final NodeSelector<String> selector = selectorFactory.newSelector((node -> "good".equals(node.getElement())));
         final Iterator<? extends Node<String>> iterator = selector.select(tree);
     }
 

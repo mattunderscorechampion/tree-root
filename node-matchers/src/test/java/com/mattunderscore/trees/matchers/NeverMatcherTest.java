@@ -29,10 +29,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.function.Predicate;
+
 import org.junit.Test;
 
 import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.OpenNode;
 
@@ -40,14 +41,14 @@ public final class NeverMatcherTest {
     @Test
     public void matches() {
         final OpenNode<String, Node<String>> node = new ImmutableNode<String, Node<String>>("a", new Object[0]) {};
-        final NodeMatcher<String> matcher = new NeverMatcher<>();
-        assertFalse(matcher.matches(node));
+        final Predicate<OpenNode<? extends String, ?>> matcher = new NeverMatcher<>();
+        assertFalse(matcher.test(node));
     }
 
     @Test
     public void testEquals() {
-        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
-        final NodeMatcher<String> matcher1 = new NeverMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new NeverMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher1 = new NeverMatcher<>();
 
         assertTrue(matcher0.equals(matcher1));
         assertTrue(matcher1.equals(matcher0));
@@ -56,14 +57,14 @@ public final class NeverMatcherTest {
 
     @Test
     public void testNotEquals0() {
-        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new NeverMatcher<>();
 
         assertFalse(matcher0.equals(null));
     }
 
     @Test
     public void testNotEquals1() {
-        final NodeMatcher<String> matcher0 = new NeverMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new NeverMatcher<>();
 
         assertFalse(matcher0.equals(new Object()));
     }

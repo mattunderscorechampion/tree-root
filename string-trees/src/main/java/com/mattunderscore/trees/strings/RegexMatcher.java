@@ -25,19 +25,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.strings;
 
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.selection.NodeMatcher;
-import net.jcip.annotations.Immutable;
-
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.jcip.annotations.Immutable;
+
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Regular expression matcher for strings.
  * @author Matt Champion on 09/06/14.
  */
 @Immutable
-public final class RegexMatcher implements NodeMatcher<String> {
+public final class RegexMatcher implements Predicate<OpenNode<? extends String, ?>> {
     private final Pattern value;
 
     public RegexMatcher(final String pattern) {
@@ -45,8 +46,27 @@ public final class RegexMatcher implements NodeMatcher<String> {
     }
 
     @Override
-    public boolean matches(OpenNode<? extends String, ?> node) {
+    public boolean test(OpenNode<? extends String, ?> node) {
         final Matcher matcher = value.matcher(node.getElement());
         return matcher.matches();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        RegexMatcher that = (RegexMatcher) o;
+        return value.equals(that.value);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 }

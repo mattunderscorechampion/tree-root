@@ -25,10 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selectors;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
-
-import java.util.Iterator;
 
 /**
  * Selector for the children of the nodes of another selector.

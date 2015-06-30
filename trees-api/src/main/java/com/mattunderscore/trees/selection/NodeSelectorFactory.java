@@ -34,15 +34,6 @@ import com.mattunderscore.trees.tree.OpenNode;
  * @author Matt Champion on 16/08/14.
  */
 public interface NodeSelectorFactory {
-    /**
-     * Create a node selector for the root node.
-     * @param matcher a matcher
-     * @param <E> the element type of the tree
-     * @deprecated Deprecated in favour of {@link Predicate} based methods
-     * @return a new selector
-     */
-    @Deprecated
-    <E> NodeSelector<E> newSelector(NodeMatcher<E> matcher);
 
     /**
      * Create a node selector for the root node.
@@ -51,17 +42,6 @@ public interface NodeSelectorFactory {
      * @return a new selector
      */
     <E> NodeSelector<E> newSelector(Predicate<OpenNode<? extends E, ?>> predicate);
-
-    /**
-     * Create a node selector for the children of another node selector.
-     * @param selector a base selector
-     * @param matcher a matcher
-     * @param <E> the element type of the tree
-     * @deprecated Deprecated in favour of {@link Predicate} based methods
-     * @return a new selector
-     */
-    @Deprecated
-    <E> NodeSelector<E> newSelector(NodeSelector<E> selector, NodeMatcher<E> matcher);
 
     /**
      * Create a node selector for the children of another node selector.

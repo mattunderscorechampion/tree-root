@@ -25,15 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selectors;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * A node selector that extends from the nodes of other selectors.

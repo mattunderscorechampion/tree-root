@@ -45,14 +45,14 @@ public final class TypeMatcherTest {
     public void testMatches() {
         final OpenNode<String, Node<String>> node = new ImmutableNode<String, Node<String>>("a", new Object[0]) {};
         final TypeMatcher matcher = new TypeMatcher(String.class);
-        assertTrue(matcher.matches(node));
+        assertTrue(matcher.test(node));
     }
 
     @Test
     public void testNotMatches() {
         final OpenNode<String, Node<String>> node = new ImmutableNode<String, Node<String>>("a", new Object[0]) {};
         final TypeMatcher matcher = new TypeMatcher(Integer.class);
-        assertFalse(matcher.matches(node));
+        assertFalse(matcher.test(node));
     }
 
     @Test

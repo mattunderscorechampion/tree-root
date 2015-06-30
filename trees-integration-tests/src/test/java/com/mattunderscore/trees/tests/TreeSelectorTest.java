@@ -28,6 +28,7 @@ package com.mattunderscore.trees.tests;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,7 +44,6 @@ import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableTreeImpl;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -84,14 +84,14 @@ public final class TreeSelectorTest {
         final Tree<String, ? extends OpenNode<String, ?>> tree = nodeApp0.build(treeClass);
 
         final TreeSelectorFactory selectorFactory = trees.treeSelectors();
-        final NodeMatcher<String> matcher0 = new EqualityMatcher<>("A");
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new EqualityMatcher<>("A");
         final TreeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<? extends Tree<String, ?>> treeIterator0 = selector0.select(tree);
         Assert.assertTrue(treeIterator0.hasNext());
         Assert.assertEquals("A", treeIterator0.next().getRoot().getElement());
         Assert.assertFalse(treeIterator0.hasNext());
 
-        final NodeMatcher<String> matcher1 = new EqualityMatcher<>("B");
+        final Predicate<OpenNode<? extends String, ?>> matcher1 = new EqualityMatcher<>("B");
         final TreeSelector<String> selector1 = selectorFactory.newSelector(selector0, matcher1);
         final Iterator<? extends Tree<String, ?>> treeIterator1 = selector1.select(tree);
         Assert.assertTrue(treeIterator1.hasNext());

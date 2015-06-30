@@ -27,8 +27,6 @@ package com.mattunderscore.trees.impl;
 
 import java.util.function.Predicate;
 
-import com.mattunderscore.trees.matchers.PredicateMatcher;
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selectors.NextNodeSelector;
@@ -46,23 +44,13 @@ final class NodeSelectorFactoryImpl implements NodeSelectorFactory {
     }
 
     @Override
-    public <E> NodeSelector<E> newSelector(final NodeMatcher<E> matcher) {
-        return new RootMatcherSelector<>(matcher);
-    }
-
-    @Override
     public <E> NodeSelector<E> newSelector(Predicate<OpenNode<? extends E, ?>> predicate) {
-        return new RootMatcherSelector<>(new PredicateMatcher<>(predicate));
-    }
-
-    @Override
-    public <E> NodeSelector<E> newSelector(final NodeSelector<E> selector, final NodeMatcher<E> matcher) {
-        return new NextNodeSelector<>(selector, matcher);
+        return new RootMatcherSelector<>(predicate);
     }
 
     @Override
     public <E> NodeSelector<E> newSelector(NodeSelector<E> selector, Predicate<OpenNode<? extends E, ?>> predicate) {
-        return new NextNodeSelector<>(selector, new PredicateMatcher<>(predicate));
+        return new NextNodeSelector<>(selector, predicate);
     }
 
     @Override

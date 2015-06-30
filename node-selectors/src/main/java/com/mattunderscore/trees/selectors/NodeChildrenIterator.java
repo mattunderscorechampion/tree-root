@@ -26,8 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.selectors;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
@@ -38,10 +38,10 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
  */
 final class NodeChildrenIterator<E, N extends OpenNode<E, ? extends N>> extends PrefetchingIterator<N> {
     private final Iterator<? extends N> parents;
-    private final NodeMatcher<E> matcher;
+    private final Predicate<OpenNode<? extends E, ?>> matcher;
     private Iterator<? extends N> possibles;
 
-    public NodeChildrenIterator(Iterator<? extends N> parents, NodeMatcher<E> matcher) {
+    public NodeChildrenIterator(Iterator<? extends N> parents, Predicate<OpenNode<? extends E, ?>> matcher) {
         this.parents = parents;
         this.matcher = matcher;
     }
@@ -54,7 +54,7 @@ final class NodeChildrenIterator<E, N extends OpenNode<E, ? extends N>> extends 
 
         if (possibles.hasNext()) {
             final N possible = possibles.next();
-            if (matcher.matches(possible)) {
+            if (matcher.test(possible)) {
                 return possible;
             } else {
                 return calculateNext();

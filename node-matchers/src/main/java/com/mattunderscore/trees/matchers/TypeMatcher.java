@@ -25,16 +25,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.matchers;
 
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.selection.NodeMatcher;
+import java.util.function.Predicate;
+
 import net.jcip.annotations.Immutable;
+
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Matches the class of the node element.
  * @author Matt Champion on 26/06/14.
  */
 @Immutable
-public final class TypeMatcher implements NodeMatcher<Object> {
+public final class TypeMatcher implements Predicate<OpenNode<? extends Object, ?>> {
     private final Class<?> type;
 
     public TypeMatcher(Class<?> type) {
@@ -45,7 +47,7 @@ public final class TypeMatcher implements NodeMatcher<Object> {
     }
 
     @Override
-    public boolean matches(OpenNode<? extends Object, ?> node) {
+    public boolean test(OpenNode<? extends Object, ?> node) {
         return type.equals(node.getElementClass());
     }
 

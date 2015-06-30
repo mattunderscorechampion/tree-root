@@ -26,28 +26,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.selectors;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Selector that applies a matcher to the child nodes selected by another selector.
+ * Selector that applies a predicate to the child nodes selected by another selector.
  * @param <E> The element type
  */
 public final class NextNodeSelector<E> implements NodeSelector<E> {
     private final NodeSelector<E> selector;
-    private final NodeMatcher<E> matcher;
+    private final Predicate<OpenNode<? extends E, ?>> predicate;
 
-    public NextNodeSelector(NodeSelector<E> selector, NodeMatcher<E> matcher) {
+    public NextNodeSelector(NodeSelector<E> selector, Predicate<OpenNode<? extends E, ?>> predicate) {
         this.selector = selector;
-        this.matcher = matcher;
+        this.predicate = predicate;
     }
 
     @Override
     public <N extends OpenNode<E, ? extends N>> Iterator<? extends N> select(Tree<E, ? extends N> tree) {
         final Iterator<? extends N> parents = selector.select(tree);
-        return new NodeChildrenIterator<>(parents, matcher);
+        return new NodeChildrenIterator<>(parents, predicate);
     }
 }

@@ -25,21 +25,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.matchers;
 
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.selection.NodeMatcher;
+import java.util.function.Predicate;
 
 import net.jcip.annotations.Immutable;
+
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Matches any node.
  * @author Matt Champion on 25/06/14.
  */
 @Immutable
-public final class AlwaysMatcher<E> implements NodeMatcher<E> {
-    private static final NodeMatcher<?> INSTANCE = new AlwaysMatcher<>();
+public final class AlwaysMatcher<E> implements Predicate<OpenNode<? extends E, ?>> {
+    private static final Predicate INSTANCE = new AlwaysMatcher<>();
 
     @Override
-    public boolean matches(OpenNode<? extends E, ?> node) {
+    public boolean test(OpenNode<? extends E, ?> node) {
         return true;
     }
 
@@ -54,7 +55,7 @@ public final class AlwaysMatcher<E> implements NodeMatcher<E> {
     }
 
     @SuppressWarnings("unchecked")
-    public static <E> NodeMatcher<E> create() {
-        return (NodeMatcher<E>)INSTANCE;
+    public static <E> Predicate<OpenNode<? extends E, ?>> create() {
+        return (Predicate<OpenNode<? extends E, ?>>)INSTANCE;
     }
 }

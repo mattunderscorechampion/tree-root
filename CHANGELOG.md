@@ -86,4 +86,4 @@ comparable
 * Substantial changes to the generic types of nodes, introduced distinction between open and closed nodes
 * Fixed unchecked cast warnings
 * Added initial support for Java 8 Streams
-* Deprecated NodeMatcher and added Predicate based alternatives
+* Replaced NodeMatcher with Java 8 Predicate

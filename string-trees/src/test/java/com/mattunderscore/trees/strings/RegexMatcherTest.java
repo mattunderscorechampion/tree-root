@@ -25,18 +25,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.strings;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ServiceLoader;
+import java.util.function.Predicate;
+
+import org.junit.Test;
+
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.immutable.TreeNodeImpl;
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import org.junit.Test;
-
-import java.util.ServiceLoader;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author Matt Champion on 09/06/14.
@@ -45,37 +47,31 @@ public final class RegexMatcherTest {
     private static final BottomUpTreeBuilder<String, Node<String>> builder = ServiceLoader.load(Trees.class)
             .iterator().next()
             .treeBuilders().bottomUpBuilder();
-    private static final NodeMatcher<String> aMatcher = new RegexMatcher("^A$");
-    private static final NodeMatcher<String> aMatcherAlt = new RegexMatcher("A");
+    private static final Predicate<OpenNode<? extends String, ?>> aMatcher = new RegexMatcher("^A$");
+    private static final Predicate<OpenNode<? extends String, ?>> aMatcherAlt = new RegexMatcher("A");
 
     @Test
     public void nodeMatches0() {
         final Tree<String, Node<String>> tree = builder.create("A").build(TreeNodeImpl.<String>typeKey());
         final Node<String> node = tree.getRoot();
-        assertTrue(aMatcher.matches(node));
+        assertTrue(aMatcher.test(node));
     }
 
     @Test
     public void nodeMatches1() {
         final Node<String> node = builder.create("A").build(TreeNodeImpl.<String>typeKey()).getRoot();
-        assertTrue(aMatcherAlt.matches(node));
-    }
-
-    @Test
-    public void nodeMatches2() {
-        final Node<String> nodeA = builder.create("A").build(TreeNodeImpl.<String>typeKey()).getRoot();
-        final Node<String> nodeB = builder.create("B").build(TreeNodeImpl.<String>typeKey()).getRoot();
+        assertTrue(aMatcherAlt.test(node));
     }
 
     @Test
     public void nodeNoMatch0() {
         final Node<String> node = builder.create("B").build(TreeNodeImpl.<String>typeKey()).getRoot();
-        assertFalse(aMatcher.matches(node));
+        assertFalse(aMatcher.test(node));
     }
 
     @Test
     public void nodeNoMatch1() {
         final Node<String> node = builder.create("B").build(TreeNodeImpl.<String>typeKey()).getRoot();
-        assertFalse(aMatcherAlt.matches(node));
+        assertFalse(aMatcherAlt.test(node));
     }
 }

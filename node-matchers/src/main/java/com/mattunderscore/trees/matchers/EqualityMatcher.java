@@ -25,17 +25,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.matchers;
 
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.selection.NodeMatcher;
+import java.util.function.Predicate;
 
 import net.jcip.annotations.Immutable;
+
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Matches nodes with the element equal to the value passed to it.
  * @author Matt Champion on 09/06/14.
  */
 @Immutable
-public final class EqualityMatcher<E> implements NodeMatcher<E> {
+public final class EqualityMatcher<E> implements Predicate<OpenNode<? extends E, ?>> {
     private final Object value;
 
     public EqualityMatcher(Object value) {
@@ -46,7 +47,7 @@ public final class EqualityMatcher<E> implements NodeMatcher<E> {
     }
 
     @Override
-    public boolean matches(OpenNode<? extends E, ?> node) {
+    public boolean test(OpenNode<? extends E, ?> node) {
         return value.equals(node.getElement());
     }
 

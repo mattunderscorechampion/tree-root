@@ -28,6 +28,7 @@ package com.mattunderscore.trees.tests;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -43,7 +44,6 @@ import com.mattunderscore.trees.matchers.EqualityMatcher;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.mutable.MutableTreeImpl;
 import com.mattunderscore.trees.pathcopy.holder.PathCopyTree;
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -84,21 +84,21 @@ public final class NodeSelectorTest {
         final Tree<String, ? extends OpenNode<String, ?>> tree = nodeApp0.build(treeClass);
 
         final NodeSelectorFactory selectorFactory = trees.nodeSelectors();
-        final NodeMatcher<String> matcher0 = new EqualityMatcher<>("A");
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new EqualityMatcher<>("A");
         final NodeSelector<String> selector0 = selectorFactory.newSelector(matcher0);
         final Iterator<? extends OpenNode<String, ?>> nodeIterator0 = selector0.select(tree);
         Assert.assertTrue(nodeIterator0.hasNext());
         Assert.assertEquals("A", nodeIterator0.next().getElement());
         Assert.assertFalse(nodeIterator0.hasNext());
 
-        final NodeMatcher<String> matcher1 = new EqualityMatcher<>("B");
+        final Predicate<OpenNode<? extends String, ?>> matcher1 = new EqualityMatcher<>("B");
         final NodeSelector<String> selector1 = selectorFactory.newSelector(selector0, matcher1);
         final Iterator<? extends OpenNode<String, ?>> nodeIterator1 = selector1.select(tree);
         Assert.assertTrue(nodeIterator1.hasNext());
         Assert.assertEquals("B", nodeIterator1.next().getElement());
         Assert.assertFalse(nodeIterator1.hasNext());
 
-        final NodeMatcher<String> matcher2 = new EqualityMatcher<>("C");
+        final Predicate<OpenNode<? extends String, ?>> matcher2 = new EqualityMatcher<>("C");
         final NodeSelector<String> selector2 = selectorFactory.newSelector(selector1, matcher2);
         final Iterator<? extends OpenNode<String, ?>> nodeIterator2 = selector2.select(tree);
         Assert.assertFalse(nodeIterator2.hasNext());

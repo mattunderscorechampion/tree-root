@@ -29,11 +29,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.function.Predicate;
+
+import org.junit.Test;
+
 import com.mattunderscore.trees.base.ImmutableNode;
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.OpenNode;
-import org.junit.Test;
 
 /**
  * Unit tests for AlwaysMatcher.
@@ -43,14 +45,14 @@ public final class AlwaysMatcherTest {
     @Test
     public void matches() {
         final OpenNode<String, Node<String>> node = new ImmutableNode<String, Node<String>>("a", new Object[0]) {};
-        final NodeMatcher<String> matcher = AlwaysMatcher.create();
-        assertTrue(matcher.matches(node));
+        final Predicate<OpenNode<? extends String, ?>> matcher = AlwaysMatcher.create();
+        assertTrue(matcher.test(node));
     }
 
     @Test
     public void testEquals0() {
-        final NodeMatcher<String> matcher0 = new AlwaysMatcher<>();
-        final NodeMatcher<String> matcher1 = new AlwaysMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new AlwaysMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher1 = new AlwaysMatcher<>();
 
         assertTrue(matcher0.equals(matcher1));
         assertTrue(matcher1.equals(matcher0));
@@ -59,7 +61,7 @@ public final class AlwaysMatcherTest {
 
     @Test
     public void testEquals1() {
-        final NodeMatcher<String> matcher = AlwaysMatcher.create();
+        final Predicate<OpenNode<? extends String, ?>> matcher = AlwaysMatcher.create();
 
         assertTrue(matcher.equals(matcher));
         assertTrue(matcher.equals(matcher));
@@ -68,14 +70,14 @@ public final class AlwaysMatcherTest {
 
     @Test
     public void testNotEquals0() {
-        final NodeMatcher<String> matcher0 = AlwaysMatcher.create();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = AlwaysMatcher.create();
 
         assertFalse(matcher0.equals(null));
     }
 
     @Test
     public void testNotEquals1() {
-        final NodeMatcher<String> matcher0 = AlwaysMatcher.create();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = AlwaysMatcher.create();
 
         assertFalse(matcher0.equals(new Object()));
     }

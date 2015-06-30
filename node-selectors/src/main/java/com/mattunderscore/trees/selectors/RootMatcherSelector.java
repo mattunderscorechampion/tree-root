@@ -26,8 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.selectors;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
-import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
@@ -35,20 +35,20 @@ import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
- * Selects nodes when the root node matches a matcher.
+ * Selects nodes when the root node matches a predicate.
  * @author Matt Champion on 18/04/15
  */
 public final class RootMatcherSelector<E> implements NodeSelector<E> {
-    private final NodeMatcher<E> matcher;
+    private final Predicate<OpenNode<? extends E, ?>> predicate;
 
-    public RootMatcherSelector(NodeMatcher<E> matcher) {
-        this.matcher = matcher;
+    public RootMatcherSelector(Predicate<OpenNode<? extends E, ?>> predicate) {
+        this.predicate = predicate;
     }
 
     @Override
     public <N extends OpenNode<E, ? extends N>> Iterator<? extends N> select(Tree<E, ? extends N> tree) {
         final N root = tree.getRoot();
-        if (matcher.matches(root)) {
+        if (predicate.test(root)) {
             return new SingletonIterator<>(root);
         }
         else {
