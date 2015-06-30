@@ -83,3 +83,7 @@ comparable
 * Have EmptyIterator throw UnsupportedOperationException instead of IllegalStateException on remove
 * Address type safety of collections
 * Removed AbstractNode and moved implementation into default methods on the Node interface
+* Substantial changes to the generic types of nodes, introduced distinction between open and closed nodes
+* Fixed unchecked cast warnings
+* Added initial support for Java 8 Streams
+* Deprecated NodeMatcher and added Predicate based alternatives
