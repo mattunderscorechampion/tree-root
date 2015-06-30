@@ -25,10 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.traversal.NodeStreamFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 
@@ -42,6 +43,7 @@ public final class TreesImpl implements Trees {
     private final TreeWalkerFactory treeWalkerFactory;
     private final TreeIteratorFactory treeIteratorFactory;
     private final TreeBuilderFactory treeBuilderFactory;
+    private final NodeStreamFactory nodeStreamFactory;
 
     public TreesImpl() {
         final SPISupport helper = new SPISupport();
@@ -50,6 +52,7 @@ public final class TreesImpl implements Trees {
         treeWalkerFactory = new TreeWalkerFactoryImpl();
         treeIteratorFactory = new TreeIteratorFactoryImpl(helper);
         treeBuilderFactory = new TreeBuilderFactoryImpl(helper);
+        nodeStreamFactory = new NodeStreamFactoryImpl(treeIteratorFactory);
     }
 
     @Override
@@ -70,6 +73,11 @@ public final class TreesImpl implements Trees {
     @Override
     public TreeIteratorFactory treeIterators() {
         return treeIteratorFactory;
+    }
+
+    @Override
+    public NodeStreamFactory nodeStreams() {
+        return nodeStreamFactory;
     }
 
     @Override

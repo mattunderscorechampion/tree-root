@@ -28,6 +28,7 @@ package com.mattunderscore.trees;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.traversal.NodeStreamFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 
@@ -60,6 +61,12 @@ public interface Trees {
      * @return A {@link com.mattunderscore.trees.traversal.TreeIteratorFactory}
      */
     TreeIteratorFactory treeIterators();
+
+    /**
+     * Obtain a {@link com.mattunderscore.trees.traversal.NodeStreamFactory}.
+     * @return A {@link com.mattunderscore.trees.traversal.NodeStreamFactory}
+     */
+    NodeStreamFactory nodeStreams();
 
     /**
      * Obtain a {@link com.mattunderscore.trees.construction.TreeBuilderFactory}.

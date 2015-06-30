@@ -41,34 +41,38 @@ public interface NodeStreamFactory {
      * @param tree A tree
      * @param <E> The type of elements
      * @param <N> The type of nodes
+     * @param <T> The type of tree
      * @return A steam of nodes
      */
-    <E, N extends OpenNode<E, N>> Stream<N> preOrderStream(Tree<E, N> tree);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> preOrderStream(T tree);
 
     /**
      * Create a stream of nodes from a tree. Following a in-order traversal pattern.
      * @param tree A tree
      * @param <E> The type of elements
      * @param <N> The type of nodes
+     * @param <T> The type of tree
      * @return A steam of nodes
      */
-    <E, N extends OpenNode<E, N>> Stream<N> inOrderStream(Tree<E, N> tree);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> inOrderStream(T tree);
 
     /**
      * Create a stream of nodes from a tree. Following a post-order traversal pattern.
      * @param tree A tree
      * @param <E> The type of elements
      * @param <N> The type of nodes
+     * @param <T> The type of tree
      * @return A steam of nodes
      */
-    <E, N extends OpenNode<E, N>> Stream<N> postOrderStream(Tree<E, N> tree);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> postOrderStream(T tree);
 
     /**
      * Create a stream of nodes from a tree. Following a breadth-first-order traversal pattern.
      * @param tree A tree
      * @param <E> The type of elements
      * @param <N> The type of nodes
+     * @param <T> The type of tree
      * @return A steam of nodes
      */
-    <E, N extends OpenNode<E, N>> Stream<N> breadthFirstStream(Tree<E, N> tree);
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> breadthFirstStream(T tree);
 }
