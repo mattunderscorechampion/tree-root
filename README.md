@@ -172,6 +172,14 @@ up to the sorting trees. The sorting tree builders are constrained to only build
 require a separate sorting algorithm to place the elements. Sorted and sorting tree builders both need a comparator for
 the elements.
 
+##Open and closed nodes
+
+For node selection it is desirable to be able to select nodes of the same type (or supertype) to the one passed in. To
+preserve this type, open nodes expose a type parameter that the child accessor methods, such as childIterator will use
+in their return type. Closed nodes extend open nodes and make this type parameter concrete. This ensures that methods
+can prove that nodes will return certain subtypes as children. This does restrict returning similar nodes, similar nodes
+must return an open subtype.
+
 ##SPI
 
 There is also an SPI that can be used to support specific implementations. The SPI can be used to expose more powerful
