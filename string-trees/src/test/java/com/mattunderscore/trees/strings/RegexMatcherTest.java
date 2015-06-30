@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.strings;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -73,5 +74,37 @@ public final class RegexMatcherTest {
     public void nodeNoMatch1() {
         final Node<String> node = builder.create("B").build(TreeNodeImpl.<String>typeKey()).getRoot();
         assertFalse(aMatcherAlt.test(node));
+    }
+
+    @Test
+    public void testEquals() {
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new RegexMatcher("A");
+        final Predicate<OpenNode<? extends String, ?>> matcher1 = new RegexMatcher("A");
+
+        assertTrue(matcher0.equals(matcher1));
+        assertTrue(matcher1.equals(matcher0));
+        assertEquals(matcher0.hashCode(), matcher1.hashCode());
+    }
+
+    @Test
+    public void testNotEquals0() {
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new RegexMatcher("A");
+        final Predicate<OpenNode<? extends String, ?>> matcher1 = new RegexMatcher("B");
+
+        assertFalse(matcher0.equals(matcher1));
+    }
+
+    @Test
+    public void testNotEquals1() {
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new RegexMatcher("A");
+
+        assertFalse(matcher0.equals(null));
+    }
+
+    @Test
+    public void testNotEquals2() {
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new RegexMatcher("A");
+
+        assertFalse(matcher0.equals(new Object()));
     }
 }

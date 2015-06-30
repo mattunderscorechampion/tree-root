@@ -39,15 +39,17 @@ import com.mattunderscore.trees.tree.OpenNode;
  */
 @Immutable
 public final class RegexMatcher implements Predicate<OpenNode<? extends String, ?>> {
-    private final Pattern value;
+    private final String regex;
+    private final Pattern pattern;
 
     public RegexMatcher(final String pattern) {
-        this.value = Pattern.compile(pattern);
+        regex = pattern;
+        this.pattern = Pattern.compile(pattern);
     }
 
     @Override
     public boolean test(OpenNode<? extends String, ?> node) {
-        final Matcher matcher = value.matcher(node.getElement());
+        final Matcher matcher = pattern.matcher(node.getElement());
         return matcher.matches();
     }
 
@@ -61,12 +63,12 @@ public final class RegexMatcher implements Predicate<OpenNode<? extends String, 
         }
 
         RegexMatcher that = (RegexMatcher) o;
-        return value.equals(that.value);
+        return regex.equals(that.regex);
 
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return regex.hashCode();
     }
 }
