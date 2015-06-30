@@ -25,11 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.Spliterators.AbstractSpliterator;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.traversal.NodeStreamFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -48,29 +53,69 @@ public final class NodeStreamFactoryImpl implements NodeStreamFactory {
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> preOrderStream(T tree) {
-        final Spliterator<N> spliterator =
-            Spliterators.spliteratorUnknownSize(iterators.preOrderIterator(tree), Spliterator.ORDERED);
+        final Spliterator<N> spliterator = spliterator(iterators.preOrderIterator(tree));
         return StreamSupport.stream(spliterator, false);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> inOrderStream(T tree) {
-        final Spliterator<N> spliterator =
-            Spliterators.spliteratorUnknownSize(iterators.inOrderIterator(tree), Spliterator.ORDERED);
+        final Spliterator<N> spliterator = spliterator(iterators.inOrderIterator(tree));
         return StreamSupport.stream(spliterator, false);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> postOrderStream(T tree) {
-        final Spliterator<N> spliterator =
-            Spliterators.spliteratorUnknownSize(iterators.postOrderIterator(tree), Spliterator.ORDERED);
+        final Spliterator<N> spliterator = spliterator(iterators.postOrderIterator(tree));
         return StreamSupport.stream(spliterator, false);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> breadthFirstStream(T tree) {
-        final Spliterator<N> spliterator =
-            Spliterators.spliteratorUnknownSize(iterators.breadthFirstIterator(tree), Spliterator.ORDERED);
+        final Spliterator<N> spliterator = spliterator(iterators.breadthFirstIterator(tree));
         return StreamSupport.stream(spliterator, false);
+    }
+
+    @Override
+    public <E, N extends OpenNode<E, N>, T extends SortingTree<E, N>> Stream<N> sortedStream(T tree) {
+        final Spliterator<N> spliterator = spliterator(tree);
+        return StreamSupport.stream(spliterator, false);
+    }
+
+    private <E, N extends OpenNode<E, N>> Spliterator<N> spliterator(Iterator<N> iterator) {
+        return Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED);
+    }
+
+    private <E, N extends OpenNode<E, N>, T extends SortingTree<E, N>> Spliterator<N> spliterator(T tree) {
+        return new SortedTreeNodeSpliterator<>(iterators.inOrderIterator(tree), tree.getComparator());
+    }
+
+    /**
+     * An ordered, sorted spliterator for sorting trees.
+     * @param <E> The element type
+     * @param <N> The node type
+     */
+    private static class SortedTreeNodeSpliterator<E, N extends OpenNode<E, N>> extends AbstractSpliterator<N> {
+        private final Iterator<N> iterator;
+        private final Comparator<E> comparator;
+
+        public SortedTreeNodeSpliterator(Iterator<N> iterator, Comparator<E> comparator) {
+            super(Long.MAX_VALUE, Spliterator.ORDERED | Spliterator.SORTED);
+            this.iterator = iterator;
+            this.comparator = comparator;
+        }
+
+        @Override
+        public boolean tryAdvance(Consumer<? super N> action) {
+            if (iterator.hasNext()) {
+                action.accept(iterator.next());
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Comparator<N> getComparator() {
+            return (o1, o2) -> comparator.compare(o1.getElement(), o2.getElement());
+        }
     }
 }

@@ -27,6 +27,7 @@ package com.mattunderscore.trees.traversal;
 
 import java.util.stream.Stream;
 
+import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -75,4 +76,14 @@ public interface NodeStreamFactory {
      * @return A steam of nodes
      */
     <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Stream<N> breadthFirstStream(T tree);
+
+    /**
+     * Create a sorted stream of nodes from a sorting tree.
+     * @param tree A tree
+     * @param <E> The type of elements
+     * @param <N> The type of nodes
+     * @param <T> The type of tree
+     * @return A steam of nodes
+     */
+    <E, N extends OpenNode<E, N>, T extends SortingTree<E, N>> Stream<N> sortedStream(T tree);
 }
