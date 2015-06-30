@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.impl;
 
 import com.mattunderscore.trees.*;
+import com.mattunderscore.trees.matchers.PredicateMatcher;
 import com.mattunderscore.trees.selection.NodeMatcher;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
@@ -36,6 +37,7 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 /**
  * @author Matt Champion on 29/06/14.
@@ -70,6 +72,11 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
     }
 
     @Override
+    public <E> TreeSelector<E> newSelector(Predicate<OpenNode<? extends E, ?>> predicate) {
+        return newSelector(new PredicateMatcher<>(predicate));
+    }
+
+    @Override
     public <E> TreeSelector<E> newSelector(final TreeSelector<E> selector, final NodeMatcher<E> matcher) throws OperationNotSupportedForType {
         return new TreeSelector<E>() {
             @Override
@@ -83,6 +90,11 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
                 throw new UnsupportedOperationException("Not yet implemented");
             }
         };
+    }
+
+    @Override
+    public <E> TreeSelector<E> newSelector(TreeSelector<E> selector, Predicate<OpenNode<? extends E, ?>> predicate) {
+        return newSelector(selector, new PredicateMatcher<>(predicate));
     }
 
     private final class TreeIterator<E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> extends PrefetchingIterator<T> {

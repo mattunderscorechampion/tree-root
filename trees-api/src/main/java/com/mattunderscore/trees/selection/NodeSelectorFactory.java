@@ -38,8 +38,10 @@ public interface NodeSelectorFactory {
      * Create a node selector for the root node.
      * @param matcher a matcher
      * @param <E> the element type of the tree
+     * @deprecated Deprecated in favour of {@link Predicate} based methods
      * @return a new selector
      */
+    @Deprecated
     <E> NodeSelector<E> newSelector(NodeMatcher<E> matcher);
 
     /**
@@ -55,8 +57,10 @@ public interface NodeSelectorFactory {
      * @param selector a base selector
      * @param matcher a matcher
      * @param <E> the element type of the tree
+     * @deprecated Deprecated in favour of {@link Predicate} based methods
      * @return a new selector
      */
+    @Deprecated
     <E> NodeSelector<E> newSelector(NodeSelector<E> selector, NodeMatcher<E> matcher);
 
     /**

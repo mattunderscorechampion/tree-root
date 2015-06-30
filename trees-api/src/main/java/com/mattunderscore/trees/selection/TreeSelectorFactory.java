@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selection;
 
+import java.util.function.Predicate;
+
+import com.mattunderscore.trees.tree.OpenNode;
+
 /**
  * @author Matt Champion on 16/08/14.
  */
@@ -33,16 +37,37 @@ public interface TreeSelectorFactory {
      * Create a tree selector for the root node (entire tree).
      * @param matcher a matcher
      * @param <E> the element type of the tree
+     * @deprecated Deprecated in favour of {@link Predicate} based methods
      * @return a new tree selector
      */
+    @Deprecated
     <E> TreeSelector<E> newSelector(NodeMatcher<E> matcher);
+
+    /**
+     * Create a tree selector for the root node (entire tree).
+     * @param predicate a predicate
+     * @param <E> the element type of the tree
+     * @return a new tree selector
+     */
+    <E> TreeSelector<E> newSelector(Predicate<OpenNode<? extends E, ?>> predicate);
 
     /**
      * Create a tree selector for the children of another tree selector.
      * @param selector a base selector
      * @param matcher a matcher
      * @param <E> the element type of the tree
+     * @deprecated Deprecated in favour of {@link Predicate} based methods
      * @return a new tree selector
      */
+    @Deprecated
     <E> TreeSelector<E> newSelector(TreeSelector<E> selector, NodeMatcher<E> matcher);
+
+    /**
+     * Create a tree selector for the children of another tree selector.
+     * @param selector a base selector
+     * @param predicate a predicate
+     * @param <E> the element type of the tree
+     * @return a new tree selector
+     */
+    <E> TreeSelector<E> newSelector(TreeSelector<E> selector, Predicate<OpenNode<? extends E, ?>> predicate);
 }

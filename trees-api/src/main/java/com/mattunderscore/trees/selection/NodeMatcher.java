@@ -25,13 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selection;
 
+import java.util.function.Predicate;
+
 import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Matches a node.
+ * @deprecated Deprecated in favour of using Java 8 {@link Predicate}s.
  * @author Matt Champion on 11/08/14.
  */
 @FunctionalInterface
+@Deprecated
 public interface NodeMatcher<E> {
 
     /**
