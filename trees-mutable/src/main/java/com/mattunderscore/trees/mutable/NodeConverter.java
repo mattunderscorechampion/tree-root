@@ -25,13 +25,37 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import com.mattunderscore.trees.impl.SPISupport;
+import com.mattunderscore.trees.impl.SPISupportAwareComponent;
+import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.tree.OpenNode;
+
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.NodeToTreeConverter} for
  * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E> extends AbstractCopyingNodeConverter<E, MutableSettableNode<E>, MutableTreeImpl<E>, MutableSettableNode<E>> {
+public final class NodeConverter<E> implements NodeToTreeConverter<E, MutableSettableNode<E>, MutableTreeImpl<E>, MutableSettableNode<E>>, SPISupportAwareComponent {
+    private final DelegateCopyingNodeToTreeConverter<E, MutableSettableNode<E>, MutableTreeImpl<E>, MutableSettableNode<E>> delegateConverter;
+
     public NodeConverter() {
-        super();
+        final Class<MutableSettableNode<E>> sourceClass = (Class<MutableSettableNode<E>>)(Class<?>)MutableSettableNode.class;
+        final Class<MutableTreeImpl<E>> targetClass = (Class<MutableTreeImpl<E>>)(Class<?>)MutableTreeImpl.class;
+        delegateConverter = new DelegateCopyingNodeToTreeConverter<>(sourceClass, targetClass);
+    }
+
+    @Override
+    public MutableTreeImpl<E> treeFromRootNode(MutableSettableNode<E> node) {
+        return delegateConverter.treeFromRootNode(node);
+    }
+
+    @Override
+    public Class<? extends OpenNode> forClass() {
+        return MutableTreeImpl.class;
+    }
+
+    @Override
+    public void setSupport(SPISupport support) {
+        delegateConverter.setSupport(support);
     }
 }
