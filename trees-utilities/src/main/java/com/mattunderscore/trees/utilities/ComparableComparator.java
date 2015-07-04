@@ -25,13 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * A comparator for all comparable objects.
  * @author Matt Champion on 06/09/14.
  */
-public final class ComparableComparator<C extends Comparable<C>> implements Comparator<C> {
+public final class ComparableComparator<C extends Comparable<C>> implements Comparator<C>, Serializable {
+    private static final long serialVersionUID = -3330735978390219001L;
+
     @Override
     public int compare(C o1, C o2) {
         return o2.compareTo(o1);
