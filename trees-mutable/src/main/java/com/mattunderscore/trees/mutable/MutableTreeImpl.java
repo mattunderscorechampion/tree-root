@@ -129,7 +129,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
     }
 
     @Override
-    public synchronized MutableTreeImpl<E> setRoot(E root) {
+    public MutableTreeImpl<E> setRoot(E root) {
         elementReference.set(root);
         return this;
     }
