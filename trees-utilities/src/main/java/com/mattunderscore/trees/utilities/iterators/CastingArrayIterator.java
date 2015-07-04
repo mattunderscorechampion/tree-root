@@ -38,7 +38,7 @@ public final class CastingArrayIterator<E> implements Iterator<E> {
     private final Object[] array;
     private int pos;
 
-    public CastingArrayIterator(Object[] array) {
+    CastingArrayIterator(Object[] array) {
         this.array = array;
         pos = 0;
     }
