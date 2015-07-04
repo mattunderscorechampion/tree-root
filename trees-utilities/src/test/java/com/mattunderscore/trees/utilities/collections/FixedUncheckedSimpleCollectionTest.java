@@ -28,6 +28,7 @@ package com.mattunderscore.trees.utilities.collections;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -38,6 +39,7 @@ import static org.junit.Assert.assertTrue;
  * @author Matt Champion on 19/09/14.
  */
 public final class FixedUncheckedSimpleCollectionTest {
+
     @Test
     public void empty() {
         final FixedUncheckedSimpleCollection<String> collection = new FixedUncheckedSimpleCollection<>(new Object[0]);
@@ -45,6 +47,20 @@ public final class FixedUncheckedSimpleCollectionTest {
         assertEquals(0, collection.size());
         assertFalse(collection.iterator().hasNext());
         assertFalse(collection.structuralIterator().hasNext());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void emptyIterator() {
+        final FixedUncheckedSimpleCollection<String> collection = new FixedUncheckedSimpleCollection<>(new Object[0]);
+        assertFalse(collection.iterator().hasNext());
+        collection.iterator().next();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void emptyStructuralIterator() {
+        final FixedUncheckedSimpleCollection<String> collection = new FixedUncheckedSimpleCollection<>(new Object[0]);
+        assertFalse(collection.structuralIterator().hasNext());
+        collection.structuralIterator().next();
     }
 
     @Test
@@ -59,6 +75,14 @@ public final class FixedUncheckedSimpleCollectionTest {
     public void removeIterator() {
         final FixedUncheckedSimpleCollection<String> collection = new FixedUncheckedSimpleCollection<>(new Object[] {"a"});
         final Iterator<String> iterator = collection.iterator();
+        iterator.next();
+        iterator.remove();
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void removeStructuralIterator() {
+        final FixedUncheckedSimpleCollection<String> collection = new FixedUncheckedSimpleCollection<>(new Object[] {"a"});
+        final Iterator<String> iterator = collection.structuralIterator();
         iterator.next();
         iterator.remove();
     }
