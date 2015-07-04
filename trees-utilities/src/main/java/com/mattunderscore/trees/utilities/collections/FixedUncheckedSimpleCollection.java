@@ -99,7 +99,10 @@ public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection
         @SuppressWarnings("unchecked")
         @Override
         public E next() {
-            return (E) array[pos++];
+            if (pos < array.length) {
+                return (E) array[pos++];
+            }
+            throw new NoSuchElementException();
         }
 
         @Override
