@@ -46,16 +46,16 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
  */
 public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSettableNode<E>> implements MutableTree<E, MutableSettableNode<E>>, MutableSettableNode<E> {
     @GuardedBy("this")
-    private SimpleCollection<MutableTreeImpl<E>> elementList;
+    private SimpleCollection<MutableTreeImpl<E>> childList;
 
     public MutableTreeImpl(E element) {
         super(element);
-        elementList = new FixedUncheckedSimpleCollection<>(new Object[0]);
+        childList = new FixedUncheckedSimpleCollection<>(new Object[0]);
     }
 
     MutableTreeImpl(E element, SimpleCollection<MutableTreeImpl<E>> childList) {
         super(element);
-        elementList = childList;
+        this.childList = childList;
     }
 
     @Override
@@ -65,7 +65,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
         }
         final MutableTreeImpl<E> child = new MutableTreeImpl<>(e);
         synchronized (this) {
-            final SimpleCollection<MutableTreeImpl<E>> oldList = elementList;
+            final SimpleCollection<MutableTreeImpl<E>> oldList = childList;
             final int size = oldList.size();
             final Object[] newArray = new Object[size + 1];
             int i = 0;
@@ -75,7 +75,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
                 i++;
             }
             newArray[size] = child;
-            elementList = new FixedUncheckedSimpleCollection<>(newArray);
+            childList = new FixedUncheckedSimpleCollection<>(newArray);
         }
         return child;
     }
@@ -86,7 +86,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
             return false;
         }
         synchronized (this) {
-            final SimpleCollection<MutableTreeImpl<E>> oldList = elementList;
+            final SimpleCollection<MutableTreeImpl<E>> oldList = childList;
             final int size = oldList.size();
             final Object[] searchArray = new Object[size];
             int i = 0;
@@ -107,7 +107,7 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
             else {
                 final int newSize = size - 1;
                 final Object[] newArray = Arrays.copyOf(searchArray, newSize);
-                elementList = new FixedUncheckedSimpleCollection<>(newArray);
+                childList = new FixedUncheckedSimpleCollection<>(newArray);
                 return true;
             }
         }
@@ -146,14 +146,14 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
     @Override
     public int getNumberOfChildren() {
         synchronized (this) {
-            return elementList.size();
+            return childList.size();
         }
     }
 
     @Override
     public Iterator<MutableTreeImpl<E>> childIterator() {
         synchronized (this) {
-            return elementList.iterator();
+            return childList.iterator();
         }
     }
 }
