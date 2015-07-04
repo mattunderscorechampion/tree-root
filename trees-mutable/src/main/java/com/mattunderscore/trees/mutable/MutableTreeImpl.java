@@ -145,11 +145,15 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
 
     @Override
     public int getNumberOfChildren() {
-        return elementList.size();
+        synchronized (this) {
+            return elementList.size();
+        }
     }
 
     @Override
     public Iterator<MutableTreeImpl<E>> childIterator() {
-        return elementList.iterator();
+        synchronized (this) {
+            return elementList.iterator();
+        }
     }
 }
