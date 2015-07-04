@@ -25,11 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.mattunderscore.trees.construction.TypeKey;
 
 /**
  * @author Matt Champion on 04/05/15
@@ -67,5 +70,11 @@ public final class MutableTreeImplTest {
         tree1.setRoot("c");
 
         assertFalse(tree0.getRoot().removeChild(tree1.getRoot()));
+    }
+
+    @Test
+    public void typeKey() {
+        final TypeKey<MutableTreeImpl<String>> key = MutableTreeImpl.typeKey();
+        assertEquals(MutableTreeImpl.class, key.getTreeType());
     }
 }

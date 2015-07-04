@@ -88,3 +88,4 @@ comparable
 * Added initial support for Java 8 Streams
 * Replaced NodeMatcher with Java 8 Predicate
 * Expose the comparator of a sorting tree
+* Added findbugs to build and fixed some of the reported issues
