@@ -34,9 +34,11 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
  * {@link com.mattunderscore.trees.mutable.MutableTreeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class Constructor<E> implements TreeConstructor<E, MutableNode<E>, MutableTree<E, MutableNode<E>>> {
+public final class Constructor<E> implements TreeConstructor<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>> {
+
+    @SafeVarargs
     @Override
-    public final MutableTree<E, MutableNode<E>> build(E e, MutableTree<E, MutableNode<E>>... subtrees) {
+    public final MutableTree<E, MutableSettableNode<E>> build(E e, MutableTree<E, MutableSettableNode<E>>... subtrees) {
         return new MutableTreeImpl(e, new FixedUncheckedSimpleCollection<E>(subtrees));
     }
 
