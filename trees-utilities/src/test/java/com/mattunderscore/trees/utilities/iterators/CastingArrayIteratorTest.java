@@ -48,6 +48,30 @@ public final class CastingArrayIteratorTest {
         iterator.next();
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void unsafeCreation() {
+        final Object[] objects = new Object[] {"a", "b"};
+        final Iterator<String> iterator = CastingArrayIterator.unsafeCreate(objects);
+
+        assertTrue(iterator.hasNext());
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
+        assertFalse(iterator.hasNext());
+        iterator.next();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void safeCreation() {
+        final String[] objects = new String[] {"a", "b"};
+        final Iterator<String> iterator = CastingArrayIterator.create(objects);
+
+        assertTrue(iterator.hasNext());
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
+        assertFalse(iterator.hasNext());
+        iterator.next();
+    }
+
     @Test(expected = UnsupportedOperationException.class)
     public void remove() {
         final Iterator<String> iterator = new CastingArrayIterator<>(new Object[] {"a"});

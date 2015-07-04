@@ -31,7 +31,7 @@ import net.jcip.annotations.NotThreadSafe;
 
 import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
+import com.mattunderscore.trees.utilities.iterators.ArrayIterator;
 import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
@@ -109,7 +109,7 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, MutableBina
             return new EmptyIterator<>();
         }
         else if (children[0] != null && children[1] != null) {
-            return new CastingArrayIterator<>(children);
+            return ArrayIterator.create(children);
         }
         else if (children[0] != null) {
             return new SingletonIterator<>(children[0]);
@@ -121,7 +121,7 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, MutableBina
 
     @Override
     public Iterator<? extends MutableBinaryTreeNodeImpl<E>> childStructuralIterator() {
-        return new CastingArrayIterator<>(children);
+        return ArrayIterator.create(children);
     }
 
     @Override

@@ -25,15 +25,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities.iterators;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.jcip.annotations.NotThreadSafe;
+
 /**
  * An iterator over object arrays that casts the objects to another class. The next method may throw a
- * ClassCastException if the wrong type of array is provided.
+ * ClassCastException if the wrong type of array is provided. The iterator does not maintain a thread safe position
+ * counter. Two thread both accessing the same iterator may both receive the same object.
+ * @param <E> The element type
  * @author Matt Champion on 11/09/14.
  */
+@NotThreadSafe
 public final class CastingArrayIterator<E> implements Iterator<E> {
     private final Object[] array;
     private int pos;
@@ -60,11 +64,24 @@ public final class CastingArrayIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Create an iterator over an array known to be the correct type. Does not really cast.
+     * Create an iterator over an array known to be the correct type. Does not really cast. Does not copy the array.
      * @param array The array
+     * @param <E> The element type
+     * @return The iterator
+     * @deprecated Prefer the use of {@link ArrayIterator} in this case
+     */
+    @Deprecated
+    public static <E> CastingArrayIterator<E> create(E[] array) {
+        return new CastingArrayIterator<>(array);
+    }
+
+    /**
+     * Create an iterator over an array known to be the correct type. Does not really cast. Does not copy the array.
+     * @param array The array
+     * @param <E> The element type
      * @return The iterator
      */
-    public CastingArrayIterator<E> create(E[] array) {
+    public static <E> CastingArrayIterator<E> unsafeCreate(Object[] array) {
         return new CastingArrayIterator<>(array);
     }
 }

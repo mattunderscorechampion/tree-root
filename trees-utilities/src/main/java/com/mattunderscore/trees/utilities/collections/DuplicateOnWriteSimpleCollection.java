@@ -63,12 +63,12 @@ public final class DuplicateOnWriteSimpleCollection<E> implements SimpleCollecti
 
     @Override
     public Iterator<E> iterator() {
-        return new CastingArrayIterator<>(elements);
+        return CastingArrayIterator.unsafeCreate(elements);
     }
 
     @Override
     public Iterator<E> structuralIterator() {
-        return new CastingArrayIterator<>(elements);
+        return CastingArrayIterator.unsafeCreate(elements);
     }
 
     /**
