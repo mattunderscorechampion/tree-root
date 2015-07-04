@@ -45,7 +45,7 @@ public final class ArrayIterator<E> implements Iterator<E> {
      * Constructor.
      * @param array The array to iterate over.
      */
-    public ArrayIterator(E[] array) {
+    ArrayIterator(E[] array) {
         this.array = array;
         pos = 0;
     }
