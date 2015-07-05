@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.impl.SPISupport;
+import com.mattunderscore.trees.impl.SPISupportImpl;
 import com.mattunderscore.trees.impl.TreesImpl;
 
 /**
@@ -32,7 +32,7 @@ public class MutableTreeImplNodeConverterTest {
             .build(MutableTreeImpl.typeKey());
 
         final MutableTreeImplNodeConverter<String> constructor = new MutableTreeImplNodeConverter<>();
-        constructor.setSupport(new SPISupport());
+        constructor.setSupport(new SPISupportImpl());
 
         final MutableTree<String, MutableSettableNode<String>> newTree = constructor.treeFromRootNode(tree.getRoot());
         assertFalse(newTree.isEmpty());

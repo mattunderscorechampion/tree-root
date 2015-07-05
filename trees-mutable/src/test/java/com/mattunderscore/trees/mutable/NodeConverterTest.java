@@ -35,7 +35,7 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.impl.SPISupport;
+import com.mattunderscore.trees.impl.SPISupportImpl;
 import com.mattunderscore.trees.impl.TreesImpl;
 
 /**
@@ -56,7 +56,7 @@ public final class NodeConverterTest {
             depth1.addChild("c");
 
             final NodeConverter<String> converter = new NodeConverter<>();
-            converter.setSupport(new SPISupport());
+            converter.setSupport(new SPISupportImpl());
 
             final MutableTree<String, MutableSettableNode<String>> convertedTree =
                 converter.treeFromRootNode(root);

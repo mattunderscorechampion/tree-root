@@ -43,7 +43,7 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 13/08/14.
  */
 public final class BottomUpTreeBuilderImplTest {
-    private static final SPISupport helper = new SPISupport();
+    private static final SPISupport helper = new SPISupportImpl();
 
     @Test
     public void buildEmpty() {
