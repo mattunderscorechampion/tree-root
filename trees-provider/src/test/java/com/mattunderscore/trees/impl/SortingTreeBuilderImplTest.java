@@ -14,8 +14,6 @@ import org.mockito.Mock;
 
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.organised.MutableOrganisedTree;
-import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 
 /**
@@ -26,14 +24,14 @@ public final class SortingTreeBuilderImplTest {
     @Mock
     private SPISupport helper;
     @Mock
-    private TestTree tree;
+    private TestSortingTree tree;
 
     @Before
     public void setUp() {
         initMocks(this);
 
-        when(helper.createEmptyTree(TestTree.class)).thenReturn(tree);
-        when(helper.createEmptyTree(eq(TestTree.class), isA(Comparator.class))).thenReturn(tree);
+        when(helper.createEmptyTree(TestSortingTree.class)).thenReturn(tree);
+        when(helper.createEmptyTree(eq(TestSortingTree.class), isA(Comparator.class))).thenReturn(tree);
     }
 
     @Test
@@ -45,9 +43,9 @@ public final class SortingTreeBuilderImplTest {
             .addElement(5)
             .addElement(2)
             .addElement(3)
-            .build(TestTree.class);
+            .build(TestSortingTree.class);
 
-        verify(helper).createEmptyTree(TestTree.class, comparator);
+        verify(helper).createEmptyTree(TestSortingTree.class, comparator);
         verify(tree).addElement(5);
         verify(tree).addElement(2);
         verify(tree).addElement(3);
@@ -62,33 +60,12 @@ public final class SortingTreeBuilderImplTest {
             .addElement(5)
             .addElement(2)
             .addElement(3)
-            .build(new TypeKey<TestTree>() {});
+            .build(new TypeKey<TestSortingTree>() {});
 
-        verify(helper).createEmptyTree(TestTree.class, comparator);
+        verify(helper).createEmptyTree(TestSortingTree.class, comparator);
         verify(tree).addElement(5);
         verify(tree).addElement(2);
         verify(tree).addElement(3);
     }
 
-    private static class TestTree implements SortingTree<Integer, BinaryTreeNode<Integer>> {
-        @Override
-        public Comparator<Integer> getComparator() {
-            return null;
-        }
-
-        @Override
-        public MutableOrganisedTree<Integer, BinaryTreeNode<Integer>> addElement(Integer element) {
-            return null;
-        }
-
-        @Override
-        public BinaryTreeNode<Integer> getRoot() {
-            return null;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
-        }
-    }
 }
