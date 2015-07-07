@@ -32,6 +32,7 @@ public final class ConverterTest {
         assertEquals("root", pathCopyTree.getRoot().getElement());
         assertTrue(pathCopyTree.getRoot().isLeaf());
         assertFalse(pathCopyTree.isEmpty());
+        assertTrue(pathCopyTree instanceof PathCopyTree);
     }
 
     private Tree<String, Node<String>> getTree() {
