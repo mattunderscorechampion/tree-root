@@ -48,4 +48,27 @@ public class ConstructorTest {
         assertEquals("left", iterator.next().getElement());
         assertFalse(iterator.hasNext());
     }
+
+    @Test
+    public void build2() {
+        final Constructor<String> constructor = new Constructor<>();
+        final PathCopyTree<String> tree = constructor.build("root", new PathCopyTree[] {
+            constructor.build("left", new PathCopyTree[] {
+                constructor.build("left-left", new PathCopyTree[] {})
+            })});
+        assertEquals("root", tree.getRoot().getElement());
+        assertFalse(tree.getRoot().isLeaf());
+        assertFalse(tree.isEmpty());
+        assertTrue(tree instanceof PathCopyTree);
+        final Iterator<MutableNode<String>> iterator = tree.getRoot().childIterator();
+        final MutableNode<String> child = iterator.next();
+        assertEquals("left", child.getElement());
+        assertFalse(child.isLeaf());
+        assertFalse(iterator.hasNext());
+        final Iterator<? extends MutableNode<String>> deeperIterator = child.childIterator();
+        final MutableNode<String> leaf = deeperIterator.next();
+        assertEquals("left-left", leaf.getElement());
+        assertTrue(leaf.isLeaf());
+        assertFalse(deeperIterator.hasNext());
+    }
 }
