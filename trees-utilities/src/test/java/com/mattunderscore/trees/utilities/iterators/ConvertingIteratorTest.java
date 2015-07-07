@@ -25,12 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities.iterators;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public final class ConvertingIteratorTest {
     @Test(expected = NoSuchElementException.class)
@@ -50,6 +54,15 @@ public final class ConvertingIteratorTest {
         final Iterator<Integer> converter = new IntegerParsingConvertingIterator(delegate);
 
         converter.remove();
+    }
+
+    @Test
+    public void mockedRemove() {
+        final Iterator<String> delegate = mock(Iterator.class);
+        final Iterator<Integer> converter = new IntegerParsingConvertingIterator(delegate);
+
+        converter.remove();
+        verify(delegate).remove();
     }
 
     public static final class IntegerParsingConvertingIterator extends ConvertingIterator<Integer, String> {
