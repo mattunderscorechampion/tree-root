@@ -216,6 +216,12 @@
                         <compilerArgument>-Xlint:unchecked</compilerArgument>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -345,7 +351,72 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>3.0.1</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <inherited>false</inherited>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>project-team</report>
+                            <report>license</report>
+                            <report>scm</report>
+                            <report>summary</report>
+                            <report>dependencies</report>
+                            <report>dependency-info</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <javaApiLinks>
+                        <property>
+                            <name>api_1.8</name>
+                            <value>http://docs.oracle.com/javase/8/docs/api/</value>
+                        </property>
+                    </javaApiLinks>
+                    <aggregate>true</aggregate>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <javaApiLinks>
+                        <property>
+                            <name>api_1.8</name>
+                            <value>http://docs.oracle.com/javase/8/docs/api/</value>
+                        </property>
+                    </javaApiLinks>
+                    <aggregate>false</aggregate>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </reporting>
