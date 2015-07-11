@@ -18,7 +18,8 @@ public class MutableTreeImplNodeConverterTest {
 
     @Test
     public void key() {
-        final MutableTreeImplNodeConverter<String> constructor = new MutableTreeImplNodeConverter<>();
+        final MutableTreeImplNodeConverter<String, MutableSettableNode<String>> constructor =
+            new MutableTreeImplNodeConverter<>();
         assertEquals(MutableTreeImpl.class, constructor.forClass());
     }
 
@@ -31,7 +32,8 @@ public class MutableTreeImplNodeConverterTest {
             builder.create("right"))
             .build(MutableTreeImpl.typeKey());
 
-        final MutableTreeImplNodeConverter<String> constructor = new MutableTreeImplNodeConverter<>();
+        final MutableTreeImplNodeConverter<String, MutableSettableNode<String>> constructor =
+            new MutableTreeImplNodeConverter<>();
         constructor.setSupport(new SPISupportImpl());
 
         final MutableTree<String, MutableSettableNode<String>> newTree = constructor.treeFromRootNode(tree.getRoot());

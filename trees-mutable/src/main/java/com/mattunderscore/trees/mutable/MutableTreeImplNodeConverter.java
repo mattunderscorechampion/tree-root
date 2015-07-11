@@ -33,20 +33,21 @@ import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Implementation for converting a node to a tree by copying the subtree.
  *
  * @author Matt Champion on 24/06/15.
  */
-public final class MutableTreeImplNodeConverter<E> implements NodeToTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>, MutableSettableNode<E>>, SPISupportAwareComponent {
+public final class MutableTreeImplNodeConverter<E, S extends OpenNode<E, S>> implements NodeToTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>, S>, SPISupportAwareComponent {
     private volatile TreeBuilderFactory treeBuilderFactory;
 
     public MutableTreeImplNodeConverter() {
     }
 
     @Override
-    public MutableTreeImpl<E> treeFromRootNode(MutableSettableNode<E> node) {
+    public MutableTreeImpl<E> treeFromRootNode(S node) {
         final TopDownTreeRootBuilder<E, MutableSettableNode<E>> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
         final TopDownTreeRootBuilder.TopDownTreeBuilder<E, MutableSettableNode<E>> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
 
@@ -54,10 +55,10 @@ public final class MutableTreeImplNodeConverter<E> implements NodeToTreeConverte
         return treeBuilder.build(MutableTreeImpl.<E>typeKey());
     }
 
-    private void copyChildren(TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> appender, MutableSettableNode<E> node) {
-        final Iterator<? extends MutableSettableNode<E>> iterator = node.childIterator();
+    private void copyChildren(TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> appender, S node) {
+        final Iterator<? extends S> iterator = node.childIterator();
         while (iterator.hasNext()) {
-            final MutableSettableNode<E> child = iterator.next();
+            final S child = iterator.next();
             final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> newAppender = appender.addChild(child.getElement());
             copyChildren(newAppender, child);
         }
