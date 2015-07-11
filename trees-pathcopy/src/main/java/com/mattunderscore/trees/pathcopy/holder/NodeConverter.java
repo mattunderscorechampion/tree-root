@@ -36,19 +36,19 @@ import com.mattunderscore.trees.tree.OpenNode;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyNode}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E, N extends OpenNode<E, N>> implements NodeToTreeConverter<E, MutableNode<E>, PathCopyTree<E>, N> {
+public final class NodeConverter<E, S extends OpenNode<E, S>> implements NodeToTreeConverter<E, MutableNode<E>, PathCopyTree<E>, S> {
 
     @Override
-    public PathCopyTree<E> treeFromRootNode(N node) {
+    public PathCopyTree<E> treeFromRootNode(S node) {
         final PathCopyTree<E> newTree = new PathCopyTree<>();
         copyChildren(newTree.setRoot(node.getElement()), node);
         return newTree;
     }
 
-    private void copyChildren(MutableNode<E> newParent, N parent) {
-        final Iterator<? extends N> iterator = parent.childIterator();
+    private void copyChildren(MutableNode<E> newParent, S parent) {
+        final Iterator<? extends S> iterator = parent.childIterator();
         while (iterator.hasNext()) {
-            final N child = iterator.next();
+            final S child = iterator.next();
             final MutableNode<E> newChild = newParent.addChild(child.getElement());
             copyChildren(newChild, child);
         }
