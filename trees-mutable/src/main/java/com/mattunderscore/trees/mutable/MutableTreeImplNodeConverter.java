@@ -25,52 +25,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
-import java.util.Iterator;
-
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.spi.impl.AbstractNodeToTreeConverter;
 
 /**
  * Implementation for converting a node to a tree by copying the subtree.
  *
  * @author Matt Champion on 24/06/15.
  */
-public final class MutableTreeImplNodeConverter<E, S extends OpenNode<E, S>> implements NodeToTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>, S>, SPISupportAwareComponent {
+public final class MutableTreeImplNodeConverter<E> extends AbstractNodeToTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>> implements SPISupportAwareComponent {
     private volatile TreeBuilderFactory treeBuilderFactory;
 
     public MutableTreeImplNodeConverter() {
-    }
-
-    @Override
-    public MutableTreeImpl<E> treeFromRootNode(S node) {
-        final TopDownTreeRootBuilder<E, MutableSettableNode<E>> topDownTreeRootBuilder = treeBuilderFactory.topDownBuilder();
-        final TopDownTreeRootBuilder.TopDownTreeBuilder<E, MutableSettableNode<E>> treeBuilder = topDownTreeRootBuilder.root(node.getElement());
-
-        copyChildren(treeBuilder, node);
-        return treeBuilder.build(MutableTreeImpl.<E>typeKey());
-    }
-
-    private void copyChildren(TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> appender, S node) {
-        final Iterator<? extends S> iterator = node.childIterator();
-        while (iterator.hasNext()) {
-            final S child = iterator.next();
-            final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> newAppender = appender.addChild(child.getElement());
-            copyChildren(newAppender, child);
-        }
-    }
-
-    @Override
-    public Class<? extends MutableSettableNode> forClass() {
-        return MutableTreeImpl.class;
+        super(MutableTreeImpl.class, MutableTreeImpl.class);
     }
 
     @Override
     public void setSupport(SPISupport support) {
         treeBuilderFactory = new TreeBuilderFactoryImpl(support);
+    }
+
+    @Override
+    protected TopDownTreeRootBuilder<E, MutableSettableNode<E>> getBuilder() {
+        return treeBuilderFactory.topDownBuilder();
     }
 }

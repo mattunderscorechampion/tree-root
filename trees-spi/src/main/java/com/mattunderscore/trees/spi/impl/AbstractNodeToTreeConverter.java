@@ -23,44 +23,53 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.pathcopy.holder;
+package com.mattunderscore.trees.spi.impl;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.spi.TreeConverter} for
- * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyTree}.
- * @author Matt Champion on 28/01/15.
+ * Abstract implementation for converting a node to a tree by copying the subtree.
+ *
+ * @author Matt Champion on 24/06/15.
  */
-public final class Converter<E> implements TreeConverter<E, MutableNode<E>, PathCopyTree<E>> {
-    @Override
-    public final <S extends OpenNode<E, S>> PathCopyTree<E> build(Tree<E, S> sourceTree) {
-        final S root = sourceTree.getRoot();
+public abstract class AbstractNodeToTreeConverter<E, N extends OpenNode<E, N>, T extends Tree<E, N>> implements NodeToTreeConverter<E, N, T> {
+    private final Class<N> targetNodeClass;
+    private final Class<T> targetTreeClass;
 
-        final PathCopyTree<E> newTree = new PathCopyTree<>();
-        final MutableNode<E> newRoot = newTree.setRoot(root.getElement());
-        final Iterator<? extends S> iterator = root.childIterator();
-        while (iterator.hasNext()) {
-            duplicate(newRoot, iterator.next());
-        }
-        return newTree;
-    }
-
-    private <S extends OpenNode<E, S>> void duplicate(MutableNode<E> newParent, S sourceChild) {
-        final MutableNode<E> newChild = newParent.addChild(sourceChild.getElement());
-        final Iterator<? extends S> iterator = sourceChild.childIterator();
-        while (iterator.hasNext()) {
-            duplicate(newChild, iterator.next());
-        }
+    public AbstractNodeToTreeConverter(Class<?> targetNodeClass, Class<?> targetTreeClass) {
+        this.targetNodeClass = (Class<N>) targetNodeClass;
+        this.targetTreeClass = (Class<T>) targetTreeClass;
     }
 
     @Override
-    public Class<? extends Tree> forClass() {
-        return PathCopyTree.class;
+    public <S extends OpenNode<E, ? extends S>> T treeFromRootNode(S node) {
+        final TopDownTreeRootBuilder<E, N> topDownTreeRootBuilder = getBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<E, N> treeBuilder =
+            topDownTreeRootBuilder.root(node.getElement());
+
+        copyChildren(treeBuilder, node);
+        return treeBuilder.build(targetTreeClass);
     }
+
+    private <S extends OpenNode<E, ? extends S>> void copyChildren(TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> appender, S node) {
+        final Iterator<? extends S> iterator = node.childIterator();
+        while (iterator.hasNext()) {
+            final S child = iterator.next();
+            final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<E> newAppender =
+                appender.addChild(child.getElement());
+            copyChildren(newAppender, child);
+        }
+    }
+
+    @Override
+    public Class<? extends N> forClass() {
+        return targetNodeClass;
+    }
+
+    protected abstract TopDownTreeRootBuilder<E, N> getBuilder();
 }

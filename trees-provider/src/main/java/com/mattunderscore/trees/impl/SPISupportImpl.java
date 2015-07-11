@@ -112,7 +112,7 @@ public final class SPISupportImpl implements SPISupport {
     @SuppressWarnings("unchecked")
     public <E, N extends OpenNode<E,? extends N>, T extends Tree<E, ? extends N>, S extends OpenNode<E, ? extends S>> T nodeToTree(S node) throws OperationNotSupportedForType {
         final Class<? extends OpenNode> klass = node.getClass();
-        final NodeToTreeConverter<E, N, T, S> converter = performLookup(converters, NodeToTreeConverter.class, klass);
+        final NodeToTreeConverter<E, N, T> converter = performLookup(converters, NodeToTreeConverter.class, klass);
         return converter.treeFromRootNode(node);
     }
 

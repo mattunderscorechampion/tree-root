@@ -126,9 +126,10 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
         return children.iterator();
     }
 
-    public final static class NodeConverter<E> implements NodeToTreeConverter<E, MutableSettableStructuredNode<E>, LinkedTree<E>, MutableSettableStructuredNode<E>> {
+    public final static class NodeConverter<E> implements NodeToTreeConverter<E, MutableSettableStructuredNode<E>,
+            LinkedTree<E>> {
         @Override
-        public LinkedTree<E> treeFromRootNode(MutableSettableStructuredNode<E> node) {
+        public <S extends OpenNode<E, ? extends S>> LinkedTree<E> treeFromRootNode(S node) {
             return (LinkedTree<E>)node;
         }
 

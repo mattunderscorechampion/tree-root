@@ -35,6 +35,7 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.impl.SPISupportImpl;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.mutable.MutableNode;
 
@@ -43,28 +44,29 @@ import com.mattunderscore.trees.mutable.MutableNode;
  * @author Matt Champion on 04/05/15
  */
 public final class NodeConverterTest {
-      private static final Trees trees = new TreesImpl();
+    private static final Trees trees = new TreesImpl();
 
-      @Test
-      public void convertToSelf() {
-            final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-            final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.typeKey());
+    @Test
+    public void convertToSelf() {
+        final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.typeKey());
 
-            final NodeConverter<String, MutableNode<String>> converter = new NodeConverter<>();
+        final NodeConverter<String> converter = new NodeConverter<>();
+        converter.setSupport(new SPISupportImpl());
 
-            final PathCopyTree<String> convertedTree =
-                converter.treeFromRootNode(tree.getRoot());
+        final PathCopyTree<String> convertedTree =
+            converter.treeFromRootNode(tree.getRoot());
 
-            final PathCopyNode<String> convertedRoot = convertedTree.getRoot();
-            assertEquals(2, convertedRoot.getNumberOfChildren());
-            final Iterator<? extends MutableNode<String>> iterator = convertedRoot.childIterator();
-            assertTrue(iterator.hasNext());
-            final MutableNode<String> child0 = iterator.next();
-            assertEquals("b", child0.getElement());
+        final PathCopyNode<String> convertedRoot = convertedTree.getRoot();
+        assertEquals(2, convertedRoot.getNumberOfChildren());
+        final Iterator<? extends MutableNode<String>> iterator = convertedRoot.childIterator();
+        assertTrue(iterator.hasNext());
+        final MutableNode<String> child0 = iterator.next();
+        assertEquals("b", child0.getElement());
 
-            assertTrue(iterator.hasNext());
-            final MutableNode<String> child1 = iterator.next();
-            assertEquals("c", child1.getElement());
-            assertFalse(iterator.hasNext());
-      }
+        assertTrue(iterator.hasNext());
+        final MutableNode<String> child1 = iterator.next();
+        assertEquals("c", child1.getElement());
+        assertFalse(iterator.hasNext());
+    }
 }

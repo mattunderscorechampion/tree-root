@@ -36,6 +36,7 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.impl.SPISupportImpl;
 import com.mattunderscore.trees.impl.TreesImpl;
 
 /**
@@ -43,30 +44,31 @@ import com.mattunderscore.trees.impl.TreesImpl;
  * @author Matt Champion on 04/05/15
  */
 public final class MutableBinaryTreeNodeConverterTest {
-      private static final Trees trees = new TreesImpl();
+    private static final Trees trees = new TreesImpl();
 
-      @Test
-      public void convertToSelf() {
-            final BottomUpTreeBuilder<String, MutableBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-            final MutableBinaryTreeImpl<String> tree = builder.create("a", builder.create("b", builder.create("c")))
-                .build(MutableBinaryTreeImpl.typeKey());
+    @Test
+    public void convertToSelf() {
+        final BottomUpTreeBuilder<String, MutableBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final MutableBinaryTreeImpl<String> tree = builder.create("a", builder.create("b", builder.create("c")))
+            .build(MutableBinaryTreeImpl.typeKey());
 
-            final MutableBinaryTreeImpl.NodeConverter<String> converter = new MutableBinaryTreeImpl.NodeConverter<>();
+        final MutableBinaryTreeImpl.NodeConverter<String> converter = new MutableBinaryTreeImpl.NodeConverter<>();
+        converter.setSupport(new SPISupportImpl());
 
-            final MutableBinaryTreeImpl<String> convertedTree =
-                converter.treeFromRootNode(tree.getRoot());
+        final MutableBinaryTreeImpl<String> convertedTree =
+            converter.treeFromRootNode(tree.getRoot());
 
-            final MutableBinaryTreeNode<String> convertedRoot = convertedTree.getRoot();
-            assertEquals(1, convertedRoot.getNumberOfChildren());
-            final Iterator<? extends MutableBinaryTreeNode<String>> iterator0 = convertedRoot.childIterator();
-            assertTrue(iterator0.hasNext());
-            final MutableBinaryTreeNode<String> child0 = iterator0.next();
-            assertEquals("b", child0.getElement());
+        final MutableBinaryTreeNode<String> convertedRoot = convertedTree.getRoot();
+        assertEquals(1, convertedRoot.getNumberOfChildren());
+        final Iterator<? extends MutableBinaryTreeNode<String>> iterator0 = convertedRoot.childIterator();
+        assertTrue(iterator0.hasNext());
+        final MutableBinaryTreeNode<String> child0 = iterator0.next();
+        assertEquals("b", child0.getElement());
 
-            final Iterator<? extends MutableBinaryTreeNode<String>> iterator1 = child0.childIterator();
-            assertTrue(iterator1.hasNext());
-            final MutableBinaryTreeNode<String> child1 = iterator1.next();
-            assertEquals("c", child1.getElement());
-            assertFalse(iterator1.hasNext());
-      }
+        final Iterator<? extends MutableBinaryTreeNode<String>> iterator1 = child0.childIterator();
+        assertTrue(iterator1.hasNext());
+        final MutableBinaryTreeNode<String> child1 = iterator1.next();
+        assertEquals("c", child1.getElement());
+        assertFalse(iterator1.hasNext());
+    }
 }

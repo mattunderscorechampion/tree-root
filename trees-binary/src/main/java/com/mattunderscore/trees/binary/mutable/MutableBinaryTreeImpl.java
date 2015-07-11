@@ -28,11 +28,16 @@ package com.mattunderscore.trees.binary.mutable;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.impl.SPISupport;
+import com.mattunderscore.trees.impl.SPISupportAwareComponent;
+import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.spi.impl.AbstractNodeToTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
@@ -49,15 +54,21 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         super(root);
     }
 
-    public static final class NodeConverter<E> implements NodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>, MutableBinaryTreeNode<E>> {
-        @Override
-        public MutableBinaryTreeImpl<E> treeFromRootNode(MutableBinaryTreeNode<E> node) {
-            return new MutableBinaryTreeImpl<>(node);
+    public static final class NodeConverter<E> extends AbstractNodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> implements SPISupportAwareComponent {
+        private volatile TreeBuilderFactory treeBuilderFactory;
+
+        public NodeConverter() {
+            super(MutableBinaryTreeNodeImpl.class, MutableBinaryTreeImpl.class);
         }
 
         @Override
-        public Class<? extends OpenNode> forClass() {
-            return MutableBinaryTreeNodeImpl.class;
+        protected TopDownTreeRootBuilder<E, MutableBinaryTreeNode<E>> getBuilder() {
+            return treeBuilderFactory.topDownBuilder();
+        }
+
+        @Override
+        public void setSupport(SPISupport support) {
+            treeBuilderFactory = new TreeBuilderFactoryImpl(support);
         }
     }
 

@@ -25,37 +25,33 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.pathcopy.holder;
 
-import java.util.Iterator;
-
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TreeBuilderFactory;
+import com.mattunderscore.trees.impl.SPISupport;
+import com.mattunderscore.trees.impl.SPISupportAwareComponent;
+import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.spi.impl.AbstractNodeToTreeConverter;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.NodeToTreeConverter} for
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyNode}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E, S extends OpenNode<E, S>> implements NodeToTreeConverter<E, MutableNode<E>, PathCopyTree<E>, S> {
+public final class NodeConverter<E> extends AbstractNodeToTreeConverter<E, MutableNode<E>, PathCopyTree<E>> implements SPISupportAwareComponent {
+    private volatile TreeBuilderFactory treeBuilderFactory;
 
-    @Override
-    public PathCopyTree<E> treeFromRootNode(S node) {
-        final PathCopyTree<E> newTree = new PathCopyTree<>();
-        copyChildren(newTree.setRoot(node.getElement()), node);
-        return newTree;
-    }
-
-    private void copyChildren(MutableNode<E> newParent, S parent) {
-        final Iterator<? extends S> iterator = parent.childIterator();
-        while (iterator.hasNext()) {
-            final S child = iterator.next();
-            final MutableNode<E> newChild = newParent.addChild(child.getElement());
-            copyChildren(newChild, child);
-        }
+    public NodeConverter() {
+        super(PathCopyNode.class, PathCopyTree.class);
     }
 
     @Override
-    public Class<? extends OpenNode> forClass() {
-        return PathCopyNode.class;
+    public void setSupport(SPISupport support) {
+        treeBuilderFactory = new TreeBuilderFactoryImpl(support);
+    }
+
+    @Override
+    protected TopDownTreeRootBuilder<E, MutableNode<E>> getBuilder() {
+        return treeBuilderFactory.topDownBuilder();
     }
 }
