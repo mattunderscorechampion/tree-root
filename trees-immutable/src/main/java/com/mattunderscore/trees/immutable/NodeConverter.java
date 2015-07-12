@@ -25,33 +25,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.immutable;
 
-import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.SPISupport;
-import com.mattunderscore.trees.impl.SPISupportAwareComponent;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.NodeToRelatedTreeConverter} for
  * {@link com.mattunderscore.trees.immutable.TreeNodeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, Node<E>, TreeNodeImpl<E>> implements SPISupportAwareComponent {
-    private volatile TreeBuilderFactory treeBuilderFactory;
-
-    public NodeConverter() {
-        super(TreeNodeImpl.class, TreeNodeImpl.class);
+public final class NodeConverter<E> implements NodeToRelatedTreeConverter<E, Node<E>, TreeNodeImpl<E>> {
+    @Override
+    public TreeNodeImpl<E> treeFromRootNode(Node<E> node) {
+        return (TreeNodeImpl<E>)node;
     }
 
     @Override
-    protected TopDownTreeRootBuilder<E, Node<E>> getBuilder() {
-        return treeBuilderFactory.topDownBuilder();
-    }
-
-    @Override
-    public void setSupport(SPISupport support) {
-        treeBuilderFactory = new TreeBuilderFactoryImpl(support);
+    public Class<? extends OpenNode> forClass() {
+        return TreeNodeImpl.class;
     }
 }
