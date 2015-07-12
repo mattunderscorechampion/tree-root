@@ -34,7 +34,7 @@ import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.spi.NodeToTreeConverter} for
+ * Implementation of {@link com.mattunderscore.trees.spi.NodeToRelatedTreeConverter} for
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyNode}.
  * @author Matt Champion on 28/01/15.
  */

@@ -14,6 +14,7 @@
     <version>0.0.9-SNAPSHOT</version>
     <name>Tree Root project</name>
     <description>Parent project for Tree Root library.</description>
+    <inceptionYear>2014</inceptionYear>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
