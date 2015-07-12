@@ -89,7 +89,7 @@ comparable
 * Replaced NodeMatcher with Java 8 Predicate
 * Expose the comparator of a sorting tree
 * Added findbugs to build and fixed some of the reported issues
-* Altered signature of NodeToTreeConverter and renamed to NodeToReleatedTreeConverter to better restrict the range of
+* Altered signature of NodeToTreeConverter and renamed to NodeToRelatedTreeConverter to better restrict the range of
 source nodes
 * Added abstract implementation of NodeToTreeConverter that copies the tree using a top down builder
 * Removed empty iterator implementation
