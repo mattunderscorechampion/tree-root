@@ -25,16 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.immutable;
 
-import com.mattunderscore.trees.impl.SPISupportImpl;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.impl.TreesImpl;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.impl.TreesImpl;
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * @author Matt Champion on 28/06/14.
@@ -50,7 +49,6 @@ public final class SPISupportWithServiceTest {
         nodeApp0.addChild("C");
         final Tree<String, Node<String>> tree0 = nodeApp0.build(TreeNodeImpl.<String>typeKey());
         final NodeConverter<String> converter = new NodeConverter<>();
-        converter.setSupport(new SPISupportImpl());
         final Tree<String, Node<String>> tree1 = converter.treeFromRootNode(tree0.getRoot());
         assertEquals(tree0.getRoot().getElement(), tree1.getRoot().getElement());
     }
