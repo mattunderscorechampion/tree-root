@@ -4,7 +4,7 @@
     <parent>
         <artifactId>tree-root</artifactId>
         <groupId>com.mattunderscore.tree.root</groupId>
-        <version>0.0.9</version>
+        <version>0.0.9-SNAPSHOT</version>
     </parent>
 
     <artifactId>node-selectors</artifactId>
