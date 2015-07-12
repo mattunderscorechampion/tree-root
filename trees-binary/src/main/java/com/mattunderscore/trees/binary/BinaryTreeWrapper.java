@@ -25,12 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
-import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.SPISupport;
-import com.mattunderscore.trees.impl.SPISupportAwareComponent;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
 
 /**
@@ -47,21 +43,15 @@ public final class BinaryTreeWrapper<E, N extends OpenBinaryTreeNode<E, N>> exte
         super(root);
     }
 
-    public static final class NodeConverter<E, N extends OpenBinaryTreeNode<E, N>> extends AbstractNodeToRelatedTreeConverter<E, N, BinaryTreeWrapper<E, N>> implements SPISupportAwareComponent {
-        private volatile TreeBuilderFactory treeBuilderFactory;
-
-        public NodeConverter() {
-            super(BinaryTreeNodeImpl.class, BinaryTreeWrapper.class);
+    public static final class NodeConverter<E, N extends OpenBinaryTreeNode<E, N>> implements NodeToRelatedTreeConverter<E, N, BinaryTreeWrapper<E, N>> {
+        @Override
+        public BinaryTreeWrapper<E, N> treeFromRootNode(N node) {
+            return new BinaryTreeWrapper<>(node);
         }
 
         @Override
-        protected TopDownTreeRootBuilder<E, N> getBuilder() {
-            return treeBuilderFactory.topDownBuilder();
-        }
-
-        @Override
-        public void setSupport(SPISupport support) {
-            treeBuilderFactory = new TreeBuilderFactoryImpl(support);
+        public Class<? extends OpenNode> forClass() {
+            return BinaryTreeNodeImpl.class;
         }
     }
 }
