@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.base.FixedNode;
@@ -33,7 +34,6 @@ import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
@@ -82,7 +82,7 @@ public final class BinaryTreeNodeImpl<E> extends FixedNode<E, BinaryTreeNode<E>>
     @Override
     public Iterator<BinaryTreeNodeImpl<E>> childIterator() {
         if (left == null && right == null) {
-            return new EmptyIterator<>();
+            return Collections.emptyIterator();
         }
         else if (left != null && right == null) {
             return new SingletonIterator<>(left);

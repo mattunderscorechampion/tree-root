@@ -28,14 +28,14 @@ package com.mattunderscore.trees.base;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
 import java.util.Iterator;
-
-import com.mattunderscore.trees.mutable.SettableNode;
-import com.mattunderscore.trees.mutable.OpenSettableNode;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.mattunderscore.trees.mutable.OpenSettableNode;
+import com.mattunderscore.trees.mutable.SettableNode;
 
 /**
  * Unit tests for AbstractSettableNode.
@@ -54,7 +54,7 @@ public final class AbstractSettableNodeTest {
 
             @Override
             public Iterator<? extends SettableNode<String>> childIterator() {
-                return new EmptyIterator<>();
+                return Collections.emptyIterator();
             }
         };
     }

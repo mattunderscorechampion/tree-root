@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.traversers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,7 +34,6 @@ import java.util.NoSuchElementException;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 
 /**
  * @author Matt Champion on 05/09/14.
@@ -45,7 +45,7 @@ public final class BreadthFirstIterator<E , N extends OpenNode<E, N>, T extends 
 
     public BreadthFirstIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
         super(tree, handler);
-        currentLayer = new EmptyIterator<>();
+        currentLayer = Collections.emptyIterator();
         nextLayer = new ArrayList<>(1);
         nextLayer.add(tree.getRoot());
     }

@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import net.jcip.annotations.NotThreadSafe;
@@ -32,7 +33,6 @@ import net.jcip.annotations.NotThreadSafe;
 import com.mattunderscore.trees.base.FixedNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.utilities.iterators.ArrayIterator;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
@@ -106,7 +106,7 @@ public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, MutableBina
     @Override
     public Iterator<MutableBinaryTreeNodeImpl<E>> childIterator() {
         if (children[0] == null && children[1] == null) {
-            return new EmptyIterator<>();
+            return Collections.emptyIterator();
         }
         else if (children[0] != null && children[1] != null) {
             return ArrayIterator.create(children);

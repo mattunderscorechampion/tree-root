@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
@@ -33,7 +34,6 @@ import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
@@ -58,7 +58,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
                     return new SingletonIterator<>(newTree);
                 }
                 else {
-                    return EmptyIterator.get();
+                    return Collections.emptyIterator();
                 }
             }
 

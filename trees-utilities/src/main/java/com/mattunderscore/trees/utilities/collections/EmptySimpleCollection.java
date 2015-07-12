@@ -25,11 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities.collections;
 
+import java.util.Collections;
 import java.util.Iterator;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import net.jcip.annotations.Immutable;
+
+import com.mattunderscore.trees.collection.SimpleCollection;
 
 /**
  * Empty simple collection.
@@ -49,11 +50,11 @@ public final class EmptySimpleCollection<E> implements SimpleCollection<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new EmptyIterator<>();
+        return Collections.emptyIterator();
     }
 
     @Override
     public Iterator<E> structuralIterator() {
-        return new EmptyIterator<>();
+        return Collections.emptyIterator();
     }
 }

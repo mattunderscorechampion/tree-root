@@ -28,12 +28,12 @@ package com.mattunderscore.trees.base;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Collections;
 import java.util.Iterator;
 
 import org.junit.Test;
 
 import com.mattunderscore.trees.mutable.SettableNode;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 
 /**
  * Unit tests for FixedNode.
@@ -48,7 +48,7 @@ public final class FixedNodeTest {
 
         @Override
         public Iterator<? extends SettableNode<String>> childIterator() {
-            return new EmptyIterator<>();
+            return Collections.emptyIterator();
         }
     };
 

@@ -25,13 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.selectors;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.EmptyIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
@@ -52,7 +52,7 @@ public final class RootMatcherSelector<E> implements NodeSelector<E> {
             return new SingletonIterator<>(root);
         }
         else {
-            return EmptyIterator.get();
+            return Collections.emptyIterator();
         }
     }
 }
