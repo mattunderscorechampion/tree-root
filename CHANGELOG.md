@@ -76,7 +76,8 @@ comparable
 * Targeted Java 8
 * Changed group ID
 
-###0.0.9 - TBD
+###0.0.9 - Fourth release of API
+Sunday July 12 21:12:34 2015
 
 * Introduced array iterator
 * Rely on default method for Iterator.remove when possible
