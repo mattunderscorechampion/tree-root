@@ -31,14 +31,14 @@ import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToTreeConverter;
+import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.NodeToTreeConverter} for
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyNode}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E> extends AbstractNodeToTreeConverter<E, MutableNode<E>, PathCopyTree<E>> implements SPISupportAwareComponent {
+public final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableNode<E>, PathCopyTree<E>> implements SPISupportAwareComponent {
     private volatile TreeBuilderFactory treeBuilderFactory;
 
     public NodeConverter() {

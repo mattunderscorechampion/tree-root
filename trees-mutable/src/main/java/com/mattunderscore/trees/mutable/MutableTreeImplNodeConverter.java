@@ -30,14 +30,14 @@ import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToTreeConverter;
+import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 
 /**
  * Implementation for converting a node to a tree by copying the subtree.
  *
  * @author Matt Champion on 24/06/15.
  */
-public final class MutableTreeImplNodeConverter<E> extends AbstractNodeToTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>> implements SPISupportAwareComponent {
+public final class MutableTreeImplNodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>> implements SPISupportAwareComponent {
     private volatile TreeBuilderFactory treeBuilderFactory;
 
     public MutableTreeImplNodeConverter() {

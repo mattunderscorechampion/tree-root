@@ -93,7 +93,7 @@ public interface SPISupport {
      * @throws OperationNotSupportedForType
      */
     @SuppressWarnings("unchecked")
-    <E, N extends OpenNode<E,? extends N>, T extends Tree<E, ? extends N>, S extends OpenNode<E, ? extends S>> T nodeToTree(S node) throws OperationNotSupportedForType;
+    <E, N extends OpenNode<E,? extends N>, T extends Tree<E, ? extends N>> T nodeToTree(N node) throws OperationNotSupportedForType;
 
     @SuppressWarnings("unchecked")
     <E, N extends OpenNode<E, N>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> lookupHandler(T tree);

@@ -36,7 +36,7 @@ import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.spi.KeyMapping;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.spi.SPIComponent;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
@@ -52,7 +52,7 @@ public final class SPISupportImpl implements SPISupport {
     private final Map<Class<?>, EmptyTreeConstructor> emptyConstructors;
     private final Map<Class<?>, TreeConstructor> treeConstructors;
     private final Map<Class<?>, TreeConverter> treeConverters;
-    private final Map<Class<?>, NodeToTreeConverter> converters;
+    private final Map<Class<?>, com.mattunderscore.trees.spi.NodeToRelatedTreeConverter> converters;
     private final Map<Class<?>, EmptySortedTreeConstructor> sortedEmptyConverters;
     private final Map<Class<?>, IteratorRemoveHandler> iteratorRemoveHandlers;
     private final Map<Class<?>, KeyMapping> keyMappings;
@@ -71,7 +71,7 @@ public final class SPISupportImpl implements SPISupport {
         populateLookupMap(treeConstructors, TreeConstructor.class);
 
         converters = new HashMap<>();
-        populateLookupMap(converters, NodeToTreeConverter.class);
+        populateLookupMap(converters, NodeToRelatedTreeConverter.class);
 
         sortedEmptyConverters = new HashMap<>();
         populateLookupMap(sortedEmptyConverters, EmptySortedTreeConstructor.class);
@@ -110,9 +110,9 @@ public final class SPISupportImpl implements SPISupport {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E, N extends OpenNode<E,? extends N>, T extends Tree<E, ? extends N>, S extends OpenNode<E, ? extends S>> T nodeToTree(S node) throws OperationNotSupportedForType {
+    public <E, N extends OpenNode<E,? extends N>, T extends Tree<E, ? extends N>> T nodeToTree(N node) throws OperationNotSupportedForType {
         final Class<? extends OpenNode> klass = node.getClass();
-        final NodeToTreeConverter<E, N, T> converter = performLookup(converters, NodeToTreeConverter.class, klass);
+        final NodeToRelatedTreeConverter<E, N, T> converter = performLookup(converters, NodeToRelatedTreeConverter.class, klass);
         return converter.treeFromRootNode(node);
     }
 

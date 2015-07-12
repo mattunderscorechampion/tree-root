@@ -31,13 +31,13 @@ import com.mattunderscore.trees.tree.Tree;
 /**
  * Takes a node and creates a subtree with the node as the root. The subtree created must not mirror modifications to
  * the source tree. Mutable trees need to create copies of the subtrees, immutable trees can return views of the source
- * tree.
+ * tree. The tree returned should use a type related to the source node. This is to support returning subtrees of a tree.
  * @author Matt Champion on 12/08/14.
  */
-public interface NodeToTreeConverter<E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> extends NodeKeyedSPIComponent {
+public interface NodeToRelatedTreeConverter<E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> extends NodeKeyedSPIComponent {
     /**
      * @param node The node to convert
      * @return The tree
      */
-    <S extends OpenNode<E, ? extends S>> T treeFromRootNode(S node);
+    T treeFromRootNode(N node);
 }

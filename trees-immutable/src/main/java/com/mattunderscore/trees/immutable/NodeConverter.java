@@ -30,15 +30,15 @@ import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToTreeConverter;
+import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.Node;
 
 /**
- * Implementation of {@link com.mattunderscore.trees.spi.NodeToTreeConverter} for
+ * Implementation of {@link com.mattunderscore.trees.spi.NodeToRelatedTreeConverter} for
  * {@link com.mattunderscore.trees.immutable.TreeNodeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E> extends AbstractNodeToTreeConverter<E, Node<E>, TreeNodeImpl<E>> implements SPISupportAwareComponent {
+public final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, Node<E>, TreeNodeImpl<E>> implements SPISupportAwareComponent {
     private volatile TreeBuilderFactory treeBuilderFactory;
 
     public NodeConverter() {

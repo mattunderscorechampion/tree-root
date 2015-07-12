@@ -22,10 +22,10 @@ import com.mattunderscore.trees.tree.Tree;
 
 
 /**
- * Unit tests for {@link AbstractNodeToTreeConverter}.
+ * Unit tests for {@link AbstractNodeToRelatedTreeConverter}.
  * @author Matt Champion on 12/07/2015.
  */
-public final class AbstractNodeToTreeConverterTest {
+public final class AbstractNodeToRelatedTreeConverterTest {
     @Mock
     private TopDownTreeRootBuilder<String, Node<String>> rootBuilder;
     @Mock
@@ -97,7 +97,7 @@ public final class AbstractNodeToTreeConverterTest {
         assertEquals(Node.class, converter.forClass());
     }
 
-    private final class Converter extends AbstractNodeToTreeConverter<String, Node<String>, Tree<String, Node<String>>> {
+    private final class Converter extends AbstractNodeToRelatedTreeConverter<String, Node<String>, Tree<String, Node<String>>> {
         private final TopDownTreeRootBuilder<String, Node<String>> builder;
 
         public Converter(Class targetNodeClass, Class targetTreeClass, TopDownTreeRootBuilder<String, Node<String>> builder) {

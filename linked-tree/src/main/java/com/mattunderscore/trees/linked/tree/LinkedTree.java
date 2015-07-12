@@ -34,7 +34,7 @@ import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -126,10 +126,10 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
         return children.iterator();
     }
 
-    public final static class NodeConverter<E> implements NodeToTreeConverter<E, MutableSettableStructuredNode<E>,
+    public final static class NodeConverter<E> implements NodeToRelatedTreeConverter<E, MutableSettableStructuredNode<E>,
             LinkedTree<E>> {
         @Override
-        public <S extends OpenNode<E, ? extends S>> LinkedTree<E> treeFromRootNode(S node) {
+        public LinkedTree<E> treeFromRootNode(MutableSettableStructuredNode<E> node) {
             return (LinkedTree<E>)node;
         }
 

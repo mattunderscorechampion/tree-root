@@ -54,7 +54,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
             public <N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
                 final N root = tree.getRoot();
                 if (predicate.test(root)) {
-                    final T newTree = helper.<E, N, T, N>nodeToTree(root);
+                    final T newTree = helper.<E, N, T>nodeToTree(root);
                     return new SingletonIterator<>(newTree);
                 }
                 else {
@@ -104,7 +104,7 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
             if (possibles.hasNext()) {
                 final N possible = possibles.next();
                 if (predicate.test(possible)) {
-                    return helper.<E, N, T, N>nodeToTree(possible);
+                    return helper.<E, N, T>nodeToTree(possible);
                 } else {
                     return calculateNext();
                 }

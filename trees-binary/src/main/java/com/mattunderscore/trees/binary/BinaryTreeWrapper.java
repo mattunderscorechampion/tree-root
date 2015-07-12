@@ -30,10 +30,8 @@ import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.impl.SPISupport;
 import com.mattunderscore.trees.impl.SPISupportAwareComponent;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToTreeConverter;
+import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
-import com.mattunderscore.trees.spi.NodeToTreeConverter;
-import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * Wrap and binary node to create a binary tree.
@@ -49,7 +47,7 @@ public final class BinaryTreeWrapper<E, N extends OpenBinaryTreeNode<E, N>> exte
         super(root);
     }
 
-    public static final class NodeConverter<E, N extends OpenBinaryTreeNode<E, N>> extends AbstractNodeToTreeConverter<E, N, BinaryTreeWrapper<E, N>> implements SPISupportAwareComponent {
+    public static final class NodeConverter<E, N extends OpenBinaryTreeNode<E, N>> extends AbstractNodeToRelatedTreeConverter<E, N, BinaryTreeWrapper<E, N>> implements SPISupportAwareComponent {
         private volatile TreeBuilderFactory treeBuilderFactory;
 
         public NodeConverter() {

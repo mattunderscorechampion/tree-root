@@ -37,7 +37,7 @@ import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToTreeConverter;
+import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
@@ -54,7 +54,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         super(root);
     }
 
-    public static final class NodeConverter<E> extends AbstractNodeToTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> implements SPISupportAwareComponent {
+    public static final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> implements SPISupportAwareComponent {
         private volatile TreeBuilderFactory treeBuilderFactory;
 
         public NodeConverter() {
