@@ -94,3 +94,8 @@ Sunday July 12 21:12:34 2015
 source nodes
 * Added abstract implementation of NodeToTreeConverter that copies the tree using a top down builder
 * Removed empty iterator implementation
+
+###0.0.10 - TBD
+
+* Removed unused TreeAware API class
+* Renamed DefaultElementWalker to DefaultWalker and changed DefaultNodeWalker to extend it
