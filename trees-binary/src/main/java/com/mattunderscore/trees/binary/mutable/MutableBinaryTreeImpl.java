@@ -27,6 +27,8 @@ package com.mattunderscore.trees.binary.mutable;
 
 import java.util.Iterator;
 
+import net.jcip.annotations.NotThreadSafe;
+
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
@@ -45,6 +47,7 @@ import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
 /**
  * @author Matt Champion on 08/09/14.
  */
+@NotThreadSafe
 public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, MutableBinaryTreeNode<E>> {
     private MutableBinaryTreeImpl() {
         super();

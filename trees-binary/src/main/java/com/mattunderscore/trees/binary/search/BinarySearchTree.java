@@ -27,6 +27,8 @@ package com.mattunderscore.trees.binary.search;
 
 import java.util.Comparator;
 
+import net.jcip.annotations.NotThreadSafe;
+
 import com.mattunderscore.trees.binary.BinaryTree;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
@@ -37,6 +39,7 @@ import com.mattunderscore.trees.sorted.SortingTree;
 /**
  * @author Matt Champion on 06/09/14.
  */
+@NotThreadSafe
 public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E>>, SortingTree<E, BinaryTreeNode<E>> {
     private final Comparator<E> comparator;
     private MutableBinaryTreeNodeImpl<E> root;
