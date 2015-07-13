@@ -31,17 +31,5 @@ import com.mattunderscore.trees.tree.OpenNode;
  * Default node walker implementation that can be extended.
  * @author Matt Champion on 13/09/14.
  */
-public abstract class DefaultNodeWalker<E, N extends OpenNode<E, N>> implements Walker<N> {
-    @Override
-    public void onEmpty() {
-    }
-
-    @Override
-    public boolean onNext(N node) {
-        return true;
-    }
-
-    @Override
-    public void onCompleted() {
-    }
+public abstract class DefaultNodeWalker<E, N extends OpenNode<E, ? extends N>> extends DefaultWalker<N> {
 }

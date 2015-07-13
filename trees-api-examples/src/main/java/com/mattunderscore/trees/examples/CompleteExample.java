@@ -36,7 +36,7 @@ import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
-import com.mattunderscore.trees.traversal.DefaultElementWalker;
+import com.mattunderscore.trees.traversal.DefaultWalker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -100,7 +100,7 @@ public final class CompleteExample {
     /**
      * Walker that sums the elements in an integer tree.
      */
-    private static final class SumWalker extends DefaultElementWalker<Integer> {
+    private static final class SumWalker extends DefaultWalker<Integer> {
         int sum = 0;
 
         @Override

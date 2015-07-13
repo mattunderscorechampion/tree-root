@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.traversal.DefaultElementWalker;
+import com.mattunderscore.trees.traversal.DefaultWalker;
 import com.mattunderscore.trees.traversal.DefaultTreeWalker;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
@@ -64,7 +64,7 @@ public final class TraversalExamples {
     }
 
     public void elementWalker(TreeWalkerFactory walkers, Tree<String, Node<String>> tree) {
-        walkers.walkElementsInOrder(tree, new DefaultElementWalker<String>() {
+        walkers.walkElementsInOrder(tree, new DefaultWalker<String>() {
             @Override
             public boolean onNext(String element) {
                 System.out.println(element);

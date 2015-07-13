@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class DefaultElementWalkerTest {
-    private final Walker<String> walker = new DefaultElementWalker<String>() {
+    private final Walker<String> walker = new DefaultWalker<String>() {
     };
 
     @Test
