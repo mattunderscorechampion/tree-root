@@ -17,13 +17,15 @@ Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion
 final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
 final Trees trees = serviceLoader.iterator().next();
 
-final BottomUpTreeBuilder<String, ClosedMutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-final Tree<String, ClosedMutableNode<String>> tree = builder.create("a",
+final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees
+    .treeBuilders()
+    .bottomUpBuilder();
+final Tree<String, MutableNode<String>> tree = builder.create("a",
     builder.create("b"),
     builder.create("c"))
-    .build(new TypeKey<Tree<String, ClosedMutableNode<String>>>(){});
+    .build(new TypeKey<Tree<String, MutableNode<String>>>(){});
 
-trees.treeWalkers().walkElementsInOrder(tree, new DefaultElementWalker<String>() {
+trees.treeWalkers().walkElementsInOrder(tree, new DefaultWalker<String>() {
     @Override
     public boolean onNext(String node) {
         System.out.println("Element: " + node);
@@ -46,7 +48,9 @@ Element: c
 final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
 final Trees trees = serviceLoader.iterator().next();
 
-final SortingTreeBuilder<Integer, ClosedBinaryTreeNode<Integer>> builder = trees.treeBuilders().sortingTreeBuilder();
+final SortingTreeBuilder<Integer, BinaryTreeNode<Integer>> builder = trees
+    .treeBuilders()
+    .sortingTreeBuilder();
 final BinarySearchTree<Integer> tree = builder
     .addElement(2)
     .addElement(1)
@@ -58,7 +62,10 @@ tree
     .addElement(6)
     .addElement(5);
 
-final Iterator<Integer> iterator = trees.treeIterators().inOrderElementsIterator(tree);
+final Iterator<Integer> iterator = trees
+    .treeIterators()
+    .inOrderElementsIterator(tree);
+
 while (iterator.hasNext()) {
     System.out.println("Element: " + iterator.next());
 }
@@ -74,7 +81,6 @@ Element: 3
 Element: 5
 Element: 6
 ```
-
 
 Documentation
 =================

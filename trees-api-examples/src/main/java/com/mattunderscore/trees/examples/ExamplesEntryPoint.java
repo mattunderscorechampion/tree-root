@@ -45,12 +45,12 @@ public final class ExamplesEntryPoint {
      */
     public static void main(String[] args) {
         System.out.println("Readme Examples:");
-        final ReadmeExamples readmeExamples = new ReadmeExamples();
+        final DocumentationExamples documentationExamples = new DocumentationExamples();
         System.out.println("Immutable tree example:");
-        readmeExamples.immutableTree();
+        documentationExamples.immutableTree();
 
         System.out.println("Binary search tree example:");
-        readmeExamples.binarySearchTree();
+        documentationExamples.binarySearchTree();
 
         final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
         final Trees trees = serviceLoader.iterator().next();

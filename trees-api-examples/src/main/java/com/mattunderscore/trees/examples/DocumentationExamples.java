@@ -39,15 +39,17 @@ import com.mattunderscore.trees.traversal.DefaultWalker;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Examples used in the README.
+ * Examples used in the README and other documentation.
  * @author Matt Champion on 29/01/15
  */
-public final class ReadmeExamples {
+public final class DocumentationExamples {
     public void immutableTree() {
         final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
         final Trees trees = serviceLoader.iterator().next();
 
-        final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees
+            .treeBuilders()
+            .bottomUpBuilder();
         final Tree<String, MutableNode<String>> tree = builder.create("a",
             builder.create("b"),
             builder.create("c"))
@@ -66,7 +68,9 @@ public final class ReadmeExamples {
         final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
         final Trees trees = serviceLoader.iterator().next();
 
-        final SortingTreeBuilder<Integer, BinaryTreeNode<Integer>> builder = trees.treeBuilders().sortingTreeBuilder();
+        final SortingTreeBuilder<Integer, BinaryTreeNode<Integer>> builder = trees
+            .treeBuilders()
+            .sortingTreeBuilder();
         final BinarySearchTree<Integer> tree = builder
             .addElement(2)
             .addElement(1)
@@ -78,7 +82,10 @@ public final class ReadmeExamples {
             .addElement(6)
             .addElement(5);
 
-        final Iterator<Integer> iterator = trees.treeIterators().inOrderElementsIterator(tree);
+        final Iterator<Integer> iterator = trees
+            .treeIterators()
+            .inOrderElementsIterator(tree);
+
         while (iterator.hasNext()) {
             System.out.println("Element: " + iterator.next());
         }
