@@ -4,7 +4,7 @@ A tree structure and utility library called Tree Root.
 
 ####Status
 This library is sill in an early stage of development. The first major release has not yet been made and the API has
-not been fixed.
+not been fixed. No formalised version scheme is currently being followed.
 
 Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/tree-root.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/tree-root)
 Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/tree-root/badge.png)](https://coveralls.io/r/mattunderscorechampion/tree-root)
