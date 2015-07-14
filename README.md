@@ -9,39 +9,6 @@ not been fixed.
 Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/tree-root.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/tree-root)
 Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/tree-root/badge.png)](https://coveralls.io/r/mattunderscorechampion/tree-root)
 
-##Examples
-
-####Immutable tree Example
-
-```java
-final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
-final Trees trees = serviceLoader.iterator().next();
-
-final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees
-    .treeBuilders()
-    .bottomUpBuilder();
-final Tree<String, MutableNode<String>> tree = builder.create("a",
-    builder.create("b"),
-    builder.create("c"))
-    .build(new TypeKey<Tree<String, MutableNode<String>>>(){});
-
-trees.treeWalkers().walkElementsInOrder(tree, new DefaultWalker<String>() {
-    @Override
-    public boolean onNext(String node) {
-        System.out.println("Element: " + node);
-        return true;
-    }
-});
-```
-
-This example builds an immutable tree and walks over the elements in order, left, root, right, generating the output:
-
-```
-Element: b
-Element: a
-Element: c
-```
-
 ####Binary search tree example
 
 ```java
@@ -82,14 +49,14 @@ Element: 5
 Element: 6
 ```
 
-Documentation
-=================
+##Documentation
 
 * [Prior art](docs/prior-art.md)
 * [Design principles](docs/prior-art.md)
 * API
    * [Definitions](docs/definitions.md)
    * [Concepts](docs/concepts.md)
+   * [Examples](docs/examples.md)
    * [Tree implementations](docs/tree-implementations.md)
 * [SPI](docs/spi.md)
 * [Simple collections](docs/simple-collections.md)
