@@ -2,7 +2,7 @@
 
 A tree structure and utility library called Tree Root.
 
-##Status
+####Status
 This library is sill in an early stage of development. The first major release has not yet been made and the API has
 not been fixed.
 
@@ -49,7 +49,7 @@ Element: 5
 Element: 6
 ```
 
-##Documentation
+####Documentation
 
 * [Prior art](docs/prior-art.md)
 * [Design principles](docs/prior-art.md)
@@ -61,11 +61,11 @@ Element: 6
 * [SPI](docs/spi.md)
 * [Simple collections](docs/simple-collections.md)
 
-##Targeted Language
+####Targeted Language
 
 The current target is Java 8. Some Java 8 features are being used in the API.
 
-##License
+####License
 
 Copyright (c) 2014, 2015 Matthew Champion
 
