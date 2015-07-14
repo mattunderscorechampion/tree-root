@@ -7,6 +7,7 @@ This library is sill in an early stage of development. The first major release h
 not been fixed. No formalised version scheme is currently being followed.
 
 Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/tree-root.svg?branch=master)](https://travis-ci.org/mattunderscorechampion/tree-root)
+
 Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/tree-root/badge.png)](https://coveralls.io/r/mattunderscorechampion/tree-root)
 
 ####Binary search tree example
