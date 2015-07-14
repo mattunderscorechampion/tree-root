@@ -52,7 +52,7 @@ Element: 6
 ####Documentation
 
 * [Prior art](docs/prior-art.md)
-* [Design principles](docs/prior-art.md)
+* [Design principles](docs/design-principles.md)
 * API
    * [Definitions](docs/definitions.md)
    * [Concepts](docs/concepts.md)
