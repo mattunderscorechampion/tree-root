@@ -99,3 +99,4 @@ source nodes
 
 * Removed unused TreeAware API class
 * Renamed DefaultElementWalker to DefaultWalker and changed DefaultNodeWalker to extend it
+* Bug fixes

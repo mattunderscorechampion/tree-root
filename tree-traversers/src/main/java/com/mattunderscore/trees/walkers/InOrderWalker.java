@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.walkers;
 
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.OpenStructuralNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.traversal.Walker;
 import net.jcip.annotations.Immutable;
@@ -58,8 +59,20 @@ public final class InOrderWalker {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private <E, N extends OpenNode<E, N>> void accept(N node, Walker<N> walker) throws Done {
-        final Iterator<? extends N> iterator = node.childIterator();
+        if (node == null) {
+            return;
+        }
+
+        final Iterator<? extends N> iterator;
+        if (node instanceof OpenStructuralNode) {
+            final OpenStructuralNode structuralNode = (OpenStructuralNode)node;
+            iterator = structuralNode.childStructuralIterator();
+        }
+        else {
+            iterator = node.childIterator();
+        }
 
         if (iterator.hasNext()) {
             final N child = iterator.next();

@@ -36,7 +36,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.InOrder;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -48,6 +47,7 @@ import com.mattunderscore.trees.traversal.Walker;
 public final class InOrderWalkerTest {
     private static InOrderWalker walker;
     private static LinkedTree<String> tree;
+    private static LinkedTree<String> rightHeavyTree;
     private static LinkedTree<String> emptyTree;
 
     @Mock
@@ -82,6 +82,11 @@ public final class InOrderWalkerTest {
                         "g"))));
 
         emptyTree = new LinkedTree.EmptyConstructor<String>().build();
+
+        rightHeavyTree = new LinkedTree.EmptyConstructor<String>().build();
+        final LinkedTree<String> right = rightHeavyTree.setRoot("a").setChild(1, "c");
+        right.setChild(0, "b");
+        right.setChild(1, "d").setChild(1, "e");
 
         walker = new InOrderWalker();
     }
@@ -124,6 +129,20 @@ public final class InOrderWalkerTest {
         elementOrder.verify(elementWalker).onNext("g");
         elementOrder.verify(elementWalker).onNext("h");
         elementOrder.verify(elementWalker).onNext("i");
+        elementOrder.verify(elementWalker).onCompleted();
+        elementOrder.verifyNoMoreInteractions();
+        verifyNoMoreInteractions(elementWalker);
+    }
+
+    @Test
+    public void elementsRightHeavy() {
+        Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(true);
+        walker.accept(rightHeavyTree, new NodeToElementWalker<>(elementWalker));
+        elementOrder.verify(elementWalker).onNext("a");
+        elementOrder.verify(elementWalker).onNext("b");
+        elementOrder.verify(elementWalker).onNext("c");
+        elementOrder.verify(elementWalker).onNext("d");
+        elementOrder.verify(elementWalker).onNext("e");
         elementOrder.verify(elementWalker).onCompleted();
         elementOrder.verifyNoMoreInteractions();
         verifyNoMoreInteractions(elementWalker);
