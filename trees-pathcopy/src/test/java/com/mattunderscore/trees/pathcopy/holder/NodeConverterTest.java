@@ -46,6 +46,7 @@ import com.mattunderscore.trees.mutable.MutableNode;
 public final class NodeConverterTest {
     private static final Trees trees = new TreesImpl();
 
+    @SuppressWarnings("unchecked")
     @Test
     public void convertToSelf() {
         final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();

@@ -32,7 +32,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.impl.SPISupportImpl;
 import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.tree.Node;
@@ -58,9 +57,9 @@ public final class ConverterTest {
         assertEquals("root", pathCopyTree.getRoot().getElement());
         assertTrue(pathCopyTree.getRoot().isLeaf());
         assertFalse(pathCopyTree.isEmpty());
-        assertTrue(pathCopyTree instanceof PathCopyTree);
     }
 
+    @SuppressWarnings("unchecked")
     private Tree<String, Node<String>> getTree() {
         final Trees trees = new TreesImpl();
         return trees.treeBuilders().bottomUpBuilder().create("root").build(LinkedTree.class);
