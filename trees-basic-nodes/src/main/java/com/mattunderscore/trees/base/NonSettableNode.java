@@ -25,31 +25,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.base;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 import com.mattunderscore.trees.tree.OpenNode;
 
 /**
- * Abstract class for mutable nodes.
+ * Abstract implementation of non-settable node.
  * @author Matt Champion on 21/09/14.
  */
-public abstract class UnfixedNode<E, N extends OpenNode<E, ? extends N>> implements OpenNode<E, N> {
-    protected final AtomicReference<E> elementReference = new AtomicReference<>();
+public abstract class NonSettableNode<E, N extends OpenNode<E, ? extends N>> implements OpenNode<E, N> {
+    protected final E element;
 
-    public UnfixedNode(E element) {
-        elementReference.set(element);
+    public NonSettableNode(E element) {
+        this.element = element;
     }
 
     @Override
-    public E getElement() {
-        return elementReference.get();
-    }
-
-    /**
-     * @param element The new element.
-     * @return The previous element.
-     */
-    protected E setElement(E element) {
-        return elementReference.getAndSet(element);
+    public final E getElement() {
+        return element;
     }
 }

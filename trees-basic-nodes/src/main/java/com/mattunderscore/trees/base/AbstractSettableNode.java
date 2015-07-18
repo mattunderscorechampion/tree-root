@@ -25,16 +25,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.base;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import com.mattunderscore.trees.mutable.OpenSettableNode;
 
 /**
  * Abstract settable node implementation.
  * @author Matt Champion
  */
-public abstract class AbstractSettableNode<E, N extends OpenSettableNode<E, ? extends N>> extends UnfixedNode<E, N> implements OpenSettableNode<E, N> {
+public abstract class AbstractSettableNode<E, N extends OpenSettableNode<E, ? extends N>> implements OpenSettableNode<E, N> {
+    protected final AtomicReference<E> elementReference = new AtomicReference<>();
 
     public AbstractSettableNode(E element) {
-        super(element);
+        elementReference.set(element);
+    }
+
+    @Override
+    public E getElement() {
+        return elementReference.get();
     }
 
     @Override

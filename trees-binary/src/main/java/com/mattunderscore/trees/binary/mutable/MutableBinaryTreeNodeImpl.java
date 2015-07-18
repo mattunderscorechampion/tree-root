@@ -30,7 +30,7 @@ import java.util.Iterator;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import com.mattunderscore.trees.base.FixedNode;
+import com.mattunderscore.trees.base.NonSettableNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.utilities.iterators.ArrayIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
@@ -40,7 +40,7 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
  * @author Matt Champion on 06/09/14.
  */
 @NotThreadSafe
-public final class MutableBinaryTreeNodeImpl<E> extends FixedNode<E, MutableBinaryTreeNode<E>> implements MutableBinaryTreeNode<E> {
+public final class MutableBinaryTreeNodeImpl<E> extends NonSettableNode<E, MutableBinaryTreeNode<E>> implements MutableBinaryTreeNode<E> {
     private MutableBinaryTreeNodeImpl<E> left;
     private MutableBinaryTreeNodeImpl<E> right;
     @SuppressWarnings("unchecked")

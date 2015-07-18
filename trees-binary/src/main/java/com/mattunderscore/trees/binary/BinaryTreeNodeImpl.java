@@ -28,7 +28,7 @@ package com.mattunderscore.trees.binary;
 import java.util.Collections;
 import java.util.Iterator;
 
-import com.mattunderscore.trees.base.FixedNode;
+import com.mattunderscore.trees.base.NonSettableNode;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -40,7 +40,7 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
  * Binary tree node implementation.
  * @author Matt Champion on 06/09/14.
  */
-public final class BinaryTreeNodeImpl<E> extends FixedNode<E, BinaryTreeNode<E>> implements BinaryTreeNode<E> {
+public final class BinaryTreeNodeImpl<E> extends NonSettableNode<E, BinaryTreeNode<E>> implements BinaryTreeNode<E> {
     private final BinaryTreeNodeImpl<E> left;
     private final BinaryTreeNodeImpl<E> right;
 

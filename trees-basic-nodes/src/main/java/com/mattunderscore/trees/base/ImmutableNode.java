@@ -35,7 +35,7 @@ import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollec
 /** 
  * @author Matt Champion on 21/09/14.
  */
-public abstract class ImmutableNode<E, N extends OpenNode<E, ? extends N>> extends FixedNode<E, N> {
+public abstract class ImmutableNode<E, N extends OpenNode<E, ? extends N>> extends NonSettableNode<E, N> {
     protected final SimpleCollection<N> children;
 
     public ImmutableNode(E element, ImmutableNode<E, N>[] childNodes) {

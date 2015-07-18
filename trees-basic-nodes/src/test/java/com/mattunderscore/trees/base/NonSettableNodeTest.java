@@ -39,8 +39,8 @@ import com.mattunderscore.trees.mutable.SettableNode;
  * Unit tests for FixedNode.
  * @author Matt Champion on 20/12/14
  */
-public final class FixedNodeTest {
-    private static final FixedNode<String, SettableNode<String>> NODE = new FixedNode<String, SettableNode<String>>("a") {
+public final class NonSettableNodeTest {
+    private static final NonSettableNode<String, SettableNode<String>> NODE = new NonSettableNode<String, SettableNode<String>>("a") {
         @Override
         public int getNumberOfChildren() {
             return 0;
