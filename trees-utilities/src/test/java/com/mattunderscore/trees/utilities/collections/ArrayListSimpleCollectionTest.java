@@ -193,4 +193,19 @@ public final class ArrayListSimpleCollectionTest {
         assertEquals(null, structuralIterator.next());
         assertEquals("a", structuralIterator.next());
     }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void get0() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.get(1);
+    }
+
+    @Test
+    public void get1() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
+        collection.add("a");
+        collection.add("b");
+        assertEquals("a", collection.get(0));
+        assertEquals("b", collection.get(1));
+    }
 }

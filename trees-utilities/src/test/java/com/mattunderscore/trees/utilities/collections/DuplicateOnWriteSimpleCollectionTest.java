@@ -34,6 +34,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -99,5 +100,17 @@ public final class DuplicateOnWriteSimpleCollectionTest {
         for (final CharSequence element : modifiedCollection) {
             assertNotEquals("good", element);
         }
+    }
+
+    @Test
+    public void replaceNothing() {
+        final DuplicateOnWriteSimpleCollection<CharSequence> collection =
+            DuplicateOnWriteSimpleCollection.create(new String[] {"Who", "is", "a", "good", "boy?"});
+        final DuplicateOnWriteSimpleCollection<CharSequence> modifiedCollection =
+            collection.replace("clever", "bad");
+        for (final CharSequence element : modifiedCollection) {
+            assertNotEquals("clever", element);
+        }
+        assertSame(collection, modifiedCollection);
     }
 }

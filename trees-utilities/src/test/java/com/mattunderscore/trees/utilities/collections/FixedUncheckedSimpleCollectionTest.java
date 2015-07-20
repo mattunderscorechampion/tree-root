@@ -86,4 +86,20 @@ public final class FixedUncheckedSimpleCollectionTest {
         iterator.next();
         iterator.remove();
     }
+
+    @Test
+    public void skipNulls() {
+        final FixedUncheckedSimpleCollection<String> collection = new FixedUncheckedSimpleCollection<>(new Object[] {null, "a"});
+        assertEquals(2, collection.size());
+
+        final Iterator<String> iterator = collection.iterator();
+        final Iterator<String> structuralIterator = collection.structuralIterator();
+
+        assertEquals("a", iterator.next());
+        assertFalse(iterator.hasNext());
+        assertEquals(null, structuralIterator.next());
+        assertTrue(structuralIterator.hasNext());
+        assertEquals("a", structuralIterator.next());
+        assertFalse(structuralIterator.hasNext());
+    }
 }
