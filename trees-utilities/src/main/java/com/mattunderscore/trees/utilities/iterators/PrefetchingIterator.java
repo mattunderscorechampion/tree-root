@@ -28,11 +28,14 @@ package com.mattunderscore.trees.utilities.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.jcip.annotations.NotThreadSafe;
+
 /**
  * Abstract iterator implementation.
  * Iterator that may prefetch the element to return next on hasNext.
  * @author Matt Champion on 25/06/14.
  */
+@NotThreadSafe
 public abstract class PrefetchingIterator<E> implements Iterator<E> {
     private E current;
     private E prefetched;

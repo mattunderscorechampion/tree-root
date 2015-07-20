@@ -30,6 +30,8 @@ import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 import java.util.*;
 
+import net.jcip.annotations.Immutable;
+
 /**
  * Array backed, not typed checked, {@link com.mattunderscore.trees.collection.SimpleCollection} implementation for an immutable
  * collection from a trusted source. It provides an iteration order and permits nulls.
@@ -37,6 +39,7 @@ import java.util.*;
  * trusted source.</p>
  * @author Matt Champion on 20/06/14.
  */
+@Immutable
 public final class FixedUncheckedSimpleCollection<E> implements SimpleCollection<E> {
     private final Object[] array;
 

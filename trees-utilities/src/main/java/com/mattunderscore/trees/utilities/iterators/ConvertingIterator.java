@@ -28,7 +28,8 @@ package com.mattunderscore.trees.utilities.iterators;
 import java.util.Iterator;
 
 /**
- * Iterator that converts from an iterator over one type to another. The converter must be implemented.
+ * Iterator that converts from an iterator over one type to another. The converter must be implemented. Thread safety is
+ * dependent on the thread safety of the delegate iterator.
  * @author Matt Champion on 13/09/14.
  */
 public abstract class ConvertingIterator<E, T> implements Iterator<E> {
@@ -53,5 +54,10 @@ public abstract class ConvertingIterator<E, T> implements Iterator<E> {
         delegate.remove();
     }
 
+    /**
+     * Convert elements from one type to another. It is expected to be stateless.
+     * @param t The source value
+     * @return The target value
+     */
     protected abstract E convert(T t);
 }
