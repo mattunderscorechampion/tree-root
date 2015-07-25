@@ -25,30 +25,35 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import java.util.Comparator;
+
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 
-import java.util.Comparator;
-
 /**
  * Implementation of {@link com.mattunderscore.trees.construction.TreeBuilderFactory}.
  * @author Matt Champion on 11/09/14.
  */
 public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
-    private final SPISupport support;
     private final TopDownTreeRootBuilder topDownTreeRootBuilder;
     private final BottomUpTreeBuilder bottomUpTreeBuilder;
+    private final EmptySortedTreeConstructorSupplierImpl emptySortedTreeConstructorSupplier;
 
-    public TreeBuilderFactoryImpl(SPISupport support) {
-        this.support = support;
-        topDownTreeRootBuilder = new TopDownTreeRootBuilderImpl(support);
-        bottomUpTreeBuilder = new BottomUpTreeBuilderImpl(support);
+    public TreeBuilderFactoryImpl(KeyMappingSupplier keyMappingSupplier, TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, TreeConverterSupplier treeConverterSupplier, EmptySortedTreeConstructorSupplierImpl emptySortedTreeConstructorSupplier) {
+        this.emptySortedTreeConstructorSupplier = emptySortedTreeConstructorSupplier;
+        topDownTreeRootBuilder = new TopDownTreeRootBuilderImpl(treeConverterSupplier, emptyTreeConstructorSupplier);
+        bottomUpTreeBuilder = new BottomUpTreeBuilderImpl(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
     }
 
     @SuppressWarnings("unchecked")
@@ -65,12 +70,12 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
 
     @Override
     public <E, N extends OpenNode<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder(Comparator<E> comparator) {
-        return new SortingTreeBuilderImpl<>(support, comparator);
+        return new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, comparator);
     }
 
     @Override
     public <E extends Comparable<E>, N extends OpenNode<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder() {
-        return new SortingTreeBuilderImpl<>(support, new ComparableComparator<E>());
+        return new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, new ComparableComparator<E>());
     }
 
     @Override

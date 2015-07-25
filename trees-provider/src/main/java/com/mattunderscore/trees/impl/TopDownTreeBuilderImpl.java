@@ -25,31 +25,35 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.*;
-import com.mattunderscore.trees.linked.tree.LinkedTree;
+import net.jcip.annotations.NotThreadSafe;
+
+import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.OpenMutableNode;
+import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.NotThreadSafe;
 
 /**
  * @author Matt Champion on 15/08/14.
  */
 @NotThreadSafe
 final class TopDownTreeBuilderImpl<E, N extends OpenNode<E, N>> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E, N> {
-    private final SPISupport helper;
     private final LinkedTree<E> tree;
+    private final TreeConverterSupplier treeConverterSupplier;
 
-    public TopDownTreeBuilderImpl(SPISupport helper, E root) {
-        this.helper = helper;
+    public TopDownTreeBuilderImpl(TreeConverterSupplier treeConverterSupplier, E root) {
+        this.treeConverterSupplier = treeConverterSupplier;
         tree = new LinkedTree<>(root);
     }
 
     @Override
     public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        return helper.convertTree(klass, tree);
+        final TreeConverter<E, N, T> converter = treeConverterSupplier.get(klass);
+        return converter.build(tree);
     }
 
     @Override

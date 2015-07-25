@@ -35,6 +35,9 @@ import org.junit.Test;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.tree.Tree;
@@ -43,11 +46,15 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 13/08/14.
  */
 public final class BottomUpTreeBuilderImplTest {
-    private static final SPISupport helper = new SPISupportImpl();
+    private static final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+    private static final TreeConstructorSupplier treeConstructorSupplier = new TreeConstructorSupplier(keyMappingSupplier);
+    private static final EmptyTreeConstructorSupplier emptyTreeConstructorSupplier =
+        new EmptyTreeConstructorSupplier(keyMappingSupplier);
 
     @Test
     public void buildEmpty() {
-        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
         final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
         assertNull(tree.getRoot());
         assertTrue(tree.isEmpty());
@@ -55,7 +62,8 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test
     public void buildLeaf() {
-        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT");
 
         final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
@@ -66,7 +74,8 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test
     public void buildSimple() {
-        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
             builder.create("a"),
             builder.create("b"));
@@ -79,7 +88,8 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test
     public void buildComplex() {
-        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
             builder.create("a",
                 builder.create("+",
@@ -100,7 +110,8 @@ public final class BottomUpTreeBuilderImplTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void failToBuild() {
-        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder = new BottomUpTreeBuilderImpl<>(helper);
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT");
         builder0.build(new TypeKey<FakeTree>() {});
     }

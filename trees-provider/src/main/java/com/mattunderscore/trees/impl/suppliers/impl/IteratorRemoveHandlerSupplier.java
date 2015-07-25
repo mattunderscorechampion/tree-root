@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,51 +23,49 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl;
+package com.mattunderscore.trees.impl.suppliers.impl;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import static com.mattunderscore.trees.impl.suppliers.SPIUtilities.populateLookupMap;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.suppliers.EmptySortedTreeConstructorSupplier;
-import com.mattunderscore.trees.sorted.SortingTree;
-import com.mattunderscore.trees.sorted.SortingTreeBuilder;
+import com.mattunderscore.trees.spi.DefaultRemovalHandler;
 import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * @author Matt Champion on 06/09/14.
+ * Supplier for {@link IteratorRemoveHandler}.
+ * @author Matt Champion on 25/07/2015
  */
-public final class SortingTreeBuilderImpl<E, N extends OpenNode<E, N>> implements SortingTreeBuilder<E, N> {
-    private final EmptySortedTreeConstructorSupplier emptyTreeConstructorSupplier;
-    private final Comparator<E> comparator;
-    private final List<E> elements = new ArrayList<>();
+public final class IteratorRemoveHandlerSupplier {
+    private final Map<Class<?>, IteratorRemoveHandler> converters;
 
-    public SortingTreeBuilderImpl(EmptySortedTreeConstructorSupplier emptyTreeConstructorSupplier, Comparator<E> comparator) {
-        this.emptyTreeConstructorSupplier = emptyTreeConstructorSupplier;
-        this.comparator = comparator;
+    public IteratorRemoveHandlerSupplier() {
+        converters = new HashMap<>();
+        populateLookupMap(converters, IteratorRemoveHandler.class);
     }
 
-    @Override
-    public SortingTreeBuilder<E, N> addElement(E element) {
-        elements.add(element);
-        return this;
-    }
-
-    @Override
-    public <T extends SortingTree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        final EmptySortedTreeConstructor<E, N, T> constructor = emptyTreeConstructorSupplier.get(klass);
-        final T tree = constructor.build(comparator);
-        for (final E element : elements) {
-            tree.addElement(element);
+    /**
+     * @param tree The tree to get the handler for
+     * @param <E> The type of element
+     * @param <N> The type of node
+     * @param <T> The type of tree
+     * @return The empty tree constructor
+     * @throws OperationNotSupportedForType If the key is not supported
+     */
+    @SuppressWarnings("unchecked")
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> get(T tree) {
+        final Class<?> klass = tree.getClass();
+        final IteratorRemoveHandler<E, N, T> iteratorRemoveHandler = converters.get(klass);
+        if (iteratorRemoveHandler == null) {
+            return new DefaultRemovalHandler<>();
         }
-        return tree;
-    }
-
-    @Override
-    public <T extends SortingTree<E, N>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
-        return build(type.getTreeType());
+        else {
+            return iteratorRemoveHandler;
+        }
     }
 }

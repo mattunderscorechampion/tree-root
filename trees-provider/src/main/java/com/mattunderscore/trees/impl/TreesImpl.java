@@ -27,6 +27,13 @@ package com.mattunderscore.trees.impl;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.IteratorRemoveHandlerSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.NodeToRelatedTreeConverterSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.traversal.NodeStreamFactory;
@@ -46,12 +53,12 @@ public final class TreesImpl implements Trees {
     private final NodeStreamFactory nodeStreamFactory;
 
     public TreesImpl() {
-        final SPISupport helper = new SPISupportImpl();
-        treeSelectorFactory = new TreeSelectorFactoryImpl(helper);
+        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
         nodeSelectorFactory = new NodeSelectorFactoryImpl();
         treeWalkerFactory = new TreeWalkerFactoryImpl();
-        treeIteratorFactory = new TreeIteratorFactoryImpl(helper);
-        treeBuilderFactory = new TreeBuilderFactoryImpl(helper);
+        treeIteratorFactory = new TreeIteratorFactoryImpl(new IteratorRemoveHandlerSupplier());
+        treeBuilderFactory = new TreeBuilderFactoryImpl(keyMappingSupplier, new TreeConstructorSupplier(keyMappingSupplier), new EmptyTreeConstructorSupplier(keyMappingSupplier), new TreeConverterSupplier(keyMappingSupplier), new EmptySortedTreeConstructorSupplierImpl());
+        treeSelectorFactory = new TreeSelectorFactoryImpl(new NodeToRelatedTreeConverterSupplier(treeBuilderFactory));
         nodeStreamFactory = new NodeStreamFactoryImpl(treeIteratorFactory);
     }
 

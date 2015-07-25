@@ -25,63 +25,75 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.tree.Tree;
+import java.lang.reflect.Array;
+
 import net.jcip.annotations.Immutable;
 
-import java.lang.reflect.Array;
+import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
+import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+import com.mattunderscore.trees.spi.TreeConstructor;
+import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * @author Matt Champion on 13/08/14.
  */
 @Immutable
 final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements BottomUpTreeBuilder<E, N> {
-    private final SPISupport helper;
+    private final TreeConstructorSupplier treeConstructorSupplier;
+    private final EmptyTreeConstructorSupplier emptyTreeConstructorSupplier;
+    private final KeyMappingSupplier keyMappingSupplier;
     private final E root;
     private final BottomUpTreeBuilder<E, N>[] children;
 
     @SuppressWarnings("unchecked")
-    public BottomUpTreeBuilderImpl(SPISupport helper) {
-        this(helper, null, new BottomUpTreeBuilder[0]);
+    public BottomUpTreeBuilderImpl(TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, KeyMappingSupplier keyMappingSupplier) {
+        this(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, null, new BottomUpTreeBuilder[0]);
     }
 
     @SuppressWarnings("unchecked")
-    private BottomUpTreeBuilderImpl(SPISupport helper, E e) {
-        this(helper, e, new BottomUpTreeBuilder[0]);
+    private BottomUpTreeBuilderImpl(TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, KeyMappingSupplier keyMappingSupplier, E e) {
+        this(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, e, new BottomUpTreeBuilder[0]);
     }
 
-    private BottomUpTreeBuilderImpl(SPISupport helper, E e, BottomUpTreeBuilder<E, N>[] builders) {
-        this.helper = helper;
+    private BottomUpTreeBuilderImpl(TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, KeyMappingSupplier keyMappingSupplier, E e, BottomUpTreeBuilder<E, N>[] builders) {
+        this.treeConstructorSupplier = treeConstructorSupplier;
+        this.emptyTreeConstructorSupplier = emptyTreeConstructorSupplier;
+        this.keyMappingSupplier = keyMappingSupplier;
         root = e;
         children = builders;
     }
 
     @Override
     public BottomUpTreeBuilder<E, N> create(E e) {
-        return new BottomUpTreeBuilderImpl<>(helper, e);
+        return new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, e);
     }
 
     @Override
     @SafeVarargs
     public final BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N>... builders) {
-        return new BottomUpTreeBuilderImpl<>(helper, e, builders);
+        return new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, e, builders);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         if (root == null) {
-            return helper.createEmptyTree(klass);
+            final EmptyTreeConstructor<E, N, T> constructor = emptyTreeConstructorSupplier.get(klass);
+            return constructor.build();
         }
         else {
-            final T[] subtrees = (T[])Array.newInstance(helper.lookupConcreteType(klass), children.length);
+            final T[] subtrees = (T[])Array.newInstance(keyMappingSupplier.get(klass), children.length);
             for (int i = 0; i < children.length; i++) {
                 subtrees[i] = children[i].build(klass);
             }
-            return helper.newTreeFrom(klass, root, subtrees);
+            final TreeConstructor<E, N, T> constructor = treeConstructorSupplier.get(klass);
+            return constructor.build(root, subtrees);
         }
     }
 

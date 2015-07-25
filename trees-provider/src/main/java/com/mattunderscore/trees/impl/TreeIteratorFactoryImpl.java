@@ -27,13 +27,14 @@ package com.mattunderscore.trees.impl;
 
 import java.util.Iterator;
 
+import com.mattunderscore.trees.impl.suppliers.impl.IteratorRemoveHandlerSupplier;
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
+import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversers.BreadthFirstIterator;
 import com.mattunderscore.trees.traversers.InOrderIterator;
 import com.mattunderscore.trees.traversers.NodeToElementIterators;
 import com.mattunderscore.trees.traversers.PostOrderIterator;
 import com.mattunderscore.trees.traversers.PreOrderIterator;
-import com.mattunderscore.trees.spi.IteratorRemoveHandler;
-import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -42,53 +43,54 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 10/09/14.
  */
 public final class TreeIteratorFactoryImpl implements TreeIteratorFactory {
-    private final SPISupport support;
 
-    public TreeIteratorFactoryImpl(SPISupport support) {
-        this.support = support;
+    private final IteratorRemoveHandlerSupplier iteratorRemoveHandlerSupplier;
+
+    public TreeIteratorFactoryImpl(IteratorRemoveHandlerSupplier iteratorRemoveHandlerSupplier) {
+        this.iteratorRemoveHandlerSupplier = iteratorRemoveHandlerSupplier;
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Iterator<N> preOrderIterator(T tree) {
-        final IteratorRemoveHandler<E, N, T> handler = support.lookupHandler(tree);
+        final IteratorRemoveHandler<E, N, T> handler = iteratorRemoveHandlerSupplier.get(tree);
         return new PreOrderIterator<>(tree, handler);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Iterator<N> inOrderIterator(T tree) {
-        final IteratorRemoveHandler<E, N, T> handler = support.lookupHandler(tree);
+        final IteratorRemoveHandler<E, N, T> handler = iteratorRemoveHandlerSupplier.get(tree);
         return new InOrderIterator<>(tree, handler);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Iterator<N> postOrderIterator(T tree) {
-        final IteratorRemoveHandler<E, N, T> handler = support.lookupHandler(tree);
+        final IteratorRemoveHandler<E, N, T> handler = iteratorRemoveHandlerSupplier.get(tree);
         return new PostOrderIterator<>(tree, handler);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> Iterator<N> breadthFirstIterator(T tree) {
-        final IteratorRemoveHandler<E, N, T> handler = support.lookupHandler(tree);
+        final IteratorRemoveHandler<E, N, T> handler = iteratorRemoveHandlerSupplier.get(tree);
         return new BreadthFirstIterator<>(tree, handler);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>> Iterator<E> preOrderElementsIterator(Tree<E, N> tree) {
-        return new NodeToElementIterators<>(new PreOrderIterator<>(tree, support.lookupHandler(tree)));
+        return new NodeToElementIterators<>(new PreOrderIterator<>(tree, iteratorRemoveHandlerSupplier.get(tree)));
     }
 
     @Override
     public <E, N extends OpenNode<E, N>> Iterator<E> inOrderElementsIterator(Tree<E, N> tree) {
-        return new NodeToElementIterators<>(new InOrderIterator<>(tree, support.lookupHandler(tree)));
+        return new NodeToElementIterators<>(new InOrderIterator<>(tree, iteratorRemoveHandlerSupplier.get(tree)));
     }
 
     @Override
     public <E, N extends OpenNode<E, N>> Iterator<E> postOrderElementsIterator(Tree<E, N> tree) {
-        return new NodeToElementIterators<>(new PostOrderIterator<>(tree, support.lookupHandler(tree)));
+        return new NodeToElementIterators<>(new PostOrderIterator<>(tree, iteratorRemoveHandlerSupplier.get(tree)));
     }
 
     @Override
     public <E, N extends OpenNode<E, N>> Iterator<E> breadthFirstElementsIterator(Tree<E, N> tree) {
-        return new NodeToElementIterators<>(new BreadthFirstIterator<>(tree, support.lookupHandler(tree)));
+        return new NodeToElementIterators<>(new BreadthFirstIterator<>(tree, iteratorRemoveHandlerSupplier.get(tree)));
     }
 }

@@ -33,9 +33,7 @@ import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.SPISupport;
-import com.mattunderscore.trees.impl.SPISupportAwareComponent;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
+import com.mattunderscore.trees.impl.TreeBuilderFactoryAware;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.spi.TreeConverter;
@@ -57,7 +55,7 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         super(root);
     }
 
-    public static final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> implements SPISupportAwareComponent {
+    public static final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> implements TreeBuilderFactoryAware {
         private volatile TreeBuilderFactory treeBuilderFactory;
 
         public NodeConverter() {
@@ -70,8 +68,8 @@ public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, Mutab
         }
 
         @Override
-        public void setSupport(SPISupport support) {
-            treeBuilderFactory = new TreeBuilderFactoryImpl(support);
+        public void setTreeBuilderFactory(TreeBuilderFactory factory) {
+            treeBuilderFactory = factory;
         }
     }
 

@@ -36,8 +36,13 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.impl.SPISupportImpl;
+import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.impl.TreesImpl;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
 
 /**
  * Test for {@link MutableBinaryTreeImpl.NodeConverter}.
@@ -52,8 +57,14 @@ public final class MutableBinaryTreeNodeConverterTest {
         final MutableBinaryTreeImpl<String> tree = builder.create("a", builder.create("b", builder.create("c")))
             .build(MutableBinaryTreeImpl.typeKey());
 
+        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
         final MutableBinaryTreeImpl.NodeConverter<String> converter = new MutableBinaryTreeImpl.NodeConverter<>();
-        converter.setSupport(new SPISupportImpl());
+        converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
+            keyMappingSupplier,
+            new TreeConstructorSupplier(keyMappingSupplier),
+            new EmptyTreeConstructorSupplier(keyMappingSupplier),
+            new TreeConverterSupplier(keyMappingSupplier),
+            new EmptySortedTreeConstructorSupplierImpl()));
 
         final MutableBinaryTreeImpl<String> convertedTree =
             converter.treeFromRootNode(tree.getRoot());

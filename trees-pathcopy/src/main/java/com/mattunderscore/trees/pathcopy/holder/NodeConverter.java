@@ -27,9 +27,7 @@ package com.mattunderscore.trees.pathcopy.holder;
 
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.SPISupport;
-import com.mattunderscore.trees.impl.SPISupportAwareComponent;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
+import com.mattunderscore.trees.impl.TreeBuilderFactoryAware;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 
@@ -38,7 +36,7 @@ import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
  * {@link com.mattunderscore.trees.pathcopy.holder.PathCopyNode}.
  * @author Matt Champion on 28/01/15.
  */
-public final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableNode<E>, PathCopyTree<E>> implements SPISupportAwareComponent {
+public final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableNode<E>, PathCopyTree<E>> implements TreeBuilderFactoryAware {
     private volatile TreeBuilderFactory treeBuilderFactory;
 
     public NodeConverter() {
@@ -46,8 +44,8 @@ public final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E
     }
 
     @Override
-    public void setSupport(SPISupport support) {
-        treeBuilderFactory = new TreeBuilderFactoryImpl(support);
+    public void setTreeBuilderFactory(TreeBuilderFactory treeBuilderFactory) {
+        this.treeBuilderFactory = treeBuilderFactory;
     }
 
     @Override

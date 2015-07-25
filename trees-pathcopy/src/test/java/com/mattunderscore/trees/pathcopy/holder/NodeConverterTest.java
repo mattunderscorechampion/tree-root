@@ -35,8 +35,13 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.impl.SPISupportImpl;
+import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
 import com.mattunderscore.trees.impl.TreesImpl;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
+import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
 import com.mattunderscore.trees.mutable.MutableNode;
 
 /**
@@ -52,8 +57,14 @@ public final class NodeConverterTest {
         final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.typeKey());
 
+        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
         final NodeConverter<String> converter = new NodeConverter<>();
-        converter.setSupport(new SPISupportImpl());
+        converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
+            keyMappingSupplier,
+            new TreeConstructorSupplier(keyMappingSupplier),
+            new EmptyTreeConstructorSupplier(keyMappingSupplier),
+            new TreeConverterSupplier(keyMappingSupplier),
+            new EmptySortedTreeConstructorSupplierImpl()));
 
         final PathCopyTree<String> convertedTree =
             converter.treeFromRootNode(tree.getRoot());

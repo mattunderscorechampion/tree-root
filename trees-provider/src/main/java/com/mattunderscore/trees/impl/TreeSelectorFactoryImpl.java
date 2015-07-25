@@ -30,8 +30,10 @@ import java.util.Iterator;
 import java.util.function.Predicate;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.impl.suppliers.impl.NodeToRelatedTreeConverterSupplier;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
@@ -41,10 +43,10 @@ import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
  * @author Matt Champion on 29/06/14.
  */
 final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
-    private final SPISupport helper;
+    private final NodeToRelatedTreeConverterSupplier nodeToRelatedTreeConverterSupplier;
 
-    public TreeSelectorFactoryImpl(SPISupport helper) {
-        this.helper = helper;
+    public TreeSelectorFactoryImpl(NodeToRelatedTreeConverterSupplier nodeToRelatedTreeConverterSupplier) {
+        this.nodeToRelatedTreeConverterSupplier = nodeToRelatedTreeConverterSupplier;
     }
 
     @Override
@@ -54,7 +56,8 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
             public <N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> Iterator<T> select(T tree) {
                 final N root = tree.getRoot();
                 if (predicate.test(root)) {
-                    final T newTree = helper.<E, N, T>nodeToTree(root);
+                    final NodeToRelatedTreeConverter<E, N, T> converter = nodeToRelatedTreeConverterSupplier.get(root);
+                    final T newTree = converter.treeFromRootNode(root);
                     return new SingletonIterator<>(newTree);
                 }
                 else {
@@ -104,7 +107,8 @@ final class TreeSelectorFactoryImpl implements TreeSelectorFactory {
             if (possibles.hasNext()) {
                 final N possible = possibles.next();
                 if (predicate.test(possible)) {
-                    return helper.<E, N, T>nodeToTree(possible);
+                    final NodeToRelatedTreeConverter<E, N, T> converter = nodeToRelatedTreeConverterSupplier.get(possible);
+                    return converter.treeFromRootNode(possible);
                 } else {
                     return calculateNext();
                 }

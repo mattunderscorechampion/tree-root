@@ -23,32 +23,18 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
+package com.mattunderscore.trees.impl;
 
-import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryAware;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
+import com.mattunderscore.trees.spi.SPIComponent;
 
 /**
- * Implementation for converting a node to a tree by copying the subtree.
- *
- * @author Matt Champion on 24/06/15.
+ * An SPI component that requires a {@link TreeBuilderFactory}.
+ * @author Matt Champion on 25/07/2015
  */
-public final class MutableTreeImplNodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>> implements TreeBuilderFactoryAware {
-    private volatile TreeBuilderFactory treeBuilderFactory;
-
-    public MutableTreeImplNodeConverter() {
-        super(MutableTreeImpl.class, MutableTreeImpl.class);
-    }
-
-    @Override
-    public void setTreeBuilderFactory(TreeBuilderFactory treeBuilderFactory) {
-        this.treeBuilderFactory = treeBuilderFactory;
-    }
-
-    @Override
-    protected TopDownTreeRootBuilder<E, MutableSettableNode<E>> getBuilder() {
-        return treeBuilderFactory.topDownBuilder();
-    }
+public interface TreeBuilderFactoryAware extends SPIComponent {
+    /**
+     * @param treeBuilderFactory The {@link TreeBuilderFactory} to use
+     */
+    void setTreeBuilderFactory(TreeBuilderFactory treeBuilderFactory);
 }

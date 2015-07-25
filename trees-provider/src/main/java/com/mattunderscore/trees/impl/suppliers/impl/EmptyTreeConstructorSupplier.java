@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,42 +23,47 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl;
+package com.mattunderscore.trees.impl.suppliers.impl;
+
+import static com.mattunderscore.trees.impl.suppliers.SPIUtilities.populateLookupMap;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * @author Matt Champion on 15/08/14.
+ * Supplier for {@link EmptyTreeConstructor}s.
+ * @author Matt Champion on 24/07/2015
  */
-final class TopDownTreeRootBuilderImpl<E, N extends OpenNode<E, N>> implements TopDownTreeRootBuilder<E, N> {
-    private final EmptyTreeConstructorSupplier emptyTreeConstructorSupplier;
-    private final TreeConverterSupplier treeConverterSupplier;
+public final class EmptyTreeConstructorSupplier {
+    private final Map<Class<?>, EmptyTreeConstructor> converters;
+    private final KeyMappingSupplier keyMappingSupplier;
 
-    public TopDownTreeRootBuilderImpl(TreeConverterSupplier treeConverterSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier) {
-        this.treeConverterSupplier = treeConverterSupplier;
-        this.emptyTreeConstructorSupplier = emptyTreeConstructorSupplier;
+    public EmptyTreeConstructorSupplier(KeyMappingSupplier keyMappingSupplier) {
+        this.keyMappingSupplier = keyMappingSupplier;
+        converters = new HashMap<>();
+        populateLookupMap(converters, EmptyTreeConstructor.class);
     }
 
-    @Override
-    public TopDownTreeBuilder<E, N> root(E e) {
-        return new TopDownTreeBuilderImpl<>(treeConverterSupplier, e);
-    }
-
-    @Override
-    public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        final EmptyTreeConstructor<E, N, T> constructor = emptyTreeConstructorSupplier.get(klass);
-        return constructor.build();
-    }
-
-    @Override
-    public <T extends Tree<E, N>> T build(TypeKey<T> type) throws OperationNotSupportedForType {
-        return build(type.getTreeType());
+    /**
+     * @param klass The key to lookup
+     * @param <E> The type of element
+     * @param <N> The type of node
+     * @param <T> The type of tree
+     * @return The empty tree constructor
+     * @throws OperationNotSupportedForType If the key is not supported
+     */
+    @SuppressWarnings("unchecked")
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> EmptyTreeConstructor<E, N, T> get(Class<T> klass) {
+        final Class<? extends T> concreteClass = keyMappingSupplier.get(klass);
+        final EmptyTreeConstructor<E, N, T> constructor = converters.get(concreteClass);
+        if (constructor == null) {
+            throw new OperationNotSupportedForType(klass, EmptyTreeConstructor.class);
+        }
+        return constructor;
     }
 }

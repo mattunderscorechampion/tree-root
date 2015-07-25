@@ -23,32 +23,39 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.mutable;
+package com.mattunderscore.trees.impl.suppliers.impl;
 
-import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryAware;
-import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
+import static com.mattunderscore.trees.impl.suppliers.SPIUtilities.populateLookupMap;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.spi.KeyMapping;
 
 /**
- * Implementation for converting a node to a tree by copying the subtree.
- *
- * @author Matt Champion on 24/06/15.
+ * Supplier for {@link KeyMapping}.
+ * @author Matt Champion on 25/07/2015
  */
-public final class MutableTreeImplNodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableSettableNode<E>, MutableTree<E, MutableSettableNode<E>>> implements TreeBuilderFactoryAware {
-    private volatile TreeBuilderFactory treeBuilderFactory;
+public final class KeyMappingSupplier {
+    private final Map<Class<?>, KeyMapping> converters;
 
-    public MutableTreeImplNodeConverter() {
-        super(MutableTreeImpl.class, MutableTreeImpl.class);
+    public KeyMappingSupplier() {
+        converters = new HashMap<>();
+        populateLookupMap(converters, KeyMapping.class);
     }
 
-    @Override
-    public void setTreeBuilderFactory(TreeBuilderFactory treeBuilderFactory) {
-        this.treeBuilderFactory = treeBuilderFactory;
-    }
-
-    @Override
-    protected TopDownTreeRootBuilder<E, MutableSettableNode<E>> getBuilder() {
-        return treeBuilderFactory.topDownBuilder();
+    /**
+     * @param klass The key to lookup
+     * @param <T> The type of key
+     * @return The empty tree constructor
+     * @throws OperationNotSupportedForType If the key is not supported
+     */
+    public <T> Class<? extends T> get(Class<T> klass) {
+        final KeyMapping<T> keyMapping = converters.get(klass);
+        if (keyMapping == null) {
+            return klass;
+        }
+        return keyMapping.getConcreteClass();
     }
 }
