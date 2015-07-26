@@ -56,9 +56,16 @@ public final class TreesImpl implements Trees {
         final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
         nodeSelectorFactory = new NodeSelectorFactoryImpl();
         treeWalkerFactory = new TreeWalkerFactoryImpl();
-        treeIteratorFactory = new TreeIteratorFactoryImpl(new IteratorRemoveHandlerSupplier());
-        treeBuilderFactory = new TreeBuilderFactoryImpl(keyMappingSupplier, new TreeConstructorSupplier(keyMappingSupplier), new EmptyTreeConstructorSupplier(keyMappingSupplier), new TreeConverterSupplier(keyMappingSupplier), new EmptySortedTreeConstructorSupplierImpl());
-        treeSelectorFactory = new TreeSelectorFactoryImpl(new NodeToRelatedTreeConverterSupplier(treeBuilderFactory));
+        treeIteratorFactory = new TreeIteratorFactoryImpl(
+            new IteratorRemoveHandlerSupplier(keyMappingSupplier));
+        treeBuilderFactory = new TreeBuilderFactoryImpl(
+            keyMappingSupplier,
+            new TreeConstructorSupplier(keyMappingSupplier),
+            new EmptyTreeConstructorSupplier(keyMappingSupplier),
+            new TreeConverterSupplier(keyMappingSupplier),
+            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier));
+        treeSelectorFactory = new TreeSelectorFactoryImpl(
+            new NodeToRelatedTreeConverterSupplier(keyMappingSupplier, treeBuilderFactory));
         nodeStreamFactory = new NodeStreamFactoryImpl(treeIteratorFactory);
     }
 

@@ -55,7 +55,7 @@ public final class MutableTreeImplNodeConverterTest {
             new TreeConstructorSupplier(keyMappingSupplier),
             new EmptyTreeConstructorSupplier(keyMappingSupplier),
             new TreeConverterSupplier(keyMappingSupplier),
-            new EmptySortedTreeConstructorSupplierImpl()));
+            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier)));
         assertEquals(MutableTreeImpl.class, converter.forClass());
     }
 
@@ -76,7 +76,7 @@ public final class MutableTreeImplNodeConverterTest {
             new TreeConstructorSupplier(keyMappingSupplier),
             new EmptyTreeConstructorSupplier(keyMappingSupplier),
             new TreeConverterSupplier(keyMappingSupplier),
-            new EmptySortedTreeConstructorSupplierImpl()));
+            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier)));
 
         final MutableTree<String, MutableSettableNode<String>> newTree = converter.treeFromRootNode(tree.getRoot());
         assertFalse(newTree.isEmpty());

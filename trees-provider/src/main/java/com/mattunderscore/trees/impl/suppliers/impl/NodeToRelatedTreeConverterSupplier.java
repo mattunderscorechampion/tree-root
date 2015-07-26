@@ -25,14 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl.suppliers.impl;
 
-import static com.mattunderscore.trees.impl.suppliers.SPIUtilities.populateLookupMap;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
+import com.mattunderscore.trees.impl.TreeBuilderFactoryAware;
 import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
@@ -41,12 +36,14 @@ import com.mattunderscore.trees.tree.Tree;
  * Supplier for {@link NodeToRelatedTreeConverter}.
  * @author Matt Champion on 24/07/2015
  */
-public final class NodeToRelatedTreeConverterSupplier {
-    private final Map<Class<?>, NodeToRelatedTreeConverter> converters;
-
-    public NodeToRelatedTreeConverterSupplier(TreeBuilderFactory treeBuilderFactory) {
-        converters = new HashMap<>();
-        populateLookupMap(converters, NodeToRelatedTreeConverter.class, treeBuilderFactory);
+public final class NodeToRelatedTreeConverterSupplier extends AbstractServiceLoaderSupplier<NodeToRelatedTreeConverter> {
+    public NodeToRelatedTreeConverterSupplier(KeyMappingSupplier keyMappingSupplier, TreeBuilderFactory factory) {
+        super(keyMappingSupplier, NodeToRelatedTreeConverter.class);
+        componentMap
+            .values()
+            .stream()
+            .filter(converter -> converter instanceof TreeBuilderFactoryAware)
+            .forEach(converter -> ((TreeBuilderFactoryAware) converter).setTreeBuilderFactory(factory));
     }
 
     /**
@@ -59,11 +56,6 @@ public final class NodeToRelatedTreeConverterSupplier {
      */
     @SuppressWarnings("unchecked")
     public <E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> NodeToRelatedTreeConverter<E, N, T> get(N node) {
-        final Class<?> klass = node.getClass();
-        final NodeToRelatedTreeConverter<E, N, T> constructor = converters.get(klass);
-        if (constructor == null) {
-            throw new OperationNotSupportedForType(klass, NodeToRelatedTreeConverter.class);
-        }
-        return constructor;
+        return getRaw(node.getClass());
     }
 }

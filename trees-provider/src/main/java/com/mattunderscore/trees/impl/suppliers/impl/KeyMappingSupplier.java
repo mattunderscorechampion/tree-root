@@ -25,10 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl.suppliers.impl;
 
-import static com.mattunderscore.trees.impl.suppliers.SPIUtilities.populateLookupMap;
-
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.spi.KeyMapping;
@@ -38,11 +37,14 @@ import com.mattunderscore.trees.spi.KeyMapping;
  * @author Matt Champion on 25/07/2015
  */
 public final class KeyMappingSupplier {
-    private final Map<Class<?>, KeyMapping> converters;
+    private final Map<Class<?>, KeyMapping> componentMap;
 
     public KeyMappingSupplier() {
-        converters = new HashMap<>();
-        populateLookupMap(converters, KeyMapping.class);
+        componentMap = new HashMap<>();
+        final ServiceLoader<KeyMapping> loader = ServiceLoader.load(KeyMapping.class);
+        for (final KeyMapping component : loader) {
+            componentMap.put(component.forClass(), component);
+        }
     }
 
     /**
@@ -51,8 +53,9 @@ public final class KeyMappingSupplier {
      * @return The empty tree constructor
      * @throws OperationNotSupportedForType If the key is not supported
      */
+    @SuppressWarnings("unchecked")
     public <T> Class<? extends T> get(Class<T> klass) {
-        final KeyMapping<T> keyMapping = converters.get(klass);
+        final KeyMapping<T> keyMapping = componentMap.get(klass);
         if (keyMapping == null) {
             return klass;
         }

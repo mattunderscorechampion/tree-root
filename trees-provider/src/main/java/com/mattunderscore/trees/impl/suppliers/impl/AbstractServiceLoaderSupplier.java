@@ -23,32 +23,27 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers;
+package com.mattunderscore.trees.impl.suppliers.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryAware;
+import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.spi.SPIComponent;
 
 /**
- * Lookup utilities for SPI components.
+ * Abstract Supplier implementation for {@link SPIComponent}s that constructs components using the {@link ServiceLoader}.
  * @author Matt Champion on 24/07/2015
  */
-public final class SPIUtilities {
-    private SPIUtilities() {
-    }
+public abstract class AbstractServiceLoaderSupplier<C extends SPIComponent> {
+    protected final Map<Class<?>, C> componentMap = new HashMap<>();
+    private final KeyMappingSupplier keyMappingSupplier;
+    private final Class<C> componentClass;
 
-    /**
-     * Populate a lookup map
-     * @param componentMap lookup map
-     * @param componentClass type of component to be returned by lookup
-     * @param <C> type of component to be returned by lookup
-     */
-    public static <C extends SPIComponent> void populateLookupMap(
-            Map<Class<?>, C> componentMap,
-            Class<C> componentClass) {
+    public AbstractServiceLoaderSupplier(KeyMappingSupplier keyMappingSupplier, Class<C> componentClass) {
+        this.keyMappingSupplier = keyMappingSupplier;
+        this.componentClass = componentClass;
         final ServiceLoader<C> loader = ServiceLoader.load(componentClass);
         for (final C component : loader) {
             componentMap.put(component.forClass(), component);
@@ -56,22 +51,27 @@ public final class SPIUtilities {
     }
 
     /**
-     * Populate a lookup map
-     * @param componentMap lookup map
-     * @param componentClass type of component to be returned by lookup
-     * @param treeBuilderFactory tree builder factory
-     * @param <C> type of component to be returned by lookup
+     * Lookup the component. If the component is not found delegates to onNoComponent.
+     * @param rawClass The component key
+     * @return The value to return
+     * @throws OperationNotSupportedForType Dependent on onNoComponent
      */
-    public static <C extends SPIComponent> void populateLookupMap(
-            Map<Class<?>, C> componentMap,
-            Class<C> componentClass,
-            TreeBuilderFactory treeBuilderFactory) {
-        final ServiceLoader<C> loader = ServiceLoader.load(componentClass);
-        for (final C component : loader) {
-            if (component instanceof TreeBuilderFactoryAware) {
-                ((TreeBuilderFactoryAware)component).setTreeBuilderFactory(treeBuilderFactory);
-            }
-            componentMap.put(component.forClass(), component);
+    protected final C getRaw(Class<?> rawClass) {
+        final Class<?> mappedClass = keyMappingSupplier.get(rawClass);
+        final C component = componentMap.get(mappedClass);
+        if (component == null) {
+            return onNoComponent(rawClass);
         }
+        return component;
+    }
+
+    /**
+     * Provides the chance to return an object if one is not found. Intended to be overridden.
+     * @param rawClass The component key not found
+     * @return The value to return
+     * @throws OperationNotSupportedForType The default behaviour
+     */
+    protected C onNoComponent(Class<?> rawClass) {
+        throw new OperationNotSupportedForType(rawClass, componentClass);
     }
 }

@@ -25,12 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl.suppliers.impl;
 
-import static com.mattunderscore.trees.impl.suppliers.SPIUtilities.populateLookupMap;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.impl.suppliers.EmptySortedTreeConstructorSupplier;
 import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -40,21 +34,16 @@ import com.mattunderscore.trees.tree.Tree;
  * Supplier for {@link EmptySortedTreeConstructor}.
  * @author Matt Champion on 25/07/2015
  */
-public final class EmptySortedTreeConstructorSupplierImpl implements EmptySortedTreeConstructorSupplier {
-    private final Map<Class<?>, EmptySortedTreeConstructor> converters;
+public final class EmptySortedTreeConstructorSupplierImpl extends AbstractServiceLoaderSupplier<EmptySortedTreeConstructor>
+        implements EmptySortedTreeConstructorSupplier {
 
-    public EmptySortedTreeConstructorSupplierImpl() {
-        converters = new HashMap<>();
-        populateLookupMap(converters, EmptySortedTreeConstructor.class);
+    public EmptySortedTreeConstructorSupplierImpl(KeyMappingSupplier keyMappingSupplier) {
+        super(keyMappingSupplier, EmptySortedTreeConstructor.class);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> EmptySortedTreeConstructor<E, N, T> get(Class<T> klass) {
-        final EmptySortedTreeConstructor<E, N, T> constructor = converters.get(klass);
-        if (constructor == null) {
-            throw new OperationNotSupportedForType(klass, EmptySortedTreeConstructor.class);
-        }
-        return constructor;
+        return getRaw(klass);
     }
 }

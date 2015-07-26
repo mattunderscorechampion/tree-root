@@ -64,7 +64,7 @@ public final class MutableBinaryTreeNodeConverterTest {
             new TreeConstructorSupplier(keyMappingSupplier),
             new EmptyTreeConstructorSupplier(keyMappingSupplier),
             new TreeConverterSupplier(keyMappingSupplier),
-            new EmptySortedTreeConstructorSupplierImpl()));
+            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier)));
 
         final MutableBinaryTreeImpl<String> convertedTree =
             converter.treeFromRootNode(tree.getRoot());

@@ -25,14 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl.suppliers.impl;
 
-import static com.mattunderscore.trees.impl.suppliers.SPIUtilities.populateLookupMap;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.spi.DefaultRemovalHandler;
-import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
@@ -41,12 +35,10 @@ import com.mattunderscore.trees.tree.Tree;
  * Supplier for {@link IteratorRemoveHandler}.
  * @author Matt Champion on 25/07/2015
  */
-public final class IteratorRemoveHandlerSupplier {
-    private final Map<Class<?>, IteratorRemoveHandler> converters;
+public final class IteratorRemoveHandlerSupplier extends AbstractServiceLoaderSupplier<IteratorRemoveHandler> {
 
-    public IteratorRemoveHandlerSupplier() {
-        converters = new HashMap<>();
-        populateLookupMap(converters, IteratorRemoveHandler.class);
+    public IteratorRemoveHandlerSupplier(KeyMappingSupplier keyMappingSupplier) {
+        super(keyMappingSupplier, IteratorRemoveHandler.class);
     }
 
     /**
@@ -59,13 +51,11 @@ public final class IteratorRemoveHandlerSupplier {
      */
     @SuppressWarnings("unchecked")
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> get(T tree) {
-        final Class<?> klass = tree.getClass();
-        final IteratorRemoveHandler<E, N, T> iteratorRemoveHandler = converters.get(klass);
-        if (iteratorRemoveHandler == null) {
-            return new DefaultRemovalHandler<>();
-        }
-        else {
-            return iteratorRemoveHandler;
-        }
+        return getRaw(tree.getClass());
+    }
+
+    @Override
+    protected IteratorRemoveHandler onNoComponent(Class<?> rawClass) {
+        return new DefaultRemovalHandler<>();
     }
 }
