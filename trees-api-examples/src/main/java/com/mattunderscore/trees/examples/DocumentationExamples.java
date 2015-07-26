@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.examples;
 
 import java.util.Iterator;
-import java.util.ServiceLoader;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.binary.BinaryTreeNode;
@@ -44,8 +43,7 @@ import com.mattunderscore.trees.tree.Tree;
  */
 public final class DocumentationExamples {
     public void immutableTree() {
-        final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
-        final Trees trees = serviceLoader.iterator().next();
+        final Trees trees = Trees.get();
 
         final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees
             .treeBuilders()
@@ -65,8 +63,7 @@ public final class DocumentationExamples {
     }
 
     public void binarySearchTree() {
-        final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
-        final Trees trees = serviceLoader.iterator().next();
+        final Trees trees = Trees.get();
 
         final SortingTreeBuilder<Integer, BinaryTreeNode<Integer>> builder = trees
             .treeBuilders()

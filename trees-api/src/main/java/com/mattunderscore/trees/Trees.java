@@ -25,6 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
+import java.util.Iterator;
+import java.util.ServiceLoader;
+
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
@@ -33,7 +36,9 @@ import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 
 /**
- * Source for tree builders.
+ * API interface.
+ * <p>
+ * Access to the API is provided through this class.
  * @author Matt Champion on 12/07/14.
  */
 public interface Trees {
@@ -73,4 +78,21 @@ public interface Trees {
      * @return A {@link com.mattunderscore.trees.construction.TreeBuilderFactory}
      */
     TreeBuilderFactory treeBuilders();
+
+    /**
+     * Obtain an instance of the API.
+     * <p>
+     * This searches through the classpath using {@link ServiceLoader} to find implementations. It returns the first one
+     * found.
+     * @return An instance of the API
+     * @throws IllegalStateException If no implementation is found on the class path
+     */
+    static Trees get() {
+        final ServiceLoader<Trees> loader = ServiceLoader.load(Trees.class);
+        final Iterator<Trees> iterator = loader.iterator();
+        if (iterator.hasNext()) {
+            return iterator.next();
+        }
+        throw new IllegalStateException("No Trees implementation found on classpath");
+    }
 }
