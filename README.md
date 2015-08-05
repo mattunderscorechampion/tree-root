@@ -10,6 +10,10 @@ Travis CI: [![Build Status](https://travis-ci.org/mattunderscorechampion/tree-ro
 
 Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion/tree-root/badge.png)](https://coveralls.io/r/mattunderscorechampion/tree-root)
 
+[Maven site](http://www.mattunderscore.com/tree-root/index.html)
+
+[API Javadoc](http://www.mattunderscore.com/tree-root/trees-api/apidocs/index.html)
+
 ####Binary search tree example
 
 ```java
