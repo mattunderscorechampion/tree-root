@@ -39,43 +39,45 @@ import net.jcip.annotations.Immutable;
  */
 @Immutable
 public final class BreadthFirstWalker {
+    private static final int ESTIMATED_GROWTH_RATE = 2;
 
     public BreadthFirstWalker() {
     }
 
-    public <E, N extends OpenNode<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
         }
         else {
-            final N node = tree.getRoot();
-            final List<N> rootLevel = new ArrayList<>(1);
-            rootLevel.add(node);
-            try {
-                accept(rootLevel, walker);
-                walker.onCompleted();
-            }
-            catch (Done done) {
-                // Used to stop traversal
-            }
-        }
-    }
+            List<N> currentLevel = new ArrayList<>(1);
+            currentLevel.add(tree.getRoot());
+            while (true) {
+                final List<N> nextLevel = new ArrayList<>(currentLevel.size() * ESTIMATED_GROWTH_RATE);
 
-    private <E, N extends OpenNode<E, N>> void accept(List<N> currentLevel, Walker<N> walker) throws Done {
-        final List<N> nextLevel = new ArrayList<>(currentLevel.size() * 2);
-        for (final N node : currentLevel) {
-            if (!walker.onNext(node)) {
-                throw new Done();
-            }
-            final Iterator<? extends N> iterator = node.childIterator();
-            while (iterator.hasNext()) {
-                nextLevel.add(iterator.next());
-            }
-        }
+                // Traverse current level
+                for (final N node : currentLevel) {
+                    if (!walker.onNext(node)) {
+                        // Stop if walker
+                        return;
+                    }
 
-        if (nextLevel.size() > 0) {
-            accept(nextLevel, walker);
+                    // Add children to next level
+                    final Iterator<? extends N> iterator = node.childIterator();
+                    while (iterator.hasNext()) {
+                        nextLevel.add(iterator.next());
+                    }
+                }
+
+                if (nextLevel.size() == 0) {
+                    // Reached the first empty level, finished
+                    walker.onCompleted();
+                    return;
+                }
+                else {
+                    currentLevel = nextLevel;
+                }
+            }
         }
     }
 }

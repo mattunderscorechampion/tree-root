@@ -76,7 +76,7 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker) {
-        breadthFirstWalker.accept(tree, walker);
+        breadthFirstWalker.traverseTree(tree, walker);
     }
 
     @Override
@@ -100,7 +100,7 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
-        breadthFirstWalker.accept(tree, nodeWalker);
+        breadthFirstWalker.traverseTree(tree, nodeWalker);
     }
 
     @Override
