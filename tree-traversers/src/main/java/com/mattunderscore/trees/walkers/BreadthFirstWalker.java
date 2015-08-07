@@ -54,10 +54,14 @@ public final class BreadthFirstWalker {
             walker.onCompleted();
         }
         else {
+            int lastSize = 1;
             Iterator<? extends N> currentLevel = new SingletonIterator<>(tree.getRoot());
             while (true) {
-                final JoinIterator.Builder<N> nextLevelBuilder = JoinIterator.builder();
+                final JoinIterator.Builder<N> nextLevelBuilder = JoinIterator
+                    .<N>builder()
+                    .estimatedSize(lastSize * ESTIMATED_GROWTH_RATE);
 
+                lastSize = 0;
                 // Traverse current level
                 while (currentLevel.hasNext()) {
                     final N node = currentLevel.next();
@@ -69,6 +73,7 @@ public final class BreadthFirstWalker {
 
                     // Add children to next level
                     nextLevelBuilder.join(node.childIterator());
+                    lastSize++;
                 }
 
                 final Iterator<? extends N> nextLevel = nextLevelBuilder.build();
