@@ -26,12 +26,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.walkers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.utilities.iterators.JoinIterator;
+import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
+
 import net.jcip.annotations.Immutable;
 
 /**
@@ -50,26 +54,25 @@ public final class BreadthFirstWalker {
             walker.onCompleted();
         }
         else {
-            List<N> currentLevel = new ArrayList<>(1);
-            currentLevel.add(tree.getRoot());
+            Iterator<? extends N> currentLevel = new SingletonIterator<>(tree.getRoot());
             while (true) {
-                final List<N> nextLevel = new ArrayList<>(currentLevel.size() * ESTIMATED_GROWTH_RATE);
+                final JoinIterator.Builder<N> nextLevelBuilder = JoinIterator.builder();
 
                 // Traverse current level
-                for (final N node : currentLevel) {
+                while (currentLevel.hasNext()) {
+                    final N node = currentLevel.next();
+
                     if (!walker.onNext(node)) {
                         // Stop if walker
                         return;
                     }
 
                     // Add children to next level
-                    final Iterator<? extends N> iterator = node.childIterator();
-                    while (iterator.hasNext()) {
-                        nextLevel.add(iterator.next());
-                    }
+                    nextLevelBuilder.join(node.childIterator());
                 }
 
-                if (nextLevel.size() == 0) {
+                final Iterator<? extends N> nextLevel = nextLevelBuilder.build();
+                if (!nextLevel.hasNext()) {
                     // Reached the first empty level, finished
                     walker.onCompleted();
                     return;
