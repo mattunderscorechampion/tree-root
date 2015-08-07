@@ -76,7 +76,7 @@ public final class JoinIterator<E> implements Iterator<E> {
      */
     @NotThreadSafe
     public static final class Builder<E> {
-        private final ArrayList<Iterator<E>> iterators;
+        private final ArrayList<Iterator<? extends E>> iterators;
 
         private Builder() {
             iterators = new ArrayList<>();
@@ -97,7 +97,7 @@ public final class JoinIterator<E> implements Iterator<E> {
          * @param iterator the new iterator
          * @return The builder
          */
-        public Builder<E> join(Iterator<E> iterator) {
+        public Builder<E> join(Iterator<? extends E> iterator) {
             // Ignore empty iterators
             if (iterator.hasNext()) {
                 iterators.add(iterator);
