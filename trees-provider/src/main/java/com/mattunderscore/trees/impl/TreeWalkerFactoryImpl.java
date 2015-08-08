@@ -61,7 +61,7 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, Walker<N> walker) {
-        preOrderWalker.accept(tree, walker);
+        preOrderWalker.traverseTree(tree, walker);
     }
 
     @Override
@@ -82,7 +82,7 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
-        preOrderWalker.accept(tree, nodeWalker);
+        preOrderWalker.traverseTree(tree, nodeWalker);
     }
 
     @Override

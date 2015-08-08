@@ -25,12 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.traversal.Walker;
+import java.lang.reflect.Array;
+import java.util.Iterator;
+import java.util.Stack;
+
 import net.jcip.annotations.Immutable;
 
-import java.util.Iterator;
+import com.mattunderscore.trees.traversal.Walker;
+import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * @author Matt Champion on 17/08/14.
@@ -41,31 +44,36 @@ public final class PreOrderWalker {
     public PreOrderWalker() {
     }
 
-    public <E, N extends OpenNode<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
         }
         else {
-            final N node = tree.getRoot();
-            try {
-                accept(node, walker);
-                walker.onCompleted();
-            }
-            catch (Done done) {
-                // Used to stop traversal
-            }
-        }
-    }
+            final Stack<N> parents = new Stack<>();
+            N current = tree.getRoot();
+            parents.push(current);
 
-    private <E, N extends OpenNode<E, N>> void accept(N node, Walker<N> walker) throws Done {
-        final Iterator<? extends N> iterator = node.childIterator();
-        if (!walker.onNext(node)) {
-            throw new Done();
-        }
-        while (iterator.hasNext()) {
-            final N child = iterator.next();
-            accept(child, walker);
+            while (!parents.isEmpty()) {
+                final N n = current;
+                final N[] reversed = (N[]) Array.newInstance(n.getClass(), n.getNumberOfChildren());
+                final Iterator<? extends N> childIterator = n.childIterator();
+                for (int i = n.getNumberOfChildren() - 1; i >= 0; i--) {
+                    reversed[i] = childIterator.next();
+                }
+                for (final N child : reversed) {
+                    parents.push(child);
+                }
+                do {
+                    current = parents.pop();
+                } while (current == null);
+
+                if (!walker.onNext(n)) {
+                    return;
+                }
+            }
+
+            walker.onCompleted();
         }
     }
 }

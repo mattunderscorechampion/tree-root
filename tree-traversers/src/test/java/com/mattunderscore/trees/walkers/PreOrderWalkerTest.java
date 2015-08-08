@@ -37,7 +37,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.InOrder;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -95,7 +94,7 @@ public final class PreOrderWalkerTest {
 
     @Test
     public void empty() {
-        walker.accept(emptyTree, nodeWalker);
+        walker.traverseTree(emptyTree, nodeWalker);
         nodeOrder.verify(nodeWalker).onEmpty();
         nodeOrder.verify(nodeWalker).onCompleted();
         nodeOrder.verifyNoMoreInteractions();
@@ -104,7 +103,7 @@ public final class PreOrderWalkerTest {
 
     @Test
     public void emptyElements() {
-        walker.accept(emptyTree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(emptyTree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onEmpty();
         elementOrder.verify(elementWalker).onCompleted();
         elementOrder.verifyNoMoreInteractions();
@@ -114,7 +113,7 @@ public final class PreOrderWalkerTest {
     @Test
     public void elements() {
         when(elementWalker.onNext(isA(String.class))).thenReturn(true);
-        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onNext("f");
         elementOrder.verify(elementWalker).onNext("b");
         elementOrder.verify(elementWalker).onNext("a");
@@ -132,7 +131,7 @@ public final class PreOrderWalkerTest {
     @Test
     public void firstElement() {
         when(elementWalker.onNext(isA(String.class))).thenReturn(false);
-        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
         verify(elementWalker).onNext("f");
         verifyNoMoreInteractions(elementWalker);
     }
@@ -140,7 +139,7 @@ public final class PreOrderWalkerTest {
     @Test
     public void firstTwoElements() {
         when(elementWalker.onNext(isA(String.class))).thenReturn(true, false);
-        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onNext("f");
         elementOrder.verify(elementWalker).onNext("b");
         elementOrder.verifyNoMoreInteractions();
@@ -150,7 +149,7 @@ public final class PreOrderWalkerTest {
     @Test
     public void nodes() {
         when(nodeWalker.onNext(linkedTreeTypeMatcher())).thenReturn(true);
-        walker.accept(tree, nodeWalker);
+        walker.traverseTree(tree, nodeWalker);
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("f"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("b"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("a"));
