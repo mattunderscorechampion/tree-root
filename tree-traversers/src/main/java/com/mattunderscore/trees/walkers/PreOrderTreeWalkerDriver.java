@@ -33,38 +33,39 @@ import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Driver for the in-order internal iteration of a tree walker.
+ *
  * @author Matt Champion on 31/01/15
  */
 public final class PreOrderTreeWalkerDriver {
-      public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, TreeWalker<N> walker) {
-            walker.onStarted();
-            if (tree.isEmpty()) {
-                  walker.onCompleted();
-            }
-            else {
-                  final N node = tree.getRoot();
-                  accept(node, walker);
-                  walker.onCompleted();
-            }
-      }
+    public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, TreeWalker<N> walker) {
+        walker.onStarted();
+        if (tree.isEmpty()) {
+            walker.onCompleted();
+        }
+        else {
+            final N node = tree.getRoot();
+            accept(node, walker);
+            walker.onCompleted();
+        }
+    }
 
-      private <E, N extends OpenNode<E, N>> void accept(N node, TreeWalker<N> walker) {
-            walker.onNode(node);
-            final Iterator<? extends N> iterator = node.childIterator();
-            if (iterator.hasNext()) {
-                  walker.onNodeChildrenStarted(node);
-                  while (iterator.hasNext()) {
-                        final N child = iterator.next();
-                        accept(child, walker);
+    private <E, N extends OpenNode<E, N>> void accept(N node, TreeWalker<N> walker) {
+        walker.onNode(node);
+        final Iterator<? extends N> iterator = node.childIterator();
+        if (iterator.hasNext()) {
+            walker.onNodeChildrenStarted(node);
+            while (iterator.hasNext()) {
+                final N child = iterator.next();
+                accept(child, walker);
 
-                        if (iterator.hasNext()) {
-                              walker.onNodeChildrenRemaining(node);
-                        }
-                  }
-                  walker.onNodeChildrenCompleted(node);
+                if (iterator.hasNext()) {
+                    walker.onNodeChildrenRemaining(node);
+                }
             }
-            else {
-                  walker.onNodeNoChildren(node);
-            }
-      }
+            walker.onNodeChildrenCompleted(node);
+        }
+        else {
+            walker.onNodeNoChildren(node);
+        }
+    }
 }
