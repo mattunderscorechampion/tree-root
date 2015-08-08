@@ -25,13 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
+import com.mattunderscore.trees.traversers.TraversalState;
 import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.OpenStructuralNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.traversal.Walker;
 import net.jcip.annotations.Immutable;
 
-import java.util.Iterator;
 import java.util.Stack;
 
 /**
@@ -49,30 +48,30 @@ public final class InOrderWalker {
             walker.onCompleted();
         }
         else {
-            final Stack<State<E, N>> parents = new Stack<>();
+            final Stack<TraversalState<E, N>> parents = new Stack<>();
             N current = tree.getRoot();
 
             while (!parents.isEmpty() || current != null) {
                 if (current != null) {
-                    final State<E, N> state = new State<>(current);
+                    final TraversalState<E, N> state = new TraversalState<>(current);
                     parents.push(state);
-                    if (state.iterator.hasNext()) {
-                        current = state.iterator.next();
+                    if (state.hasNextChild()) {
+                        current = state.nextChild();
                     }
                     else {
                         current = null;
                     }
                 }
                 else {
-                    final State<E, N> state = parents.peek();
-                    if (state.iterator.hasNext()) {
-                        current = state.iterator.next();
+                    final TraversalState<E, N> state = parents.peek();
+                    if (state.hasNextChild()) {
+                        current = state.nextChild();
                     }
-                    if (!state.iterator.hasNext()) {
+                    if (!state.hasNextChild()) {
                         parents.pop();
                     }
 
-                    if (!walker.onNext(state.node)) {
+                    if (!walker.onNext(state.getNode())) {
                         return;
                     }
                 }
@@ -82,20 +81,4 @@ public final class InOrderWalker {
         }
     }
 
-    private static final class State<E, N extends OpenNode<E, N>> {
-        private final N node;
-        private final Iterator<? extends N> iterator;
-
-        @SuppressWarnings("unchecked")
-        public State(N node) {
-            this.node = node;
-            if (node instanceof OpenStructuralNode) {
-                final OpenStructuralNode structuralNode = (OpenStructuralNode)node;
-                this.iterator = structuralNode.childStructuralIterator();
-            }
-            else {
-                this.iterator = node.childIterator();
-            }
-        }
-    }
 }

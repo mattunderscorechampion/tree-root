@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,53 +25,52 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.traversers;
 
-import com.mattunderscore.trees.spi.IteratorRemoveHandler;
+import java.util.Iterator;
+
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.OpenStructuralNode;
-import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.NotThreadSafe;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Stack;
 
 /**
- * @author Matt Champion on 22/08/14.
+ * Traversal state.
+ * <p>
+ * Keeps track of the children of a node that have not yet been traversed.
+ *
+ * @author Matt Champion on 08/08/2015
  */
-@NotThreadSafe
-public final class InOrderIterator<E , N extends OpenNode<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
-    private final Stack<TraversalState<E, N>> parents = new Stack<>();
-    private N current;
+public final class TraversalState<E, N extends OpenNode<E, N>> {
+    private final N node;
+    private final Iterator<? extends N> children;
 
-    public InOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
-        super(tree, handler);
-        current = tree.getRoot();
+    @SuppressWarnings("unchecked")
+    public TraversalState(N node) {
+        this.node = node;
+        if (node instanceof OpenStructuralNode) {
+            final OpenStructuralNode structuralNode = (OpenStructuralNode) node;
+            this.children = structuralNode.childStructuralIterator();
+        }
+        else {
+            this.children = node.childIterator();
+        }
     }
 
-    @Override
-    protected N calculateNext() throws NoSuchElementException {
-        while (!parents.isEmpty() || current != null) {
-            if (current != null) {
-                final TraversalState<E, N> state = new TraversalState<>(current);
-                parents.push(state);
-                if (state.hasNextChild()) {
-                    current = state.nextChild();
-                }
-                else {
-                    current = null;
-                }
-            }
-            else {
-                final TraversalState<E, N> state = parents.peek();
-                if (state.hasNextChild()) {
-                    current = state.nextChild();
-                }
-                if (!state.hasNextChild()) {
-                    parents.pop();
-                }
-                return state.getNode();
-            }
-        }
-        throw new NoSuchElementException();
+    /**
+     * @return The current node
+     */
+    public N getNode() {
+        return node;
+    }
+
+    /**
+     * @return If the node has any untraversed children
+     */
+    public boolean hasNextChild() {
+        return children.hasNext();
+    }
+
+    /**
+     * @return The next child to traverse
+     */
+    public N nextChild() {
+        return children.next();
     }
 }

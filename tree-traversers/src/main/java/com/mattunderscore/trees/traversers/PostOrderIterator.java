@@ -37,7 +37,7 @@ import java.util.Stack;
  * @author Matt Champion on 03/09/14.
  */
 public final class PostOrderIterator<E , N extends OpenNode<E, N>, T extends Tree<E, N>> extends RemoveHandlerIterator<E, N, T> {
-    private final Stack<State<E, N>> parents = new Stack<>();
+    private final Stack<TraversalState<E, N>> parents = new Stack<>();
     private N current;
 
     public PostOrderIterator(T tree, IteratorRemoveHandler<E, N, T> handler) {
@@ -49,10 +49,10 @@ public final class PostOrderIterator<E , N extends OpenNode<E, N>, T extends Tre
     protected N calculateNext() throws NoSuchElementException {
         while (!parents.isEmpty() || current != null) {
             if (current != null) {
-                final State<E, N> state = new State<>(current);
+                final TraversalState<E, N> state = new TraversalState<>(current);
                 parents.push(state);
-                if (state.iterator.hasNext()) {
-                    current = state.iterator.next();
+                if (state.hasNextChild()) {
+                    current = state.nextChild();
                 }
                 else {
                     // Leaf
@@ -60,29 +60,19 @@ public final class PostOrderIterator<E , N extends OpenNode<E, N>, T extends Tre
                 }
             }
             else {
-                final State<E, N> state = parents.peek();
-                if (state.iterator.hasNext()) {
-                    current = state.iterator.next();
+                final TraversalState<E, N> state = parents.peek();
+                if (state.hasNextChild()) {
+                    current = state.nextChild();
                     continue;
                 }
 
-                if (!state.iterator.hasNext()) {
+                if (!state.hasNextChild()) {
                     parents.pop();
                 }
 
-                return state.node;
+                return state.getNode();
             }
         }
         throw new NoSuchElementException();
-    }
-
-    private static final class State<E, N extends OpenNode<E, N>> {
-        private final N node;
-        private final Iterator<? extends N> iterator;
-
-        public State(N node) {
-            this.node = node;
-            this.iterator = node.childIterator();
-        }
     }
 }
