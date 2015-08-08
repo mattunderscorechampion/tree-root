@@ -36,7 +36,7 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 31/01/15
  */
 public final class PreOrderTreeWalkerDriver {
-      public <E, N extends OpenNode<E, N>> void accept(Tree<E, N> tree, TreeWalker<N> walker) {
+      public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, TreeWalker<N> walker) {
             walker.onStarted();
             if (tree.isEmpty()) {
                   walker.onCompleted();

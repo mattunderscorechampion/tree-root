@@ -90,7 +90,7 @@ public final class PreOrderTreeWalkerDriverTest {
 
     @Test
     public void empty() {
-        driver.accept(emptyTree, walker);
+        driver.traverseTree(emptyTree, walker);
         inOrder.verify(walker).onStarted();
         inOrder.verify(walker).onCompleted();
         inOrder.verifyNoMoreInteractions();
@@ -98,7 +98,7 @@ public final class PreOrderTreeWalkerDriverTest {
 
     @Test
     public void nodes() {
-        driver.accept(tree, walker);
+        driver.traverseTree(tree, walker);
         inOrder.verify(walker).onStarted();
         inOrder.verify(walker).onNode(linkedTreeElementMatcher("f"));
         inOrder.verify(walker).onNodeChildrenStarted(linkedTreeElementMatcher("f"));
