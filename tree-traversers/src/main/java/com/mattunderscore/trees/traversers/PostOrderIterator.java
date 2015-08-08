@@ -25,13 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.traversers;
 
+import java.util.NoSuchElementException;
+import java.util.Stack;
+
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Stack;
 
 /**
  * @author Matt Champion on 03/09/14.

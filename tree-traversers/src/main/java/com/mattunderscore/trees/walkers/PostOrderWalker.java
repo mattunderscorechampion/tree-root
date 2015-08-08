@@ -27,11 +27,12 @@ package com.mattunderscore.trees.walkers;
 
 import java.util.Stack;
 
+import net.jcip.annotations.Immutable;
+
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.traversers.TraversalState;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.Immutable;
 
 /**
  * @author Matt Champion on 17/08/14.

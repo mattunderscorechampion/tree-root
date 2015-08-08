@@ -25,18 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
+
+import net.jcip.annotations.Immutable;
 
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.iterators.JoinIterator;
 import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
-
-import net.jcip.annotations.Immutable;
 
 /**
  * @author Matt Champion on 17/08/14.

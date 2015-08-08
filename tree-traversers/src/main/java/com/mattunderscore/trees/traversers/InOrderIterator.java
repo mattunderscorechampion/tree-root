@@ -25,15 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.traversers;
 
-import com.mattunderscore.trees.spi.IteratorRemoveHandler;
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.OpenStructuralNode;
-import com.mattunderscore.trees.tree.Tree;
-import net.jcip.annotations.NotThreadSafe;
-
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Stack;
+
+import net.jcip.annotations.NotThreadSafe;
+
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
+import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * @author Matt Champion on 22/08/14.

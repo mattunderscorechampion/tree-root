@@ -25,10 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.traversers;
 
+import java.util.Iterator;
+
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
-
-import java.util.Iterator;
 
 /**
  * An element iterator that delegates to a Node iterator and unwraps the return to an element.

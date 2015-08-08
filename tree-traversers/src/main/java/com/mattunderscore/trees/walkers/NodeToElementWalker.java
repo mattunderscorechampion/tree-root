@@ -25,8 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
-import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.traversal.Walker;
+import com.mattunderscore.trees.tree.OpenNode;
 
 /**
  * A Node walker that unwraps the elements and passes them to a delegated element walker.
