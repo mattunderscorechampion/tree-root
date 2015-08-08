@@ -26,9 +26,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.walkers;
 
 import java.util.Iterator;
+import java.util.Stack;
 
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.OpenStructuralNode;
 import com.mattunderscore.trees.tree.Tree;
 import net.jcip.annotations.Immutable;
 
@@ -41,30 +43,62 @@ public final class PostOrderWalker {
     public PostOrderWalker() {
     }
 
-    public <E, N extends OpenNode<E, N>> void accept(Tree<E, N> tree, Walker<N> walker) {
+    public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();
             walker.onCompleted();
         }
         else {
-            final N node = tree.getRoot();
-            try {
-                accept(node, walker);
-                walker.onCompleted();
+            final Stack<State<E, N>> parents = new Stack<>();
+            N current = tree.getRoot();
+
+            while (!parents.isEmpty() || current != null) {
+                if (current != null) {
+                    final State<E, N> state = new State<>(current);
+                    parents.push(state);
+                    if (state.iterator.hasNext()) {
+                        current = state.iterator.next();
+                    }
+                    else {
+                        // Leaf
+                        current = null;
+                    }
+                }
+                else {
+                    final State<E, N> state = parents.peek();
+                    if (state.iterator.hasNext()) {
+                        current = state.iterator.next();
+                        continue;
+                    }
+
+                    if (!state.iterator.hasNext()) {
+                        parents.pop();
+                    }
+
+                    if (!walker.onNext(state.node)) {
+                        return;
+                    }
+                }
             }
-            catch (Done done) {
-                // Used to stop traversal
-            }
+
+            walker.onCompleted();
         }
     }
 
-    private <E, N extends OpenNode<E, N>> void accept(N node, Walker<N> walker) throws Done {
-        final Iterator<? extends N> iterator = node.childIterator();
-        while (iterator.hasNext()) {
-            accept(iterator.next(), walker);
-        }
-        if (!walker.onNext(node)) {
-            throw new Done();
+    private static final class State<E, N extends OpenNode<E, N>> {
+        private final N node;
+        private final Iterator<? extends N> iterator;
+
+        @SuppressWarnings("unchecked")
+        public State(N node) {
+            this.node = node;
+            if (node instanceof OpenStructuralNode) {
+                final OpenStructuralNode structuralNode = (OpenStructuralNode)node;
+                this.iterator = structuralNode.childStructuralIterator();
+            }
+            else {
+                this.iterator = node.childIterator();
+            }
         }
     }
 }
