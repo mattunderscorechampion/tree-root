@@ -66,7 +66,7 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkInOrder(T tree, Walker<N> walker) {
-        inOrderWalker.accept(tree, walker);
+        inOrderWalker.traverseTree(tree, walker);
     }
 
     @Override
@@ -88,7 +88,7 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsInOrder(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
-        inOrderWalker.accept(tree, nodeWalker);
+        inOrderWalker.traverseTree(tree, nodeWalker);
     }
 
     @Override

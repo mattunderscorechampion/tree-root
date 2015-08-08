@@ -100,7 +100,7 @@ public final class InOrderWalkerTest {
 
     @Test
     public void empty() {
-        walker.accept(emptyTree, nodeWalker);
+        walker.traverseTree(emptyTree, nodeWalker);
         nodeOrder.verify(nodeWalker).onEmpty();
         nodeOrder.verify(nodeWalker).onCompleted();
         nodeOrder.verifyNoMoreInteractions();
@@ -109,7 +109,7 @@ public final class InOrderWalkerTest {
 
     @Test
     public void emptyElements() {
-        walker.accept(emptyTree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(emptyTree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onEmpty();
         elementOrder.verify(elementWalker).onCompleted();
         elementOrder.verifyNoMoreInteractions();
@@ -119,7 +119,7 @@ public final class InOrderWalkerTest {
     @Test
     public void elements() {
         Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(true);
-        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onNext("a");
         elementOrder.verify(elementWalker).onNext("b");
         elementOrder.verify(elementWalker).onNext("c");
@@ -137,7 +137,7 @@ public final class InOrderWalkerTest {
     @Test
     public void elementsRightHeavy() {
         Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(true);
-        walker.accept(rightHeavyTree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(rightHeavyTree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onNext("a");
         elementOrder.verify(elementWalker).onNext("b");
         elementOrder.verify(elementWalker).onNext("c");
@@ -151,7 +151,7 @@ public final class InOrderWalkerTest {
     @Test
     public void firstElement() {
         Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(false);
-        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
         verify(elementWalker).onNext("a");
         verifyNoMoreInteractions(elementWalker);
     }
@@ -159,7 +159,7 @@ public final class InOrderWalkerTest {
     @Test
     public void firstTwoElements() {
         Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(true, false);
-        walker.accept(tree, new NodeToElementWalker<>(elementWalker));
+        walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onNext("a");
         elementOrder.verify(elementWalker).onNext("b");
         elementOrder.verifyNoMoreInteractions();
@@ -169,7 +169,7 @@ public final class InOrderWalkerTest {
     @Test
     public void nodes() {
         Mockito.when(nodeWalker.onNext(linkedTreeTypeMatcher())).thenReturn(true);
-        walker.accept(tree, nodeWalker);
+        walker.traverseTree(tree, nodeWalker);
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("a"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("b"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("c"));
