@@ -44,8 +44,8 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.Walker;
 
-public final class InOrderWalkerTest {
-    private static InOrderWalker walker;
+public final class InOrderWalkerDriverTest {
+    private static InOrderWalkerDriver walker;
     private static LinkedTree<String> tree;
     private static LinkedTree<String> rightHeavyTree;
     private static LinkedTree<String> emptyTree;
@@ -88,7 +88,7 @@ public final class InOrderWalkerTest {
         right.setChild(0, "b");
         right.setChild(1, "d").setChild(1, "e");
 
-        walker = new InOrderWalker();
+        walker = new InOrderWalkerDriver();
     }
 
     @Before

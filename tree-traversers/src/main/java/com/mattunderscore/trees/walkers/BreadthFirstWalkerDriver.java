@@ -25,23 +25,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
-import java.util.Stack;
 
 import net.jcip.annotations.Immutable;
 
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.utilities.iterators.JoinIterator;
+import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
+ * Driver for walkers that traverses the tree in breadth first order.
  * @author Matt Champion on 17/08/14.
  */
 @Immutable
-public final class PreOrderWalker {
+public final class BreadthFirstWalkerDriver {
+    private static final int ESTIMATED_GROWTH_RATE = 2;
 
-    public PreOrderWalker() {
+    public BreadthFirstWalkerDriver() {
     }
 
     public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
@@ -50,30 +52,38 @@ public final class PreOrderWalker {
             walker.onCompleted();
         }
         else {
-            final Stack<N> parents = new Stack<>();
-            N current = tree.getRoot();
-            parents.push(current);
+            int lastSize = 1;
+            Iterator<? extends N> currentLevel = new SingletonIterator<>(tree.getRoot());
+            while (true) {
+                final JoinIterator.Builder<N> nextLevelBuilder = JoinIterator
+                    .<N>builder()
+                    .estimatedSize(lastSize * ESTIMATED_GROWTH_RATE);
 
-            while (!parents.isEmpty()) {
-                final N n = current;
-                final N[] reversed = (N[]) Array.newInstance(n.getClass(), n.getNumberOfChildren());
-                final Iterator<? extends N> childIterator = n.childIterator();
-                for (int i = n.getNumberOfChildren() - 1; i >= 0; i--) {
-                    reversed[i] = childIterator.next();
-                }
-                for (final N child : reversed) {
-                    parents.push(child);
-                }
-                do {
-                    current = parents.pop();
-                } while (current == null);
+                lastSize = 0;
+                // Traverse current level
+                while (currentLevel.hasNext()) {
+                    final N node = currentLevel.next();
 
-                if (!walker.onNext(n)) {
+                    if (!walker.onNext(node)) {
+                        // Stop if walker
+                        return;
+                    }
+
+                    // Add children to next level
+                    nextLevelBuilder.join(node.childIterator());
+                    lastSize++;
+                }
+
+                final Iterator<? extends N> nextLevel = nextLevelBuilder.build();
+                if (!nextLevel.hasNext()) {
+                    // Reached the first empty level, finished
+                    walker.onCompleted();
                     return;
                 }
+                else {
+                    currentLevel = nextLevel;
+                }
             }
-
-            walker.onCompleted();
         }
     }
 }

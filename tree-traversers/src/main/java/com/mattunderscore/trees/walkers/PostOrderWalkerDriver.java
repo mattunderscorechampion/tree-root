@@ -35,12 +35,13 @@ import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Driver for walkers that traverses the tree in post-order.
  * @author Matt Champion on 17/08/14.
  */
 @Immutable
-public final class PostOrderWalker {
+public final class PostOrderWalkerDriver {
 
-    public PostOrderWalker() {
+    public PostOrderWalkerDriver() {
     }
 
     public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {

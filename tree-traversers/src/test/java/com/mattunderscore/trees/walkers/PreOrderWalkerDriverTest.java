@@ -44,8 +44,8 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.Walker;
 
-public final class BreadthFirstWalkerTest {
-    private static BreadthFirstWalker walker;
+public final class PreOrderWalkerDriverTest {
+    private static PreOrderWalkerDriver walker;
     private static LinkedTree<String> tree;
     private static LinkedTree<String> emptyTree;
 
@@ -82,7 +82,7 @@ public final class BreadthFirstWalkerTest {
 
         emptyTree = new LinkedTree.EmptyConstructor<String>().build();
 
-        walker = new BreadthFirstWalker();
+        walker = new PreOrderWalkerDriver();
     }
 
     @Before
@@ -116,12 +116,12 @@ public final class BreadthFirstWalkerTest {
         walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
         elementOrder.verify(elementWalker).onNext("f");
         elementOrder.verify(elementWalker).onNext("b");
-        elementOrder.verify(elementWalker).onNext("i");
         elementOrder.verify(elementWalker).onNext("a");
         elementOrder.verify(elementWalker).onNext("d");
-        elementOrder.verify(elementWalker).onNext("h");
         elementOrder.verify(elementWalker).onNext("c");
         elementOrder.verify(elementWalker).onNext("e");
+        elementOrder.verify(elementWalker).onNext("i");
+        elementOrder.verify(elementWalker).onNext("h");
         elementOrder.verify(elementWalker).onNext("g");
         elementOrder.verify(elementWalker).onCompleted();
         elementOrder.verifyNoMoreInteractions();
@@ -152,12 +152,12 @@ public final class BreadthFirstWalkerTest {
         walker.traverseTree(tree, nodeWalker);
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("f"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("b"));
-        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("i"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("a"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("d"));
-        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("h"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("c"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("e"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("i"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("h"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("g"));
         nodeOrder.verify(nodeWalker).onCompleted();
         nodeOrder.verifyNoMoreInteractions();

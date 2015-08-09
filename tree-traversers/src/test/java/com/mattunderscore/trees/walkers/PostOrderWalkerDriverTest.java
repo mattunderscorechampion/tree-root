@@ -44,8 +44,8 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.Walker;
 
-public final class PostOrderWalkerTest {
-    private static PostOrderWalker walker;
+public final class PostOrderWalkerDriverTest {
+    private static PostOrderWalkerDriver walker;
     private static LinkedTree<String> tree;
     private static LinkedTree<String> emptyTree;
 
@@ -82,7 +82,7 @@ public final class PostOrderWalkerTest {
 
         emptyTree = new LinkedTree.EmptyConstructor<String>().build();
 
-        walker = new PostOrderWalker();
+        walker = new PostOrderWalkerDriver();
     }
 
     @Before

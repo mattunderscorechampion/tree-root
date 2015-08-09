@@ -25,24 +25,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
-import java.util.Iterator;
+import java.util.Stack;
 
 import net.jcip.annotations.Immutable;
 
 import com.mattunderscore.trees.traversal.Walker;
+import com.mattunderscore.trees.traversers.TraversalState;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.JoinIterator;
-import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
+ * Driver for walkers that traverses the tree in in-order.
  * @author Matt Champion on 17/08/14.
  */
 @Immutable
-public final class BreadthFirstWalker {
-    private static final int ESTIMATED_GROWTH_RATE = 2;
+public final class InOrderWalkerDriver {
 
-    public BreadthFirstWalker() {
+    public InOrderWalkerDriver() {
     }
 
     public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
@@ -51,38 +50,37 @@ public final class BreadthFirstWalker {
             walker.onCompleted();
         }
         else {
-            int lastSize = 1;
-            Iterator<? extends N> currentLevel = new SingletonIterator<>(tree.getRoot());
-            while (true) {
-                final JoinIterator.Builder<N> nextLevelBuilder = JoinIterator
-                    .<N>builder()
-                    .estimatedSize(lastSize * ESTIMATED_GROWTH_RATE);
+            final Stack<TraversalState<E, N>> parents = new Stack<>();
+            N current = tree.getRoot();
 
-                lastSize = 0;
-                // Traverse current level
-                while (currentLevel.hasNext()) {
-                    final N node = currentLevel.next();
-
-                    if (!walker.onNext(node)) {
-                        // Stop if walker
-                        return;
+            while (!parents.isEmpty() || current != null) {
+                if (current != null) {
+                    final TraversalState<E, N> state = new TraversalState<>(current);
+                    parents.push(state);
+                    if (state.hasNextChild()) {
+                        current = state.nextChild();
                     }
-
-                    // Add children to next level
-                    nextLevelBuilder.join(node.childIterator());
-                    lastSize++;
-                }
-
-                final Iterator<? extends N> nextLevel = nextLevelBuilder.build();
-                if (!nextLevel.hasNext()) {
-                    // Reached the first empty level, finished
-                    walker.onCompleted();
-                    return;
+                    else {
+                        current = null;
+                    }
                 }
                 else {
-                    currentLevel = nextLevel;
+                    final TraversalState<E, N> state = parents.peek();
+                    if (state.hasNextChild()) {
+                        current = state.nextChild();
+                    }
+                    if (!state.hasNextChild()) {
+                        parents.pop();
+                    }
+
+                    if (!walker.onNext(state.getNode())) {
+                        return;
+                    }
                 }
             }
+
+            walker.onCompleted();
         }
     }
+
 }

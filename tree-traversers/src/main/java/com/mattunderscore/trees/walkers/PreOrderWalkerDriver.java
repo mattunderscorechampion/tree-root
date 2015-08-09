@@ -25,22 +25,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
+import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.Stack;
 
 import net.jcip.annotations.Immutable;
 
 import com.mattunderscore.trees.traversal.Walker;
-import com.mattunderscore.trees.traversers.TraversalState;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Driver for walkers that traverses the tree in pre-order.
  * @author Matt Champion on 17/08/14.
  */
 @Immutable
-public final class InOrderWalker {
+public final class PreOrderWalkerDriver {
 
-    public InOrderWalker() {
+    public PreOrderWalkerDriver() {
     }
 
     public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
@@ -49,37 +51,30 @@ public final class InOrderWalker {
             walker.onCompleted();
         }
         else {
-            final Stack<TraversalState<E, N>> parents = new Stack<>();
+            final Stack<N> parents = new Stack<>();
             N current = tree.getRoot();
+            parents.push(current);
 
-            while (!parents.isEmpty() || current != null) {
-                if (current != null) {
-                    final TraversalState<E, N> state = new TraversalState<>(current);
-                    parents.push(state);
-                    if (state.hasNextChild()) {
-                        current = state.nextChild();
-                    }
-                    else {
-                        current = null;
-                    }
+            while (!parents.isEmpty()) {
+                final N n = current;
+                final N[] reversed = (N[]) Array.newInstance(n.getClass(), n.getNumberOfChildren());
+                final Iterator<? extends N> childIterator = n.childIterator();
+                for (int i = n.getNumberOfChildren() - 1; i >= 0; i--) {
+                    reversed[i] = childIterator.next();
                 }
-                else {
-                    final TraversalState<E, N> state = parents.peek();
-                    if (state.hasNextChild()) {
-                        current = state.nextChild();
-                    }
-                    if (!state.hasNextChild()) {
-                        parents.pop();
-                    }
+                for (final N child : reversed) {
+                    parents.push(child);
+                }
+                do {
+                    current = parents.pop();
+                } while (current == null);
 
-                    if (!walker.onNext(state.getNode())) {
-                        return;
-                    }
+                if (!walker.onNext(n)) {
+                    return;
                 }
             }
 
             walker.onCompleted();
         }
     }
-
 }

@@ -27,6 +27,8 @@ package com.mattunderscore.trees.walkers;
 
 import java.util.Iterator;
 
+import net.jcip.annotations.Immutable;
+
 import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
@@ -36,6 +38,7 @@ import com.mattunderscore.trees.tree.Tree;
  *
  * @author Matt Champion on 31/01/15
  */
+@Immutable
 public final class PreOrderTreeWalkerDriver {
     public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, TreeWalker<N> walker) {
         walker.onStarted();
