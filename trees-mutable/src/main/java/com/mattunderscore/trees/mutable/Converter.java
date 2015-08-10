@@ -30,6 +30,7 @@ import java.util.Iterator;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.TreeConverter} for
@@ -41,20 +42,17 @@ public final class Converter<E> implements TreeConverter<E, MutableSettableNode<
     @Override
     public final <S extends OpenNode<E, S>> MutableTreeImpl<E> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
-        final MutableTreeImpl<E> newTree = new MutableTreeImpl<>(root.getElement());
-        final Iterator<? extends S> iterator = root.childIterator();
-        while (iterator.hasNext()) {
-            duplicate(newTree, iterator.next());
-        }
-        return newTree;
+
+        return duplicate(root.getElement(), root.childIterator());
     }
 
-    private <S extends OpenNode<E, S>> void duplicate(MutableTreeImpl<E> newParent, S sourceChild) {
-        final MutableTreeImpl<E> newChild = newParent.addChild(sourceChild.getElement());
-        final Iterator<? extends S> iterator = sourceChild.childIterator();
-        while (iterator.hasNext()) {
-            duplicate(newChild, iterator.next());
+    private <S extends OpenNode<E, S>> MutableTreeImpl<E> duplicate(E element, Iterator<? extends S> childIterator) {
+        final ArrayListSimpleCollection<MutableTreeImpl<E>> children = new ArrayListSimpleCollection<>();
+        while (childIterator.hasNext()) {
+            final S child = childIterator.next();
+            children.add(duplicate(child.getElement(), child.childIterator()));
         }
+        return new MutableTreeImpl<>(element, children);
     }
 
     @Override
