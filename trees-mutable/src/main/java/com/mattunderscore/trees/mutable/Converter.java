@@ -43,14 +43,15 @@ public final class Converter<E> implements TreeConverter<E, MutableSettableNode<
     public final <S extends OpenNode<E, S>> MutableTreeImpl<E> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
 
-        return duplicate(root.getElement(), root.childIterator());
+        return duplicate(root.getElement(), root.childIterator(), root.getNumberOfChildren());
     }
 
-    private <S extends OpenNode<E, S>> MutableTreeImpl<E> duplicate(E element, Iterator<? extends S> childIterator) {
-        final ArrayListSimpleCollection<MutableTreeImpl<E>> children = new ArrayListSimpleCollection<>();
+    private <S extends OpenNode<E, S>> MutableTreeImpl<E> duplicate(
+            E element, Iterator<? extends S> childIterator, int numberOfChildren) {
+        final ArrayListSimpleCollection<MutableTreeImpl<E>> children = new ArrayListSimpleCollection<>(numberOfChildren);
         while (childIterator.hasNext()) {
             final S child = childIterator.next();
-            children.add(duplicate(child.getElement(), child.childIterator()));
+            children.add(duplicate(child.getElement(), child.childIterator(), child.getNumberOfChildren()));
         }
         return new MutableTreeImpl<>(element, children);
     }
