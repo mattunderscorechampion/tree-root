@@ -59,6 +59,13 @@ public final class ArrayListSimpleCollectionTest {
     }
 
     @Test
+    public void createWithInitialCapacity() {
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>(64);
+        collection.add("a");
+        assertEquals("a", collection.get(0));
+    }
+
+    @Test
     public void add() {
         final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>();
         assertTrue(collection.isEmpty());

@@ -39,7 +39,7 @@ import java.util.*;
  */
 @NotThreadSafe
 public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
-    private final List<E> list;
+    private final ArrayList<E> list;
 
     /**
      * Create an empty collection.
@@ -55,6 +55,14 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
      */
     public ArrayListSimpleCollection(Collection<E> initial) {
         list = new ArrayList<>(initial);
+    }
+
+    /**
+     * Create an empty collection with an initial capacity.
+     * @param initialCapacity The initial capacity
+     */
+    public ArrayListSimpleCollection(int initialCapacity) {
+        list = new ArrayList<>(initialCapacity);
     }
 
     /**
