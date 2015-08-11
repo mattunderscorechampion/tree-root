@@ -55,7 +55,7 @@
     <dependencies>
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-binary</artifactId>
+            <artifactId>trees-binary-search</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
