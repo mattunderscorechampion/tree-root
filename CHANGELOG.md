@@ -106,3 +106,5 @@ source nodes
 * Renamed walker driver classes to make clear that they drive the iteration
 * Refactored TreeConverter for MutableTreeImpl to reduce collection copying
 * Allow presizing of ArrayListSimpleCollection
+* Rely on key mapping for immutable nodes instead of multiple SPI components
+* Moved binary search trees into separate module
