@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.immutable;
 
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -32,7 +34,13 @@ import com.mattunderscore.trees.tree.Tree;
  * {@link com.mattunderscore.trees.immutable.TreeNodeImpl}.
  * @author Matt Champion on 28/01/15.
  */
-public final class EmptyConstructor<E> extends AbstractEmptyConstructor<E> {
+public final class EmptyConstructor<E> implements EmptyTreeConstructor<E, Node<E>, TreeNodeImpl<E>> {
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final TreeNodeImpl<E> build() {
+        return new TreeNodeImpl(null, new TreeNodeImpl[0]);
+    }
 
     @Override
     public Class<? extends Tree> forClass() {
