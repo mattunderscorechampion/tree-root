@@ -39,6 +39,9 @@ import org.junit.Test;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 
+/**
+ * Tests for {@link LinkedTree}.
+ */
 public final class LinkedTreeTest {
     private LinkedTree<String> tree;
 

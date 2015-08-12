@@ -30,6 +30,7 @@ import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 
 /**
+ * Implementation of {@link NodeToRelatedTreeConverter} for {@link LinkedTree}.
  * @author Matt Champion on 12/08/2015
  */
 public final class NodeConverter<E> implements NodeToRelatedTreeConverter<E, MutableSettableStructuredNode<E>,

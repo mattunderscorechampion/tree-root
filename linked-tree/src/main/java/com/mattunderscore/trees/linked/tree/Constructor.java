@@ -26,10 +26,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.linked.tree;
 
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Implementation of {@link TreeConstructor} for {@link LinkedTree}.
  * @author Matt Champion on 12/08/2015
  */
 public final class Constructor<E> implements TreeConstructor<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {

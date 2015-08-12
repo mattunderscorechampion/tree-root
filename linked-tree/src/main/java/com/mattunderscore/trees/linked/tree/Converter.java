@@ -28,11 +28,13 @@ package com.mattunderscore.trees.linked.tree;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Implementation of {@link TreeConverter} for {@link LinkedTree}.
  * @author Matt Champion on 12/08/2015
  */
 public final class Converter<E> implements TreeConverter<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {

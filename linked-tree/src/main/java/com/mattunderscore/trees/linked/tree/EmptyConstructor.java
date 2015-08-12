@@ -27,9 +27,11 @@ package com.mattunderscore.trees.linked.tree;
 
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Implementation of {@link EmptyTreeConstructor} for {@link LinkedTree}.
  * @author Matt Champion on 12/08/2015
  */
 public final class EmptyConstructor<E> implements EmptyTreeConstructor<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {
