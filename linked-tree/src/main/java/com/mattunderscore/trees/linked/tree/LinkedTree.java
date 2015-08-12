@@ -55,7 +55,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
     }
 
     @SuppressWarnings("unchecked")
-    private LinkedTree(E root, LinkedTree[] subtrees) {
+    /*package*/ LinkedTree(E root, LinkedTree[] subtrees) {
         super(root);
         children = new ArrayListSimpleCollection<>();
         for (final LinkedTree subtree : subtrees) {
@@ -124,72 +124,6 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
     @Override
     public Iterator<LinkedTree<E>> childIterator() {
         return children.iterator();
-    }
-
-    public final static class NodeConverter<E> implements NodeToRelatedTreeConverter<E, MutableSettableStructuredNode<E>,
-            LinkedTree<E>> {
-        @Override
-        public LinkedTree<E> treeFromRootNode(MutableSettableStructuredNode<E> node) {
-            return (LinkedTree<E>)node;
-        }
-
-        @Override
-        public Class<? extends OpenNode> forClass() {
-            return LinkedTree.class;
-        }
-    }
-
-    public final static class Constructor<E> implements TreeConstructor<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {
-
-        @Override
-        @SafeVarargs
-        public final LinkedTree<E> build(E e, LinkedTree<E>... subtrees) {
-            return new LinkedTree<>(e, subtrees);
-        }
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return LinkedTree.class;
-        }
-    }
-
-    public final static class EmptyConstructor<E> implements EmptyTreeConstructor<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {
-
-        @Override
-        public LinkedTree<E> build() {
-            return new LinkedTree<>(null);
-        }
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return LinkedTree.class;
-        }
-    }
-
-    public final static class Converter<E> implements TreeConverter<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {
-        @Override
-        public <S extends OpenNode<E, S>> LinkedTree<E> build(Tree<E, S> sourceTree) {
-            final S root = sourceTree.getRoot();
-            final LinkedTree<E> newTree = new LinkedTree<>(root.getElement());
-            final Iterator<? extends S> iterator = root.childIterator();
-            while (iterator.hasNext()) {
-                duplicate(newTree, iterator.next());
-            }
-            return newTree;
-        }
-
-        @Override
-        public Class<? extends Tree> forClass() {
-            return LinkedTree.class;
-        }
-
-        private <S extends OpenNode<E, S>> void duplicate(LinkedTree<E> newParent, S sourceChild) {
-            final LinkedTree<E> newChild = newParent.addChild(sourceChild.getElement());
-            final Iterator<? extends S> iterator = sourceChild.childIterator();
-            while (iterator.hasNext()) {
-                duplicate(newChild, iterator.next());
-            }
-        }
     }
 
     /**

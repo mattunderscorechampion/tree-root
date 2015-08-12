@@ -38,14 +38,13 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.spi.TreeConstructor;
 
 public final class LinkedTreeTest {
     private LinkedTree<String> tree;
 
     @Before
     public void setUp() {
-        final LinkedTree.Constructor<String> constructor = new LinkedTree.Constructor<>();
+        final Constructor<String> constructor = new Constructor<>();
         tree = constructor.build(
             "a",
                 constructor.build(
@@ -153,7 +152,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void emptyConstructor() {
-        final EmptyTreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new LinkedTree.EmptyConstructor<>();
+        final EmptyTreeConstructor<String, MutableSettableStructuredNode<String>, LinkedTree<String>> constructor = new EmptyConstructor<>();
         final LinkedTree<String> emptyTree = constructor.build();
         assertTrue(emptyTree.isEmpty());
         assertNull(emptyTree.getRoot());
@@ -162,7 +161,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void nodeToTreeConverterTest0() {
-        final LinkedTree.NodeConverter<String> converter = new LinkedTree.NodeConverter<>();
+        final NodeConverter<String> converter = new NodeConverter<>();
         final LinkedTree<String> newTree = converter.treeFromRootNode(tree);
 
         assertFalse(newTree.isEmpty());
@@ -184,7 +183,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void nodeToTreeConverterTest1() {
-        final LinkedTree.NodeConverter<String> converter = new LinkedTree.NodeConverter<>();
+        final NodeConverter<String> converter = new NodeConverter<>();
         final LinkedTree<String> newTree = converter.treeFromRootNode(tree.getChild(1));
 
         assertFalse(newTree.isEmpty());
@@ -197,7 +196,7 @@ public final class LinkedTreeTest {
 
     @Test
     public void converter() {
-        final LinkedTree.Converter<String> converter = new LinkedTree.Converter<>();
+        final Converter<String> converter = new Converter<>();
         final LinkedTree<String> newTree = converter.build(tree);
 
         assertFalse(newTree.isEmpty());

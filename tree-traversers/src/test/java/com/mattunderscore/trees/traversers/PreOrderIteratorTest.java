@@ -34,7 +34,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.linked.tree.Constructor;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.DefaultRemovalHandler;
 import com.mattunderscore.trees.tree.Tree;
@@ -50,7 +50,7 @@ public final class PreOrderIteratorTest {
 
     @BeforeClass
     public static void setUpTree() {
-        final LinkedTree.Constructor<String> constructor = new LinkedTree.Constructor<>();
+        final Constructor<String> constructor = new Constructor<>();
         tree = constructor.build(
             "f",
                 constructor.build(

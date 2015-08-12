@@ -40,6 +40,8 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.mattunderscore.trees.linked.tree.Constructor;
+import com.mattunderscore.trees.linked.tree.EmptyConstructor;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.Walker;
@@ -58,7 +60,7 @@ public final class PostOrderWalkerDriverTest {
 
     @BeforeClass
     public static void setUpClass() {
-        final LinkedTree.Constructor<String> constructor = new LinkedTree.Constructor<>();
+        final Constructor<String> constructor = new Constructor<>();
         tree = constructor.build(
             "f",
             constructor.build(
@@ -80,7 +82,7 @@ public final class PostOrderWalkerDriverTest {
                     constructor.build(
                         "g"))));
 
-        emptyTree = new LinkedTree.EmptyConstructor<String>().build();
+        emptyTree = new EmptyConstructor<String>().build();
 
         walker = new PostOrderWalkerDriver();
     }

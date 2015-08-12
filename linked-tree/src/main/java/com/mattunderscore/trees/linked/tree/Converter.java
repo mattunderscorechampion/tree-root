@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,45 +23,40 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.selectors;
+package com.mattunderscore.trees.linked.tree;
 
 import java.util.Iterator;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.mattunderscore.trees.linked.tree.Constructor;
-import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
-import com.mattunderscore.trees.selection.NodeSelector;
+import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Unit tests for ChildSelector.
- * @author Matt Champion on 25/12/14
+ * @author Matt Champion on 12/08/2015
  */
-public final class ChildSelectorTest {
-    private static Tree<String, MutableSettableStructuredNode<String>> tree;
-
-    @BeforeClass
-    public static void setUpClass() {
-        final Constructor<String> constructor = new Constructor<>();
-        tree = constructor.build(
-            "a",
-            constructor.build(
-                "b"),
-            constructor.build(
-                "c"));
+public final class Converter<E> implements TreeConverter<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {
+    @Override
+    public <S extends OpenNode<E, S>> LinkedTree<E> build(Tree<E, S> sourceTree) {
+        final S root = sourceTree.getRoot();
+        final LinkedTree<E> newTree = new LinkedTree<>(root.getElement());
+        final Iterator<? extends S> iterator = root.childIterator();
+        while (iterator.hasNext()) {
+            duplicate(newTree, iterator.next());
+        }
+        return newTree;
     }
 
-    @Test
-    public void selectsChildren() {
-        final NodeSelector<String> extendedSelector = new ChildSelector<>(new RootMatcherSelector<>(new AlwaysMatcher<>()));
+    @Override
+    public Class<? extends Tree> forClass() {
+        return LinkedTree.class;
+    }
 
-        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = extendedSelector.select(tree);
-        Assert.assertEquals("b", iterator.next().getElement());
-        Assert.assertEquals("c", iterator.next().getElement());
-        Assert.assertFalse(iterator.hasNext());
+    private <S extends OpenNode<E, S>> void duplicate(LinkedTree<E> newParent, S sourceChild) {
+        final LinkedTree<E> newChild = newParent.addChild(sourceChild.getElement());
+        final Iterator<? extends S> iterator = sourceChild.childIterator();
+        while (iterator.hasNext()) {
+            duplicate(newChild, iterator.next());
+        }
     }
 }

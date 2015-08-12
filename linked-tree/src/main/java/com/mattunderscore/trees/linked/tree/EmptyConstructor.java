@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,45 +23,24 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.selectors;
+package com.mattunderscore.trees.linked.tree;
 
-import java.util.Iterator;
-
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.mattunderscore.trees.linked.tree.Constructor;
-import com.mattunderscore.trees.matchers.AlwaysMatcher;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
-import com.mattunderscore.trees.selection.NodeSelector;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Unit tests for ChildSelector.
- * @author Matt Champion on 25/12/14
+ * @author Matt Champion on 12/08/2015
  */
-public final class ChildSelectorTest {
-    private static Tree<String, MutableSettableStructuredNode<String>> tree;
+public final class EmptyConstructor<E> implements EmptyTreeConstructor<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {
 
-    @BeforeClass
-    public static void setUpClass() {
-        final Constructor<String> constructor = new Constructor<>();
-        tree = constructor.build(
-            "a",
-            constructor.build(
-                "b"),
-            constructor.build(
-                "c"));
+    @Override
+    public LinkedTree<E> build() {
+        return new LinkedTree<>(null);
     }
 
-    @Test
-    public void selectsChildren() {
-        final NodeSelector<String> extendedSelector = new ChildSelector<>(new RootMatcherSelector<>(new AlwaysMatcher<>()));
-
-        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = extendedSelector.select(tree);
-        Assert.assertEquals("b", iterator.next().getElement());
-        Assert.assertEquals("c", iterator.next().getElement());
-        Assert.assertFalse(iterator.hasNext());
+    @Override
+    public Class<? extends Tree> forClass() {
+        return LinkedTree.class;
     }
 }
