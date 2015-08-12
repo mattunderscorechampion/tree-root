@@ -63,6 +63,12 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
         }
     }
 
+    @SuppressWarnings("unchecked")
+    /*package*/ LinkedTree(E root, ArrayListSimpleCollection<LinkedTree<E>> subtrees) {
+        super(root);
+        children = subtrees;
+    }
+
     @Override
     public boolean isEmpty() {
         return elementReference.get() == null;

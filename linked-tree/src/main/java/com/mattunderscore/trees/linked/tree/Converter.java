@@ -32,6 +32,7 @@ import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
 
 /**
  * Implementation of {@link TreeConverter} for {@link LinkedTree}.
@@ -41,24 +42,21 @@ public final class Converter<E> implements TreeConverter<E, MutableSettableStruc
     @Override
     public <S extends OpenNode<E, S>> LinkedTree<E> build(Tree<E, S> sourceTree) {
         final S root = sourceTree.getRoot();
-        final LinkedTree<E> newTree = new LinkedTree<>(root.getElement());
-        final Iterator<? extends S> iterator = root.childIterator();
-        while (iterator.hasNext()) {
-            duplicate(newTree, iterator.next());
+        return duplicate(root.getElement(), root.childIterator(), root.getNumberOfChildren());
+    }
+
+    private <S extends OpenNode<E, S>> LinkedTree<E> duplicate(
+        E element, Iterator<? extends S> childIterator, int numberOfChildren) {
+        final ArrayListSimpleCollection<LinkedTree<E>> children = new ArrayListSimpleCollection<>(numberOfChildren);
+        while (childIterator.hasNext()) {
+            final S child = childIterator.next();
+            children.add(duplicate(child.getElement(), child.childIterator(), child.getNumberOfChildren()));
         }
-        return newTree;
+        return new LinkedTree<>(element, children);
     }
 
     @Override
     public Class<? extends Tree> forClass() {
         return LinkedTree.class;
-    }
-
-    private <S extends OpenNode<E, S>> void duplicate(LinkedTree<E> newParent, S sourceChild) {
-        final LinkedTree<E> newChild = newParent.addChild(sourceChild.getElement());
-        final Iterator<? extends S> iterator = sourceChild.childIterator();
-        while (iterator.hasNext()) {
-            duplicate(newChild, iterator.next());
-        }
     }
 }
