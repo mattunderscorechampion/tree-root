@@ -40,91 +40,92 @@ import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 
 /**
  * Tests for {@link TreeIteratorFactoryImpl}.
+ *
  * @author Matt Champion on 04/05/15
  */
 public final class TreeIteratorFactoryImplTest {
-      private static TreeIteratorFactory iteratorFactory;
-      private static LinkedTree<String> tree;
+    private static TreeIteratorFactory iteratorFactory;
+    private static LinkedTree<String> tree;
 
-      @SuppressWarnings("unchecked")
-      @BeforeClass
-      public static void setUp() {
-            final Trees trees = new TreesImpl();
-            iteratorFactory = trees.treeIterators();
-            final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-            tree = builder.create("root", builder.create("a", builder.create("c")), builder.create("b"))
-                .build(LinkedTree.<String>typeKey());
-      }
+    @SuppressWarnings("unchecked")
+    @BeforeClass
+    public static void setUp() {
+        final Trees trees = new TreesImpl();
+        iteratorFactory = trees.treeIterators();
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        tree = builder.create("root", builder.create("a", builder.create("c")), builder.create("b"))
+            .build(LinkedTree.<String>typeKey());
+    }
 
-      @Test
-      public void preOrderIterator() {
-            final Iterator<? extends MutableSettableStructuredNode<String>> iterator = iteratorFactory.preOrderIterator(tree);
-            assertEquals("root", iterator.next().getElement());
-            assertEquals("a", iterator.next().getElement());
-            assertEquals("c", iterator.next().getElement());
-            assertEquals("b", iterator.next().getElement());
-      }
+    @Test
+    public void preOrderIterator() {
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = iteratorFactory.preOrderIterator(tree);
+        assertEquals("root", iterator.next().getElement());
+        assertEquals("a", iterator.next().getElement());
+        assertEquals("c", iterator.next().getElement());
+        assertEquals("b", iterator.next().getElement());
+    }
 
-      @Test
-      public void preOrderElementsIterator() {
-            final Iterator<String> iterator = iteratorFactory.preOrderElementsIterator(tree);
-            assertEquals("root", iterator.next());
-            assertEquals("a", iterator.next());
-            assertEquals("c", iterator.next());
-            assertEquals("b", iterator.next());
-      }
+    @Test
+    public void preOrderElementsIterator() {
+        final Iterator<String> iterator = iteratorFactory.preOrderElementsIterator(tree);
+        assertEquals("root", iterator.next());
+        assertEquals("a", iterator.next());
+        assertEquals("c", iterator.next());
+        assertEquals("b", iterator.next());
+    }
 
-      @Test
-      public void postOrderIterator() {
-            final Iterator<? extends MutableSettableStructuredNode<String>> iterator = iteratorFactory.postOrderIterator(tree);
-            assertEquals("c", iterator.next().getElement());
-            assertEquals("a", iterator.next().getElement());
-            assertEquals("b", iterator.next().getElement());
-            assertEquals("root", iterator.next().getElement());
-      }
+    @Test
+    public void postOrderIterator() {
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = iteratorFactory.postOrderIterator(tree);
+        assertEquals("c", iterator.next().getElement());
+        assertEquals("a", iterator.next().getElement());
+        assertEquals("b", iterator.next().getElement());
+        assertEquals("root", iterator.next().getElement());
+    }
 
-      @Test
-      public void postOrderElementsIterator() {
-            final Iterator<String> iterator = iteratorFactory.postOrderElementsIterator(tree);
-            assertEquals("c", iterator.next());
-            assertEquals("a", iterator.next());
-            assertEquals("b", iterator.next());
-            assertEquals("root", iterator.next());
-      }
+    @Test
+    public void postOrderElementsIterator() {
+        final Iterator<String> iterator = iteratorFactory.postOrderElementsIterator(tree);
+        assertEquals("c", iterator.next());
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
+        assertEquals("root", iterator.next());
+    }
 
-      @Test
-      public void inOrderIterator() {
-            final Iterator<? extends MutableSettableStructuredNode<String>> iterator = iteratorFactory.inOrderIterator(tree);
-            assertEquals("c", iterator.next().getElement());
-            assertEquals("a", iterator.next().getElement());
-            assertEquals("root", iterator.next().getElement());
-            assertEquals("b", iterator.next().getElement());
-      }
+    @Test
+    public void inOrderIterator() {
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = iteratorFactory.inOrderIterator(tree);
+        assertEquals("c", iterator.next().getElement());
+        assertEquals("a", iterator.next().getElement());
+        assertEquals("root", iterator.next().getElement());
+        assertEquals("b", iterator.next().getElement());
+    }
 
-      @Test
-      public void inOrderElementsIterator() {
-            final Iterator<String> iterator = iteratorFactory.inOrderElementsIterator(tree);
-            assertEquals("c", iterator.next());
-            assertEquals("a", iterator.next());
-            assertEquals("root", iterator.next());
-            assertEquals("b", iterator.next());
-      }
+    @Test
+    public void inOrderElementsIterator() {
+        final Iterator<String> iterator = iteratorFactory.inOrderElementsIterator(tree);
+        assertEquals("c", iterator.next());
+        assertEquals("a", iterator.next());
+        assertEquals("root", iterator.next());
+        assertEquals("b", iterator.next());
+    }
 
-      @Test
-      public void breadthFirstIterator() {
-            final Iterator<? extends MutableSettableStructuredNode<String>> iterator = iteratorFactory.breadthFirstIterator(tree);
-            assertEquals("root", iterator.next().getElement());
-            assertEquals("a", iterator.next().getElement());
-            assertEquals("b", iterator.next().getElement());
-            assertEquals("c", iterator.next().getElement());
-      }
+    @Test
+    public void breadthFirstIterator() {
+        final Iterator<? extends MutableSettableStructuredNode<String>> iterator = iteratorFactory.breadthFirstIterator(tree);
+        assertEquals("root", iterator.next().getElement());
+        assertEquals("a", iterator.next().getElement());
+        assertEquals("b", iterator.next().getElement());
+        assertEquals("c", iterator.next().getElement());
+    }
 
-      @Test
-      public void breadthFirstElementsIterator() {
-            final Iterator<String> iterator = iteratorFactory.breadthFirstElementsIterator(tree);
-            assertEquals("root", iterator.next());
-            assertEquals("a", iterator.next());
-            assertEquals("b", iterator.next());
-            assertEquals("c", iterator.next());
-      }
+    @Test
+    public void breadthFirstElementsIterator() {
+        final Iterator<String> iterator = iteratorFactory.breadthFirstElementsIterator(tree);
+        assertEquals("root", iterator.next());
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
+        assertEquals("c", iterator.next());
+    }
 }
