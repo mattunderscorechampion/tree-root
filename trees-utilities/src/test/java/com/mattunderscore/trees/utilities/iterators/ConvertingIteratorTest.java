@@ -28,15 +28,25 @@ package com.mattunderscore.trees.utilities.iterators;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
 public final class ConvertingIteratorTest {
+    @Mock
+    private Iterator<String> delegate;
+
+    @Before
+    public void setUp() {
+        initMocks(this);
+    }
+
     @Test(expected = NoSuchElementException.class)
     public void testSingle() {
         final Iterator<String> delegate = new SingletonIterator<>("5");
@@ -58,7 +68,6 @@ public final class ConvertingIteratorTest {
 
     @Test
     public void mockedRemove() {
-        final Iterator<String> delegate = mock(Iterator.class);
         final Iterator<Integer> converter = new IntegerParsingConvertingIterator(delegate);
 
         converter.remove();
