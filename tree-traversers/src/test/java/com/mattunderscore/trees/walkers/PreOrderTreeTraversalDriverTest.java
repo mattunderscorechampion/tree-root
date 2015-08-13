@@ -43,11 +43,11 @@ import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.TreeWalker;
 
 /**
- * Unit tests for {@link PreOrderTreeWalkerDriver}.
+ * Unit tests for {@link PreOrderTreeTraversalDriver}.
  * @author Matt Champion on 09/05/2015.
  */
-public final class PreOrderTreeWalkerDriverTest {
-    private static PreOrderTreeWalkerDriver driver;
+public final class PreOrderTreeTraversalDriverTest {
+    private static PreOrderTreeTraversalDriver driver;
     private static LinkedTree<String> tree;
     private static LinkedTree<String> emptyTree;
 
@@ -81,7 +81,7 @@ public final class PreOrderTreeWalkerDriverTest {
 
         emptyTree = new EmptyConstructor<String>().build();
 
-        driver = new PreOrderTreeWalkerDriver();
+        driver = new PreOrderTreeTraversalDriver();
     }
 
     @Before

@@ -46,8 +46,11 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.Walker;
 
+/**
+ * Unit tests for {@link PostOrderWalkerDriver}.
+ */
 public final class PostOrderWalkerDriverTest {
-    private static PostOrderWalkerDriver walker;
+    private static TraversalDriver walker;
     private static LinkedTree<String> tree;
     private static LinkedTree<String> emptyTree;
 

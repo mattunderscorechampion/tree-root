@@ -32,41 +32,34 @@ import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.walkers.BreadthFirstWalkerDriver;
-import com.mattunderscore.trees.walkers.InOrderWalkerDriver;
+import com.mattunderscore.trees.walkers.BreadthFirstTraversalDriver;
+import com.mattunderscore.trees.walkers.InOrderTraversalDriver;
 import com.mattunderscore.trees.walkers.NodeToElementTreeWalker;
 import com.mattunderscore.trees.walkers.NodeToElementWalker;
 import com.mattunderscore.trees.walkers.PostOrderWalkerDriver;
-import com.mattunderscore.trees.walkers.PreOrderTreeWalkerDriver;
-import com.mattunderscore.trees.walkers.PreOrderWalkerDriver;
+import com.mattunderscore.trees.walkers.PreOrderTraversalDriver;
+import com.mattunderscore.trees.walkers.PreOrderTreeTraversalDriver;
+import com.mattunderscore.trees.walkers.TraversalDriver;
 
 /**
  * @author Matt Champion on 23/08/14.
  */
 @Immutable
 public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
-    private final BreadthFirstWalkerDriver breadthFirstWalkerDriver;
-    private final InOrderWalkerDriver inOrderWalkerDriver;
-    private final PostOrderWalkerDriver postOrderWalkerDriver;
-    private final PreOrderWalkerDriver preOrderWalkerDriver;
-    private final PreOrderTreeWalkerDriver preOrderTreeWalkerDriver;
-
-    public TreeWalkerFactoryImpl() {
-        breadthFirstWalkerDriver = new BreadthFirstWalkerDriver();
-        inOrderWalkerDriver = new InOrderWalkerDriver();
-        postOrderWalkerDriver = new PostOrderWalkerDriver();
-        preOrderWalkerDriver = new PreOrderWalkerDriver();
-        preOrderTreeWalkerDriver = new PreOrderTreeWalkerDriver();
-    }
+    private final TraversalDriver breadthFirstTraversalDriver = new BreadthFirstTraversalDriver();
+    private final TraversalDriver inOrderTraversalDriver = new InOrderTraversalDriver();
+    private final TraversalDriver postOrderWalkerDriver = new PostOrderWalkerDriver();
+    private final TraversalDriver preOrderTraversalDriver = new PreOrderTraversalDriver();
+    private final PreOrderTreeTraversalDriver preOrderTreeTraversalDriver = new PreOrderTreeTraversalDriver();
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, Walker<N> walker) {
-        preOrderWalkerDriver.traverseTree(tree, walker);
+        preOrderTraversalDriver.traverseTree(tree, walker);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkInOrder(T tree, Walker<N> walker) {
-        inOrderWalkerDriver.traverseTree(tree, walker);
+        inOrderTraversalDriver.traverseTree(tree, walker);
     }
 
     @Override
@@ -76,19 +69,19 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkBreadthFirst(T tree, Walker<N> walker) {
-        breadthFirstWalkerDriver.traverseTree(tree, walker);
+        breadthFirstTraversalDriver.traverseTree(tree, walker);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
-        preOrderWalkerDriver.traverseTree(tree, nodeWalker);
+        preOrderTraversalDriver.traverseTree(tree, nodeWalker);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsInOrder(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
-        inOrderWalkerDriver.traverseTree(tree, nodeWalker);
+        inOrderTraversalDriver.traverseTree(tree, nodeWalker);
     }
 
     @Override
@@ -100,17 +93,17 @@ public final class TreeWalkerFactoryImpl implements TreeWalkerFactory {
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsBreadthFirst(T tree, Walker<E> walker) {
         final Walker<N> nodeWalker = new NodeToElementWalker<>(walker);
-        breadthFirstWalkerDriver.traverseTree(tree, nodeWalker);
+        breadthFirstTraversalDriver.traverseTree(tree, nodeWalker);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkPreOrder(T tree, TreeWalker<N> walker) {
-        preOrderTreeWalkerDriver.traverseTree(tree, walker);
+        preOrderTreeTraversalDriver.traverseTree(tree, walker);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> void walkElementsPreOrder(T tree, TreeWalker<E> walker) {
         final TreeWalker<N> nodeWalker = new NodeToElementTreeWalker<>(walker);
-        preOrderTreeWalkerDriver.traverseTree(tree, nodeWalker);
+        preOrderTreeTraversalDriver.traverseTree(tree, nodeWalker);
     }
 }

@@ -40,11 +40,13 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 17/08/14.
  */
 @Immutable
-public final class PreOrderWalkerDriver {
+public final class PreOrderTraversalDriver implements TraversalDriver {
 
-    public PreOrderWalkerDriver() {
+    public PreOrderTraversalDriver() {
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
     public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();

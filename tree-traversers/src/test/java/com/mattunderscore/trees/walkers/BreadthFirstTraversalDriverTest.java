@@ -46,8 +46,11 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.Walker;
 
-public final class BreadthFirstWalkerDriverTest {
-    private static BreadthFirstWalkerDriver walker;
+/**
+ * Unit tests for {@link BreadthFirstTraversalDriver}.
+ */
+public final class BreadthFirstTraversalDriverTest {
+    private static TraversalDriver walker;
     private static LinkedTree<String> tree;
     private static LinkedTree<String> emptyTree;
 
@@ -84,7 +87,7 @@ public final class BreadthFirstWalkerDriverTest {
 
         emptyTree = new EmptyConstructor<String>().build();
 
-        walker = new BreadthFirstWalkerDriver();
+        walker = new BreadthFirstTraversalDriver();
     }
 
     @Before

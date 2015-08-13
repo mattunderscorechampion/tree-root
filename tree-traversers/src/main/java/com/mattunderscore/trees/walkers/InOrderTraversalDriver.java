@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2014 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,50 +25,63 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
-import java.util.Iterator;
+import java.util.Stack;
 
 import net.jcip.annotations.Immutable;
 
-import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.Walker;
+import com.mattunderscore.trees.traversers.TraversalState;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Driver for the in-order internal iteration of a tree walker.
- *
- * @author Matt Champion on 31/01/15
+ * Driver for walkers that traverses the tree in in-order.
+ * @author Matt Champion on 17/08/14.
  */
 @Immutable
-public final class PreOrderTreeWalkerDriver {
-    public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, TreeWalker<N> walker) {
-        walker.onStarted();
+public final class InOrderTraversalDriver implements TraversalDriver {
+
+    public InOrderTraversalDriver() {
+    }
+
+    @Override
+    public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
+            walker.onEmpty();
             walker.onCompleted();
         }
         else {
-            final N node = tree.getRoot();
-            accept(node, walker);
-            walker.onCompleted();
-        }
-    }
+            final Stack<TraversalState<E, N>> parents = new Stack<>();
+            N current = tree.getRoot();
 
-    private <E, N extends OpenNode<E, N>> void accept(N node, TreeWalker<N> walker) {
-        walker.onNode(node);
-        final Iterator<? extends N> iterator = node.childIterator();
-        if (iterator.hasNext()) {
-            walker.onNodeChildrenStarted(node);
-            while (iterator.hasNext()) {
-                final N child = iterator.next();
-                accept(child, walker);
+            while (!parents.isEmpty() || current != null) {
+                if (current != null) {
+                    final TraversalState<E, N> state = new TraversalState<>(current);
+                    parents.push(state);
+                    if (state.hasNextChild()) {
+                        current = state.nextChild();
+                    }
+                    else {
+                        current = null;
+                    }
+                }
+                else {
+                    final TraversalState<E, N> state = parents.peek();
+                    if (state.hasNextChild()) {
+                        current = state.nextChild();
+                    }
+                    if (!state.hasNextChild()) {
+                        parents.pop();
+                    }
 
-                if (iterator.hasNext()) {
-                    walker.onNodeChildrenRemaining(node);
+                    if (!walker.onNext(state.getNode())) {
+                        return;
+                    }
                 }
             }
-            walker.onNodeChildrenCompleted(node);
-        }
-        else {
-            walker.onNodeNoChildren(node);
+
+            walker.onCompleted();
         }
     }
+
 }

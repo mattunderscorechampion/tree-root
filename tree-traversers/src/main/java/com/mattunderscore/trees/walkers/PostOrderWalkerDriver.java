@@ -39,11 +39,12 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 17/08/14.
  */
 @Immutable
-public final class PostOrderWalkerDriver {
+public final class PostOrderWalkerDriver implements TraversalDriver {
 
     public PostOrderWalkerDriver() {
     }
 
+    @Override
     public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
         if (tree.isEmpty()) {
             walker.onEmpty();

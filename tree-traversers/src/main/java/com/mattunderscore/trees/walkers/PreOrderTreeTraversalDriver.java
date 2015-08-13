@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,61 +29,46 @@ import java.util.Iterator;
 
 import net.jcip.annotations.Immutable;
 
-import com.mattunderscore.trees.traversal.Walker;
+import com.mattunderscore.trees.traversal.TreeWalker;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.JoinIterator;
-import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
 
 /**
- * Driver for walkers that traverses the tree in breadth first order.
- * @author Matt Champion on 17/08/14.
+ * Driver for the in-order internal iteration of a tree walker.
+ *
+ * @author Matt Champion on 31/01/15
  */
 @Immutable
-public final class BreadthFirstWalkerDriver {
-    private static final int ESTIMATED_GROWTH_RATE = 2;
-
-    public BreadthFirstWalkerDriver() {
-    }
-
-    public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, Walker<N> walker) {
+public final class PreOrderTreeTraversalDriver {
+    public <E, N extends OpenNode<E, N>> void traverseTree(Tree<E, N> tree, TreeWalker<N> walker) {
+        walker.onStarted();
         if (tree.isEmpty()) {
-            walker.onEmpty();
             walker.onCompleted();
         }
         else {
-            int lastSize = 1;
-            Iterator<? extends N> currentLevel = new SingletonIterator<>(tree.getRoot());
-            while (true) {
-                final JoinIterator.Builder<N> nextLevelBuilder = JoinIterator
-                    .<N>builder()
-                    .estimatedSize(lastSize * ESTIMATED_GROWTH_RATE);
+            final N node = tree.getRoot();
+            accept(node, walker);
+            walker.onCompleted();
+        }
+    }
 
-                lastSize = 0;
-                // Traverse current level
-                while (currentLevel.hasNext()) {
-                    final N node = currentLevel.next();
+    private <E, N extends OpenNode<E, N>> void accept(N node, TreeWalker<N> walker) {
+        walker.onNode(node);
+        final Iterator<? extends N> iterator = node.childIterator();
+        if (iterator.hasNext()) {
+            walker.onNodeChildrenStarted(node);
+            while (iterator.hasNext()) {
+                final N child = iterator.next();
+                accept(child, walker);
 
-                    if (!walker.onNext(node)) {
-                        // Stop if walker
-                        return;
-                    }
-
-                    // Add children to next level
-                    nextLevelBuilder.join(node.childIterator());
-                    lastSize++;
-                }
-
-                final Iterator<? extends N> nextLevel = nextLevelBuilder.build();
-                if (!nextLevel.hasNext()) {
-                    // Reached the first empty level, finished
-                    walker.onCompleted();
-                    return;
-                }
-                else {
-                    currentLevel = nextLevel;
+                if (iterator.hasNext()) {
+                    walker.onNodeChildrenRemaining(node);
                 }
             }
+            walker.onNodeChildrenCompleted(node);
+        }
+        else {
+            walker.onNodeNoChildren(node);
         }
     }
 }

@@ -31,13 +31,13 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.mattunderscore.trees.linked.tree.Constructor;
@@ -46,9 +46,13 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.traversal.Walker;
 
-public final class PreOrderWalkerDriverTest {
-    private static PreOrderWalkerDriver walker;
+/**
+ * Unit tests for {@link InOrderTraversalDriver}.
+ */
+public final class InOrderTraversalDriverTest {
+    private static TraversalDriver walker;
     private static LinkedTree<String> tree;
+    private static LinkedTree<String> rightHeavyTree;
     private static LinkedTree<String> emptyTree;
 
     @Mock
@@ -84,7 +88,12 @@ public final class PreOrderWalkerDriverTest {
 
         emptyTree = new EmptyConstructor<String>().build();
 
-        walker = new PreOrderWalkerDriver();
+        rightHeavyTree = new EmptyConstructor<String>().build();
+        final LinkedTree<String> right = rightHeavyTree.setRoot("a").setChild(1, "c");
+        right.setChild(0, "b");
+        right.setChild(1, "d").setChild(1, "e");
+
+        walker = new InOrderTraversalDriver();
     }
 
     @Before
@@ -114,17 +123,31 @@ public final class PreOrderWalkerDriverTest {
 
     @Test
     public void elements() {
-        when(elementWalker.onNext(isA(String.class))).thenReturn(true);
+        Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(true);
         walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
-        elementOrder.verify(elementWalker).onNext("f");
-        elementOrder.verify(elementWalker).onNext("b");
         elementOrder.verify(elementWalker).onNext("a");
-        elementOrder.verify(elementWalker).onNext("d");
+        elementOrder.verify(elementWalker).onNext("b");
         elementOrder.verify(elementWalker).onNext("c");
+        elementOrder.verify(elementWalker).onNext("d");
         elementOrder.verify(elementWalker).onNext("e");
-        elementOrder.verify(elementWalker).onNext("i");
-        elementOrder.verify(elementWalker).onNext("h");
+        elementOrder.verify(elementWalker).onNext("f");
         elementOrder.verify(elementWalker).onNext("g");
+        elementOrder.verify(elementWalker).onNext("h");
+        elementOrder.verify(elementWalker).onNext("i");
+        elementOrder.verify(elementWalker).onCompleted();
+        elementOrder.verifyNoMoreInteractions();
+        verifyNoMoreInteractions(elementWalker);
+    }
+
+    @Test
+    public void elementsRightHeavy() {
+        Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(true);
+        walker.traverseTree(rightHeavyTree, new NodeToElementWalker<>(elementWalker));
+        elementOrder.verify(elementWalker).onNext("a");
+        elementOrder.verify(elementWalker).onNext("b");
+        elementOrder.verify(elementWalker).onNext("c");
+        elementOrder.verify(elementWalker).onNext("d");
+        elementOrder.verify(elementWalker).onNext("e");
         elementOrder.verify(elementWalker).onCompleted();
         elementOrder.verifyNoMoreInteractions();
         verifyNoMoreInteractions(elementWalker);
@@ -132,17 +155,17 @@ public final class PreOrderWalkerDriverTest {
 
     @Test
     public void firstElement() {
-        when(elementWalker.onNext(isA(String.class))).thenReturn(false);
+        Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(false);
         walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
-        verify(elementWalker).onNext("f");
+        verify(elementWalker).onNext("a");
         verifyNoMoreInteractions(elementWalker);
     }
 
     @Test
     public void firstTwoElements() {
-        when(elementWalker.onNext(isA(String.class))).thenReturn(true, false);
+        Mockito.when(elementWalker.onNext(isA(String.class))).thenReturn(true, false);
         walker.traverseTree(tree, new NodeToElementWalker<>(elementWalker));
-        elementOrder.verify(elementWalker).onNext("f");
+        elementOrder.verify(elementWalker).onNext("a");
         elementOrder.verify(elementWalker).onNext("b");
         elementOrder.verifyNoMoreInteractions();
         verifyNoMoreInteractions(elementWalker);
@@ -150,17 +173,17 @@ public final class PreOrderWalkerDriverTest {
 
     @Test
     public void nodes() {
-        when(nodeWalker.onNext(linkedTreeTypeMatcher())).thenReturn(true);
+        Mockito.when(nodeWalker.onNext(linkedTreeTypeMatcher())).thenReturn(true);
         walker.traverseTree(tree, nodeWalker);
-        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("f"));
-        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("b"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("a"));
-        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("d"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("b"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("c"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("d"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("e"));
-        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("i"));
-        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("h"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("f"));
         nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("g"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("h"));
+        nodeOrder.verify(nodeWalker).onNext(linkedTreeElementMatcher("i"));
         nodeOrder.verify(nodeWalker).onCompleted();
         nodeOrder.verifyNoMoreInteractions();
         verifyNoMoreInteractions(nodeWalker);
