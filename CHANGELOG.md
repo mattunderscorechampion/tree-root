@@ -103,8 +103,9 @@ source nodes
 * Added convinence method for obtaining an implementation of the API
 * Refactored walker drivers to avoid recursion
 * Added JoinIterator that combines multiple iterators
-* Renamed walker driver classes to make clear that they drive the iteration
+* Renamed traversal driver classes to make clear that they drive the iteration
 * Refactored TreeConverter for MutableTreeImpl to reduce collection copying
 * Allow presizing of ArrayListSimpleCollection
 * Rely on key mapping for immutable nodes instead of multiple SPI components
 * Moved binary search trees into separate module
+* Separated LinkedTree SPI components into separate files
