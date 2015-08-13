@@ -29,6 +29,7 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
@@ -37,8 +38,8 @@ import com.mattunderscore.trees.traversal.TreeIteratorFactory;
  * @author Matt Champion on 08/08/14.
  */
 public final class MutableTreeExamples {
-    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String, MutableNode<String>> builder, TreeIteratorFactory traverser)
-    {
+    @SuppressWarnings("unchecked")
+    public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String, MutableNode<String>> builder, TreeIteratorFactory traverser) {
         final MutableTree<String, MutableNode<String>> tree = builder.create("root",
                 builder.create("a",
                         builder.create("1"),
@@ -46,16 +47,18 @@ public final class MutableTreeExamples {
                         builder.create("3")),
                 builder.create("b",
                         builder.create("+"),
-                        builder.create("-"))).build(MutableTree.class);
+                        builder.create("-")))
+            .build(new TypeKey<MutableTree<String, MutableNode<String>>>() {});
 
         final Iterator<MutableNode<String>> iterator = traverser.preOrderIterator(tree);
         final MutableNode<String> mutableNode = iterator.next();
         final MutableNode<String> newNode = mutableNode.addChild("more");
     }
 
-    public void createTreeFromRoot(BottomUpTreeBuilder<String, MutableNode<String>> builder)
-    {
-        final MutableTree<String, MutableNode<String>> tree = builder.create("root").build(MutableTree.class);
+    public void createTreeFromRoot(BottomUpTreeBuilder<String, MutableNode<String>> builder) {
+        final MutableTree<String, MutableNode<String>> tree = builder
+            .create("root")
+            .build(new TypeKey<MutableTree<String, MutableNode<String>>>() {});
         final MutableNode<String> root = tree.getRoot();
         final MutableNode<String> left = root.addChild("a");
         final MutableNode<String> right = root.addChild("b");
@@ -66,8 +69,7 @@ public final class MutableTreeExamples {
         right.addChild("-");
     }
 
-    public void createTreeFromTopDown(TopDownTreeRootBuilder<String, MutableNode<String>> builder)
-    {
+    public void createTreeFromTopDown(TopDownTreeRootBuilder<String, MutableNode<String>> builder) {
         final TopDownTreeRootBuilder.TopDownTreeBuilder<String, MutableNode<String>> b0 = builder.root("root");
         final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> left = b0.addChild("a");
         final TopDownTreeRootBuilder.TopDownTreeBuilderAppender<String> right = b0.addChild("b");
@@ -76,6 +78,8 @@ public final class MutableTreeExamples {
         left.addChild("3");
         right.addChild("+");
         right.addChild("-");
-        final MutableTree<String, MutableNode<String>> tree = b0.build(MutableTree.class);
+        final MutableTree<String, MutableNode<String>> tree = b0
+            .build(new TypeKey<MutableTree<String, MutableNode<String>>>() {
+            });
     }
 }
