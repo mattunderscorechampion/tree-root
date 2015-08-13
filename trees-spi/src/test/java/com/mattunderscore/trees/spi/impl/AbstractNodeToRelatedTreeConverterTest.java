@@ -68,6 +68,7 @@ public final class AbstractNodeToRelatedTreeConverterTest {
     @Mock
     private Tree<String, Node<String>> convertedTree;
 
+    @SuppressWarnings("unchecked")
     @Before
     public void setUp() {
         initMocks(this);
@@ -101,9 +102,10 @@ public final class AbstractNodeToRelatedTreeConverterTest {
         when(builder.build(Tree.class)).thenReturn(convertedTree);
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void treeFromRootNode() {
-        final Converter converter = new Converter(Node.class, Tree.class, rootBuilder);
+        final Converter converter = new Converter(rootBuilder);
         final Tree<String, Node<String>> newTree = converter.treeFromRootNode(root);
 
         verify(rootBuilder).root("root");
@@ -118,15 +120,15 @@ public final class AbstractNodeToRelatedTreeConverterTest {
 
     @Test
     public void forClass() {
-        final Converter converter = new Converter(Node.class, Tree.class, rootBuilder);
+        final Converter converter = new Converter(rootBuilder);
         assertEquals(Node.class, converter.forClass());
     }
 
     private final class Converter extends AbstractNodeToRelatedTreeConverter<String, Node<String>, Tree<String, Node<String>>> {
         private final TopDownTreeRootBuilder<String, Node<String>> builder;
 
-        public Converter(Class targetNodeClass, Class targetTreeClass, TopDownTreeRootBuilder<String, Node<String>> builder) {
-            super(targetNodeClass, targetTreeClass);
+        public Converter(TopDownTreeRootBuilder<String, Node<String>> builder) {
+            super(Node.class, Tree.class);
             this.builder = builder;
         }
 

@@ -41,6 +41,7 @@ public abstract class AbstractNodeToRelatedTreeConverter<E, N extends OpenNode<E
     private final Class<N> targetNodeClass;
     private final Class<T> targetTreeClass;
 
+    @SuppressWarnings("unchecked")
     public AbstractNodeToRelatedTreeConverter(Class<?> targetNodeClass, Class<?> targetTreeClass) {
         this.targetNodeClass = (Class<N>) targetNodeClass;
         this.targetTreeClass = (Class<T>) targetTreeClass;
@@ -71,5 +72,8 @@ public abstract class AbstractNodeToRelatedTreeConverter<E, N extends OpenNode<E
         return targetNodeClass;
     }
 
+    /**
+     * @return A builder for the root of the target tree
+     */
     protected abstract TopDownTreeRootBuilder<E, N> getBuilder();
 }
