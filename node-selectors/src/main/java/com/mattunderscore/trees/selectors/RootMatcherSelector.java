@@ -32,7 +32,7 @@ import java.util.function.Predicate;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
+import com.mattunderscore.iterators.SingletonIterator;
 
 /**
  * Selects nodes when the root node matches a predicate.

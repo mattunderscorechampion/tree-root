@@ -33,7 +33,7 @@ import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
+import com.mattunderscore.iterators.PrefetchingIterator;
 
 /**
  * A node selector that extends from the nodes of other selectors.

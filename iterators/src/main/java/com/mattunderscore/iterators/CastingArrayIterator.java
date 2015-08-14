@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.iterators;
+package com.mattunderscore.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -31,75 +31,57 @@ import java.util.NoSuchElementException;
 import net.jcip.annotations.NotThreadSafe;
 
 /**
- * Abstract iterator implementation.
- * Iterator that may prefetch the element to return next on hasNext.
- * @author Matt Champion on 25/06/14.
+ * An iterator over object arrays that casts the objects to another class. The next method may throw a
+ * ClassCastException if the wrong type of array is provided. The iterator does not maintain a thread safe position
+ * counter. Two thread both accessing the same iterator may both receive the same object.
+ * @param <E> The element type
+ * @author Matt Champion on 11/09/14.
  */
 @NotThreadSafe
-public abstract class PrefetchingIterator<E> implements Iterator<E> {
-    private E current;
-    private E prefetched;
+public final class CastingArrayIterator<E> implements Iterator<E> {
+    private final Object[] array;
+    private int pos;
 
-    @Override
-    public final boolean hasNext() {
-        if (prefetched != null) {
-            return true;
-        }
-        else {
-            try {
-                prefetched = calculateNext();
-                return true;
-            }
-            catch (NoSuchElementException e) {
-                return false;
-            }
-        }
+    CastingArrayIterator(Object[] array) {
+        this.array = array;
+        pos = 0;
     }
 
     @Override
-    public final E next() {
-        final E next = prefetched;
-        if (next != null) {
-            prefetched = null;
-            return next;
-        }
-        else {
-            current = calculateNext();
-            return current;
-        }
+    public boolean hasNext() {
+        return pos < array.length;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final void remove() {
-        if (!isRemoveSupported()) {
-            throw new UnsupportedOperationException("Remove not supported");
-        }
-        else if (current != null) {
-            remove(current);
-            current = null;
+    public E next() {
+        if (pos < array.length) {
+            return (E) array[pos++];
         }
         else {
-            throw new IllegalStateException("No current value to remove");
+            throw new NoSuchElementException();
         }
     }
 
     /**
-     * @return The next element to return when asked
-     * @throws NoSuchElementException If no more elements
+     * Create an iterator over an array known to be the correct type. Does not really cast. Does not copy the array.
+     * @param array The array
+     * @param <E> The element type
+     * @return The iterator
+     * @deprecated Prefer the use of {@link ArrayIterator} in this case
      */
-    protected abstract E calculateNext() throws NoSuchElementException;
-
-    /**
-     * @return {@code true} if removal is supported
-     */
-    protected boolean isRemoveSupported() {
-        return false;
+    @Deprecated
+    public static <E> CastingArrayIterator<E> create(E[] array) {
+        return new CastingArrayIterator<>(array);
     }
 
     /**
-     * Perform the removal
-     * @param current The current item to remove
+     * Create an iterator over an array known to be the correct type. Does not really cast. Does not copy the array.
+     * @param array The array
+     * @param <E> The element type
+     * @return The iterator
      */
-    protected void remove(E current) {
+    public static <E> CastingArrayIterator<E> unsafeCreate(Object[] array) {
+        return new CastingArrayIterator<>(array);
     }
 }

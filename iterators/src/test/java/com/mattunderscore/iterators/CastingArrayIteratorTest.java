@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.iterators;
+package com.mattunderscore.iterators;
 
 import org.junit.Test;
 
@@ -34,21 +34,47 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public final class SingletonIteratorTest {
+public final class CastingArrayIteratorTest {
 
     @Test(expected = NoSuchElementException.class)
-    public void stepThrough() {
-        final Iterator<String> iterator = new SingletonIterator<>("a");
+    public void stringCast() {
+        final Object[] objects = new Object[] {"a", "b"};
+        final Iterator<String> iterator = new CastingArrayIterator<>(objects);
 
         assertTrue(iterator.hasNext());
         assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
+        assertFalse(iterator.hasNext());
+        iterator.next();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void unsafeCreation() {
+        final Object[] objects = new Object[] {"a", "b"};
+        final Iterator<String> iterator = CastingArrayIterator.unsafeCreate(objects);
+
+        assertTrue(iterator.hasNext());
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
+        assertFalse(iterator.hasNext());
+        iterator.next();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void safeCreation() {
+        final String[] objects = new String[] {"a", "b"};
+        final Iterator<String> iterator = CastingArrayIterator.create(objects);
+
+        assertTrue(iterator.hasNext());
+        assertEquals("a", iterator.next());
+        assertEquals("b", iterator.next());
         assertFalse(iterator.hasNext());
         iterator.next();
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void remove() {
-        final Iterator<String> iterator = new SingletonIterator<>("a");
+        final Iterator<String> iterator = new CastingArrayIterator<>(new Object[] {"a"});
 
         iterator.remove();
     }

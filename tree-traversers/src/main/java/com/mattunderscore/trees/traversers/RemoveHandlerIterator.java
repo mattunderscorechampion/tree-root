@@ -28,7 +28,7 @@ package com.mattunderscore.trees.traversers;
 import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
+import com.mattunderscore.iterators.PrefetchingIterator;
 
 /**
  * Iterator that provides support for removing elements from trees.

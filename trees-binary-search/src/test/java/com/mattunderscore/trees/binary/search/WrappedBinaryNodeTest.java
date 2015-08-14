@@ -40,7 +40,7 @@ import org.mockito.Mock;
 
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.utilities.iterators.ArrayIterator;
+import com.mattunderscore.iterators.ArrayIterator;
 
 /**
  * Unit tests for {@link WrappedBinaryNode}.

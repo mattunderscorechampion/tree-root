@@ -32,8 +32,8 @@ import net.jcip.annotations.NotThreadSafe;
 
 import com.mattunderscore.trees.base.NonSettableNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.utilities.iterators.ArrayIterator;
-import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
+import com.mattunderscore.iterators.ArrayIterator;
+import com.mattunderscore.iterators.SingletonIterator;
 
 /**
  * Mutable binary tree node implementation.

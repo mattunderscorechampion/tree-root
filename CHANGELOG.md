@@ -114,3 +114,4 @@ source nodes
 * Moved simple collections to separate module
 * Renamed simple collections package
 * Moved SimpleCollection out of the API module 
+* Renamed iterators package

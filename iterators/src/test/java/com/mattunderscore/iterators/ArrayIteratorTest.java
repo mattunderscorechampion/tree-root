@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,47 +23,23 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.iterators;
+package com.mattunderscore.iterators;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
-public final class CastingArrayIteratorTest {
-
+/**
+ * Unit tests for {@link ArrayIterator}.
+ */
+public final class ArrayIteratorTest {
     @Test(expected = NoSuchElementException.class)
     public void stringCast() {
-        final Object[] objects = new Object[] {"a", "b"};
-        final Iterator<String> iterator = new CastingArrayIterator<>(objects);
-
-        assertTrue(iterator.hasNext());
-        assertEquals("a", iterator.next());
-        assertEquals("b", iterator.next());
-        assertFalse(iterator.hasNext());
-        iterator.next();
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void unsafeCreation() {
-        final Object[] objects = new Object[] {"a", "b"};
-        final Iterator<String> iterator = CastingArrayIterator.unsafeCreate(objects);
-
-        assertTrue(iterator.hasNext());
-        assertEquals("a", iterator.next());
-        assertEquals("b", iterator.next());
-        assertFalse(iterator.hasNext());
-        iterator.next();
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void safeCreation() {
         final String[] objects = new String[] {"a", "b"};
-        final Iterator<String> iterator = CastingArrayIterator.create(objects);
+        final Iterator<String> iterator = ArrayIterator.create(objects);
 
         assertTrue(iterator.hasNext());
         assertEquals("a", iterator.next());
@@ -74,7 +50,7 @@ public final class CastingArrayIteratorTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void remove() {
-        final Iterator<String> iterator = new CastingArrayIterator<>(new Object[] {"a"});
+        final Iterator<String> iterator = new ArrayIterator<>(new String[] {"a"});
 
         iterator.remove();
     }

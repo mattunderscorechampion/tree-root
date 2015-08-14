@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
+import com.mattunderscore.iterators.ConvertingIterator;
 
 /**
  * Wrap a ClosedMutableBinaryTreeNode as a ClosedBinaryTreeNode.

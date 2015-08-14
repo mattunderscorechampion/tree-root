@@ -32,8 +32,8 @@ import net.jcip.annotations.Immutable;
 import com.mattunderscore.trees.traversal.Walker;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.JoinIterator;
-import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
+import com.mattunderscore.iterators.JoinIterator;
+import com.mattunderscore.iterators.SingletonIterator;
 
 /**
  * Driver for walkers that traverses the tree in breadth first order.

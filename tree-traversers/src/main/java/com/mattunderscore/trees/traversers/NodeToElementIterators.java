@@ -28,7 +28,7 @@ package com.mattunderscore.trees.traversers;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.utilities.iterators.ConvertingIterator;
+import com.mattunderscore.iterators.ConvertingIterator;
 
 /**
  * An element iterator that delegates to a Node iterator and unwraps the return to an element.

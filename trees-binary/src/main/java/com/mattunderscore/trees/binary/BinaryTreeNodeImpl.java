@@ -33,8 +33,8 @@ import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
-import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
+import com.mattunderscore.iterators.CastingArrayIterator;
+import com.mattunderscore.iterators.SingletonIterator;
 
 /**
  * Binary tree node implementation.

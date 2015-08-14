@@ -29,7 +29,7 @@ import java.util.Iterator;
 import java.util.function.Predicate;
 
 import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
+import com.mattunderscore.iterators.PrefetchingIterator;
 
 /**
  * Iterator over the children of nodes provided by an iterator and filtered by a matcher.

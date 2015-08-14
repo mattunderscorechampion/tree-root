@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,26 +23,29 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.iterators;
+package com.mattunderscore.iterators;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import net.jcip.annotations.NotThreadSafe;
 
 /**
- * An iterator over object arrays that casts the objects to another class. The next method may throw a
- * ClassCastException if the wrong type of array is provided. The iterator does not maintain a thread safe position
- * counter. Two thread both accessing the same iterator may both receive the same object.
- * @param <E> The element type
- * @author Matt Champion on 11/09/14.
+ * Iterator over an array. The iterator does not maintain a thread safe position counter. Two thread both accessing
+ * the same iterator may both receive the same object.
+ * @author Matt Champion on 13/06/2015
  */
 @NotThreadSafe
-public final class CastingArrayIterator<E> implements Iterator<E> {
-    private final Object[] array;
+public final class ArrayIterator<E> implements Iterator<E> {
+    private final E[] array;
     private int pos;
 
-    CastingArrayIterator(Object[] array) {
+    /**
+     * Constructor.
+     * @param array The array to iterate over.
+     */
+    ArrayIterator(E[] array) {
         this.array = array;
         pos = 0;
     }
@@ -52,11 +55,10 @@ public final class CastingArrayIterator<E> implements Iterator<E> {
         return pos < array.length;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public E next() {
         if (pos < array.length) {
-            return (E) array[pos++];
+            return array[pos++];
         }
         else {
             throw new NoSuchElementException();
@@ -64,24 +66,12 @@ public final class CastingArrayIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Create an iterator over an array known to be the correct type. Does not really cast. Does not copy the array.
-     * @param array The array
-     * @param <E> The element type
-     * @return The iterator
-     * @deprecated Prefer the use of {@link ArrayIterator} in this case
-     */
-    @Deprecated
-    public static <E> CastingArrayIterator<E> create(E[] array) {
-        return new CastingArrayIterator<>(array);
-    }
-
-    /**
-     * Create an iterator over an array known to be the correct type. Does not really cast. Does not copy the array.
+     * Copies the array and returns an iterator over the copy.
      * @param array The array
      * @param <E> The element type
      * @return The iterator
      */
-    public static <E> CastingArrayIterator<E> unsafeCreate(Object[] array) {
-        return new CastingArrayIterator<>(array);
+    public static <E> Iterator<E> create(E[] array) {
+        return new ArrayIterator<>(Arrays.copyOf(array, array.length));
     }
 }

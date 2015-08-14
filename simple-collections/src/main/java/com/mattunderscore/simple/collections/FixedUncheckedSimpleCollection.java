@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.simple.collections;
 
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
+import com.mattunderscore.iterators.PrefetchingIterator;
 
 import java.util.*;
 

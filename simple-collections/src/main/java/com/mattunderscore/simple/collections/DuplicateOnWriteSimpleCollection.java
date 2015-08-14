@@ -30,7 +30,7 @@ import java.util.Iterator;
 
 import net.jcip.annotations.Immutable;
 
-import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
+import com.mattunderscore.iterators.CastingArrayIterator;
 
 /**
  * A collection that when modified returns a duplicate of the collection. The collection is backed by an array. The

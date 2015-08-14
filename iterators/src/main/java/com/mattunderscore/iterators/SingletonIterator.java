@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2014 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -23,55 +23,39 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.iterators;
-
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+package com.mattunderscore.iterators;
 
 import net.jcip.annotations.NotThreadSafe;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
- * Iterator over an array. The iterator does not maintain a thread safe position counter. Two thread both accessing
- * the same iterator may both receive the same object.
- * @author Matt Champion on 13/06/2015
+ * Iterator for a single object.
+ * @author Matt Champion on 25/06/14.
  */
 @NotThreadSafe
-public final class ArrayIterator<E> implements Iterator<E> {
-    private final E[] array;
-    private int pos;
+public final class SingletonIterator<E> implements Iterator<E> {
+    private final E element;
+    private boolean used = false;
 
-    /**
-     * Constructor.
-     * @param array The array to iterate over.
-     */
-    ArrayIterator(E[] array) {
-        this.array = array;
-        pos = 0;
+    public SingletonIterator(E element) {
+        this.element = element;
     }
 
     @Override
     public boolean hasNext() {
-        return pos < array.length;
+        return !used;
     }
 
     @Override
     public E next() {
-        if (pos < array.length) {
-            return array[pos++];
-        }
-        else {
+        if (used) {
             throw new NoSuchElementException();
         }
-    }
-
-    /**
-     * Copies the array and returns an iterator over the copy.
-     * @param array The array
-     * @param <E> The element type
-     * @return The iterator
-     */
-    public static <E> Iterator<E> create(E[] array) {
-        return new ArrayIterator<>(Arrays.copyOf(array, array.length));
+        else {
+            used = true;
+            return element;
+        }
     }
 }

@@ -36,8 +36,8 @@ import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
-import com.mattunderscore.trees.utilities.iterators.SingletonIterator;
+import com.mattunderscore.iterators.PrefetchingIterator;
+import com.mattunderscore.iterators.SingletonIterator;
 
 /**
  * @author Matt Champion on 29/06/14.

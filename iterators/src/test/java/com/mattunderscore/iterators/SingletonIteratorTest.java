@@ -23,39 +23,33 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.iterators;
+package com.mattunderscore.iterators;
 
-import net.jcip.annotations.NotThreadSafe;
+import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * Iterator for a single object.
- * @author Matt Champion on 25/06/14.
- */
-@NotThreadSafe
-public final class SingletonIterator<E> implements Iterator<E> {
-    private final E element;
-    private boolean used = false;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-    public SingletonIterator(E element) {
-        this.element = element;
+public final class SingletonIteratorTest {
+
+    @Test(expected = NoSuchElementException.class)
+    public void stepThrough() {
+        final Iterator<String> iterator = new SingletonIterator<>("a");
+
+        assertTrue(iterator.hasNext());
+        assertEquals("a", iterator.next());
+        assertFalse(iterator.hasNext());
+        iterator.next();
     }
 
-    @Override
-    public boolean hasNext() {
-        return !used;
-    }
+    @Test(expected = UnsupportedOperationException.class)
+    public void remove() {
+        final Iterator<String> iterator = new SingletonIterator<>("a");
 
-    @Override
-    public E next() {
-        if (used) {
-            throw new NoSuchElementException();
-        }
-        else {
-            used = true;
-            return element;
-        }
+        iterator.remove();
     }
 }

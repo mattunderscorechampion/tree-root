@@ -30,7 +30,7 @@ import java.util.Iterator;
 import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
+import com.mattunderscore.iterators.PrefetchingIterator;
 import com.mattunderscore.trees.wrappers.SimpleTreeWrapper;
 
 /**
