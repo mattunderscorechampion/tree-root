@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
+import com.mattunderscore.simple.collections.DuplicateOnWriteSimpleCollection;
 
 import org.junit.Test;
 

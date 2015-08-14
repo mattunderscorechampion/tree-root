@@ -33,13 +33,7 @@ import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
-import com.mattunderscore.trees.spi.TreeConstructor;
-import com.mattunderscore.trees.spi.TreeConverter;
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
+import com.mattunderscore.simple.collections.ArrayListSimpleCollection;
 
 /**
  * A simple tree implementation. Commonly used for temporary trees.

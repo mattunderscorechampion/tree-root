@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.collections;
+package com.mattunderscore.simple.collections;
 
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Unit tests for {@link com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection}.
+ * Unit tests for {@link FixedUncheckedSimpleCollection}.
  * @author Matt Champion on 19/09/14.
  */
 public final class FixedUncheckedSimpleCollectionTest {

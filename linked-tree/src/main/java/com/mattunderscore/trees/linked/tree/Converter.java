@@ -28,11 +28,10 @@ package com.mattunderscore.trees.linked.tree;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
-import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
+import com.mattunderscore.simple.collections.ArrayListSimpleCollection;
 
 /**
  * Implementation of {@link TreeConverter} for {@link LinkedTree}.

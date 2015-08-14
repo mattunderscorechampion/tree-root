@@ -30,7 +30,7 @@ import java.util.Iterator;
 import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection;
+import com.mattunderscore.simple.collections.ArrayListSimpleCollection;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.TreeConverter} for

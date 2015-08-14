@@ -33,7 +33,7 @@ import net.jcip.annotations.GuardedBy;
 import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+import com.mattunderscore.simple.collections.FixedUncheckedSimpleCollection;
 
 /**
  * Initial attempt at thread safety is base on copy on mutation. When a child node is added or removed a shallow copy

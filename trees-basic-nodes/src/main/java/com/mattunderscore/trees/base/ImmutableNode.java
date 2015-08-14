@@ -29,8 +29,8 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+import com.mattunderscore.simple.collections.DuplicateOnWriteSimpleCollection;
+import com.mattunderscore.simple.collections.FixedUncheckedSimpleCollection;
 
 /** 
  * @author Matt Champion on 21/09/14.

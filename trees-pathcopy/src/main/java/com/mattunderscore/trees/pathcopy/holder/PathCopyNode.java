@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import com.mattunderscore.trees.base.ImmutableNode;
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
+import com.mattunderscore.simple.collections.DuplicateOnWriteSimpleCollection;
 
 /**
  * Path copy node that uses holders to propagate changes up.

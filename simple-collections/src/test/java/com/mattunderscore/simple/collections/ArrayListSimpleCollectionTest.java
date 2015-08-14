@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.collections;
+package com.mattunderscore.simple.collections;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -36,7 +36,7 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link com.mattunderscore.trees.utilities.collections.ArrayListSimpleCollection}.
+ * Unit tests for {@link ArrayListSimpleCollection}.
  * @author Matt Champion on 19/09/14.
  */
 public final class ArrayListSimpleCollectionTest {

@@ -30,7 +30,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.mattunderscore.trees.mutable.MutableNode;
-import com.mattunderscore.trees.utilities.collections.DuplicateOnWriteSimpleCollection;
+import com.mattunderscore.simple.collections.DuplicateOnWriteSimpleCollection;
 
 /**
  * Node holder for child nodes.

@@ -27,7 +27,7 @@ package com.mattunderscore.trees.mutable;
 
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.utilities.collections.FixedUncheckedSimpleCollection;
+import com.mattunderscore.simple.collections.FixedUncheckedSimpleCollection;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.spi.EmptyTreeConstructor} for

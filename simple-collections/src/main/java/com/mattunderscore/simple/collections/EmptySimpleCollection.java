@@ -23,45 +23,38 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.utilities.collections;
+package com.mattunderscore.simple.collections;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+import java.util.Collections;
 import java.util.Iterator;
+
+import net.jcip.annotations.Immutable;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 /**
- * Unit tests for EmptySimpleCollection.
+ * Empty simple collection.
  * @author Matt Champion on 20/12/14
  */
-public final class EmptySimpleCollectionTest {
-    private static final SimpleCollection<String> COLLECTION = new EmptySimpleCollection<>();
-
-    @Test
-    public void size() {
-        Assert.assertEquals(0, COLLECTION.size());
+@Immutable
+public final class EmptySimpleCollection<E> implements SimpleCollection<E> {
+    @Override
+    public int size() {
+        return 0;
     }
 
-    @Test
-    public void isEmpty() {
-        assertTrue(COLLECTION.isEmpty());
+    @Override
+    public boolean isEmpty() {
+        return true;
     }
 
-    @Test
-    public void iterator() {
-        final Iterator<String> iterator = COLLECTION.iterator();
-        assertFalse(iterator.hasNext());
+    @Override
+    public Iterator<E> iterator() {
+        return Collections.emptyIterator();
     }
 
-    @Test
-    public void structuralIterator() {
-        final Iterator<String> iterator = COLLECTION.structuralIterator();
-        assertFalse(iterator.hasNext());
+    @Override
+    public Iterator<E> structuralIterator() {
+        return Collections.emptyIterator();
     }
 }
