@@ -33,7 +33,7 @@ import java.util.NoSuchElementException;
  * @author Matt Champion on 14/08/2015
  */
 public abstract class FilteringIterator<E> extends PrefetchingIterator<E> {
-    private final Iterator<E> delegate;
+    protected final Iterator<E> delegate;
 
     /**
      * Constructor.

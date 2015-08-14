@@ -25,7 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.linked.tree;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.spi.TreeConverter;
@@ -46,7 +48,7 @@ public final class Converter<E> implements TreeConverter<E, MutableSettableStruc
 
     private <S extends OpenNode<E, S>> LinkedTree<E> duplicate(
         E element, Iterator<? extends S> childIterator, int numberOfChildren) {
-        final ArrayListSimpleCollection<LinkedTree<E>> children = new ArrayListSimpleCollection<>(numberOfChildren);
+        final ArrayList<LinkedTree<E>> children = new ArrayList<>(numberOfChildren);
         while (childIterator.hasNext()) {
             final S child = childIterator.next();
             children.add(duplicate(child.getElement(), child.childIterator(), child.getNumberOfChildren()));

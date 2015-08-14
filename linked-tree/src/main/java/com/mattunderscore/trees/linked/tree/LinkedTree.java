@@ -25,10 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.linked.tree;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import net.jcip.annotations.NotThreadSafe;
 
+import com.mattunderscore.iterators.FilteringIterator;
 import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
@@ -41,24 +45,22 @@ import com.mattunderscore.simple.collections.ArrayListSimpleCollection;
  */
 @NotThreadSafe
 public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettableStructuredNode<E>> implements MutableTree<E, MutableSettableStructuredNode<E>>, MutableSettableStructuredNode<E> {
-    private final ArrayListSimpleCollection<LinkedTree<E>> children;
+    private final ArrayList<LinkedTree<E>> children;
 
     public LinkedTree(E root) {
         super(root);
-        children = new ArrayListSimpleCollection<>();
+        children = new ArrayList<>();
     }
 
     @SuppressWarnings("unchecked")
     /*package*/ LinkedTree(E root, LinkedTree[] subtrees) {
         super(root);
-        children = new ArrayListSimpleCollection<>();
-        for (final LinkedTree subtree : subtrees) {
-            children.add(subtree);
-        }
+        children = new ArrayList<>(subtrees.length);
+        Collections.addAll(children, (LinkedTree<E>[])subtrees);
     }
 
     @SuppressWarnings("unchecked")
-    /*package*/ LinkedTree(E root, ArrayListSimpleCollection<LinkedTree<E>> subtrees) {
+    /*package*/ LinkedTree(E root, ArrayList<LinkedTree<E>> subtrees) {
         super(root);
         children = subtrees;
     }
@@ -80,7 +82,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
 
     @Override
     public Iterator<LinkedTree<E>> childStructuralIterator() {
-        return children.structuralIterator();
+        return children.iterator();
     }
 
     @Override
@@ -91,7 +93,16 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
     @Override
     public LinkedTree<E> setChild(int nChild, E element) {
         final LinkedTree<E> child = new LinkedTree<>(element);
-        children.set(nChild, child);
+        if (nChild < children.size()) {
+            children.set(nChild, child);
+        }
+        else {
+            children.ensureCapacity(nChild);
+            for (int i = children.size(); i < nChild; i++) {
+                children.add(null);
+            }
+            children.add(child);
+        }
         return child;
     }
 
@@ -107,7 +118,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
 
     @Override
     public boolean removeChild(MutableSettableStructuredNode<E> child) {
-        return child != null && child.getClass().equals(getClass()) && children.remove((LinkedTree<E>)child);
+        return child != null && child.getClass().equals(getClass()) && children.remove(child);
     }
 
     @Override
@@ -123,7 +134,7 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
 
     @Override
     public Iterator<LinkedTree<E>> childIterator() {
-        return children.iterator();
+        return new NonNullIterator<>(children.iterator());
     }
 
     /**
@@ -133,5 +144,26 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
      */
     public static <E> TypeKey<LinkedTree<E>> typeKey() {
         return new TypeKey<LinkedTree<E>>() {};
+    }
+
+    private static final class NonNullIterator<T> extends FilteringIterator<T> {
+        private NonNullIterator(Iterator<T> delegate) {
+            super(delegate);
+        }
+
+        @Override
+        protected boolean accept(T element) {
+            return element != null;
+        }
+
+        @Override
+        protected boolean isRemoveSupported() {
+            return true;
+        }
+
+        @Override
+        protected void remove(T current) {
+            delegate.remove();
+        }
     }
 }

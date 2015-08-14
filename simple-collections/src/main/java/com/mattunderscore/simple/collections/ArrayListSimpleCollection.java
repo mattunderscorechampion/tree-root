@@ -99,6 +99,7 @@ public final class ArrayListSimpleCollection<E> implements SimpleCollection<E> {
             return list.set(index, element);
         }
         else {
+            list.ensureCapacity(index);
             for (int i = list.size(); i < index; i++) {
                 list.add(null);
             }
