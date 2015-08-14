@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>tree-root</artifactId>
         <groupId>com.mattunderscore.tree.root</groupId>
         <version>0.0.10-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trees-utilities</artifactId>
-    <name>Utilities</name>
-    <description>Provides utilities used by the implementation but not directly related to trees.</description>
-
-    <prerequisites>
-        <maven>${trees.prerequisite.maven.version}</maven>
-    </prerequisites>
+    <artifactId>iterators</artifactId>
+    <name>Iterators</name>
+    <description>Iterators used by the project. These are utility iterators, not iterators for traversing trees.</description>
 
     <dependencies>
         <dependency>
-            <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-api</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>net.jcip</groupId>
-            <artifactId>jcip-annotations</artifactId>
         </dependency>
 
         <dependency>
@@ -38,8 +25,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>iterators</artifactId>
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
         </dependency>
     </dependencies>
 
@@ -61,4 +48,5 @@
             </build>
         </profile>
     </profiles>
+
 </project>

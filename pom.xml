@@ -40,6 +40,7 @@
         <module>trees-spi</module>
         <module>tree-traversers</module>
         <module>trees-binary-search</module>
+        <module>iterators</module>
     </modules>
 
     <licenses>
@@ -329,6 +330,12 @@
             <dependency>
                 <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-utilities</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.tree.root</groupId>
+                <artifactId>iterators</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
