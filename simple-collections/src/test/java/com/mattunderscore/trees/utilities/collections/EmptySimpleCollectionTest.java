@@ -32,6 +32,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.collection.SimpleCollection;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -43,7 +45,7 @@ public final class EmptySimpleCollectionTest {
 
     @Test
     public void size() {
-        assertEquals(0, COLLECTION.size());
+        Assert.assertEquals(0, COLLECTION.size());
     }
 
     @Test

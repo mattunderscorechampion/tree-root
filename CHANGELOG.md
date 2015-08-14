@@ -111,3 +111,4 @@ source nodes
 * Separated LinkedTree SPI components into separate files
 * Added package-info files to describe packages
 * Moved utility iterators to separate module
+* Moved simple collections to separate module

@@ -35,7 +35,7 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-utilities</artifactId>
+            <artifactId>iterators</artifactId>
         </dependency>
 
         <dependency>
