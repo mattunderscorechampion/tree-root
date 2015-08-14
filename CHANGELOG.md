@@ -109,3 +109,4 @@ source nodes
 * Rely on key mapping for immutable nodes instead of multiple SPI components
 * Moved binary search trees into separate module
 * Separated LinkedTree SPI components into separate files
+* Added package-info files to describe packages.
