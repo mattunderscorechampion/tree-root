@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.simple.collections;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.PrefetchingIterator;
 
 import net.jcip.annotations.NotThreadSafe;
@@ -33,7 +32,7 @@ import net.jcip.annotations.NotThreadSafe;
 import java.util.*;
 
 /**
- * A {@link com.mattunderscore.trees.collection.SimpleCollection} backed by {@link java.util.ArrayList}. Not
+ * A {@link SimpleCollection} backed by {@link java.util.ArrayList}. Not
  * thread-safe. Mutable. Does not provide an iteration order or permit nulls.
  * @author Matt Champion on 09/09/14.
  */

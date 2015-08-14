@@ -31,7 +31,7 @@ import java.util.Iterator;
 import net.jcip.annotations.GuardedBy;
 
 import com.mattunderscore.trees.base.AbstractSettableNode;
-import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.simple.collections.FixedUncheckedSimpleCollection;
 

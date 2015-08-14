@@ -27,4 +27,4 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
  * Provides an interface for representing simple collections.
  * @author Matt Champion on 14/08/2015
  */
-package com.mattunderscore.trees.collection;
+package com.mattunderscore.simple.collections;

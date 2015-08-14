@@ -30,7 +30,6 @@ import java.util.Iterator;
 
 import net.jcip.annotations.Immutable;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
 import com.mattunderscore.trees.utilities.iterators.CastingArrayIterator;
 
 /**

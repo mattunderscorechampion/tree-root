@@ -31,8 +31,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-
 import org.junit.Assert;
 import org.junit.Test;
 

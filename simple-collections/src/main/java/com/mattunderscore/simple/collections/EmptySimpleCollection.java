@@ -30,8 +30,6 @@ import java.util.Iterator;
 
 import net.jcip.annotations.Immutable;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
-
 /**
  * Empty simple collection.
  * @author Matt Champion on 20/12/14

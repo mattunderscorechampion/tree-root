@@ -27,7 +27,7 @@ package com.mattunderscore.trees.base;
 
 import java.util.Iterator;
 
-import com.mattunderscore.trees.collection.SimpleCollection;
+import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.simple.collections.DuplicateOnWriteSimpleCollection;
 import com.mattunderscore.simple.collections.FixedUncheckedSimpleCollection;
