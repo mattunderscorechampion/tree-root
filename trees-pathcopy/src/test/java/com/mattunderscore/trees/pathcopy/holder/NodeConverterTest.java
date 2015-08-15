@@ -49,7 +49,7 @@ import com.mattunderscore.trees.mutable.MutableNode;
  * @author Matt Champion on 04/05/15
  */
 public final class NodeConverterTest {
-    private static final Trees trees = new TreesImpl();
+    private static final Trees trees = Trees.get();
 
     @SuppressWarnings("unchecked")
     @Test

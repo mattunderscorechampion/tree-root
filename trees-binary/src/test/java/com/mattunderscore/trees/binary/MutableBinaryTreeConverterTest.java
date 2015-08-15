@@ -45,7 +45,7 @@ import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
  * @author Matt Champion on 04/05/15
  */
 public class MutableBinaryTreeConverterTest {
-      private static final Trees trees = new TreesImpl();
+      private static final Trees trees = Trees.get();
 
       @Test
       public void convertFromSelf() {

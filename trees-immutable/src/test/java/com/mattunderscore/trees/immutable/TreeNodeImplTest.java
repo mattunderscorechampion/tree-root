@@ -43,7 +43,7 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 09/05/2015
  */
 public final class TreeNodeImplTest {
-    private static final Trees trees = new TreesImpl();
+    private static final Trees trees = Trees.get();
 
     @Test
     public void topDownEmpty0() {

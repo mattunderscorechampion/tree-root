@@ -62,7 +62,7 @@ public final class MutableTreeImplNodeConverterTest {
     @SuppressWarnings("unchecked")
     @Test
     public void convert() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
         final BottomUpTreeBuilder<String, MutableSettableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         final MutableTree<String, MutableSettableNode<String>> tree = builder.create("root",
             builder.create("left"),

@@ -47,7 +47,7 @@ public final class TreeWalkerFactoryImplTest {
 
     @BeforeClass
     public static void setUp() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
         walkerFactory = trees.treeWalkers();
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         tree = builder.create("root",

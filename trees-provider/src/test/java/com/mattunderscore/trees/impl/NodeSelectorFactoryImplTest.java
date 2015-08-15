@@ -53,7 +53,7 @@ public final class NodeSelectorFactoryImplTest {
 
     @BeforeClass
     public static void setUpClass() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
         factory = trees.nodeSelectors();
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         tree = builder.create("a",

@@ -42,7 +42,7 @@ import com.mattunderscore.trees.utilities.ComparableComparator;
 import org.junit.Test;
 
 public class TreeBuilderFactoryImplTest {
-    private final static Trees trees = new TreesImpl();
+    private final static Trees trees = Trees.get();
 
     @Test
     public void testTopDownBuilder() {

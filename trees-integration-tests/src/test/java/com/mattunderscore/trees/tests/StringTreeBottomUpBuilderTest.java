@@ -52,7 +52,7 @@ import com.mattunderscore.trees.tree.Tree;
  */
 @RunWith(Parameterized.class)
 public class StringTreeBottomUpBuilderTest {
-    private static final Trees trees = new TreesImpl();
+    private static final Trees trees = Trees.get();
     private final Class treeClass;
 
     public StringTreeBottomUpBuilderTest(Class<? extends Tree<String, ? extends OpenNode<String, ?>>> treeClass) {

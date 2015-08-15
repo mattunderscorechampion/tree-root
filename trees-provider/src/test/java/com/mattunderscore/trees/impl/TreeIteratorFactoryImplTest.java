@@ -50,7 +50,7 @@ public final class TreeIteratorFactoryImplTest {
     @SuppressWarnings("unchecked")
     @BeforeClass
     public static void setUp() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
         iteratorFactory = trees.treeIterators();
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         tree = builder.create("root", builder.create("a", builder.create("c")), builder.create("b"))

@@ -41,7 +41,7 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 08/09/14.
  */
 public final class BinaryTreeIteratorTest {
-    private static final Trees trees = new TreesImpl();
+    private static final Trees trees = Trees.get();
 
     @Test
     public void preorder() {

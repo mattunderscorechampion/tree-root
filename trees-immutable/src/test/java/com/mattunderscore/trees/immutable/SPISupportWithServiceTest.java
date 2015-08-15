@@ -39,7 +39,7 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 28/06/14.
  */
 public final class SPISupportWithServiceTest {
-    private static final Trees trees = new TreesImpl();
+    private static final Trees trees = Trees.get();
 
     @Test
     public void test0() {

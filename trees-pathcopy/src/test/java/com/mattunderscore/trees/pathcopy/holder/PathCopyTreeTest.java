@@ -53,7 +53,7 @@ public final class PathCopyTreeTest {
 
     @BeforeClass
     public static void setUp() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
         iterators = trees.treeIterators();
         builder = trees.treeBuilders().bottomUpBuilder();
     }

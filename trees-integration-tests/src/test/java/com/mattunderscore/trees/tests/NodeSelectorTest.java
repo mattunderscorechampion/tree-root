@@ -55,7 +55,7 @@ import com.mattunderscore.trees.tree.Tree;
  */
 @RunWith(Parameterized.class)
 public final class NodeSelectorTest {
-    private static final Trees trees = new TreesImpl();
+    private static final Trees trees = Trees.get();
     private final Class treeClass;
 
     public NodeSelectorTest(Class<Tree<String, ? extends OpenNode<String, ?>>> treeClass) {

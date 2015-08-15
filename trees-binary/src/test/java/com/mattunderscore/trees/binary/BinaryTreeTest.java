@@ -46,7 +46,7 @@ import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
  * @author Matt Champion on 06/09/14.
  */
 public final class BinaryTreeTest {
-    private final Trees trees = new TreesImpl();
+    private final Trees trees = Trees.get();
 
     @Test
     public void empty() {

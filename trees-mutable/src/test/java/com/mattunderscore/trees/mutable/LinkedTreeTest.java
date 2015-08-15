@@ -48,7 +48,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(Parameterized.class)
 public final class LinkedTreeTest {
-    private static final Trees trees = new TreesImpl();
+    private static final Trees trees = Trees.get();
     private final Class<MutableTree<String, MutableSettableStructuredNode<String>>> treeClass;
 
     public LinkedTreeTest(Class<MutableTree<String, MutableSettableStructuredNode<String>>> treeClass) {

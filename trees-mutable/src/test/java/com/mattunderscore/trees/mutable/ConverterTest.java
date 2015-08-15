@@ -24,7 +24,7 @@ public final class ConverterTest {
     @SuppressWarnings("unchecked")
     @Before
     public void setUp() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
 
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder =
             trees.treeBuilders().bottomUpBuilder();

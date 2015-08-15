@@ -45,7 +45,7 @@ import com.mattunderscore.trees.utilities.ComparableComparator;
  * @author Matt Champion on 06/09/14.
  */
 public final class BinarySearchTreeTest {
-    private final Trees trees = new TreesImpl();
+    private final Trees trees = Trees.get();
 
     @Test
     public void addingAndOrdering() {

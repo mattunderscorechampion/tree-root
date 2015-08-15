@@ -49,7 +49,7 @@ import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
  * @author Matt Champion on 04/05/15
  */
 public final class MutableBinaryTreeNodeConverterTest {
-    private static final Trees trees = new TreesImpl();
+    private static final Trees trees = Trees.get();
 
     @Test
     public void convertToSelf() {

@@ -47,7 +47,7 @@ public final class SortedStreamTest {
 
     @Test
     public void sortedStream() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
 
         final BinarySearchTree<String> tree = trees.treeBuilders()
             .<String, BinaryTreeNode<String>>sortingTreeBuilder()

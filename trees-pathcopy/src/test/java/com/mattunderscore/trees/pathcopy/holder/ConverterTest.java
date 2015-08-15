@@ -61,7 +61,7 @@ public final class ConverterTest {
 
     @SuppressWarnings("unchecked")
     private Tree<String, Node<String>> getTree() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
         return trees.treeBuilders().bottomUpBuilder().create("root").build(LinkedTree.class);
     }
 }

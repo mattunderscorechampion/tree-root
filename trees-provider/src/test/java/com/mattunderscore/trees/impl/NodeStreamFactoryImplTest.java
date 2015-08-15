@@ -47,7 +47,7 @@ public final class NodeStreamFactoryImplTest {
 
     @BeforeClass
     public static void setUpClass() {
-        final Trees trees = new TreesImpl();
+        final Trees trees = Trees.get();
         streamFactory = trees.nodeStreams();
         final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         tree = builder.create("root", builder.create("a", builder.create("c")), builder.create("b"))
