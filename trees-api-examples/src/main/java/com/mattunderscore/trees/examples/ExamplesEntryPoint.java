@@ -42,6 +42,7 @@ public final class ExamplesEntryPoint {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
+
         System.out.println("Readme Examples:");
         final DocumentationExamples documentationExamples = new DocumentationExamples();
         System.out.println("Immutable tree example:");
@@ -51,6 +52,9 @@ public final class ExamplesEntryPoint {
         documentationExamples.binarySearchTree();
 
         final Trees trees = Trees.get();
+
+        System.out.println("Available implementations:");
+        trees.availableTreeImplementations().forEach(c -> System.out.println(c.getSimpleName()));
 
         System.out.println("General examples:");
         final ImmutableTreeExamples immutableTreeExamples = new ImmutableTreeExamples();
