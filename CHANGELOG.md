@@ -115,3 +115,4 @@ source nodes
 * Renamed simple collections package
 * Moved SimpleCollection out of the API module 
 * Renamed iterators package
+* Added SPI component to allow tree implementations to be discovered 
