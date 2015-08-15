@@ -18,6 +18,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>simple-collections</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>

@@ -25,9 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
+import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
@@ -78,6 +80,11 @@ public interface Trees {
      * @return A {@link com.mattunderscore.trees.construction.TreeBuilderFactory}
      */
     TreeBuilderFactory treeBuilders();
+
+    /**
+     * @return A simple collection containing the available tree implementations.
+     */
+    SimpleCollection<Class<?>> availableTreeImplementations();
 
     /**
      * Obtain an instance of the API.

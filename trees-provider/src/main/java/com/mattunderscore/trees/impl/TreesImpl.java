@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import java.util.ServiceLoader;
+
+import com.mattunderscore.simple.collections.ArrayListSimpleCollection;
+import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
@@ -36,9 +40,11 @@ import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.spi.TreeImplementation;
 import com.mattunderscore.trees.traversal.NodeStreamFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.Trees}.
@@ -97,5 +103,13 @@ public final class TreesImpl implements Trees {
     @Override
     public TreeBuilderFactory treeBuilders() {
         return treeBuilderFactory;
+    }
+
+    @Override
+    public SimpleCollection<Class<?>> availableTreeImplementations() {
+        final ServiceLoader<TreeImplementation> loader = ServiceLoader.load(TreeImplementation.class);
+        final ArrayListSimpleCollection<Class<?>> classes = new ArrayListSimpleCollection<>();
+        loader.forEach(i -> classes.add(i.forClass()));
+        return classes;
     }
 }
