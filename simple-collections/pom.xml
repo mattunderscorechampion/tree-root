@@ -15,11 +15,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-api</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
