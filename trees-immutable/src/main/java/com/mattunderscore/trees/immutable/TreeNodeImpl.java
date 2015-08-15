@@ -70,7 +70,7 @@ public final class TreeNodeImpl<E> extends ImmutableNode<E, Node<E>> implements 
     }
 
     @Override
-    public Iterator<? extends Node<E>> childIterator() {
+    public Iterator<Node<E>> childIterator() {
         return children.iterator();
     }
 }
