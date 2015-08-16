@@ -63,6 +63,7 @@ Element: 6
    * [Concepts](docs/concepts.md)
    * [Examples](docs/examples.md)
    * [Tree implementations](docs/tree-implementations.md)
+   * [Setup](docs/setup.md)
 * [SPI](docs/spi.md)
 * [Simple collections](docs/simple-collections.md)
 
