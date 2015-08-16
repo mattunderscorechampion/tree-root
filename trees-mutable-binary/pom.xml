@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trees-binary-search</artifactId>
-    <name>Binary search tree implementation</name>
-    <description>Implementation of binary search trees.</description>
+    <artifactId>trees-mutable-binary</artifactId>
+    <name>Mutable binary tree implementation</name>
+    <description>Implementation of mutable binary trees</description>
 
     <prerequisites>
         <maven>${trees.prerequisite.maven.version}</maven>
@@ -31,11 +31,6 @@
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-spi</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-mutable-binary</artifactId>
         </dependency>
 
         <dependency>
@@ -79,4 +74,5 @@
             </build>
         </profile>
     </profiles>
+
 </project>
