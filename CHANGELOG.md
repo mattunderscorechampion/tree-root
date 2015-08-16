@@ -100,7 +100,7 @@ source nodes
 * Removed unused TreeAware API class
 * Renamed DefaultElementWalker to DefaultWalker and changed DefaultNodeWalker to extend it
 * Bug fixes
-* Added convinence method for obtaining an implementation of the API
+* Added convenience method for obtaining an implementation of the API
 * Refactored walker drivers to avoid recursion
 * Added JoinIterator that combines multiple iterators
 * Renamed traversal driver classes to make clear that they drive the iteration
