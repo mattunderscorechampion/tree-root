@@ -27,7 +27,7 @@ package com.mattunderscore.trees.pathcopy.holder;
 
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryAware;
+import com.mattunderscore.trees.spi.TreeBuilderFactoryAware;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 

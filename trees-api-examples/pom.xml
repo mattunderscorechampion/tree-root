@@ -57,9 +57,15 @@
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-binary-search</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-immutable</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-provider</artifactId>
         </dependency>
     </dependencies>
 

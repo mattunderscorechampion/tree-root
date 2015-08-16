@@ -27,7 +27,7 @@ package com.mattunderscore.trees.impl.suppliers.impl;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryAware;
+import com.mattunderscore.trees.spi.TreeBuilderFactoryAware;
 import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;

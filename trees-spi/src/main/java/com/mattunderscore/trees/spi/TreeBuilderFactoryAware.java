@@ -23,13 +23,13 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl;
+package com.mattunderscore.trees.spi;
 
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.spi.SPIComponent;
 
 /**
- * An SPI component that requires a {@link TreeBuilderFactory}.
+ * An SPI component that requires a {@link TreeBuilderFactory}. When constructing components implementing this interface
+ * an instance of {@link TreeBuilderFactory} should be injected using the setter method.
  * @author Matt Champion on 25/07/2015
  */
 public interface TreeBuilderFactoryAware extends SPIComponent {
