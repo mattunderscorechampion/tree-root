@@ -19,13 +19,24 @@
     <dependencies>
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-immutable</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-provider</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

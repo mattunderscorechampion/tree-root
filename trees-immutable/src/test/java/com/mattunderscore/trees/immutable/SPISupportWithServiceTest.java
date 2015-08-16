@@ -31,7 +31,6 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
-import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 

@@ -58,6 +58,7 @@
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-immutable</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -69,6 +70,12 @@
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-pathcopy</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-provider</artifactId>
             <scope>test</scope>
         </dependency>
 

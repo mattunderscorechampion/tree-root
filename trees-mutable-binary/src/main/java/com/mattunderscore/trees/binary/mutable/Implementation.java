@@ -27,7 +27,6 @@ package com.mattunderscore.trees.binary.mutable;
 
 import net.jcip.annotations.Immutable;
 
-import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.spi.TreeImplementation;
 import com.mattunderscore.trees.tree.Tree;
 

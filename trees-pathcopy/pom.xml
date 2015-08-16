@@ -24,17 +24,17 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-basic-nodes</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-provider</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-spi</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-utilities</artifactId>
         </dependency>
 
         <dependency>

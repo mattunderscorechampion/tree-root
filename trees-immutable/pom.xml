@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-provider</artifactId>
+            <artifactId>trees-basic-nodes</artifactId>
         </dependency>
 
         <dependency>
@@ -45,6 +45,12 @@
         <dependency>
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-provider</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

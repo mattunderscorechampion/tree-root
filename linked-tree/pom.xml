@@ -19,7 +19,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -35,11 +34,6 @@
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-spi</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-utilities</artifactId>
         </dependency>
     </dependencies>
 

@@ -25,6 +25,16 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-basic-nodes</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>tree-wrappers</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-provider</artifactId>
         </dependency>
 
@@ -34,14 +44,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-utilities</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -52,7 +56,6 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -74,5 +77,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
