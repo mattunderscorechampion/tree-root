@@ -6,6 +6,8 @@ you will need to add the module for each tree implementation you wish to use. Yo
 ```trees-provider``` as a dependency, this dependency provides an implementation for the Trees class, builders and other
 parts of the API that are not specific to a single tree.
 
+Here is an example of how to add the API and immutable tree implementation to your project:
+
 ```xml
 <dependency>
     <groupId>com.mattunderscore.tree.root</groupId>
