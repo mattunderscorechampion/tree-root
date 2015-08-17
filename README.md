@@ -65,6 +65,7 @@ Element: 6
    * [Tree implementations](docs/tree-implementations.md)
    * [Setup](docs/setup.md)
 * [SPI](docs/spi.md)
+* [Custom tree implementations](docs/custom-tree-implementations.md)
 * [Simple collections](docs/simple-collections.md)
 * [Iterators](docs/iterators.md)
 
