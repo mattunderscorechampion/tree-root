@@ -66,6 +66,7 @@ Element: 6
    * [Setup](docs/setup.md)
 * [SPI](docs/spi.md)
 * [Simple collections](docs/simple-collections.md)
+* [Iterators](docs/iterators.md)
 
 ####Targeted Language
 
