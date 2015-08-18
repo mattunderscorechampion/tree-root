@@ -39,5 +39,7 @@ public interface Tree<E, N extends OpenNode<E, ? extends N>> {
     /**
      * @return {@code true} if the tree is empty
      */
-    boolean isEmpty();
+    default boolean isEmpty() {
+        return getRoot() == null;
+    }
 }
