@@ -35,14 +35,13 @@ import java.util.Iterator;
 import org.junit.Test;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
 
 /**
  * Tests for {@link MutableBinaryTreeImpl}.
  * @author Matt Champion on 04/05/15
  */
 public final class MutableBinaryTreeImplTest {
-      private final MutableBinaryTreeImpl.Constructor<String> constructor = new MutableBinaryTreeImpl.Constructor<>();
+      private final Constructor<String> constructor = new Constructor<>();
 
       @Test
       public void build() {

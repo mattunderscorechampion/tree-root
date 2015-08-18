@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,47 +25,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
-import net.jcip.annotations.NotThreadSafe;
-
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Mutable binary tree implementation.
- * @author Matt Champion on 08/09/14.
+ * Implementation of {@link com.mattunderscore.trees.spi.EmptyTreeConstructor} for
+ * {@link MutableBinaryTreeImpl}.
+ * @author Matt Champion on 18/08/2015
  */
-@NotThreadSafe
-public final class MutableBinaryTreeImpl<E> implements Tree<E, MutableBinaryTreeNode<E>> {
-    private MutableBinaryTreeNodeImpl<E> root;
-
-    /*package*/ MutableBinaryTreeImpl() {
-        root = null;
-    }
-
-    /*package*/ MutableBinaryTreeImpl(MutableBinaryTreeNodeImpl<E> root) {
-        this.root = root;
+public final class EmptyConstructor<E> implements EmptyTreeConstructor<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> {
+    @Override
+    public MutableBinaryTreeImpl<E> build() {
+        return new MutableBinaryTreeImpl<>();
     }
 
     @Override
-    public MutableBinaryTreeNode<E> getRoot() {
-        return root;
-    }
-
-    /**
-     * Allow mutation of root.
-     * @param newRoot The new root
-     */
-    /*package*/ void setRoot(MutableBinaryTreeNodeImpl<E> newRoot) {
-        root = newRoot;
-    }
-
-    /**
-     * Construct a TypeKey for a specific element type.
-     * @param <E> The element type
-     * @return The type key
-     */
-    public static <E> TypeKey<MutableBinaryTreeImpl<E>> typeKey() {
-        return new TypeKey<MutableBinaryTreeImpl<E>>() {};
+    public Class<? extends Tree> forClass() {
+        return MutableBinaryTreeImpl.class;
     }
 }

@@ -35,14 +35,12 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 
 /**
- * Test for {@link MutableBinaryTreeImpl.NodeConverter}.
+ * Test for {@link NodeConverter}.
  * @author Matt Champion on 04/05/15
  */
 public class MutableBinaryTreeConverterTest {
@@ -54,7 +52,7 @@ public class MutableBinaryTreeConverterTest {
             final MutableBinaryTreeImpl<String> tree = builder.create("a", builder.create("b", builder.create("c")))
                 .build(MutableBinaryTreeImpl.typeKey());
 
-            final MutableBinaryTreeImpl.Converter<String> converter = new MutableBinaryTreeImpl.Converter<>();
+            final Converter<String> converter = new Converter<>();
 
             final MutableBinaryTreeImpl<String> convertedTree =
                 converter.build(tree);
@@ -79,7 +77,7 @@ public class MutableBinaryTreeConverterTest {
             final LinkedTree<String> tree = builder.create("a", builder.create("b", builder.create("c")))
                 .build(LinkedTree.typeKey());
 
-            final MutableBinaryTreeImpl.Converter<String> converter = new MutableBinaryTreeImpl.Converter<>();
+            final Converter<String> converter = new Converter<>();
 
             final MutableBinaryTreeImpl<String> convertedTree =
                 converter.build(tree);
@@ -104,7 +102,7 @@ public class MutableBinaryTreeConverterTest {
             final LinkedTree<String> tree = builder.create("a", builder.create("b"), builder.create("c"))
                 .build(LinkedTree.typeKey());
 
-            final MutableBinaryTreeImpl.Converter<String> converter = new MutableBinaryTreeImpl.Converter<>();
+            final Converter<String> converter = new Converter<>();
 
             final MutableBinaryTreeImpl<String> convertedTree =
                 converter.build(tree);
@@ -128,7 +126,7 @@ public class MutableBinaryTreeConverterTest {
             final LinkedTree<String> tree = builder.create("a", builder.create("b"), builder.create("c"), builder.create("c"))
                 .build(LinkedTree.typeKey());
 
-            final MutableBinaryTreeImpl.Converter<String> converter = new MutableBinaryTreeImpl.Converter<>();
+            final Converter<String> converter = new Converter<>();
 
             converter.build(tree);
       }
