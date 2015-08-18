@@ -42,6 +42,7 @@ import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Mutable binary tree implementation.
  * @author Matt Champion on 08/09/14.
  */
 @NotThreadSafe
