@@ -30,10 +30,10 @@ import java.util.Iterator;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import com.mattunderscore.trees.base.NonSettableNode;
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.iterators.ArrayIterator;
 import com.mattunderscore.iterators.SingletonIterator;
+import com.mattunderscore.trees.base.NonSettableNode;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 
 /**
  * Mutable binary tree node implementation.
@@ -68,25 +68,25 @@ public final class MutableBinaryTreeNodeImpl<E> extends NonSettableNode<E, Mutab
         return setInternalRight(new MutableBinaryTreeNodeImpl<>(element));
     }
 
-    private synchronized MutableBinaryTreeNodeImpl<E> setInternalRight(MutableBinaryTreeNodeImpl<E> right) {
+    private MutableBinaryTreeNodeImpl<E> setInternalRight(MutableBinaryTreeNodeImpl<E> right) {
         this.right = right;
         children[1] = right;
         return right;
     }
 
-    private synchronized MutableBinaryTreeNodeImpl<E> setInternalLeft(MutableBinaryTreeNodeImpl<E> left) {
+    private MutableBinaryTreeNodeImpl<E> setInternalLeft(MutableBinaryTreeNodeImpl<E> left) {
         this.left = left;
         children[0] = left;
         return left;
     }
 
     @Override
-    public synchronized MutableBinaryTreeNode<E> getLeft() {
+    public MutableBinaryTreeNode<E> getLeft() {
         return left;
     }
 
     @Override
-    public synchronized MutableBinaryTreeNode<E> getRight() {
+    public MutableBinaryTreeNode<E> getRight() {
         return right;
     }
 
