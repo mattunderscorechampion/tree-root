@@ -40,19 +40,33 @@ import com.mattunderscore.trees.spi.TreeConverter;
 import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
-import com.mattunderscore.trees.wrappers.AbstractTreeWrapper;
 
 /**
  * @author Matt Champion on 08/09/14.
  */
 @NotThreadSafe
-public final class MutableBinaryTreeImpl<E> extends AbstractTreeWrapper<E, MutableBinaryTreeNode<E>> {
+public final class MutableBinaryTreeImpl<E> implements Tree<E, MutableBinaryTreeNode<E>> {
+    private MutableBinaryTreeNodeImpl<E> root;
+
     private MutableBinaryTreeImpl() {
-        super();
+        root = null;
     }
 
-    private MutableBinaryTreeImpl(MutableBinaryTreeNode<E> root) {
-        super(root);
+    private MutableBinaryTreeImpl(MutableBinaryTreeNodeImpl<E> root) {
+        this.root = root;
+    }
+
+    @Override
+    public MutableBinaryTreeNode<E> getRoot() {
+        return root;
+    }
+
+    /**
+     * Allow mutation of root.
+     * @param newRoot The new root
+     */
+    /*package*/ void setRoot(MutableBinaryTreeNodeImpl<E> newRoot) {
+        root = newRoot;
     }
 
     public static final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> implements TreeBuilderFactoryAware {
