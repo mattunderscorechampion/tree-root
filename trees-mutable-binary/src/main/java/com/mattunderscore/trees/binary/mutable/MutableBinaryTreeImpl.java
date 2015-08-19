@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
+import com.mattunderscore.trees.binary.MutableBinaryTree;
 import net.jcip.annotations.NotThreadSafe;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
@@ -36,7 +37,7 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 08/09/14.
  */
 @NotThreadSafe
-public final class MutableBinaryTreeImpl<E> implements Tree<E, MutableBinaryTreeNode<E>> {
+public final class MutableBinaryTreeImpl<E> implements MutableBinaryTree<E, MutableBinaryTreeNode<E>> {
     private MutableBinaryTreeNodeImpl<E> root;
 
     /*package*/ MutableBinaryTreeImpl() {
@@ -52,11 +53,18 @@ public final class MutableBinaryTreeImpl<E> implements Tree<E, MutableBinaryTree
         return root;
     }
 
+    @Override
+    public MutableBinaryTreeNode<E> setRoot(E root) {
+        final MutableBinaryTreeNodeImpl<E> newRoot = new MutableBinaryTreeNodeImpl<>(root);
+        setRootInternal(newRoot);
+        return newRoot;
+    }
+
     /**
      * Allow mutation of root.
      * @param newRoot The new root
      */
-    /*package*/ void setRoot(MutableBinaryTreeNodeImpl<E> newRoot) {
+    /*package*/ void setRootInternal(MutableBinaryTreeNodeImpl<E> newRoot) {
         root = newRoot;
     }
 

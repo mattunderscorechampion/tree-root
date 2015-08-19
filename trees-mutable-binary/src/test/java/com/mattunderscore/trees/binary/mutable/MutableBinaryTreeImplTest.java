@@ -25,16 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Iterator;
 
+import com.mattunderscore.trees.binary.MutableBinaryTree;
 import org.junit.Test;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for {@link MutableBinaryTreeImpl}.
@@ -97,5 +95,18 @@ public final class MutableBinaryTreeImplTest {
         assertEquals("d", iterator.next().getElement());
         assertEquals("e", iterator.next().getElement());
         assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void setRoot() {
+        final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>();
+
+        assertTrue(tree.isEmpty());
+
+        final MutableBinaryTreeNode<String> node = tree.setRoot("a");
+
+        assertEquals("a", node.getElement());
+        assertFalse(tree.isEmpty());
+        assertSame(node, tree.getRoot());
     }
 }
