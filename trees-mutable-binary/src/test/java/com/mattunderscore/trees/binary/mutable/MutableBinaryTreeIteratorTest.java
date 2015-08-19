@@ -25,18 +25,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.tree.Tree;
+import org.junit.Test;
 
 import java.util.Iterator;
 
-import org.junit.Test;
-
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
-import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.tree.Tree;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Matt Champion on 08/09/14.

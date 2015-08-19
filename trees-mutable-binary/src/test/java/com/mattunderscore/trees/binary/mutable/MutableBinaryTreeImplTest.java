@@ -25,12 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
-import java.util.Iterator;
-
-import com.mattunderscore.trees.binary.MutableBinaryTree;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import org.junit.Test;
 
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import java.util.Iterator;
 
 import static org.junit.Assert.*;
 

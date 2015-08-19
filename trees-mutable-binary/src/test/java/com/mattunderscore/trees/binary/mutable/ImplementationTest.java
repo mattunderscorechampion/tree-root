@@ -1,10 +1,9 @@
 package com.mattunderscore.trees.binary.mutable;
 
-import static org.junit.Assert.assertEquals;
-
+import com.mattunderscore.trees.spi.TreeImplementation;
 import org.junit.Test;
 
-import com.mattunderscore.trees.spi.TreeImplementation;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit tests for {@link Implementation}.

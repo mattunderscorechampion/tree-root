@@ -26,11 +26,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTree;
-import net.jcip.annotations.NotThreadSafe;
-
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.Tree;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Mutable binary tree implementation.
