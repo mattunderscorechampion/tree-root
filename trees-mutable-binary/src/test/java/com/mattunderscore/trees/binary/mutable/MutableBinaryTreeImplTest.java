@@ -38,63 +38,64 @@ import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 
 /**
  * Tests for {@link MutableBinaryTreeImpl}.
+ *
  * @author Matt Champion on 04/05/15
  */
 public final class MutableBinaryTreeImplTest {
-      private final Constructor<String> constructor = new Constructor<>();
+    private final Constructor<String> constructor = new Constructor<>();
 
-      @Test
-      public void build() {
-            final MutableBinaryTreeImpl<String> leftSubtree = constructor.build("b", new MutableBinaryTreeImpl[0]);
-            final MutableBinaryTreeImpl<String> rightSubtree = constructor.build("c", new MutableBinaryTreeImpl[0]);
+    @Test
+    public void build() {
+        final MutableBinaryTreeImpl<String> leftSubtree = constructor.build("b", new MutableBinaryTreeImpl[0]);
+        final MutableBinaryTreeImpl<String> rightSubtree = constructor.build("c", new MutableBinaryTreeImpl[0]);
 
-            final MutableBinaryTreeImpl<String> tree = constructor.build("a", new MutableBinaryTreeImpl[] {leftSubtree, rightSubtree});
+        final MutableBinaryTreeImpl<String> tree = constructor.build("a", new MutableBinaryTreeImpl[]{leftSubtree, rightSubtree});
 
-            assertEquals("a", tree.getRoot().getElement());
+        assertEquals("a", tree.getRoot().getElement());
 
-            final Iterator<? extends MutableBinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
-            final MutableBinaryTreeNode<String> left = iterator.next();
-            final MutableBinaryTreeNode<String> right = iterator.next();
-            assertFalse(iterator.hasNext());
+        final Iterator<? extends MutableBinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
+        final MutableBinaryTreeNode<String> left = iterator.next();
+        final MutableBinaryTreeNode<String> right = iterator.next();
+        assertFalse(iterator.hasNext());
 
-            assertEquals("b", left.getElement());
-            assertEquals("c", right.getElement());
-            assertFalse(left.childIterator().hasNext());
-            assertFalse(right.childIterator().hasNext());
-      }
+        assertEquals("b", left.getElement());
+        assertEquals("c", right.getElement());
+        assertFalse(left.childIterator().hasNext());
+        assertFalse(right.childIterator().hasNext());
+    }
 
-      @Test(expected = IllegalStateException.class)
-      public void badBuild() {
-            final MutableBinaryTreeImpl<String> subtree0 = constructor.build("a", new MutableBinaryTreeImpl[0]);
-            final MutableBinaryTreeImpl<String> subtree1 = constructor.build("b", new MutableBinaryTreeImpl[0]);
-            final MutableBinaryTreeImpl<String> subtree2 = constructor.build("c", new MutableBinaryTreeImpl[0]);
+    @Test(expected = IllegalStateException.class)
+    public void badBuild() {
+        final MutableBinaryTreeImpl<String> subtree0 = constructor.build("a", new MutableBinaryTreeImpl[0]);
+        final MutableBinaryTreeImpl<String> subtree1 = constructor.build("b", new MutableBinaryTreeImpl[0]);
+        final MutableBinaryTreeImpl<String> subtree2 = constructor.build("c", new MutableBinaryTreeImpl[0]);
 
-            constructor.build("a", new MutableBinaryTreeImpl[] {subtree0, subtree1, subtree2});
-      }
+        constructor.build("a", new MutableBinaryTreeImpl[]{subtree0, subtree1, subtree2});
+    }
 
-      @Test
-      public void mutate() {
-            final MutableBinaryTreeImpl<String> leftSubtree = constructor.build("b", new MutableBinaryTreeImpl[0]);
-            final MutableBinaryTreeImpl<String> rightSubtree = constructor.build("c", new MutableBinaryTreeImpl[0]);
+    @Test
+    public void mutate() {
+        final MutableBinaryTreeImpl<String> leftSubtree = constructor.build("b", new MutableBinaryTreeImpl[0]);
+        final MutableBinaryTreeImpl<String> rightSubtree = constructor.build("c", new MutableBinaryTreeImpl[0]);
 
-            final MutableBinaryTreeImpl<String> tree = constructor.build("a", new MutableBinaryTreeImpl[]{leftSubtree, rightSubtree});
+        final MutableBinaryTreeImpl<String> tree = constructor.build("a", new MutableBinaryTreeImpl[]{leftSubtree, rightSubtree});
 
-            assertEquals("a", tree.getRoot().getElement());
-            final MutableBinaryTreeNode<String> left = tree.getRoot().getLeft();
-            assertNull(left.getLeft());
-            final MutableBinaryTreeNode<String> leftOfLeft = left.setLeft("d");
-            assertEquals("d", left.getLeft().getElement());
-            assertEquals(leftOfLeft, left.getLeft());
+        assertEquals("a", tree.getRoot().getElement());
+        final MutableBinaryTreeNode<String> left = tree.getRoot().getLeft();
+        assertNull(left.getLeft());
+        final MutableBinaryTreeNode<String> leftOfLeft = left.setLeft("d");
+        assertEquals("d", left.getLeft().getElement());
+        assertEquals(leftOfLeft, left.getLeft());
 
-            assertNull(left.getRight());
-            final MutableBinaryTreeNode<String> rightOfLeft = left.setRight("e");
-            assertEquals("e", left.getRight().getElement());
-            assertEquals(rightOfLeft, left.getRight());
+        assertNull(left.getRight());
+        final MutableBinaryTreeNode<String> rightOfLeft = left.setRight("e");
+        assertEquals("e", left.getRight().getElement());
+        assertEquals(rightOfLeft, left.getRight());
 
-            final Iterator<? extends MutableBinaryTreeNode<String>> iterator = left.childIterator();
-            assertTrue(iterator.hasNext());
-            assertEquals("d", iterator.next().getElement());
-            assertEquals("e", iterator.next().getElement());
-            assertFalse(iterator.hasNext());
-      }
+        final Iterator<? extends MutableBinaryTreeNode<String>> iterator = left.childIterator();
+        assertTrue(iterator.hasNext());
+        assertEquals("d", iterator.next().getElement());
+        assertEquals("e", iterator.next().getElement());
+        assertFalse(iterator.hasNext());
+    }
 }
