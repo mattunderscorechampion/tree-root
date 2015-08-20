@@ -26,39 +26,38 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.spi.Rotator;
+import com.mattunderscore.trees.spi.Rotator.RootReference;
+import com.mattunderscore.trees.spi.Rotator.RootReferenceFactory;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Implementation of {@link Rotator} for {@link MutableBinaryTreeNodeImpl} in the left direction.
+ * Implementation of {@link RootReferenceFactory} for {@link MutableBinaryTreeNodeImpl}.
  * @author Matt Champion on 20/08/2015
  */
-public final class RightRotator<E> implements Rotator<E, MutableBinaryTreeNode<E>> {
+public final class RootReferenceFactoryImpl<E> implements RootReferenceFactory<E, MutableBinaryTreeNode<E>> {
     @Override
-    public void rotate(Rotator.RootReference<MutableBinaryTreeNode<E>> reference, MutableBinaryTreeNode<E> currentRoot) {
-        final MutableBinaryTreeNodeImpl<E> root = (MutableBinaryTreeNodeImpl<E>)currentRoot;
-        final MutableBinaryTreeNodeImpl<E> pivot = (MutableBinaryTreeNodeImpl<E>)root.getLeft();
-
-        if (pivot == null) {
-            throw new IllegalStateException("No pivot node");
-        }
-        else {
-            final MutableBinaryTreeNodeImpl<E> rs = (MutableBinaryTreeNodeImpl<E>)pivot.getRight();
-
-            if (rs == null) {
-                pivot.setInternalRight(root);
-                reference.replaceRoot(root, pivot);
+    public RootReference<MutableBinaryTreeNode<E>> wrapNode(MutableBinaryTreeNode<E> node) {
+        return (oldRoot, newRoot) -> {
+            if (node.getLeft() == oldRoot) {
+                final MutableBinaryTreeNodeImpl<E> concreteNode = (MutableBinaryTreeNodeImpl<E>)node;
+                concreteNode.setInternalLeft((MutableBinaryTreeNodeImpl<E>)newRoot);
+            }
+            else if (node.getRight() == oldRoot) {
+                final MutableBinaryTreeNodeImpl<E> concreteNode = (MutableBinaryTreeNodeImpl<E>)node;
+                concreteNode.setInternalRight((MutableBinaryTreeNodeImpl<E>) newRoot);
             }
             else {
-                root.setInternalLeft(rs);
-                pivot.setInternalRight(root);
-                reference.replaceRoot(root, pivot);
+                throw new IllegalStateException("The root node is not child of parent");
             }
-        }
+        };
     }
 
     @Override
-    public Direction forDirection() {
-        return Direction.RIGHT;
+    public RootReference<MutableBinaryTreeNode<E>> wrapTree(Tree<E, MutableBinaryTreeNode<E>> tree) {
+        return (oldRoot, newRoot) -> {
+            final MutableBinaryTreeImpl<E> concreteTree = (MutableBinaryTreeImpl<E>)tree;
+            concreteTree.setRootInternal((MutableBinaryTreeNodeImpl<E>)newRoot);
+        };
     }
 
     @Override

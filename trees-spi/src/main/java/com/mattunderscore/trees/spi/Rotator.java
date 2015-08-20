@@ -41,20 +41,6 @@ public interface Rotator<E, N extends OpenNode<E, N>> extends SPIComponent {
     void rotate(RootReference<N> reference, N root);
 
     /**
-     * Wrap a node as a root reference.
-     * @param node The node to wrap
-     * @return The reference
-     */
-    RootReference<N> wrapNode(N node);
-
-    /**
-     * Wrap a tree as a root reference.
-     * @param tree The tree to wrap
-     * @return The reference
-     */
-    RootReference<N> wrapTree(Tree<E, N> tree);
-
-    /**
      * @return The direction of rotation performed by the rotator
      */
     Direction forDirection();
@@ -74,5 +60,26 @@ public interface Rotator<E, N extends OpenNode<E, N>> extends SPIComponent {
          * @param pivot The pivot of the rotation
          */
        void replaceRoot(O root, O pivot);
+    }
+
+    /**
+     * Factory for {@link RootReference} objects.
+     * @param <E> The element type
+     * @param <O> The node type
+     */
+    interface RootReferenceFactory<E, O extends OpenNode<E, O>> extends SPIComponent {
+        /**
+         * Wrap a node as a root reference.
+         * @param node The node to wrap
+         * @return The reference
+         */
+        RootReference<O> wrapNode(O node);
+
+        /**
+         * Wrap a tree as a root reference.
+         * @param tree The tree to wrap
+         * @return The reference
+         */
+        RootReference<O> wrapTree(Tree<E, O> tree);
     }
 }

@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.spi.Rotator;
+import com.mattunderscore.trees.spi.Rotator.Direction;
 
 /**
  * Unit tests for {@link LeftRotator}.
@@ -16,6 +16,7 @@ public final class LeftRotatorTest {
 
     @Test
     public void rotateAtRoot() {
+        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> b = new MutableBinaryTreeNodeImpl<>("b");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
@@ -25,7 +26,7 @@ public final class LeftRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(p);
 
         final LeftRotator<String> rotator = new LeftRotator<>();
-        rotator.rotate(rotator.wrapTree(tree), tree.getRoot());
+        rotator.rotate(factory.wrapTree(tree), tree.getRoot());
 
         assertEquals("q", tree.getRoot().getElement());
         assertEquals("p", tree.getRoot().getLeft().getElement());
@@ -36,6 +37,7 @@ public final class LeftRotatorTest {
 
     @Test
     public void rotateAtNode() {
+        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> b = new MutableBinaryTreeNodeImpl<>("b");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
@@ -46,7 +48,7 @@ public final class LeftRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
         final LeftRotator<String> rotator = new LeftRotator<>();
-        rotator.rotate(rotator.wrapNode(node), tree.getRoot().getLeft());
+        rotator.rotate(factory.wrapNode(node), tree.getRoot().getLeft());
 
         assertEquals("node", tree.getRoot().getElement());
         assertEquals("q", tree.getRoot().getLeft().getElement());
@@ -58,6 +60,7 @@ public final class LeftRotatorTest {
 
     @Test
     public void rotateSimpleAtRoot() {
+        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
         final MutableBinaryTreeNodeImpl<String> q = new MutableBinaryTreeNodeImpl<>("q", null, c);
@@ -66,7 +69,7 @@ public final class LeftRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(p);
 
         final LeftRotator<String> rotator = new LeftRotator<>();
-        rotator.rotate(rotator.wrapTree(tree), tree.getRoot());
+        rotator.rotate(factory.wrapTree(tree), tree.getRoot());
 
         assertEquals("q", tree.getRoot().getElement());
         assertEquals("p", tree.getRoot().getLeft().getElement());
@@ -76,6 +79,7 @@ public final class LeftRotatorTest {
 
     @Test
     public void rotateSimpleAtNodeOnLeft() {
+        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
         final MutableBinaryTreeNodeImpl<String> q = new MutableBinaryTreeNodeImpl<>("q", null, c);
@@ -85,7 +89,7 @@ public final class LeftRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
         final LeftRotator<String> rotator = new LeftRotator<>();
-        rotator.rotate(rotator.wrapNode(node), tree.getRoot().getLeft());
+        rotator.rotate(factory.wrapNode(node), tree.getRoot().getLeft());
 
         assertEquals("node", tree.getRoot().getElement());
         assertEquals("q", tree.getRoot().getLeft().getElement());
@@ -96,6 +100,7 @@ public final class LeftRotatorTest {
 
     @Test
     public void rotateSimpleAtRight() {
+        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
         final MutableBinaryTreeNodeImpl<String> q = new MutableBinaryTreeNodeImpl<>("q", null, c);
@@ -105,7 +110,7 @@ public final class LeftRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
         final LeftRotator<String> rotator = new LeftRotator<>();
-        rotator.rotate(rotator.wrapNode(node), tree.getRoot().getRight());
+        rotator.rotate(factory.wrapNode(node), tree.getRoot().getRight());
 
         assertEquals("node", tree.getRoot().getElement());
         assertEquals("q", tree.getRoot().getRight().getElement());
@@ -115,23 +120,15 @@ public final class LeftRotatorTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void unableToReplaceUnknown() {
-        final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
-        final MutableBinaryTreeNodeImpl<String> b = new MutableBinaryTreeNodeImpl<>("b");
-        final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
-        final Rotator.RootReference<MutableBinaryTreeNode<String>> reference = new LeftRotator<String>().wrapNode(a);
-        reference.replaceRoot(b, c);
-    }
-
-    @Test(expected = IllegalStateException.class)
     public void attemptWithoutPivot() {
+        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> p = new MutableBinaryTreeNodeImpl<>("p", a, null);
 
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(p);
 
         final LeftRotator<String> rotator = new LeftRotator<>();
-        rotator.rotate(rotator.wrapTree(tree), tree.getRoot());
+        rotator.rotate(factory.wrapTree(tree), tree.getRoot());
     }
 
     @Test

@@ -27,7 +27,6 @@ package com.mattunderscore.trees.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.spi.Rotator;
-import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Implementation of {@link Rotator} for {@link MutableBinaryTreeNodeImpl} in the left direction.
@@ -55,31 +54,6 @@ public final class LeftRotator<E> implements Rotator<E, MutableBinaryTreeNode<E>
                 reference.replaceRoot(root, pivot);
             }
         }
-    }
-
-    @Override
-    public RootReference<MutableBinaryTreeNode<E>> wrapNode(MutableBinaryTreeNode<E> node) {
-        return (oldRoot, newRoot) -> {
-            if (node.getLeft() == oldRoot) {
-                final MutableBinaryTreeNodeImpl<E> concreteNode = (MutableBinaryTreeNodeImpl<E>)node;
-                concreteNode.setInternalLeft((MutableBinaryTreeNodeImpl<E>)newRoot);
-            }
-            else if (node.getRight() == oldRoot) {
-                final MutableBinaryTreeNodeImpl<E> concreteNode = (MutableBinaryTreeNodeImpl<E>)node;
-                concreteNode.setInternalRight((MutableBinaryTreeNodeImpl<E>) newRoot);
-            }
-            else {
-                throw new IllegalStateException("The root node is not child of parent");
-            }
-        };
-    }
-
-    @Override
-    public RootReference<MutableBinaryTreeNode<E>> wrapTree(Tree<E, MutableBinaryTreeNode<E>> tree) {
-        return (oldRoot, newRoot) -> {
-            final MutableBinaryTreeImpl<E> concreteTree = (MutableBinaryTreeImpl<E>)tree;
-            concreteTree.setRootInternal((MutableBinaryTreeNodeImpl<E>)newRoot);
-        };
     }
 
     @Override
