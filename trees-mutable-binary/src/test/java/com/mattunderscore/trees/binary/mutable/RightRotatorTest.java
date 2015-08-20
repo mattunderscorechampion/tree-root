@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.mattunderscore.trees.spi.Rotator;
+import com.mattunderscore.trees.spi.Rotator.Direction;
+
 /**
  * Unit tests for {@link RightRotator}.
  *
@@ -126,6 +129,12 @@ public final class RightRotatorTest {
 
         final RightRotator<String> rotator = new RightRotator<>();
         rotator.rotate(factory.wrapTree(tree), tree.getRoot());
+    }
+
+    @Test
+    public void forDirection() {
+        final RightRotator<String> rotator = new RightRotator<>();
+        assertEquals(Direction.RIGHT, rotator.forDirection());
     }
 
     @Test

@@ -132,6 +132,12 @@ public final class LeftRotatorTest {
     }
 
     @Test
+    public void forDirection() {
+        final LeftRotator<String> rotator = new LeftRotator<>();
+        assertEquals(Direction.LEFT, rotator.forDirection());
+    }
+
+    @Test
     public void forClass() {
         final LeftRotator<String> rotator = new LeftRotator<>();
         assertEquals(MutableBinaryTreeNodeImpl.class, rotator.forClass());
