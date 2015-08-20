@@ -83,6 +83,11 @@ public final class RightRotator<E> implements Rotator<E, MutableBinaryTreeNode<E
     }
 
     @Override
+    public Direction forDirection() {
+        return Direction.RIGHT;
+    }
+
+    @Override
     public Class<?> forClass() {
         return MutableBinaryTreeNodeImpl.class;
     }

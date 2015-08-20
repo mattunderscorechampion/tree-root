@@ -55,6 +55,16 @@ public interface Rotator<E, N extends OpenNode<E, N>> extends SPIComponent {
     RootReference<N> wrapTree(Tree<E, N> tree);
 
     /**
+     * @return The direction of rotation performed by the rotator
+     */
+    Direction forDirection();
+
+    enum Direction {
+        LEFT,
+        RIGHT;
+    }
+
+    /**
      * Reference to the root to allow replacement.
      */
     interface RootReference<O> {
