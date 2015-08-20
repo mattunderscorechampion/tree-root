@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.mattunderscore.trees.spi.Rotator;
 import com.mattunderscore.trees.spi.Rotator.Direction;
 
 /**

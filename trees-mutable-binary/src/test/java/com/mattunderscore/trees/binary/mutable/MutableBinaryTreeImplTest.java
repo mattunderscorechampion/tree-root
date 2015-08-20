@@ -49,6 +49,8 @@ public final class MutableBinaryTreeImplTest {
 
         assertEquals("a", tree.getRoot().getElement());
 
+        assertFalse(tree.getRoot().isLeaf());
+
         final Iterator<? extends MutableBinaryTreeNode<String>> iterator = tree.getRoot().childIterator();
         final MutableBinaryTreeNode<String> left = iterator.next();
         final MutableBinaryTreeNode<String> right = iterator.next();
@@ -58,6 +60,11 @@ public final class MutableBinaryTreeImplTest {
         assertEquals("c", right.getElement());
         assertFalse(left.childIterator().hasNext());
         assertFalse(right.childIterator().hasNext());
+        assertTrue(left.isLeaf());
+        assertTrue(right.isLeaf());
+
+        assertEquals(left, tree.getRoot().getChild(0));
+        assertEquals(right, tree.getRoot().getChild(1));
     }
 
     @Test(expected = IllegalStateException.class)
