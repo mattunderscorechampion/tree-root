@@ -32,7 +32,6 @@ import net.jcip.annotations.NotThreadSafe;
 
 import com.mattunderscore.iterators.ArrayIterator;
 import com.mattunderscore.iterators.SingletonIterator;
-import com.mattunderscore.trees.base.NonSettableNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 
 /**
@@ -40,20 +39,21 @@ import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
  * @author Matt Champion on 06/09/14.
  */
 @NotThreadSafe
-public final class MutableBinaryTreeNodeImpl<E> extends NonSettableNode<E, MutableBinaryTreeNode<E>> implements MutableBinaryTreeNode<E> {
+public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode<E> {
+    private final E element;
     private MutableBinaryTreeNodeImpl<E> left;
     private MutableBinaryTreeNodeImpl<E> right;
     @SuppressWarnings("unchecked")
     private final MutableBinaryTreeNodeImpl<E>[] children = new MutableBinaryTreeNodeImpl[2];
 
     public MutableBinaryTreeNodeImpl(E element) {
-        super(element);
+        this.element = element;
         left = null;
         right = null;
     }
 
     public MutableBinaryTreeNodeImpl(E element, MutableBinaryTreeNodeImpl<E> left, MutableBinaryTreeNodeImpl<E> right) {
-        super(element);
+        this.element = element;
         setInternalLeft(left);
         setInternalRight(right);
     }
@@ -68,13 +68,13 @@ public final class MutableBinaryTreeNodeImpl<E> extends NonSettableNode<E, Mutab
         return setInternalRight(new MutableBinaryTreeNodeImpl<>(element));
     }
 
-    private MutableBinaryTreeNodeImpl<E> setInternalRight(MutableBinaryTreeNodeImpl<E> right) {
+    /*package*/ MutableBinaryTreeNodeImpl<E> setInternalRight(MutableBinaryTreeNodeImpl<E> right) {
         this.right = right;
         children[1] = right;
         return right;
     }
 
-    private MutableBinaryTreeNodeImpl<E> setInternalLeft(MutableBinaryTreeNodeImpl<E> left) {
+    /*package*/ MutableBinaryTreeNodeImpl<E> setInternalLeft(MutableBinaryTreeNodeImpl<E> left) {
         this.left = left;
         children[0] = left;
         return left;
@@ -88,6 +88,11 @@ public final class MutableBinaryTreeNodeImpl<E> extends NonSettableNode<E, Mutab
     @Override
     public MutableBinaryTreeNode<E> getRight() {
         return right;
+    }
+
+    @Override
+    public E getElement() {
+        return element;
     }
 
     @Override
