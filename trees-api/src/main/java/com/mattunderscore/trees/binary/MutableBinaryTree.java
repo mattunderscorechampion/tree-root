@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary;
 
+import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -38,4 +39,14 @@ public interface MutableBinaryTree<E, N extends OpenMutableBinaryTreeNode<E, N>>
      * @return Root node.
      */
     N setRoot(E root);
+
+    /**
+     * Construct a TypeKey for a specific element type.
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return The type key
+     */
+    static <E, N extends OpenMutableBinaryTreeNode<E, N>> TypeKey<MutableBinaryTree<E, N>> typeKey() {
+        return new TypeKey<MutableBinaryTree<E, N>>() {};
+    }
 }
