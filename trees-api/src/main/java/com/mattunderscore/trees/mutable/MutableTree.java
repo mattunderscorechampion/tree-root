@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.mutable;
 
+import com.mattunderscore.trees.construction.TypeKey;
+import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -38,4 +40,14 @@ public interface MutableTree<E, N extends OpenMutableNode<E, N>> extends Tree<E,
      * @return Root node.
      */
     N setRoot(E root);
+
+    /**
+     * Construct a TypeKey for a specific element type.
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return The type key
+     */
+    static <E, N extends OpenMutableNode<E, N>> TypeKey<MutableTree<E, N>> typeKey() {
+        return new TypeKey<MutableTree<E, N>>() {};
+    }
 }

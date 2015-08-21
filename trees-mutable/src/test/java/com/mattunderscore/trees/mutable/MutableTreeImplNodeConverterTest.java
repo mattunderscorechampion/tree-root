@@ -33,7 +33,6 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
 import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
@@ -67,7 +66,7 @@ public final class MutableTreeImplNodeConverterTest {
         final MutableTree<String, MutableSettableNode<String>> tree = builder.create("root",
             builder.create("left"),
             builder.create("right"))
-            .build(MutableTreeImpl.typeKey());
+            .build(MutableTree.typeKey());
 
         final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
         final MutableTreeImplNodeConverter<String> converter = new MutableTreeImplNodeConverter<>();
