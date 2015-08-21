@@ -75,7 +75,7 @@ public final class TreeNodeImplTest {
     public void bottomUpEmpty1() {
         final Tree<String, Node<String>> tree = trees.treeBuilders()
             .<String, Node<String>>bottomUpBuilder()
-            .build(TreeNodeImpl.<String>typeKey());
+            .build(Tree.<String, Node<String>>typeKey());
         assertTrue(tree.isEmpty());
         assertNull(tree.getRoot());
     }

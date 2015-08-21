@@ -25,6 +25,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.tree;
 
+import com.mattunderscore.trees.construction.TypeKey;
+
 /**
  * Represents a tree.
  * @author Matt Champion on 08/08/14.
@@ -41,5 +43,15 @@ public interface Tree<E, N extends OpenNode<E, ? extends N>> {
      */
     default boolean isEmpty() {
         return getRoot() == null;
+    }
+
+    /**
+     * Construct a TypeKey for a specific element type.
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return The type key
+     */
+    static <E, N extends OpenNode<E, N>> TypeKey<Tree<E, N>> typeKey() {
+        return new TypeKey<Tree<E, N>>() {};
     }
 }
