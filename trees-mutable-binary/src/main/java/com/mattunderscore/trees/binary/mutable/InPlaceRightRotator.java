@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.transformation.RotationDirection;
 import com.mattunderscore.trees.spi.Rotator;
 
 /**
@@ -58,8 +59,8 @@ public final class InPlaceRightRotator<E> implements Rotator<E, MutableBinaryTre
     }
 
     @Override
-    public Direction forDirection() {
-        return Direction.RIGHT;
+    public RotationDirection forDirection() {
+        return RotationDirection.RIGHT;
     }
 
     @Override

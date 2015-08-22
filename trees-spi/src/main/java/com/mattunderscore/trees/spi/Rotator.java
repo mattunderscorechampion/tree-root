@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
+import com.mattunderscore.trees.transformation.RotationDirection;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -43,12 +44,7 @@ public interface Rotator<E, N extends OpenNode<E, N>> extends SPIComponent {
     /**
      * @return The direction of rotation performed by the rotator
      */
-    Direction forDirection();
-
-    enum Direction {
-        LEFT,
-        RIGHT;
-    }
+    RotationDirection forDirection();
 
     /**
      * Reference to the root to allow replacement.

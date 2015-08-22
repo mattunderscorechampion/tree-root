@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.mattunderscore.trees.spi.Rotator.Direction;
+import com.mattunderscore.trees.transformation.RotationDirection;
 
 /**
  * Unit tests for {@link InPlaceRightRotator}.
@@ -133,7 +133,7 @@ public final class InPlaceRightRotatorTest {
     @Test
     public void forDirection() {
         final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
-        assertEquals(Direction.RIGHT, rotator.forDirection());
+        assertEquals(RotationDirection.RIGHT, rotator.forDirection());
     }
 
     @Test
