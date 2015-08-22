@@ -23,39 +23,21 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.spi;
+package com.mattunderscore.trees.impl.suppliers.impl;
 
-import com.mattunderscore.trees.transformation.RotationDirection;
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.binary.OpenMutableBinaryTreeNode;
+import com.mattunderscore.trees.spi.RootReferenceFactory;
 
 /**
- * Rotator SPI component. Rotates a tree once in any direction.
- * @author Matt Champion on 17/08/2015
+ * Supplier for {@link RootReferenceFactory} components.
+ * @author Matt Champion on 22/08/2015
  */
-public interface Rotator<E, N extends OpenNode<E, N>> extends SPIComponent {
-    /**
-     * Apply the rotation.
-     * @param reference The reference to the root
-     * @param root The root of the rotation
-     */
-    void rotate(RootReference<N> reference, N root);
-
-    /**
-     * @return The direction of rotation performed by the rotator
-     */
-    RotationDirection forDirection();
-
-    /**
-     * Reference to the root to allow replacement.
-     */
-    interface RootReference<O> {
-        /**
-         * Replace the root with the pivot.
-         * @param root The root of the rotation
-         * @param pivot The pivot of the rotation
-         */
-       void replaceRoot(O root, O pivot);
+public final class RootReferenceFactorySupplier extends AbstractServiceLoaderSupplier<RootReferenceFactory> {
+    public RootReferenceFactorySupplier(KeyMappingSupplier keyMappingSupplier) {
+        super(keyMappingSupplier, RootReferenceFactory.class);
     }
 
+    public <E, N extends OpenMutableBinaryTreeNode<E, N>> RootReferenceFactory<E, N> get(N node) {
+        return getRaw(node.getClass());
+    }
 }

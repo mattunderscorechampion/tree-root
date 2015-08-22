@@ -27,7 +27,7 @@ package com.mattunderscore.trees.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.spi.Rotator.RootReference;
-import com.mattunderscore.trees.spi.Rotator.RootReferenceFactory;
+import com.mattunderscore.trees.spi.RootReferenceFactory;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
