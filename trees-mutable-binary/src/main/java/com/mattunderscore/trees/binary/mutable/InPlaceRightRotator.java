@@ -29,10 +29,11 @@ import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.spi.Rotator;
 
 /**
- * Implementation of {@link Rotator} for {@link MutableBinaryTreeNodeImpl} in the left direction.
+ * Implementation of {@link Rotator} for {@link MutableBinaryTreeNodeImpl} in the left direction. Rotation is performed
+ * in place by modifying the existing tree.
  * @author Matt Champion on 20/08/2015
  */
-public final class RightRotator<E> implements Rotator<E, MutableBinaryTreeNode<E>> {
+public final class InPlaceRightRotator<E> implements Rotator<E, MutableBinaryTreeNode<E>> {
     @Override
     public void rotate(Rotator.RootReference<MutableBinaryTreeNode<E>> reference, MutableBinaryTreeNode<E> currentRoot) {
         final MutableBinaryTreeNodeImpl<E> root = (MutableBinaryTreeNodeImpl<E>)currentRoot;

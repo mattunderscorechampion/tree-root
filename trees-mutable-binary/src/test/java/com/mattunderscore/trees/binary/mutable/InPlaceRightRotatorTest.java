@@ -7,11 +7,11 @@ import org.junit.Test;
 import com.mattunderscore.trees.spi.Rotator.Direction;
 
 /**
- * Unit tests for {@link RightRotator}.
+ * Unit tests for {@link InPlaceRightRotator}.
  *
  * @author Matt Champion on 17/08/2015
  */
-public final class RightRotatorTest {
+public final class InPlaceRightRotatorTest {
 
     @Test
     public void rotateAtRoot() {
@@ -24,7 +24,7 @@ public final class RightRotatorTest {
 
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(q);
 
-        final RightRotator<String> rotator = new RightRotator<>();
+        final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
         rotator.rotate(factory.wrapTree(tree), tree.getRoot());
 
         assertEquals("p", tree.getRoot().getElement());
@@ -46,7 +46,7 @@ public final class RightRotatorTest {
 
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
-        final RightRotator<String> rotator = new RightRotator<>();
+        final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
         rotator.rotate(factory.wrapNode(node), tree.getRoot().getLeft());
 
         assertEquals("node", tree.getRoot().getElement());
@@ -67,7 +67,7 @@ public final class RightRotatorTest {
 
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(q);
 
-        final RightRotator<String> rotator = new RightRotator<>();
+        final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
         rotator.rotate(factory.wrapTree(tree), tree.getRoot());
 
         assertEquals("p", tree.getRoot().getElement());
@@ -87,7 +87,7 @@ public final class RightRotatorTest {
 
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
-        final RightRotator<String> rotator = new RightRotator<>();
+        final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
         rotator.rotate(factory.wrapNode(node), tree.getRoot().getLeft());
 
         assertEquals("node", tree.getRoot().getElement());
@@ -108,7 +108,7 @@ public final class RightRotatorTest {
 
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
-        final RightRotator<String> rotator = new RightRotator<>();
+        final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
         rotator.rotate(factory.wrapNode(node), tree.getRoot().getRight());
 
         assertEquals("node", tree.getRoot().getElement());
@@ -126,19 +126,19 @@ public final class RightRotatorTest {
 
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(p);
 
-        final RightRotator<String> rotator = new RightRotator<>();
+        final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
         rotator.rotate(factory.wrapTree(tree), tree.getRoot());
     }
 
     @Test
     public void forDirection() {
-        final RightRotator<String> rotator = new RightRotator<>();
+        final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
         assertEquals(Direction.RIGHT, rotator.forDirection());
     }
 
     @Test
     public void forClass() {
-        final RightRotator<String> rotator = new RightRotator<>();
+        final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
         assertEquals(MutableBinaryTreeNodeImpl.class, rotator.forClass());
     }
 }
