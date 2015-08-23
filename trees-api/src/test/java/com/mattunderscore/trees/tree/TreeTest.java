@@ -1,6 +1,7 @@
 package com.mattunderscore.trees.tree;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -17,5 +18,18 @@ public final class TreeTest {
         final TypeKey<Tree<String, Node<String>>> key = Tree.typeKey();
 
         assertEquals(Tree.class, key.getTreeType());
+    }
+
+    @Test
+    public void isEmpty() {
+        final FakeTree tree = new FakeTree();
+        assertTrue(tree.isEmpty());
+    }
+
+    private static final class FakeTree implements Tree<String, Node<String>> {
+        @Override
+        public Node<String> getRoot() {
+            return null;
+        }
     }
 }

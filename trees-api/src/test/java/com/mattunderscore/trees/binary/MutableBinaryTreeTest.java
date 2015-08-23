@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Unit tests for {@link MutableBinaryTree}.
@@ -16,8 +14,8 @@ import com.mattunderscore.trees.tree.Tree;
 public final class MutableBinaryTreeTest {
     @Test
     public void typeKey() {
-        final TypeKey<Tree<String, Node<String>>> key = Tree.typeKey();
+        final TypeKey<MutableBinaryTree<String, MutableBinaryTreeNode<String>>> key = MutableBinaryTree.typeKey();
 
-        assertEquals(Tree.class, key.getTreeType());
+        assertEquals(MutableBinaryTree.class, key.getTreeType());
     }
 }

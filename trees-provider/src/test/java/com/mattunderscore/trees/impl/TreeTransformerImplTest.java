@@ -34,6 +34,18 @@ public final class TreeTransformerImplTest {
         when(tree.getRoot()).thenReturn(rootParent);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void rotateEmptyTree() {
+        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final TreeTransformerImpl transformer = new TreeTransformerImpl(
+            new RootReferenceFactorySupplier(keyMappingSupplier),
+            new RotatorSupplier(keyMappingSupplier));
+
+        when(tree.isEmpty()).thenReturn(true);
+
+        transformer.rotateRootInPlace(tree, RotationDirection.LEFT);
+    }
+
     @Test(expected = OperationNotSupportedForType.class)
     public void rotateRootInPlaceNoneFound() {
         final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
