@@ -116,6 +116,99 @@ public final class BottomUpTreeBuilderImplTest {
         builder0.build(new TypeKey<FakeTree>() {});
     }
 
+    @Test
+    public void build1Child() {
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
+            builder.create("a"));
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(1, tree.getNumberOfChildren());
+        assertFalse(tree.isEmpty());
+    }
+
+    @Test
+    public void build2Child() {
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
+            builder.create("a"),
+            builder.create("b"));
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(2, tree.getNumberOfChildren());
+        assertFalse(tree.isEmpty());
+    }
+
+    @Test
+    public void build3Child() {
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
+            builder.create("a"),
+            builder.create("b"),
+            builder.create("c"));
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(3, tree.getNumberOfChildren());
+        assertFalse(tree.isEmpty());
+    }
+
+    @Test
+    public void build4Child() {
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
+            builder.create("a"),
+            builder.create("b"),
+            builder.create("c"),
+            builder.create("d"));
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(4, tree.getNumberOfChildren());
+        assertFalse(tree.isEmpty());
+    }
+
+    @Test
+    public void build5Child() {
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
+            builder.create("a"),
+            builder.create("b"),
+            builder.create("c"),
+            builder.create("d"),
+            builder.create("e"));
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(5, tree.getNumberOfChildren());
+        assertFalse(tree.isEmpty());
+    }
+
+    @Test
+    public void build6Child() {
+        final BottomUpTreeBuilderImpl<String, MutableSettableStructuredNode<String>> builder =
+            new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder0 = builder.create("ROOT",
+            builder.create("a"),
+            builder.create("b"),
+            builder.create("c"),
+            builder.create("d"),
+            builder.create("e"),
+            builder.create("f"));
+
+        final LinkedTree<String> tree = builder0.build(LinkedTree.<String>typeKey());
+        assertEquals("ROOT", tree.getRoot().getElement());
+        assertEquals(6, tree.getNumberOfChildren());
+        assertFalse(tree.isEmpty());
+    }
+
     public interface FakeTree extends Tree<String, MutableSettableStructuredNode<String>> {
     }
 }
