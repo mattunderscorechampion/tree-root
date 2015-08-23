@@ -36,7 +36,9 @@ import com.mattunderscore.trees.spi.impl.AbstractNodeToRelatedTreeConverter;
  * {@link MutableBinaryTreeImpl}.
  * @author Matt Champion on 18/08/2015
  */
-public final class NodeConverter<E> extends AbstractNodeToRelatedTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>> implements TreeBuilderFactoryAware {
+public final class NodeConverter<E>
+        extends AbstractNodeToRelatedTreeConverter<E, MutableBinaryTreeNode<E>, MutableBinaryTreeImpl<E>>
+        implements TreeBuilderFactoryAware {
     private volatile TreeBuilderFactory treeBuilderFactory;
 
     public NodeConverter() {

@@ -35,12 +35,6 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-provider</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-spi</artifactId>
         </dependency>
 

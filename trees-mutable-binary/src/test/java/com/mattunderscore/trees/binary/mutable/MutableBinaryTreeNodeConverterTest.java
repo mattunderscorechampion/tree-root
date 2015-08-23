@@ -25,60 +25,54 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Iterator;
-
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 
-import com.mattunderscore.trees.Trees;
-import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
+import com.mattunderscore.trees.construction.TreeBuilderFactory;
 
 /**
  * Test for {@link NodeConverter}.
  * @author Matt Champion on 04/05/15
  */
 public final class MutableBinaryTreeNodeConverterTest {
-    private static final Trees trees = Trees.get();
+    @Mock
+    private TreeBuilderFactory builderFactory;
+    @Mock
+    private TopDownTreeRootBuilder rootBuilder;
+    @Mock
+    private TopDownTreeRootBuilder.TopDownTreeBuilder builder;
+
+    @Before
+    public void setUp() {
+        initMocks(this);
+
+        when(builderFactory.topDownBuilder()).thenReturn(rootBuilder);
+        when(rootBuilder.root(isA(String.class))).thenReturn(builder);
+    }
 
     @Test
     public void convertToSelf() {
-        final BottomUpTreeBuilder<String, MutableBinaryTreeNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
-        final MutableBinaryTreeImpl<String> tree = builder.create("a", builder.create("b", builder.create("c")))
-            .build(MutableBinaryTreeImpl.typeKey());
+        final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(
+            new MutableBinaryTreeNodeImpl<>(
+                "a",
+                new MutableBinaryTreeNodeImpl<>("b"),
+                new MutableBinaryTreeNodeImpl<>("c")));
 
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
         final NodeConverter<String> converter = new NodeConverter<>();
-        converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
-            keyMappingSupplier,
-            new TreeConstructorSupplier(keyMappingSupplier),
-            new EmptyTreeConstructorSupplier(keyMappingSupplier),
-            new TreeConverterSupplier(keyMappingSupplier),
-            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier)));
+        converter.setTreeBuilderFactory(builderFactory);
 
-        final MutableBinaryTreeImpl<String> convertedTree =
-            converter.treeFromRootNode(tree.getRoot());
+        converter.treeFromRootNode(tree.getRoot());
 
-        final MutableBinaryTreeNode<String> convertedRoot = convertedTree.getRoot();
-        assertEquals(1, convertedRoot.getNumberOfChildren());
-        final Iterator<? extends MutableBinaryTreeNode<String>> iterator0 = convertedRoot.childIterator();
-        assertTrue(iterator0.hasNext());
-        final MutableBinaryTreeNode<String> child0 = iterator0.next();
-        assertEquals("b", child0.getElement());
-
-        final Iterator<? extends MutableBinaryTreeNode<String>> iterator1 = child0.childIterator();
-        assertTrue(iterator1.hasNext());
-        final MutableBinaryTreeNode<String> child1 = iterator1.next();
-        assertEquals("c", child1.getElement());
-        assertFalse(iterator1.hasNext());
+        verify(rootBuilder).root("a");
+        verify(builder).addChild("b");
+        verify(builder).addChild("c");
+        verify(builder).build(MutableBinaryTreeImpl.class);
     }
 }
