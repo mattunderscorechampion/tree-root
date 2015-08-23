@@ -21,7 +21,6 @@ import com.mattunderscore.trees.linked.tree.LinkedTree;
 public final class ConverterTest {
     private LinkedTree<String> tree;
 
-    @SuppressWarnings("unchecked")
     @Before
     public void setUp() {
         final Trees trees = Trees.get();

@@ -47,7 +47,6 @@ public final class TreeIteratorFactoryImplTest {
     private static TreeIteratorFactory iteratorFactory;
     private static LinkedTree<String> tree;
 
-    @SuppressWarnings("unchecked")
     @BeforeClass
     public static void setUp() {
         final Trees trees = Trees.get();

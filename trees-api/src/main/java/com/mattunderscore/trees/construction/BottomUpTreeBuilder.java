@@ -42,6 +42,51 @@ public interface BottomUpTreeBuilder<E, N extends OpenNode<E, N>> extends BaseTr
 
     /**
      * @param e the root node
+     * @param builder a builder for a subtree
+     * @return a new builder that creates a tree containing a single node
+     */
+    BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder);
+
+    /**
+     * @param e the root node
+     * @param builder0 a builder for a subtree
+     * @param builder1 a builder for a subtree
+     * @return a new builder that creates a tree containing a single node
+     */
+    BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1);
+
+    /**
+     * @param e the root node
+     * @param builder0 a builder for a subtree
+     * @param builder1 a builder for a subtree
+     * @param builder2 a builder for a subtree
+     * @return a new builder that creates a tree containing a single node
+     */
+    BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2);
+
+    /**
+     * @param e the root node
+     * @param builder0 a builder for a subtree
+     * @param builder1 a builder for a subtree
+     * @param builder2 a builder for a subtree
+     * @param builder3 a builder for a subtree
+     * @return a new builder that creates a tree containing a single node
+     */
+    BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2, BottomUpTreeBuilder<E, N> builder3);
+
+    /**
+     * @param e the root node
+     * @param builder0 a builder for a subtree
+     * @param builder1 a builder for a subtree
+     * @param builder2 a builder for a subtree
+     * @param builder3 a builder for a subtree
+     * @param builder4 a builder for a subtree
+     * @return a new builder that creates a tree containing a single node
+     */
+    BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2, BottomUpTreeBuilder<E, N> builder3, BottomUpTreeBuilder<E, N> builder4);
+
+    /**
+     * @param e the root node
      * @param builders builders for subtrees
      * @return a new builder that creates a tree containing the element as the root and the trees returned by the
      * builders as children

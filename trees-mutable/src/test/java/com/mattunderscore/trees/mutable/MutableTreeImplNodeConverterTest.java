@@ -58,7 +58,6 @@ public final class MutableTreeImplNodeConverterTest {
         assertEquals(MutableTreeImpl.class, converter.forClass());
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void convert() {
         final Trees trees = Trees.get();

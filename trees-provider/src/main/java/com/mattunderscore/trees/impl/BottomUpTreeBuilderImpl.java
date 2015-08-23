@@ -74,10 +74,88 @@ final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements Bott
         return new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, e);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder) {
+        return new BottomUpTreeBuilderImpl<>(
+            treeConstructorSupplier,
+            emptyTreeConstructorSupplier,
+            keyMappingSupplier,
+            e,
+            new BottomUpTreeBuilder[] { builder });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1) {
+        return new BottomUpTreeBuilderImpl<>(
+            treeConstructorSupplier,
+            emptyTreeConstructorSupplier,
+            keyMappingSupplier,
+            e,
+            new BottomUpTreeBuilder[] {
+                builder0,
+                builder1
+            });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2) {
+        return new BottomUpTreeBuilderImpl<>(
+            treeConstructorSupplier,
+            emptyTreeConstructorSupplier,
+            keyMappingSupplier,
+            e,
+            new BottomUpTreeBuilder[] {
+                builder0,
+                builder1,
+                builder2
+            });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2, BottomUpTreeBuilder<E, N> builder3) {
+        return new BottomUpTreeBuilderImpl<>(
+            treeConstructorSupplier,
+            emptyTreeConstructorSupplier,
+            keyMappingSupplier,
+            e,
+            new BottomUpTreeBuilder[] {
+                builder0,
+                builder1,
+                builder2,
+                builder3
+            });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2, BottomUpTreeBuilder<E, N> builder3, BottomUpTreeBuilder<E, N> builder4) {
+        return new BottomUpTreeBuilderImpl<>(
+            treeConstructorSupplier,
+            emptyTreeConstructorSupplier,
+            keyMappingSupplier,
+            e,
+            new BottomUpTreeBuilder[] {
+                builder0,
+                builder1,
+                builder2,
+                builder3,
+                builder4
+            });
+    }
+
     @Override
     @SafeVarargs
     public final BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N>... builders) {
-        return new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, e, builders);
+        return new BottomUpTreeBuilderImpl<>(
+            treeConstructorSupplier,
+            emptyTreeConstructorSupplier,
+            keyMappingSupplier,
+            e,
+            builders);
     }
 
     @SuppressWarnings("unchecked")

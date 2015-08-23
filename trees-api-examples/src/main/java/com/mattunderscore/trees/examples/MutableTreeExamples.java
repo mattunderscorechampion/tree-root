@@ -38,7 +38,6 @@ import com.mattunderscore.trees.traversal.TreeIteratorFactory;
  * @author Matt Champion on 08/08/14.
  */
 public final class MutableTreeExamples {
-    @SuppressWarnings("unchecked")
     public void createTreeFromTheBottomUp(BottomUpTreeBuilder<String, MutableNode<String>> builder, TreeIteratorFactory traverser) {
         final MutableTree<String, MutableNode<String>> tree = builder.create("root",
                 builder.create("a",

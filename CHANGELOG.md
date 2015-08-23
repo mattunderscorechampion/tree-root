@@ -121,3 +121,4 @@ source nodes
 * Added rotator for the MutableBinaryTree implementation
 * Added type keys for the tree interfaces
 * Added tree transformation API and provided support for rotation
+* Added multiple overloads to the BottomUpTreeBuilder to help address varargs warnings
