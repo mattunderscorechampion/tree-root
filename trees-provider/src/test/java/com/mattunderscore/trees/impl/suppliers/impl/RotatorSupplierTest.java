@@ -25,8 +25,14 @@ public final class RotatorSupplierTest {
     }
 
     @Test(expected = OperationNotSupportedForType.class)
-    public void noneFound() {
+    public void noneFoundLeft() {
         final RotatorSupplier supplier = new RotatorSupplier(new KeyMappingSupplier());
         supplier.get(node, RotationDirection.LEFT);
+    }
+
+    @Test(expected = OperationNotSupportedForType.class)
+    public void noneFoundRight() {
+        final RotatorSupplier supplier = new RotatorSupplier(new KeyMappingSupplier());
+        supplier.get(node, RotationDirection.RIGHT);
     }
 }
