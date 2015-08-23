@@ -29,27 +29,34 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.binary.MutableBinaryTree;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.impl.TreeTransformerImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplier;
 import com.mattunderscore.trees.transformation.RotationDirection;
+import com.mattunderscore.trees.transformation.TreeTransformer;
 
 /**
  * Tests for {@link TreeTransformerImpl}.
  * @author Matt Champion on 22/08/2015
  */
-public final class TreeTransformationImplTest {
+public final class TreeTransformerImplTest {
     @Test
     public void leftRotate() {
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
-        final TreeTransformerImpl transformer = new TreeTransformerImpl(
-            new RootReferenceFactorySupplier(keyMappingSupplier),
-            new RotatorSupplier(keyMappingSupplier));
-
-        final MutableBinaryTree<String, MutableBinaryTreeNode<String>> tree = createTree();
+        final TreeTransformer transformer = Trees.get().transformations();
+        final BottomUpTreeBuilder<String, MutableBinaryTreeNode<String>> builder = Trees
+            .get()
+            .treeBuilders()
+            .bottomUpBuilder();
+        final MutableBinaryTree<String, MutableBinaryTreeNode<String>> tree = builder.create(
+            "p",
+            builder.create("a"),
+            builder.create(
+                "q",
+                builder.create("b"),
+                builder.create("c")))
+            .build(MutableBinaryTreeImpl.typeKey());
 
         transformer.rotateRootInPlace(tree, RotationDirection.LEFT);
 
@@ -58,15 +65,5 @@ public final class TreeTransformationImplTest {
         assertEquals("c", tree.getRoot().getRight().getElement());
         assertEquals("a", tree.getRoot().getLeft().getLeft().getElement());
         assertEquals("b", tree.getRoot().getLeft().getRight().getElement());
-    }
-
-    private MutableBinaryTree<String, MutableBinaryTreeNode<String>> createTree() {
-        final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
-        final MutableBinaryTreeNodeImpl<String> b = new MutableBinaryTreeNodeImpl<>("b");
-        final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
-        final MutableBinaryTreeNodeImpl<String> q = new MutableBinaryTreeNodeImpl<>("q", b, c);
-        final MutableBinaryTreeNodeImpl<String> p = new MutableBinaryTreeNodeImpl<>("p", a, q);
-
-        return new MutableBinaryTreeImpl<>(p);
     }
 }

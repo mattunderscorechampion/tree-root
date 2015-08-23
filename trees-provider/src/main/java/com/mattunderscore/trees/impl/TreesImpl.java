@@ -36,11 +36,14 @@ import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier
 import com.mattunderscore.trees.impl.suppliers.impl.IteratorRemoveHandlerSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.NodeToRelatedTreeConverterSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.spi.TreeImplementation;
+import com.mattunderscore.trees.transformation.TreeTransformer;
 import com.mattunderscore.trees.traversal.NodeStreamFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
@@ -57,6 +60,7 @@ public final class TreesImpl implements Trees {
     private final TreeIteratorFactory treeIteratorFactory;
     private final TreeBuilderFactory treeBuilderFactory;
     private final NodeStreamFactory nodeStreamFactory;
+    private final TreeTransformer transformations;
 
     public TreesImpl() {
         final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
@@ -73,6 +77,9 @@ public final class TreesImpl implements Trees {
         treeSelectorFactory = new TreeSelectorFactoryImpl(
             new NodeToRelatedTreeConverterSupplier(keyMappingSupplier, treeBuilderFactory));
         nodeStreamFactory = new NodeStreamFactoryImpl(treeIteratorFactory);
+        transformations = new TreeTransformerImpl(
+            new RootReferenceFactorySupplier(keyMappingSupplier),
+            new RotatorSupplier(keyMappingSupplier));
     }
 
     @Override
@@ -103,6 +110,11 @@ public final class TreesImpl implements Trees {
     @Override
     public TreeBuilderFactory treeBuilders() {
         return treeBuilderFactory;
+    }
+
+    @Override
+    public TreeTransformer transformations() {
+        return transformations;
     }
 
     @Override

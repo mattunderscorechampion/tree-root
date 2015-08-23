@@ -32,12 +32,13 @@ import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplier;
 import com.mattunderscore.trees.spi.Rotator;
 import com.mattunderscore.trees.spi.RootReferenceFactory;
 import com.mattunderscore.trees.transformation.RotationDirection;
+import com.mattunderscore.trees.transformation.TreeTransformer;
 
 /**
  * Provides tree transformation operations.
  * @author Matt Champion on 22/08/2015
  */
-public final class TreeTransformerImpl {
+public final class TreeTransformerImpl implements TreeTransformer {
     private final RootReferenceFactorySupplier rootReferenceFactorySupplier;
     private final RotatorSupplier rotatorSupplier;
 
@@ -46,6 +47,7 @@ public final class TreeTransformerImpl {
         this.rotatorSupplier = rotatorSupplier;
     }
 
+    @Override
     public <E, N extends OpenMutableBinaryTreeNode<E, N>> void rotateRootInPlace(MutableBinaryTree<E, N> tree, RotationDirection direction) {
         if (tree.isEmpty()) {
             throw new IllegalArgumentException("An empty tree cannot be rotated");
@@ -59,8 +61,8 @@ public final class TreeTransformerImpl {
         rotator.rotate(reference, root);
     }
 
+    @Override
     public <E, N extends OpenMutableBinaryTreeNode<E, N>> void rotateInPlace(N rootParent, N rotationRoot, RotationDirection direction) {
-
         final RootReferenceFactory<E, N> referenceFactory = rootReferenceFactorySupplier.get(rootParent);
         final Rotator.RootReference<N> reference = referenceFactory.wrapNode(rootParent);
 

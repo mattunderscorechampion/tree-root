@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
@@ -33,6 +32,7 @@ import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
+import com.mattunderscore.trees.transformation.TreeTransformer;
 import com.mattunderscore.trees.traversal.NodeStreamFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
@@ -80,6 +80,12 @@ public interface Trees {
      * @return A {@link com.mattunderscore.trees.construction.TreeBuilderFactory}
      */
     TreeBuilderFactory treeBuilders();
+
+    /**
+     * Obtain a {@link com.mattunderscore.trees.transformation.TreeTransformer}.
+     * @return A {@link com.mattunderscore.trees.transformation.TreeTransformer}
+     */
+    TreeTransformer transformations();
 
     /**
      * @return A simple collection containing the available tree implementations.

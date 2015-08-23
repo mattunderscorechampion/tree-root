@@ -118,5 +118,6 @@ source nodes
 * Changed the return type of the TreeNodeImpl child iterator as it is final
 * Added SPI component to allow tree implementations to be discovered 
 * Moved mutable binary trees into separate module
-* Added prototype rotator for the MutableBinaryTree implementation
+* Added rotator for the MutableBinaryTree implementation
 * Added type keys for the tree interfaces
+* Added tree transformation API and provided support for rotation
