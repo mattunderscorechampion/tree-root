@@ -17,8 +17,7 @@ Coveralls: [![Coverage Status](https://coveralls.io/repos/mattunderscorechampion
 ####Binary search tree example
 
 ```java
-final ServiceLoader<Trees> serviceLoader = ServiceLoader.load(Trees.class);
-final Trees trees = serviceLoader.iterator().next();
+final Trees trees = Trees.get();
 
 final SortingTreeBuilder<Integer, BinaryTreeNode<Integer>> builder = trees
     .treeBuilders()
