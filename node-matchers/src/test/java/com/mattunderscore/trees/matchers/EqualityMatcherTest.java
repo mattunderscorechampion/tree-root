@@ -42,6 +42,10 @@ import com.mattunderscore.trees.tree.OpenNode;
  * @author Matt Champion on 20/12/14
  */
 public final class EqualityMatcherTest {
+    @Test(expected = NullPointerException.class)
+    public void noNulls() {
+        new EqualityMatcher<>(null);
+    }
 
     @Test
     public void matches() {
@@ -65,6 +69,13 @@ public final class EqualityMatcherTest {
         assertTrue(matcher0.equals(matcher1));
         assertTrue(matcher1.equals(matcher0));
         assertEquals(matcher0.hashCode(), matcher1.hashCode());
+    }
+
+    @Test
+    public void testEqualsSelf() {
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new EqualityMatcher<>("a");
+
+        assertTrue(matcher0.equals(matcher0));
     }
 
     @Test

@@ -69,6 +69,14 @@ public final class IdentityMatcherTest {
     }
 
     @Test
+    public void testEqualsSelf() {
+        final String element = "a";
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = new IdentityMatcher<>(element);
+
+        assertTrue(matcher0.equals(matcher0));
+    }
+
+    @Test
     public void testNotEquals0() {
         final Predicate<OpenNode<? extends String, ?>> matcher0 = new IdentityMatcher<>(new String("a"));
         final Predicate<OpenNode<? extends String, ?>> matcher1 = new IdentityMatcher<>(new String("a"));

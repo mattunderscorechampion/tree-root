@@ -47,8 +47,8 @@ public final class NeverMatcherTest {
 
     @Test
     public void testEquals() {
-        final Predicate<OpenNode<? extends String, ?>> matcher0 = new NeverMatcher<>();
-        final Predicate<OpenNode<? extends String, ?>> matcher1 = new NeverMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = NeverMatcher.create();
+        final Predicate<OpenNode<? extends String, ?>> matcher1 = NeverMatcher.create();
 
         assertTrue(matcher0.equals(matcher1));
         assertTrue(matcher1.equals(matcher0));
@@ -57,14 +57,14 @@ public final class NeverMatcherTest {
 
     @Test
     public void testNotEquals0() {
-        final Predicate<OpenNode<? extends String, ?>> matcher0 = new NeverMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = NeverMatcher.create();
 
         assertFalse(matcher0.equals(null));
     }
 
     @Test
     public void testNotEquals1() {
-        final Predicate<OpenNode<? extends String, ?>> matcher0 = new NeverMatcher<>();
+        final Predicate<OpenNode<? extends String, ?>> matcher0 = NeverMatcher.create();
 
         assertFalse(matcher0.equals(new Object()));
     }

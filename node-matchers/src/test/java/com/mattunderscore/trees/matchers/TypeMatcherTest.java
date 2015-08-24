@@ -40,6 +40,10 @@ import com.mattunderscore.trees.tree.OpenNode;
  * @author Matt Champion on 20/12/14
  */
 public final class TypeMatcherTest {
+    @Test(expected = NullPointerException.class)
+    public void testNoNulls() {
+        new TypeMatcher(null);
+    }
 
     @Test
     public void testMatches() {
@@ -66,12 +70,20 @@ public final class TypeMatcherTest {
     }
 
     @Test
+    public void testEqualsSelf() {
+        final TypeMatcher matcher0 = new TypeMatcher(String.class);
+
+        assertTrue(matcher0.equals(matcher0));
+    }
+
+    @Test
     public void testNotEquals0() {
         final TypeMatcher matcher0 = new TypeMatcher(String.class);
         final TypeMatcher matcher1 = new TypeMatcher(Integer.class);
 
         assertFalse(matcher0.equals(matcher1));
     }
+
 
     @Test
     public void testNotEquals1() {
