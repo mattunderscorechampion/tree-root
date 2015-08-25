@@ -11,10 +11,11 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 23/08/2015
  */
 public final class TreeConverterSupplierTest {
+
     @Test(expected = OperationNotSupportedForType.class)
     public void get() {
         final TreeConverterSupplier supplier = new TreeConverterSupplier(
-            new KeyMappingSupplier());
+            KeyMappingSupplier.get());
 
         supplier.get(Tree.class);
     }

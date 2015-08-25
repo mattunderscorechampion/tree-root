@@ -29,7 +29,7 @@ public final class IteratorRemoveHandlerSupplierTest {
     @Test
     public void get() {
         final IteratorRemoveHandlerSupplier supplier = new IteratorRemoveHandlerSupplier(
-            new KeyMappingSupplier());
+            KeyMappingSupplier.get());
 
         final IteratorRemoveHandler<String, Node<String>, Tree<String, Node<String>>> handler = supplier.get(tree);
         assertEquals(DefaultRemovalHandler.class, handler.getClass());

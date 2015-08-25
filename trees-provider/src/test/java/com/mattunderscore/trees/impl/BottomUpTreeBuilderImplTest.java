@@ -46,7 +46,7 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 13/08/14.
  */
 public final class BottomUpTreeBuilderImplTest {
-    private static final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+    private static final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
     private static final TreeConstructorSupplier treeConstructorSupplier = new TreeConstructorSupplier(keyMappingSupplier);
     private static final EmptyTreeConstructorSupplier emptyTreeConstructorSupplier =
         new EmptyTreeConstructorSupplier(keyMappingSupplier);

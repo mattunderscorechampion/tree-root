@@ -28,9 +28,9 @@ public final class NodeToRelatedTreeConverterSupplierTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void get() {
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
         final NodeToRelatedTreeConverterSupplier supplier = new NodeToRelatedTreeConverterSupplier(
-            new KeyMappingSupplier(),
+            keyMappingSupplier,
             new TreeBuilderFactoryImpl(
                 keyMappingSupplier,
                 new TreeConstructorSupplier(keyMappingSupplier),

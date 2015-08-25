@@ -39,9 +39,8 @@ import com.mattunderscore.trees.spi.KeyMapping;
 public final class KeyMappingSupplier {
     private final Map<Class<?>, KeyMapping> componentMap;
 
-    public KeyMappingSupplier() {
+    /* package */ KeyMappingSupplier(Iterable<KeyMapping> loader) {
         componentMap = new HashMap<>();
-        final ServiceLoader<KeyMapping> loader = ServiceLoader.load(KeyMapping.class);
         for (final KeyMapping component : loader) {
             componentMap.put(component.forClass(), component);
         }
@@ -60,5 +59,9 @@ public final class KeyMappingSupplier {
             return klass;
         }
         return keyMapping.getConcreteClass();
+    }
+
+    public static KeyMappingSupplier get() {
+        return new KeyMappingSupplier(ServiceLoader.load(KeyMapping.class));
     }
 }

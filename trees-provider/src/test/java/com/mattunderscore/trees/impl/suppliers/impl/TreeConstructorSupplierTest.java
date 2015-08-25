@@ -14,7 +14,7 @@ public final class TreeConstructorSupplierTest {
     @Test(expected = OperationNotSupportedForType.class)
     public void get() {
         final TreeConstructorSupplier supplier = new TreeConstructorSupplier(
-            new KeyMappingSupplier());
+            KeyMappingSupplier.get());
 
         supplier.get(Tree.class);
     }

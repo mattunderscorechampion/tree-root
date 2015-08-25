@@ -56,7 +56,7 @@ public final class NodeConverterTest {
         final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.typeKey());
 
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
         final NodeConverter<String> converter = new NodeConverter<>();
         converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
             keyMappingSupplier,

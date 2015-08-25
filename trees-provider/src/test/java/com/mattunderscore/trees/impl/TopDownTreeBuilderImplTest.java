@@ -43,7 +43,7 @@ import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
  * @author Matt Champion on 15/08/14.
  */
 public class TopDownTreeBuilderImplTest {
-    private static final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+    private static final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
     private static final EmptyTreeConstructorSupplier emptyTreeConstructorSupplier =
         new EmptyTreeConstructorSupplier(keyMappingSupplier);
     private static final TreeConverterSupplier treeConverterSupplier = new TreeConverterSupplier(keyMappingSupplier);

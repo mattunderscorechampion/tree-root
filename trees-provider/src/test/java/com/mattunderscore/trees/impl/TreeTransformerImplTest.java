@@ -36,7 +36,7 @@ public final class TreeTransformerImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void rotateEmptyTree() {
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
         final TreeTransformerImpl transformer = new TreeTransformerImpl(
             new RootReferenceFactorySupplier(keyMappingSupplier),
             new RotatorSupplier(keyMappingSupplier));
@@ -48,7 +48,7 @@ public final class TreeTransformerImplTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void rotateRootInPlaceNoneFound() {
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
         final TreeTransformerImpl transformer = new TreeTransformerImpl(
             new RootReferenceFactorySupplier(keyMappingSupplier),
             new RotatorSupplier(keyMappingSupplier));
@@ -58,7 +58,7 @@ public final class TreeTransformerImplTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void rotateInPlaceNoneFound() {
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
         final TreeTransformerImpl transformer = new TreeTransformerImpl(
             new RootReferenceFactorySupplier(keyMappingSupplier),
             new RotatorSupplier(keyMappingSupplier));

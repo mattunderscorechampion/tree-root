@@ -63,7 +63,7 @@ public final class TreesImpl implements Trees {
     private final TreeTransformer transformations;
 
     public TreesImpl() {
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
         nodeSelectorFactory = new NodeSelectorFactoryImpl();
         treeWalkerFactory = new TreeWalkerFactoryImpl();
         treeIteratorFactory = new TreeIteratorFactoryImpl(

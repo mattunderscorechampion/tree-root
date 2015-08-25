@@ -47,7 +47,7 @@ public final class MutableTreeImplNodeConverterTest {
 
     @Test
     public void key() {
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
         final MutableTreeImplNodeConverter<String> converter = new MutableTreeImplNodeConverter<>();
         converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
             keyMappingSupplier,
@@ -67,7 +67,7 @@ public final class MutableTreeImplNodeConverterTest {
             builder.create("right"))
             .build(MutableTree.typeKey());
 
-        final KeyMappingSupplier keyMappingSupplier = new KeyMappingSupplier();
+        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
         final MutableTreeImplNodeConverter<String> converter = new MutableTreeImplNodeConverter<>();
         converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
             keyMappingSupplier,

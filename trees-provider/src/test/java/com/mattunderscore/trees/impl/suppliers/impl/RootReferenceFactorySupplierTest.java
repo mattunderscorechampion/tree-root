@@ -25,7 +25,7 @@ public final class RootReferenceFactorySupplierTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void noneFound() {
-        final RootReferenceFactorySupplier supplier = new RootReferenceFactorySupplier(new KeyMappingSupplier());
+        final RootReferenceFactorySupplier supplier = new RootReferenceFactorySupplier(KeyMappingSupplier.get());
         supplier.get(node);
     }
 }
