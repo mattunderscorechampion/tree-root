@@ -34,6 +34,8 @@ import java.util.Iterator;
 import org.junit.Test;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.linked.tree.Constructor;
+import com.mattunderscore.trees.linked.tree.LinkedTree;
 
 /**
  * Test for {@link NodeConverter}.
@@ -49,7 +51,7 @@ public final class MutableBinaryTreeConverterTest {
                 new MutableBinaryTreeNodeImpl<>("b",
                     new MutableBinaryTreeNodeImpl<>("c"),
                     null),
-                null));
+                new MutableBinaryTreeNodeImpl<>("d")));
 
         final Converter<String> converter = new Converter<>();
 
@@ -57,16 +59,37 @@ public final class MutableBinaryTreeConverterTest {
             converter.build(tree);
 
         final MutableBinaryTreeNode<String> convertedRoot = convertedTree.getRoot();
-        assertEquals(1, convertedRoot.getNumberOfChildren());
+        assertEquals(2, convertedRoot.getNumberOfChildren());
         final Iterator<? extends MutableBinaryTreeNode<String>> iterator0 = convertedRoot.childIterator();
         assertTrue(iterator0.hasNext());
         final MutableBinaryTreeNode<String> child0 = iterator0.next();
         assertEquals("b", child0.getElement());
+        final MutableBinaryTreeNode<String> child1 = iterator0.next();
+        assertEquals("d", child1.getElement());
 
         final Iterator<? extends MutableBinaryTreeNode<String>> iterator1 = child0.childIterator();
         assertTrue(iterator1.hasNext());
-        final MutableBinaryTreeNode<String> child1 = iterator1.next();
-        assertEquals("c", child1.getElement());
+        final MutableBinaryTreeNode<String> child2 = iterator1.next();
+        assertEquals("c", child2.getElement());
         assertFalse(iterator1.hasNext());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void cannotConvertTreeWithThreeChildren() {
+        final Constructor<String> linkedTreeConstructor = new Constructor<>();
+        final LinkedTree<String> tree = linkedTreeConstructor.build("a",
+            linkedTreeConstructor.build("b"),
+            linkedTreeConstructor.build("c"),
+            linkedTreeConstructor.build("d"));
+
+        final Converter<String> converter = new Converter<>();
+
+        converter.build(tree);
+    }
+
+    @Test
+    public void forClass() {
+        final Converter<String> converter = new Converter<>();
+        assertEquals(MutableBinaryTreeImpl.class, converter.forClass());
     }
 }
