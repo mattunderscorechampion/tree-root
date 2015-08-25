@@ -35,7 +35,7 @@ import com.mattunderscore.simple.collections.DuplicateOnWriteSimpleCollection;
  * Path copy node that uses holders to propagate changes up.
  * @author Matt Champion on 14/11/14.
  */
-final class PathCopyNode<E> extends ImmutableNode<E, MutableNode<E>> implements MutableNode<E> {
+public final class PathCopyNode<E> extends ImmutableNode<E, MutableNode<E>> implements MutableNode<E> {
     private final Holder<E> holder;
 
     PathCopyNode(Holder<E> holder, E element) {
