@@ -27,8 +27,8 @@ package com.mattunderscore.trees.impl;
 
 import com.mattunderscore.trees.binary.MutableBinaryTree;
 import com.mattunderscore.trees.binary.OpenMutableBinaryTreeNode;
-import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplier;
+import com.mattunderscore.trees.impl.suppliers.RootReferenceFactorySupplier;
+import com.mattunderscore.trees.impl.suppliers.RotatorSupplier;
 import com.mattunderscore.trees.spi.Rotator;
 import com.mattunderscore.trees.spi.RootReferenceFactory;
 import com.mattunderscore.trees.transformation.RotationDirection;

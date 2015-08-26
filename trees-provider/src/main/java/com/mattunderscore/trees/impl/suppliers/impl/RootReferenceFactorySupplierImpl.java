@@ -26,17 +26,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.impl.suppliers.impl;
 
 import com.mattunderscore.trees.binary.OpenMutableBinaryTreeNode;
+import com.mattunderscore.trees.impl.suppliers.RootReferenceFactorySupplier;
 import com.mattunderscore.trees.spi.RootReferenceFactory;
 
 /**
- * Supplier for {@link RootReferenceFactory} components.
+ * Implementation {@link RootReferenceFactorySupplier}.
  * @author Matt Champion on 22/08/2015
  */
-public final class RootReferenceFactorySupplier extends AbstractServiceLoaderSupplier<RootReferenceFactory> {
-    public RootReferenceFactorySupplier(KeyMappingSupplier keyMappingSupplier) {
+public final class RootReferenceFactorySupplierImpl extends AbstractServiceLoaderSupplier<RootReferenceFactory> implements RootReferenceFactorySupplier {
+    public RootReferenceFactorySupplierImpl(KeyMappingSupplier keyMappingSupplier) {
         super(keyMappingSupplier, RootReferenceFactory.class);
     }
 
+    @Override
     public <E, N extends OpenMutableBinaryTreeNode<E, N>> RootReferenceFactory<E, N> get(N node) {
         return getRaw(node.getClass());
     }

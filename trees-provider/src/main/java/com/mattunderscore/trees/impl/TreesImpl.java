@@ -36,8 +36,8 @@ import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier
 import com.mattunderscore.trees.impl.suppliers.impl.IteratorRemoveHandlerSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.NodeToRelatedTreeConverterSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplier;
+import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplierImpl;
+import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplierImpl;
 import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
@@ -47,7 +47,6 @@ import com.mattunderscore.trees.transformation.TreeTransformer;
 import com.mattunderscore.trees.traversal.NodeStreamFactory;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
-import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.Trees}.
@@ -78,8 +77,8 @@ public final class TreesImpl implements Trees {
             new NodeToRelatedTreeConverterSupplier(keyMappingSupplier, treeBuilderFactory));
         nodeStreamFactory = new NodeStreamFactoryImpl(treeIteratorFactory);
         transformations = new TreeTransformerImpl(
-            new RootReferenceFactorySupplier(keyMappingSupplier),
-            new RotatorSupplier(keyMappingSupplier));
+            new RootReferenceFactorySupplierImpl(keyMappingSupplier),
+            new RotatorSupplierImpl(keyMappingSupplier));
     }
 
     @Override

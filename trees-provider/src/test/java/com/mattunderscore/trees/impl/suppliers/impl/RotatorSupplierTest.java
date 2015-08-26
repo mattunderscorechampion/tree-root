@@ -8,10 +8,11 @@ import org.mockito.Mock;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.impl.suppliers.RotatorSupplier;
 import com.mattunderscore.trees.transformation.RotationDirection;
 
 /**
- * Unit tests for {@link RotatorSupplier}.
+ * Unit tests for {@link RotatorSupplierImpl}.
  *
  * @author Matt Champion on 22/08/2015
  */
@@ -26,13 +27,13 @@ public final class RotatorSupplierTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void noneFoundLeft() {
-        final RotatorSupplier supplier = new RotatorSupplier(KeyMappingSupplier.get());
+        final RotatorSupplier supplier = new RotatorSupplierImpl(KeyMappingSupplier.get());
         supplier.get(node, RotationDirection.LEFT);
     }
 
     @Test(expected = OperationNotSupportedForType.class)
     public void noneFoundRight() {
-        final RotatorSupplier supplier = new RotatorSupplier(KeyMappingSupplier.get());
+        final RotatorSupplier supplier = new RotatorSupplierImpl(KeyMappingSupplier.get());
         supplier.get(node, RotationDirection.RIGHT);
     }
 }

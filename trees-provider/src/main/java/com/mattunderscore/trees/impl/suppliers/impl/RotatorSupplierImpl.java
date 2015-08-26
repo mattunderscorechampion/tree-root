@@ -31,19 +31,20 @@ import java.util.ServiceLoader;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.binary.OpenMutableBinaryTreeNode;
+import com.mattunderscore.trees.impl.suppliers.RotatorSupplier;
 import com.mattunderscore.trees.spi.Rotator;
 import com.mattunderscore.trees.transformation.RotationDirection;
 
 /**
- * Supplier for {@link Rotator} components.
+ * Implementation of {@link RotatorSupplier}.
  * @author Matt Champion on 22/08/2015
  */
-public final class RotatorSupplier {
+public final class RotatorSupplierImpl implements RotatorSupplier {
     private final Map<Class<?>, Rotator> leftRotators = new HashMap<>();
     private final Map<Class<?>, Rotator> rightRotators = new HashMap<>();
     private final KeyMappingSupplier keyMappingSupplier;
 
-    public RotatorSupplier(KeyMappingSupplier keyMappingSupplier) {
+    public RotatorSupplierImpl(KeyMappingSupplier keyMappingSupplier) {
         this.keyMappingSupplier = keyMappingSupplier;
         final ServiceLoader<Rotator> loader = ServiceLoader.load(Rotator.class);
         for (final Rotator component : loader) {
@@ -56,6 +57,7 @@ public final class RotatorSupplier {
         }
     }
 
+    @Override
     public <E, N extends OpenMutableBinaryTreeNode<E, N>> Rotator<E, N> get(N node, RotationDirection direction) {
         final Class<?> rawClass = node.getClass();
         final Class<?> mappedClass = keyMappingSupplier.get(rawClass);

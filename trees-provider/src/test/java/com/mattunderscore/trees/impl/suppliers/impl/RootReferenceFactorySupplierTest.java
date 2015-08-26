@@ -8,9 +8,10 @@ import org.mockito.Mock;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.impl.suppliers.RootReferenceFactorySupplier;
 
 /**
- * Unit tests for {@link RootReferenceFactorySupplier}.
+ * Unit tests for {@link RootReferenceFactorySupplierImpl}.
  *
  * @author Matt Champion on 22/08/2015
  */
@@ -25,7 +26,7 @@ public final class RootReferenceFactorySupplierTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void noneFound() {
-        final RootReferenceFactorySupplier supplier = new RootReferenceFactorySupplier(KeyMappingSupplier.get());
+        final RootReferenceFactorySupplier supplier = new RootReferenceFactorySupplierImpl(KeyMappingSupplier.get());
         supplier.get(node);
     }
 }
