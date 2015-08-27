@@ -122,3 +122,4 @@ source nodes
 * Added type keys for the tree interfaces
 * Added tree transformation API and provided support for rotation
 * Added multiple overloads to the BottomUpTreeBuilder to help address varargs warnings
+* Added prototype querier for nodes and trees

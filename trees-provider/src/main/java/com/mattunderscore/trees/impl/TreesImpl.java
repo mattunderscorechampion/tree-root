@@ -40,6 +40,7 @@ import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplier
 import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplierImpl;
 import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.query.Querier;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.spi.TreeImplementation;
@@ -60,6 +61,7 @@ public final class TreesImpl implements Trees {
     private final TreeBuilderFactory treeBuilderFactory;
     private final NodeStreamFactory nodeStreamFactory;
     private final TreeTransformer transformations;
+    private final Querier querier;
 
     public TreesImpl() {
         final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
@@ -79,6 +81,7 @@ public final class TreesImpl implements Trees {
         transformations = new TreeTransformerImpl(
             new RootReferenceFactorySupplierImpl(keyMappingSupplier),
             new RotatorSupplierImpl(keyMappingSupplier));
+        querier = new QuerierImpl();
     }
 
     @Override
@@ -114,6 +117,11 @@ public final class TreesImpl implements Trees {
     @Override
     public TreeTransformer transformations() {
         return transformations;
+    }
+
+    @Override
+    public Querier querier() {
+        return querier;
     }
 
     @Override

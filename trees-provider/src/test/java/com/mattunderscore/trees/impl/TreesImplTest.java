@@ -11,6 +11,7 @@ import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
+import com.mattunderscore.trees.query.Querier;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.transformation.TreeTransformer;
@@ -87,5 +88,12 @@ public final class TreesImplTest {
         final Trees trees = Trees.get();
         final TreeSelectorFactory selectors = trees.treeSelectors();
         assertTrue(selectors instanceof TreeSelectorFactoryImpl);
+    }
+
+    @Test
+    public void querier() {
+        final Trees trees = Trees.get();
+        final Querier querier = trees.querier();
+        assertTrue(querier instanceof QuerierImpl);
     }
 }

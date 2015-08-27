@@ -30,6 +30,7 @@ import java.util.ServiceLoader;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
+import com.mattunderscore.trees.query.Querier;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
 import com.mattunderscore.trees.transformation.TreeTransformer;
@@ -86,6 +87,12 @@ public interface Trees {
      * @return A {@link com.mattunderscore.trees.transformation.TreeTransformer}
      */
     TreeTransformer transformations();
+
+    /**
+     * Obtain a {@link com.mattunderscore.trees.query.Querier}.
+     * @return A {@link com.mattunderscore.trees.query.Querier}
+     */
+    Querier querier();
 
     /**
      * @return A simple collection containing the available tree implementations.
