@@ -26,17 +26,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.spi.Rotator.RootReference;
-import com.mattunderscore.trees.spi.RootReferenceFactory;
+import com.mattunderscore.trees.spi.ParentReference;
+import com.mattunderscore.trees.spi.ParentReferenceFactory;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Implementation of {@link RootReferenceFactory} for {@link MutableBinaryTreeNodeImpl}.
+ * Implementation of {@link ParentReferenceFactory} for {@link MutableBinaryTreeNodeImpl}.
  * @author Matt Champion on 20/08/2015
  */
-public final class RootReferenceFactoryImpl<E> implements RootReferenceFactory<E, MutableBinaryTreeNode<E>> {
+public final class ParentReferenceFactoryImpl<E> implements ParentReferenceFactory<E, MutableBinaryTreeNode<E>> {
     @Override
-    public RootReference<MutableBinaryTreeNode<E>> wrapNode(MutableBinaryTreeNode<E> node) {
+    public ParentReference<MutableBinaryTreeNode<E>> wrap(MutableBinaryTreeNode<E> node) {
         return (oldRoot, newRoot) -> {
             if (node.getLeft() == oldRoot) {
                 final MutableBinaryTreeNodeImpl<E> concreteNode = (MutableBinaryTreeNodeImpl<E>)node;
@@ -47,14 +47,17 @@ public final class RootReferenceFactoryImpl<E> implements RootReferenceFactory<E
                 concreteNode.setInternalRight((MutableBinaryTreeNodeImpl<E>) newRoot);
             }
             else {
-                throw new IllegalStateException("The root node is not child of parent");
+                throw new IllegalArgumentException("The current node is not a child of parent");
             }
         };
     }
 
     @Override
-    public RootReference<MutableBinaryTreeNode<E>> wrapTree(Tree<E, MutableBinaryTreeNode<E>> tree) {
+    public ParentReference<MutableBinaryTreeNode<E>> wrap(Tree<E, MutableBinaryTreeNode<E>> tree) {
         return (oldRoot, newRoot) -> {
+            if (tree.getRoot() != oldRoot) {
+                throw new IllegalArgumentException("The current node is not the root of the tree");
+            }
             final MutableBinaryTreeImpl<E> concreteTree = (MutableBinaryTreeImpl<E>)tree;
             concreteTree.setRootInternal((MutableBinaryTreeNodeImpl<E>)newRoot);
         };

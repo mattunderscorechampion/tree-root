@@ -29,8 +29,9 @@ import com.mattunderscore.trees.binary.MutableBinaryTree;
 import com.mattunderscore.trees.binary.OpenMutableBinaryTreeNode;
 import com.mattunderscore.trees.impl.suppliers.RootReferenceFactorySupplier;
 import com.mattunderscore.trees.impl.suppliers.RotatorSupplier;
+import com.mattunderscore.trees.spi.ParentReferenceFactory;
 import com.mattunderscore.trees.spi.Rotator;
-import com.mattunderscore.trees.spi.RootReferenceFactory;
+import com.mattunderscore.trees.spi.ParentReference;
 import com.mattunderscore.trees.transformation.RotationDirection;
 import com.mattunderscore.trees.transformation.TreeTransformer;
 
@@ -54,8 +55,8 @@ public final class TreeTransformerImpl implements TreeTransformer {
         }
 
         final N root = tree.getRoot();
-        final RootReferenceFactory<E, N> referenceFactory = rootReferenceFactorySupplier.get(root);
-        final Rotator.RootReference<N> reference = referenceFactory.wrapTree(tree);
+        final ParentReferenceFactory<E, N> referenceFactory = rootReferenceFactorySupplier.get(root);
+        final ParentReference<N> reference = referenceFactory.wrap(tree);
 
         final Rotator<E, N> rotator = rotatorSupplier.get(root, direction);
         rotator.rotate(reference, root);
@@ -63,8 +64,8 @@ public final class TreeTransformerImpl implements TreeTransformer {
 
     @Override
     public <E, N extends OpenMutableBinaryTreeNode<E, N>> void rotateInPlace(N rootParent, N rotationRoot, RotationDirection direction) {
-        final RootReferenceFactory<E, N> referenceFactory = rootReferenceFactorySupplier.get(rootParent);
-        final Rotator.RootReference<N> reference = referenceFactory.wrapNode(rootParent);
+        final ParentReferenceFactory<E, N> referenceFactory = rootReferenceFactorySupplier.get(rootParent);
+        final ParentReference<N> reference = referenceFactory.wrap(rootParent);
 
         final Rotator<E, N> rotator = rotatorSupplier.get(rotationRoot, direction);
         rotator.rotate(reference, rotationRoot);

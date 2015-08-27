@@ -15,7 +15,7 @@ public final class InPlaceRightRotatorTest {
 
     @Test
     public void rotateAtRoot() {
-        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
+        final ParentReferenceFactoryImpl<String> factory = new ParentReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> b = new MutableBinaryTreeNodeImpl<>("b");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
@@ -25,7 +25,7 @@ public final class InPlaceRightRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(q);
 
         final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
-        rotator.rotate(factory.wrapTree(tree), tree.getRoot());
+        rotator.rotate(factory.wrap(tree), tree.getRoot());
 
         assertEquals("p", tree.getRoot().getElement());
         assertEquals("a", tree.getRoot().getLeft().getElement());
@@ -36,7 +36,7 @@ public final class InPlaceRightRotatorTest {
 
     @Test
     public void rotateAtNode() {
-        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
+        final ParentReferenceFactoryImpl<String> factory = new ParentReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> b = new MutableBinaryTreeNodeImpl<>("b");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
@@ -47,7 +47,7 @@ public final class InPlaceRightRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
         final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
-        rotator.rotate(factory.wrapNode(node), tree.getRoot().getLeft());
+        rotator.rotate(factory.wrap(node), tree.getRoot().getLeft());
 
         assertEquals("node", tree.getRoot().getElement());
         assertEquals("p", tree.getRoot().getLeft().getElement());
@@ -59,7 +59,7 @@ public final class InPlaceRightRotatorTest {
 
     @Test
     public void rotateSimpleAtRoot() {
-        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
+        final ParentReferenceFactoryImpl<String> factory = new ParentReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
         final MutableBinaryTreeNodeImpl<String> p = new MutableBinaryTreeNodeImpl<>("p", a, null);
@@ -68,7 +68,7 @@ public final class InPlaceRightRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(q);
 
         final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
-        rotator.rotate(factory.wrapTree(tree), tree.getRoot());
+        rotator.rotate(factory.wrap(tree), tree.getRoot());
 
         assertEquals("p", tree.getRoot().getElement());
         assertEquals("a", tree.getRoot().getLeft().getElement());
@@ -78,7 +78,7 @@ public final class InPlaceRightRotatorTest {
 
     @Test
     public void rotateSimpleAtNodeOnLeft() {
-        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
+        final ParentReferenceFactoryImpl<String> factory = new ParentReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
         final MutableBinaryTreeNodeImpl<String> p = new MutableBinaryTreeNodeImpl<>("p", a, null);
@@ -88,7 +88,7 @@ public final class InPlaceRightRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
         final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
-        rotator.rotate(factory.wrapNode(node), tree.getRoot().getLeft());
+        rotator.rotate(factory.wrap(node), tree.getRoot().getLeft());
 
         assertEquals("node", tree.getRoot().getElement());
         assertEquals("p", tree.getRoot().getLeft().getElement());
@@ -99,7 +99,7 @@ public final class InPlaceRightRotatorTest {
 
     @Test
     public void rotateSimpleAtRight() {
-        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
+        final ParentReferenceFactoryImpl<String> factory = new ParentReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> c = new MutableBinaryTreeNodeImpl<>("c");
         final MutableBinaryTreeNodeImpl<String> p = new MutableBinaryTreeNodeImpl<>("p", a, null);
@@ -109,7 +109,7 @@ public final class InPlaceRightRotatorTest {
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(node);
 
         final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
-        rotator.rotate(factory.wrapNode(node), tree.getRoot().getRight());
+        rotator.rotate(factory.wrap(node), tree.getRoot().getRight());
 
         assertEquals("node", tree.getRoot().getElement());
         assertEquals("p", tree.getRoot().getRight().getElement());
@@ -120,14 +120,14 @@ public final class InPlaceRightRotatorTest {
 
     @Test(expected = IllegalStateException.class)
     public void attemptWithoutPivot() {
-        final RootReferenceFactoryImpl<String> factory = new RootReferenceFactoryImpl<>();
+        final ParentReferenceFactoryImpl<String> factory = new ParentReferenceFactoryImpl<>();
         final MutableBinaryTreeNodeImpl<String> a = new MutableBinaryTreeNodeImpl<>("a");
         final MutableBinaryTreeNodeImpl<String> p = new MutableBinaryTreeNodeImpl<>("p", null, a);
 
         final MutableBinaryTreeImpl<String> tree = new MutableBinaryTreeImpl<>(p);
 
         final InPlaceRightRotator<String> rotator = new InPlaceRightRotator<>();
-        rotator.rotate(factory.wrapTree(tree), tree.getRoot());
+        rotator.rotate(factory.wrap(tree), tree.getRoot());
     }
 
     @Test

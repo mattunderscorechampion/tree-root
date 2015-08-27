@@ -25,24 +25,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.transformation.RotationDirection;
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Rotator SPI component. Rotates a tree once in any direction.
- * @author Matt Champion on 17/08/2015
+ * Factory for {@link ParentReference} objects.
+ * @param <E> The element type
+ * @param <O> The node type
  */
-public interface Rotator<E, N extends OpenNode<E, N>> extends SPIComponent {
+public interface ParentReferenceFactory<E, O extends OpenNode<E, O>> extends SPIComponent {
     /**
-     * Apply the rotation.
-     * @param reference The reference to the root
-     * @param root The root of the rotation
+     * Wrap a node as a parent reference.
+     * @param node The node to wrap
+     * @return The reference
      */
-    void rotate(ParentReference<N> reference, N root);
+    ParentReference<O> wrap(O node);
 
     /**
-     * @return The direction of rotation performed by the rotator
+     * Wrap a tree as a parent reference.
+     * @param tree The tree to wrap
+     * @return The reference
      */
-    RotationDirection forDirection();
-
+    ParentReference<O> wrap(Tree<E, O> tree);
 }

@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.binary.mutable;
 
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.spi.ParentReference;
 import com.mattunderscore.trees.transformation.RotationDirection;
 import com.mattunderscore.trees.spi.Rotator;
 
@@ -36,7 +37,7 @@ import com.mattunderscore.trees.spi.Rotator;
  */
 public final class InPlaceLeftRotator<E> implements Rotator<E, MutableBinaryTreeNode<E>> {
     @Override
-    public void rotate(RootReference<MutableBinaryTreeNode<E>> reference, MutableBinaryTreeNode<E> currentRoot) {
+    public void rotate(ParentReference<MutableBinaryTreeNode<E>> reference, MutableBinaryTreeNode<E> currentRoot) {
         final MutableBinaryTreeNodeImpl<E> root = (MutableBinaryTreeNodeImpl<E>)currentRoot;
         final MutableBinaryTreeNodeImpl<E> pivot = (MutableBinaryTreeNodeImpl<E>)root.getRight();
 
@@ -48,12 +49,12 @@ public final class InPlaceLeftRotator<E> implements Rotator<E, MutableBinaryTree
 
             if (rs == null) {
                 pivot.setInternalLeft(root);
-                reference.replaceRoot(root, pivot);
+                reference.replace(root, pivot);
             }
             else {
                 root.setInternalRight(rs);
                 pivot.setInternalLeft(root);
-                reference.replaceRoot(root, pivot);
+                reference.replace(root, pivot);
             }
         }
     }

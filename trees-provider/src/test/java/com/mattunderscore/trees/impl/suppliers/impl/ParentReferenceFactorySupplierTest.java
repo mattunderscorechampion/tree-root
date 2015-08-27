@@ -15,7 +15,7 @@ import com.mattunderscore.trees.impl.suppliers.RootReferenceFactorySupplier;
  *
  * @author Matt Champion on 22/08/2015
  */
-public final class RootReferenceFactorySupplierTest {
+public final class ParentReferenceFactorySupplierTest {
     @Mock
     private MutableBinaryTreeNode<String> node;
 

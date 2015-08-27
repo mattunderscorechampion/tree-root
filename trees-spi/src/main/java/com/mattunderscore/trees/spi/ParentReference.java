@@ -25,26 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.spi;
 
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.Tree;
-
 /**
- * Factory for {@link Rotator.RootReference} objects.
- * @param <E> The element type
- * @param <O> The node type
+ * Reference to the parent to allow replacement. This allows for the structural modification of the tree by replacing
+ * one node with another. It abstracts if the node being replaced is an intermediary node or the root of the tree.
  */
-public interface RootReferenceFactory<E, O extends OpenNode<E, O>> extends SPIComponent {
+@FunctionalInterface
+public interface ParentReference<O> {
     /**
-     * Wrap a node as a root reference.
-     * @param node The node to wrap
-     * @return The reference
+     * Replace the current node with the new node.
+     * @param currentNode The current node
+     * @param newNode The new node
+     * @throws IllegalArgumentException if the current node is not present
      */
-    Rotator.RootReference<O> wrapNode(O node);
-
-    /**
-     * Wrap a tree as a root reference.
-     * @param tree The tree to wrap
-     * @return The reference
-     */
-    Rotator.RootReference<O> wrapTree(Tree<E, O> tree);
+   void replace(O currentNode, O newNode);
 }

@@ -17,7 +17,8 @@ import com.mattunderscore.trees.impl.suppliers.RotatorSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
 import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplierImpl;
 import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplierImpl;
-import com.mattunderscore.trees.spi.RootReferenceFactory;
+import com.mattunderscore.trees.spi.ParentReference;
+import com.mattunderscore.trees.spi.ParentReferenceFactory;
 import com.mattunderscore.trees.spi.Rotator;
 import com.mattunderscore.trees.transformation.RotationDirection;
 
@@ -36,13 +37,13 @@ public final class TreeTransformerImplTest {
     @Mock
     private RootReferenceFactorySupplier referenceFactorySupplier;
     @Mock
-    private RootReferenceFactory<String, MutableBinaryTreeNode<String>> referenceFactory;
+    private ParentReferenceFactory<String, MutableBinaryTreeNode<String>> referenceFactory;
     @Mock
     private RotatorSupplier rotatorSupplier;
     @Mock
     private Rotator rotator;
     @Mock
-    private Rotator.RootReference<MutableBinaryTreeNode<String>> reference;
+    private ParentReference<MutableBinaryTreeNode<String>> reference;
 
     @Before
     public void setUp() {
@@ -51,8 +52,8 @@ public final class TreeTransformerImplTest {
         when(rotatorSupplier.get(isA(MutableBinaryTreeNode.class), isA(RotationDirection.class))).thenReturn(rotator);
         when(referenceFactorySupplier.get(rootParent)).thenReturn(referenceFactory);
         when(referenceFactorySupplier.get(root)).thenReturn(referenceFactory);
-        when(referenceFactory.wrapTree(tree)).thenReturn(reference);
-        when(referenceFactory.wrapNode(rootParent)).thenReturn(reference);
+        when(referenceFactory.wrap(tree)).thenReturn(reference);
+        when(referenceFactory.wrap(rootParent)).thenReturn(reference);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -95,7 +96,7 @@ public final class TreeTransformerImplTest {
 
         transformer.rotateInPlace(rootParent, root, RotationDirection.LEFT);
 
-        verify(referenceFactory).wrapNode(rootParent);
+        verify(referenceFactory).wrap(rootParent);
         verify(rotator).rotate(reference, root);
     }
 
@@ -108,7 +109,7 @@ public final class TreeTransformerImplTest {
 
         transformer.rotateRootInPlace(tree, RotationDirection.LEFT);
 
-        verify(referenceFactory).wrapTree(tree);
+        verify(referenceFactory).wrap(tree);
         verify(rotator).rotate(reference, root);
     }
 }
