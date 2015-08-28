@@ -25,9 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl.query;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 
 import com.mattunderscore.trees.tree.OpenNode;
 
@@ -40,7 +45,58 @@ public final class FindAllPathsToLeaves {
     }
 
     public static <E, N extends OpenNode<E, N>> Collection<List<N>> paths(N startingNode) {
-        return new HashSet<>();
+        final Stack<BackPath<E, N>> parents = new Stack<>();
+        final Set<List<N>> paths = new HashSet<>();
+        final Set<BackPath<E, N>> backPaths = new HashSet<>();
+
+        BackPath<E, N> current = new BackPath<>(null, startingNode);
+        parents.push(current);
+
+        while (!parents.isEmpty()) {
+            final BackPath<E, N> n = current;
+            final N[] reversed = (N[]) Array.newInstance(n.node.getClass(), n.node.getNumberOfChildren());
+            final Iterator<? extends N> childIterator = n.node.childIterator();
+            for (int i = n.node.getNumberOfChildren() - 1; i >= 0; i--) {
+                reversed[i] = childIterator.next();
+            }
+            for (final N child : reversed) {
+                parents.push(new BackPath<>(n, child));
+            }
+            do {
+                current = parents.pop();
+            } while (current == null);
+            if (current.node.isLeaf()) {
+                backPaths.add(current);
+            }
+        }
+
+        for (final BackPath<E, N> backPath : backPaths) {
+            BackPath<E, N>  currentPath = backPath;
+            final Stack<N> nodes = new Stack<>();
+            nodes.push(currentPath.node);
+            while (currentPath.parent != null) {
+                currentPath = currentPath.parent;
+                nodes.push(currentPath.node);
+            }
+
+            final List<N> path = new ArrayList<>();
+            while (!nodes.isEmpty()) {
+                path.add(nodes.pop());
+            }
+
+            paths.add(path);
+        }
+
+        return paths;
     }
 
+    private static final class BackPath<E, N extends OpenNode<E, N>> {
+        private final BackPath<E, N> parent;
+        private final N node;
+
+        private BackPath(BackPath<E, N> parent, N node) {
+            this.parent = parent;
+            this.node = node;
+        }
+    }
 }

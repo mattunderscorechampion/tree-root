@@ -18,7 +18,6 @@ import com.mattunderscore.trees.query.Querier;
  */
 public final class QuerierImplTest {
 
-    @Ignore("Paths not implemented")
     @Test
     public void heightLeaf() {
         final LinkedTree<String> node = new LinkedTree<>("a");
@@ -28,7 +27,6 @@ public final class QuerierImplTest {
         assertEquals(0, querier.height(node));
     }
 
-    @Ignore("Paths not implemented")
     @Test
     public void heightSimple() {
         final LinkedTree<String> node = new LinkedTree<>("a");
@@ -39,7 +37,6 @@ public final class QuerierImplTest {
         assertEquals(1, querier.height(node));
     }
 
-    @Ignore("Paths not implemented")
     @Test
     public void heightManyPaths() {
         final LinkedTree<String> node = new LinkedTree<>("a");
@@ -51,7 +48,6 @@ public final class QuerierImplTest {
         assertEquals(1, querier.height(node));
     }
 
-    @Ignore("Paths not implemented")
     @Test
     public void heightSinglePath() {
         final LinkedTree<String> node = new LinkedTree<>("a");
