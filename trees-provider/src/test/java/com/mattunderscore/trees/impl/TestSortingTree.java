@@ -32,6 +32,7 @@ import com.mattunderscore.trees.organised.MutableOrganisedTree;
 import com.mattunderscore.trees.sorted.SortingTree;
 
 /**
+ * Intended to be mocked.
  * @author Matt Champion on 05/07/2015
  */
 class TestSortingTree implements SortingTree<Integer, BinaryTreeNode<Integer>> {
