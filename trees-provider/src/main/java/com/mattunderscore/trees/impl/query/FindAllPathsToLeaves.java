@@ -46,12 +46,12 @@ public final class FindAllPathsToLeaves {
 
     public static <E, N extends OpenNode<E, N>> Collection<List<N>> paths(N startingNode) {
         final Stack<BackPath<E, N>> parents = new Stack<>();
-        final Set<List<N>> paths = new HashSet<>();
         final Set<BackPath<E, N>> backPaths = new HashSet<>();
 
         BackPath<E, N> current = new BackPath<>(null, startingNode);
         parents.push(current);
 
+        // Preorder traversal of tree constructing back paths
         while (!parents.isEmpty()) {
             final BackPath<E, N> n = current;
             final N[] reversed = (N[]) Array.newInstance(n.node.getClass(), n.node.getNumberOfChildren());
@@ -70,26 +70,37 @@ public final class FindAllPathsToLeaves {
             }
         }
 
+        final Set<List<N>> paths = new HashSet<>();
         for (final BackPath<E, N> backPath : backPaths) {
-            BackPath<E, N>  currentPath = backPath;
-            final Stack<N> nodes = new Stack<>();
-            nodes.push(currentPath.node);
-            while (currentPath.parent != null) {
-                currentPath = currentPath.parent;
-                nodes.push(currentPath.node);
-            }
-
-            final List<N> path = new ArrayList<>();
-            while (!nodes.isEmpty()) {
-                path.add(nodes.pop());
-            }
-
-            paths.add(path);
+            paths.add(toPath(backPath));
         }
 
         return paths;
     }
 
+    /**
+     * Turn a back path into a path. Effectively reverse order.
+     */
+    private static <E, N extends OpenNode<E, N>> List<N> toPath(BackPath<E, N> backPath) {
+        BackPath<E, N>  currentPath = backPath;
+        final Stack<N> nodes = new Stack<>();
+        nodes.push(currentPath.node);
+        while (currentPath.parent != null) {
+            currentPath = currentPath.parent;
+            nodes.push(currentPath.node);
+        }
+
+        final List<N> path = new ArrayList<>();
+        while (!nodes.isEmpty()) {
+            path.add(nodes.pop());
+        }
+
+        return path;
+    }
+
+    /**
+     * Represent a path in reverse order from a leaf back to the node.
+     */
     private static final class BackPath<E, N extends OpenNode<E, N>> {
         private final BackPath<E, N> parent;
         private final N node;
