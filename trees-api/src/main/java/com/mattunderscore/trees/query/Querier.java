@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.query;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.mattunderscore.simple.collections.SimpleCollection;

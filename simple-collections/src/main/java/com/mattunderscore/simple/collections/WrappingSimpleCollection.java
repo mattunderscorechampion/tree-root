@@ -29,13 +29,16 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+import net.jcip.annotations.NotThreadSafe;
+
 import com.mattunderscore.iterators.FilteringIterator;
 
 /**
  * Wrap a {@link Collection} as a {@link SimpleCollection}.
  * @author Matt Champion on 29/08/2015
  */
-public class WrappingSimpleCollection<E> implements SimpleCollection<E> {
+@NotThreadSafe
+public final class WrappingSimpleCollection<E> implements SimpleCollection<E> {
     private final Collection<E> delegateCollection;
 
     public WrappingSimpleCollection(Collection<E> delegateCollection) {

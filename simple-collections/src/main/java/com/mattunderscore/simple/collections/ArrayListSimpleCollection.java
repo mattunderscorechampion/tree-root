@@ -25,11 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.simple.collections;
 
-import com.mattunderscore.iterators.PrefetchingIterator;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import java.util.*;
+import com.mattunderscore.iterators.PrefetchingIterator;
 
 /**
  * A {@link SimpleCollection} backed by {@link java.util.ArrayList}. Not

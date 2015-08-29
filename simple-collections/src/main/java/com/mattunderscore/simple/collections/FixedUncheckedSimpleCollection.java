@@ -25,11 +25,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.simple.collections;
 
-import com.mattunderscore.iterators.PrefetchingIterator;
-
-import java.util.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import net.jcip.annotations.Immutable;
+
+import com.mattunderscore.iterators.PrefetchingIterator;
 
 /**
  * Array backed, not typed checked, {@link SimpleCollection} implementation for an immutable
