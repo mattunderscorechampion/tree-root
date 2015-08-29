@@ -32,6 +32,11 @@
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>simple-collections</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>
