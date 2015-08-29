@@ -33,6 +33,7 @@ import net.jcip.annotations.GuardedBy;
 import com.mattunderscore.simple.collections.FixedUncheckedSimpleCollection;
 import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.base.AbstractSettableNode;
+import com.mattunderscore.trees.base.MutableChildIterator;
 import com.mattunderscore.trees.construction.TypeKey;
 
 /**
@@ -151,36 +152,10 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
     }
 
     @Override
-    public Iterator<MutableTreeImpl<E>> childIterator() {
+    public Iterator<MutableSettableNode<E>> childIterator() {
         synchronized (this) {
-            final Iterator<MutableTreeImpl<E>> iterator = childList.iterator();
-            return new ChildIterator(iterator);
+            return new MutableChildIterator<>(this, childList.iterator());
         }
     }
 
-    private final class ChildIterator implements Iterator<MutableTreeImpl<E>> {
-        private final Iterator<MutableTreeImpl<E>> iterator;
-        private volatile MutableTreeImpl<E> current;
-
-        private ChildIterator(Iterator<MutableTreeImpl<E>> iterator) {
-            this.iterator = iterator;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return iterator.hasNext();
-        }
-
-        @Override
-        public MutableTreeImpl<E> next() {
-            final MutableTreeImpl<E> next = iterator.next();
-            current = next;
-            return next;
-        }
-
-        @Override
-        public void remove() {
-            removeChild(current);
-        }
-    }
 }

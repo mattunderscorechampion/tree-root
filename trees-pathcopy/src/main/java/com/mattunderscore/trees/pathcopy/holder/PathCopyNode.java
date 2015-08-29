@@ -28,6 +28,7 @@ package com.mattunderscore.trees.pathcopy.holder;
 import java.util.Iterator;
 
 import com.mattunderscore.trees.base.ImmutableNode;
+import com.mattunderscore.trees.base.MutableChildIterator;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.simple.collections.DuplicateOnWriteSimpleCollection;
 
@@ -103,6 +104,6 @@ public final class PathCopyNode<E> extends ImmutableNode<E, MutableNode<E>> impl
 
     @Override
     public Iterator<MutableNode<E>> childIterator() {
-        return children.iterator();
+        return new MutableChildIterator<>(this, children.iterator());
     }
 }

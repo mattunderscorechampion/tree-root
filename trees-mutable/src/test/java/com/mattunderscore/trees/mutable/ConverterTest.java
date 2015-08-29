@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
-import com.mattunderscore.trees.impl.TreesImpl;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 
 /**
@@ -41,12 +40,12 @@ public final class ConverterTest {
         final MutableTreeImpl<String> mutableTree = converter.build(tree);
 
         assertEquals("a", mutableTree.getRoot().getElement());
-        final Iterator<MutableTreeImpl<String>> rootChildIterator = mutableTree.getRoot().childIterator();
+        final Iterator<MutableSettableNode<String>> rootChildIterator = mutableTree.getRoot().childIterator();
         assertEquals("b", rootChildIterator.next().getElement());
-        final MutableTreeImpl<String> child = rootChildIterator.next();
+        final MutableSettableNode<String> child = rootChildIterator.next();
         assertFalse(rootChildIterator.hasNext());
         assertEquals("c", child.getElement());
-        final Iterator<MutableTreeImpl<String>> childChildIterator = child.childIterator();
+        final Iterator<? extends MutableSettableNode<String>> childChildIterator = child.childIterator();
         assertEquals("d", childChildIterator.next().getElement());
         assertFalse(childChildIterator.hasNext());
     }
