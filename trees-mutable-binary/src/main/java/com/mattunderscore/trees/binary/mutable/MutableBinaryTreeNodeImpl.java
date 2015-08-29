@@ -25,13 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.binary.mutable;
 
-import java.util.Collections;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import com.mattunderscore.iterators.ArrayIterator;
-import com.mattunderscore.iterators.SingletonIterator;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 
 /**
@@ -43,8 +41,6 @@ public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode
     private final E element;
     private MutableBinaryTreeNodeImpl<E> left;
     private MutableBinaryTreeNodeImpl<E> right;
-    @SuppressWarnings("unchecked")
-    private final MutableBinaryTreeNodeImpl<E>[] children = new MutableBinaryTreeNodeImpl[2];
 
     public MutableBinaryTreeNodeImpl(E element) {
         this.element = element;
@@ -70,13 +66,11 @@ public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode
 
     /*package*/ MutableBinaryTreeNodeImpl<E> setInternalRight(MutableBinaryTreeNodeImpl<E> right) {
         this.right = right;
-        children[1] = right;
         return right;
     }
 
     /*package*/ MutableBinaryTreeNodeImpl<E> setInternalLeft(MutableBinaryTreeNodeImpl<E> left) {
         this.left = left;
-        children[0] = left;
         return left;
     }
 
@@ -97,10 +91,10 @@ public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode
 
     @Override
     public int getNumberOfChildren() {
-        if (children[0] == null && children[1] == null) {
+        if (left == null && right == null) {
             return 0;
         }
-        else if (children[0] != null && children[1] != null) {
+        else if (left != null && right != null) {
             return 2;
         }
         else {
@@ -109,38 +103,121 @@ public final class MutableBinaryTreeNodeImpl<E> implements MutableBinaryTreeNode
     }
 
     @Override
-    public Iterator<MutableBinaryTreeNodeImpl<E>> childIterator() {
-        if (children[0] == null && children[1] == null) {
-            return Collections.emptyIterator();
-        }
-        else if (children[0] != null && children[1] != null) {
-            return ArrayIterator.create(children);
-        }
-        else if (children[0] != null) {
-            return new SingletonIterator<>(children[0]);
-        }
-        else {
-            return new SingletonIterator<>(children[1]);
-        }
+    public Iterator<? extends MutableBinaryTreeNode<E>> childIterator() {
+        return new ChildIterator();
     }
 
     @Override
-    public Iterator<? extends MutableBinaryTreeNodeImpl<E>> childStructuralIterator() {
-        return ArrayIterator.create(children);
+    public Iterator<? extends MutableBinaryTreeNode<E>> childStructuralIterator() {
+        return new ChildStructuralIterator();
     }
 
     @Override
     public MutableBinaryTreeNodeImpl<E> getChild(int nChild) {
-        if (nChild >= getNumberOfChildren()) {
-            throw new IndexOutOfBoundsException();
+        if (left != null && nChild == 0) {
+            return left;
+        }
+        else if (left == null && nChild == 0 && right != null) {
+            return null;
+        }
+        else if (right != null && nChild == 1) {
+            return right;
         }
         else {
-            return children[nChild];
+            throw new IndexOutOfBoundsException();
         }
     }
 
     @Override
     public boolean isLeaf() {
         return left == null && right == null;
+    }
+
+    @NotThreadSafe
+    private final class ChildIterator implements Iterator<MutableBinaryTreeNode<E>> {
+        private int pos = -1;
+
+        public ChildIterator() {
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (pos == -1 && (left != null || right != null)) || (pos == 0 && right != null);
+        }
+
+        @Override
+        public MutableBinaryTreeNode<E> next() {
+            if (pos == -1 && left != null) {
+                pos = 0;
+                return left;
+            }
+            else if (pos == -1 && right != null) {
+                pos = 1;
+                return right;
+            }
+            else if (pos == 0 && right != null) {
+                pos = 1;
+                return right;
+            }
+            else {
+                pos = 2;
+                throw new NoSuchElementException();
+            }
+        }
+
+        @Override
+        public void remove() {
+            if (pos == 0) {
+                left = null;
+            }
+            else if (pos == 1) {
+                right = null;
+            }
+            else {
+                throw new IllegalStateException();
+            }
+        }
+    }
+
+    @NotThreadSafe
+    private final class ChildStructuralIterator implements Iterator<MutableBinaryTreeNode<E>> {
+        private int pos = -1;
+
+        public ChildStructuralIterator() {
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (pos == -1 && (left != null || right != null)) || (pos == 0 && right != null);
+        }
+
+        @Override
+        public MutableBinaryTreeNode<E> next() {
+            if (pos == -1) {
+                pos = 0;
+                return left;
+            }
+            else if (pos == 0) {
+                pos = 1;
+                return right;
+            }
+            else {
+                pos = 2;
+                throw new NoSuchElementException();
+            }
+        }
+
+        @Override
+        public void remove() {
+            if (pos == 0) {
+                left = null;
+            }
+            else if (pos == 1) {
+                right = null;
+            }
+            else {
+                throw new IllegalStateException();
+            }
+        }
     }
 }
