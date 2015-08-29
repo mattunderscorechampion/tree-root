@@ -27,13 +27,14 @@ package com.mattunderscore.trees.impl.query;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
+import com.mattunderscore.simple.collections.SimpleCollection;
+import com.mattunderscore.simple.collections.WrappingSimpleCollection;
 import com.mattunderscore.trees.tree.OpenNode;
 
 /**
@@ -44,7 +45,7 @@ public final class FindAllPathsToLeaves {
     private FindAllPathsToLeaves() {
     }
 
-    public static <E, N extends OpenNode<E, N>> Collection<List<N>> paths(N startingNode) {
+    public static <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> paths(N startingNode) {
         final Stack<BackPath<E, N>> parents = new Stack<>();
         final Set<BackPath<E, N>> backPaths = new HashSet<>();
 
@@ -75,7 +76,7 @@ public final class FindAllPathsToLeaves {
             paths.add(toPath(backPath));
         }
 
-        return paths;
+        return new WrappingSimpleCollection<>(paths);
     }
 
     /**

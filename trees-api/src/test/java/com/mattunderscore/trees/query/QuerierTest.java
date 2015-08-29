@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
@@ -60,7 +61,7 @@ public final class QuerierTest {
         }
 
         @Override
-        public <E, N extends OpenNode<E, N>> Collection<List<N>> pathsToLeaves(N node) {
+        public <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node) {
             return null;
         }
     }

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.query.Querier;
@@ -68,7 +69,7 @@ public final class QuerierImplTest {
 
         final Querier querier = new QuerierImpl();
 
-        final Collection<List<MutableSettableStructuredNode<String>>> paths = querier.pathsToLeaves(node);
+        final SimpleCollection<List<MutableSettableStructuredNode<String>>> paths = querier.pathsToLeaves(node);
 
         assertEquals(1, paths.size());
 
@@ -85,7 +86,7 @@ public final class QuerierImplTest {
 
         final Querier querier = new QuerierImpl();
 
-        final Collection<List<MutableSettableStructuredNode<String>>> paths = querier.pathsToLeaves(node);
+        final SimpleCollection<List<MutableSettableStructuredNode<String>>> paths = querier.pathsToLeaves(node);
 
         assertEquals(1, paths.size());
 
@@ -104,7 +105,7 @@ public final class QuerierImplTest {
 
         final Querier querier = new QuerierImpl();
 
-        final Collection<List<MutableSettableStructuredNode<String>>> paths = querier.pathsToLeaves(node);
+        final SimpleCollection<List<MutableSettableStructuredNode<String>>> paths = querier.pathsToLeaves(node);
 
         assertEquals(2, paths.size());
 
@@ -132,7 +133,7 @@ public final class QuerierImplTest {
 
         final Querier querier = new QuerierImpl();
 
-        final Collection<List<MutableSettableStructuredNode<String>>> paths = querier.pathsToLeaves(node);
+        final SimpleCollection<List<MutableSettableStructuredNode<String>>> paths = querier.pathsToLeaves(node);
 
         assertEquals(2, paths.size());
 

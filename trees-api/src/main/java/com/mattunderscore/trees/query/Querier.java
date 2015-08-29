@@ -28,6 +28,7 @@ package com.mattunderscore.trees.query;
 import java.util.Collection;
 import java.util.List;
 
+import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -64,7 +65,7 @@ public interface Querier {
      * @return A collection of lists. The list starts with the node passed in and ends with a leaf node. The other nodes
      * in the list describe transitions in the path
      */
-    <E, N extends OpenNode<E, N>> Collection<List<N>> pathsToLeaves(N node);
+    <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node);
 
     /**
      * Find all the paths to leaf nodes from the root node of the tree.
@@ -74,7 +75,7 @@ public interface Querier {
      * @return A collection of lists. The list starts with the node passed in and ends with a leaf node. The other nodes
      * in the list describe transitions in the path
      */
-    default <E, N extends OpenNode<E, N>> Collection<List<N>> pathsToLeaves(Tree<E, N> tree) {
+    default <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(Tree<E, N> tree) {
         return pathsToLeaves(tree.getRoot());
     }
 }
