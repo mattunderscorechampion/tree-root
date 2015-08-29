@@ -30,10 +30,10 @@ import java.util.Iterator;
 
 import net.jcip.annotations.GuardedBy;
 
-import com.mattunderscore.trees.base.AbstractSettableNode;
-import com.mattunderscore.simple.collections.SimpleCollection;
-import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.simple.collections.FixedUncheckedSimpleCollection;
+import com.mattunderscore.simple.collections.SimpleCollection;
+import com.mattunderscore.trees.base.AbstractSettableNode;
+import com.mattunderscore.trees.construction.TypeKey;
 
 /**
  * Initial attempt at thread safety is base on copy on mutation. When a child node is added or removed a shallow copy
@@ -153,7 +153,34 @@ public final class MutableTreeImpl<E> extends AbstractSettableNode<E, MutableSet
     @Override
     public Iterator<MutableTreeImpl<E>> childIterator() {
         synchronized (this) {
-            return childList.iterator();
+            final Iterator<MutableTreeImpl<E>> iterator = childList.iterator();
+            return new ChildIterator(iterator);
+        }
+    }
+
+    private final class ChildIterator implements Iterator<MutableTreeImpl<E>> {
+        private final Iterator<MutableTreeImpl<E>> iterator;
+        private volatile MutableTreeImpl<E> current;
+
+        private ChildIterator(Iterator<MutableTreeImpl<E>> iterator) {
+            this.iterator = iterator;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public MutableTreeImpl<E> next() {
+            final MutableTreeImpl<E> next = iterator.next();
+            current = next;
+            return next;
+        }
+
+        @Override
+        public void remove() {
+            removeChild(current);
         }
     }
 }

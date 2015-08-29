@@ -160,4 +160,20 @@ public final class MutableTreeTest {
         assertTrue(tree.getRoot().removeChild(child));
         assertEquals(0, tree.getRoot().getNumberOfChildren());
     }
+
+    @Test
+    public void removeByIterator() {
+        final TopDownTreeRootBuilder<String, MutableSettableNode<String>> rootBuilder = trees.treeBuilders().topDownBuilder();
+        final TopDownTreeRootBuilder.TopDownTreeBuilder<String, MutableSettableNode<String>> builder = rootBuilder.root("a");
+        final MutableTree<String, MutableSettableNode<String>> tree = builder.build(treeClass);
+        tree.getRoot().addChild("b");
+        assertEquals(1, tree.getRoot().getNumberOfChildren());
+
+        final Iterator<? extends MutableSettableNode<String>> iterator = tree.getRoot().childIterator();
+        iterator.next();
+        assertFalse(iterator.hasNext());
+        iterator.remove();
+
+        assertEquals(0, tree.getRoot().getNumberOfChildren());
+    }
 }
