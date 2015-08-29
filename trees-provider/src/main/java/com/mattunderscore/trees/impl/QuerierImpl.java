@@ -25,6 +25,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import java.util.Collection;
+import java.util.List;
+
+import com.mattunderscore.trees.impl.query.FindAllPathsToLeaves;
 import com.mattunderscore.trees.impl.query.FindHeight;
 import com.mattunderscore.trees.query.Querier;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -41,5 +45,10 @@ public final class QuerierImpl implements Querier {
     @Override
     public <E, N extends OpenNode<E, N>> int height(N node) {
         return FindHeight.height(node);
+    }
+
+    @Override
+    public <E, N extends OpenNode<E, N>> Collection<List<N>> pathsToLeaves(N node) {
+        return FindAllPathsToLeaves.paths(node);
     }
 }

@@ -25,7 +25,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.query;
 
+import java.util.Collection;
+import java.util.List;
+
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Provides querying operations.
@@ -33,11 +37,44 @@ import com.mattunderscore.trees.tree.OpenNode;
  */
 public interface Querier {
     /**
-     * Find the height of a node
+     * Find the height of a node.
      * @param node The node to find the height of
      * @param <E> The element type
      * @param <N> The node type
      * @return The height
      */
     <E, N extends OpenNode<E, N>> int height(N node);
+
+    /**
+     * Find the height of the root node of a tree.
+     * @param tree The tree to find the height of
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return The height
+     */
+    default <E, N extends OpenNode<E, N>> int height(Tree<E, N> tree) {
+        return height(tree.getRoot());
+    }
+
+    /**
+     * Find all the paths to leaf nodes from the provided node.
+     * @param node The starting node
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return A collection of lists. The list starts with the node passed in and ends with a leaf node. The other nodes
+     * in the list describe transitions in the path
+     */
+    <E, N extends OpenNode<E, N>> Collection<List<N>> pathsToLeaves(N node);
+
+    /**
+     * Find all the paths to leaf nodes from the root node of the tree.
+     * @param tree The node
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return A collection of lists. The list starts with the node passed in and ends with a leaf node. The other nodes
+     * in the list describe transitions in the path
+     */
+    default <E, N extends OpenNode<E, N>> Collection<List<N>> pathsToLeaves(Tree<E, N> tree) {
+        return pathsToLeaves(tree.getRoot());
+    }
 }
