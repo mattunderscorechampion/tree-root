@@ -26,6 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.simple.collections;
 
 import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * A simplified collection that implements {@link java.lang.Iterable}. It exposes two iterators, one which returns only
@@ -62,4 +66,12 @@ public interface SimpleCollection<N> extends Iterable<N> {
      * @return an Iterator over the elements in this collection
      */
     Iterator<N> structuralIterator();
+
+    /**
+     * @return A stream over the elements of the collection. Returns the same values as the structural iterator.
+     */
+    default Stream<N> stream() {
+        final Spliterator<N> spliterator = Spliterators.spliteratorUnknownSize(structuralIterator(), 0);
+        return StreamSupport.stream(spliterator, false);
+    }
 }

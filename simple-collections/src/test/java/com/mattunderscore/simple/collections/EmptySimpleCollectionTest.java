@@ -30,6 +30,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -55,6 +58,17 @@ public final class EmptySimpleCollectionTest {
     public void iterator() {
         final Iterator<String> iterator = COLLECTION.iterator();
         assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void stream() {
+        final SimpleCollection<String> collection = COLLECTION;
+
+        final Stream<String> stream = collection.stream();
+
+        final List<String> streamed = stream.collect(Collectors.toList());
+
+        assertEquals(0, streamed.size());
     }
 
     @Test

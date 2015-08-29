@@ -32,6 +32,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Test;
 
@@ -56,6 +58,22 @@ public final class ArrayListSimpleCollectionTest {
         assertEquals("a", structuralIterator.next());
         assertEquals("b", structuralIterator.next());
         assertFalse(structuralIterator.hasNext());
+    }
+
+    @Test
+    public void stream() {
+        final List<String> set = new ArrayList<>();
+        set.add("a");
+        set.add("b");
+        final ArrayListSimpleCollection<String> collection = new ArrayListSimpleCollection<>(set);
+
+        final Stream<String> stream = collection.stream();
+
+        final List<String> streamed = stream.collect(Collectors.toList());
+
+        assertEquals(2, streamed.size());
+        assertEquals("a", streamed.get(0));
+        assertEquals("b", streamed.get(1));
     }
 
     @Test

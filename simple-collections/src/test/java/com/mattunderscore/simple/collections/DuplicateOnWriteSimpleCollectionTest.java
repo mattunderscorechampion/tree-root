@@ -27,7 +27,11 @@ package com.mattunderscore.simple.collections;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -55,6 +59,19 @@ public final class DuplicateOnWriteSimpleCollectionTest {
         assertEquals(1, modifiedCollection.size());
         assertEquals("a", modifiedCollection.iterator().next());
         assertEquals("a", modifiedCollection.structuralIterator().next());
+    }
+
+    @Test
+    public void stream() {
+        final SimpleCollection<String> collection = DuplicateOnWriteSimpleCollection.create(new String[] {"a", "b"});
+
+        final Stream<String> stream = collection.stream();
+
+        final List<String> streamed = stream.collect(Collectors.toList());
+
+        assertEquals(2, streamed.size());
+        assertEquals("a", streamed.get(0));
+        assertEquals("b", streamed.get(1));
     }
 
     @Test

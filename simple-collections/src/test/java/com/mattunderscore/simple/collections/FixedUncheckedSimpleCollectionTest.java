@@ -28,7 +28,10 @@ package com.mattunderscore.simple.collections;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -61,6 +64,19 @@ public final class FixedUncheckedSimpleCollectionTest {
         final FixedUncheckedSimpleCollection<String> collection = new FixedUncheckedSimpleCollection<>(new Object[0]);
         assertFalse(collection.structuralIterator().hasNext());
         collection.structuralIterator().next();
+    }
+
+    @Test
+    public void stream() {
+        final SimpleCollection<String> collection = new FixedUncheckedSimpleCollection<>(new String[] {"a", "b"});
+
+        final Stream<String> stream = collection.stream();
+
+        final List<String> streamed = stream.collect(Collectors.toList());
+
+        assertEquals(2, streamed.size());
+        assertEquals("a", streamed.get(0));
+        assertEquals("b", streamed.get(1));
     }
 
     @Test
