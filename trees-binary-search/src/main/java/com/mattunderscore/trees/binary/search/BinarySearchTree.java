@@ -37,6 +37,8 @@ import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.sorted.SortingTree;
 
 /**
+ * A binary search tree implementation. This is a {@link BinaryTree} that is also a {@link SortingTree}. The tree is
+ * mutated by adding new elements to the tree and allowing the tree to place the nodes.
  * @author Matt Champion on 06/09/14.
  */
 @NotThreadSafe

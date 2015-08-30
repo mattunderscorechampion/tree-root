@@ -50,7 +50,7 @@ public abstract class ConvertingIterator<E, T> implements Iterator<E> {
     }
 
     @Override
-    public final void remove() {
+    public void remove() {
         delegate.remove();
     }
 

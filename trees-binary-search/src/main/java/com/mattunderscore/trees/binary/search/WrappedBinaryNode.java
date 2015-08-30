@@ -32,7 +32,7 @@ import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.iterators.ConvertingIterator;
 
 /**
- * Wrap a ClosedMutableBinaryTreeNode as a ClosedBinaryTreeNode.
+ * Wrap a {@link MutableBinaryTreeNode} as a {@link BinaryTreeNode}. This allows mutability to be internalised.
  * @author Matt Champion on 22/06/2015
  */
 public final class WrappedBinaryNode<E> implements BinaryTreeNode<E> {
@@ -100,6 +100,12 @@ public final class WrappedBinaryNode<E> implements BinaryTreeNode<E> {
                 return new WrappedBinaryNode<>(node);
             }
             return null;
+        }
+
+        @Override
+        public void remove() {
+            // Wrapped mutable nodes should not return iterators that permit removal
+            throw new UnsupportedOperationException();
         }
     }
 }

@@ -160,4 +160,12 @@ public final class WrappedBinaryNodeTest {
 
         wrappedIterator.next();
     }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void removeNotSupported() {
+        final WrappedBinaryNode<String> wrappedParent = new WrappedBinaryNode<>(parent);
+        final Iterator<? extends BinaryTreeNode<String>> wrappedIterator = wrappedParent.childIterator();
+        wrappedIterator.next();
+        wrappedIterator.remove();
+    }
 }
