@@ -1,11 +1,9 @@
 package com.mattunderscore.trees.walkers;
 
-import static org.junit.Assert.*;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
