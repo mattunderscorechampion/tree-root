@@ -43,6 +43,7 @@
         <module>iterators</module>
         <module>simple-collections</module>
         <module>trees-mutable-binary</module>
+        <module>common-walkers</module>
     </modules>
 
     <licenses>
@@ -350,6 +351,12 @@
             <dependency>
                 <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>trees-utilities</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.tree.root</groupId>
+                <artifactId>common-walkers</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
