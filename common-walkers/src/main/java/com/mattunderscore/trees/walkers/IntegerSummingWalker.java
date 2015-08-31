@@ -25,27 +25,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.walkers;
 
+import com.mattunderscore.trees.traversal.DefaultWalker;
+
 /**
  * Implementation of {@link SummingWalker} for {@link Integer}s.
  * @author Matt Champion on 31/08/2015
  */
 @Stateful
 @SingleUse
-public final class IntegerSummingWalker implements SummingWalker<Integer> {
+public final class IntegerSummingWalker extends DefaultWalker<Integer> implements SummingWalker<Integer> {
     private int sum = 0;
-
-    @Override
-    public void onEmpty() {
-    }
 
     @Override
     public boolean onNext(Integer node) {
         sum += node;
         return true;
-    }
-
-    @Override
-    public void onCompleted() {
     }
 
     @Override

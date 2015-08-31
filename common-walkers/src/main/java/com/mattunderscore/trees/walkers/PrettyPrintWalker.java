@@ -29,14 +29,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;
 
-import com.mattunderscore.trees.traversal.TreeWalker;
+import com.mattunderscore.trees.traversal.DefaultTreeWalker;
 
 /**
  * Pretty printer for trees. Prints tree in a Lisp-like representation.
  * @author Matt Champion on 31/08/2015
  */
 
-public final class PrettyPrintWalker<T> implements TreeWalker<T> {
+public final class PrettyPrintWalker<T> extends DefaultTreeWalker<T> {
     private final OutputStream stream;
 
     public PrettyPrintWalker(OutputStream stream) {
@@ -91,10 +91,6 @@ public final class PrettyPrintWalker<T> implements TreeWalker<T> {
         catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-    }
-
-    @Override
-    public void onNodeNoChildren(Object node) {
     }
 
     @Override
