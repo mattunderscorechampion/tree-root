@@ -30,11 +30,11 @@ import java.util.Iterator;
 import com.mattunderscore.trees.mutable.MutableNode;
 import com.mattunderscore.trees.mutable.MutableTree;
 import com.mattunderscore.trees.traversal.DefaultWalker;
-import com.mattunderscore.trees.traversal.DefaultTreeWalker;
 import com.mattunderscore.trees.traversal.TreeIteratorFactory;
 import com.mattunderscore.trees.traversal.TreeWalkerFactory;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.walkers.PrettyPrintWalker;
 
 /**
  * Traversal examples.
@@ -74,36 +74,6 @@ public final class TraversalExamples {
     }
 
     public void elementTreeWalker(TreeWalkerFactory walkers, Tree<String, Node<String>> tree) {
-        walkers.walkPreOrder(tree, new DefaultTreeWalker<Node<String>>() {
-            @Override
-            public void onStarted() {
-                System.out.print("(");
-            }
-
-            @Override
-            public void onNode(Node<String> node) {
-                System.out.print(node.getElement());
-            }
-
-            @Override
-            public void onNodeChildrenStarted(Node<String> node) {
-                System.out.print(" (");
-            }
-
-            @Override
-            public void onNodeChildrenRemaining(Node<String> node) {
-                System.out.print(" ");
-            }
-
-            @Override
-            public void onNodeChildrenCompleted(Node<String> node) {
-                System.out.print(")");
-            }
-
-            @Override
-            public void onCompleted() {
-                System.out.println(")");
-            }
-        });
+        walkers.walkElementsPreOrder(tree, new PrettyPrintWalker<>(System.out));
     }
 }

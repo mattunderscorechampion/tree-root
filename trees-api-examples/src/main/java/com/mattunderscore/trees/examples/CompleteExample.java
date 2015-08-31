@@ -36,9 +36,10 @@ import com.mattunderscore.trees.selection.NodeSelector;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelector;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
-import com.mattunderscore.trees.traversal.DefaultWalker;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.walkers.IntegerSummingWalker;
+import com.mattunderscore.trees.walkers.SummingWalker;
 
 /**
  * @author Matt Champion on 16/08/14.
@@ -93,20 +94,7 @@ public final class CompleteExample {
      * Sum all the values in an integer tree.
      */
     public void sum(Trees trees, Tree<Integer, Node<Integer>> tree) {
-        final SumWalker walker = new SumWalker();
+        final SummingWalker<Integer> walker = new IntegerSummingWalker();
         trees.treeWalkers().walkElementsInOrder(tree, walker);
-    }
-
-    /**
-     * Walker that sums the elements in an integer tree.
-     */
-    private static final class SumWalker extends DefaultWalker<Integer> {
-        int sum = 0;
-
-        @Override
-        public boolean onNext(Integer integer) {
-            sum += integer;
-            return true;
-        }
     }
 }

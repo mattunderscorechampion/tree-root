@@ -60,7 +60,7 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
-            <artifactId>trees-immutable</artifactId>
+            <artifactId>common-walkers</artifactId>
         </dependency>
 
         <dependency>
