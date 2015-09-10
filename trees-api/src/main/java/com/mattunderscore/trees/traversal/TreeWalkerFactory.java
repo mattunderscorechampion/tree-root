@@ -29,6 +29,7 @@ import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
+ * Factory for walkers over the node and elements of trees.
  * @author Matt Champion on 23/08/14.
  */
 public interface TreeWalkerFactory {

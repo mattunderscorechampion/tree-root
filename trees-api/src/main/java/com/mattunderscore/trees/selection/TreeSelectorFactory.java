@@ -30,6 +30,7 @@ import java.util.function.Predicate;
 import com.mattunderscore.trees.tree.OpenNode;
 
 /**
+ * Factory for creating subtree selectors.
  * @author Matt Champion on 16/08/14.
  */
 public interface TreeSelectorFactory {

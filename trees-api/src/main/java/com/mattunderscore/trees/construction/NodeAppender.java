@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.construction;
 
 /**
+ * Interface for adding new children. These children maybe nodes or stand-ins for nodes.
  * @author Matt Champion on 08/08/14.
  */
 public interface NodeAppender<E, N extends NodeAppender<E, N>> {
