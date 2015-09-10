@@ -35,7 +35,6 @@ import com.mattunderscore.trees.traversal.DefaultTreeWalker;
  * Pretty printer for trees. Prints tree in a Lisp-like representation.
  * @author Matt Champion on 31/08/2015
  */
-
 public final class PrettyPrintWalker<T> extends DefaultTreeWalker<T> {
     private final OutputStream stream;
 

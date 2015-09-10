@@ -7,11 +7,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates that the walker can only be used once.
- * @author Matt Champion on 31/08/2015
+ * Indicates that the walker is stateful.
+ * @author Matt Champion on 10/09/2015
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.TYPE)
-public @interface SingleUse {
+public @interface Stateless {
 }
