@@ -28,6 +28,7 @@ package com.mattunderscore.trees.impl;
 import java.util.List;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
+import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
 import com.mattunderscore.trees.impl.query.FindAllPathsToLeaves;
 import com.mattunderscore.trees.impl.query.FindHeight;
 import com.mattunderscore.trees.query.Querier;
@@ -50,5 +51,18 @@ public final class QuerierImpl implements Querier {
     @Override
     public <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node) {
         return FindAllPathsToLeaves.paths(node);
+    }
+
+    @Override
+    public <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(N node) {
+        if (node == null) {
+            return true;
+        }
+
+        final int leftHeight = node.getLeft() == null ? 0 : height(node.getLeft());
+        final int rightHeight = node.getRight() == null ? 0 :  height(node.getRight());
+        final int heightDifference = Math.abs(leftHeight - rightHeight);
+
+        return heightDifference <= 1 && isBalanced(node.getLeft()) && isBalanced(node.getRight());
     }
 }

@@ -28,6 +28,7 @@ package com.mattunderscore.trees.query;
 import java.util.List;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
+import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -76,5 +77,25 @@ public interface Querier {
      */
     default <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(Tree<E, N> tree) {
         return pathsToLeaves(tree.getRoot());
+    }
+
+    /**
+     * Test if the subtree starting at the node is balanced.
+     * @param node The node to test
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return If is balanced
+     */
+    <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(N node);
+
+    /**
+     * Test if the trees is balanced.
+     * @param tree The tree to test
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return If is balanced
+     */
+    default <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(Tree<E, N> tree) {
+        return isBalanced(tree.getRoot());
     }
 }

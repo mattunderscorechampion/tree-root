@@ -5,7 +5,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.junit.Before;
@@ -13,7 +12,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
-import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.binary.BinaryTreeNode;
+import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
@@ -24,10 +24,10 @@ import com.mattunderscore.trees.tree.Tree;
  */
 public final class QuerierTest {
     @Mock
-    private Tree<String, Node<String>> tree;
+    private Tree<String, BinaryTreeNode<String>> tree;
 
     @Mock
-    private Node<String> node;
+    private BinaryTreeNode<String> node;
 
     @Before
     public void setUp() {
@@ -54,6 +54,15 @@ public final class QuerierTest {
         verify(querier).pathsToLeaves(node);
     }
 
+    @Test
+    public void treeBalanced() {
+        final Querier querier = spy(new TestQuerier());
+
+        querier.pathsToLeaves(tree);
+
+        verify(querier).pathsToLeaves(node);
+    }
+
     private static class TestQuerier implements Querier {
         @Override
         public <E, N extends OpenNode<E, N>> int height(N node) {
@@ -63,6 +72,11 @@ public final class QuerierTest {
         @Override
         public <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node) {
             return null;
+        }
+
+        @Override
+        public <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(N node) {
+            return false;
         }
     }
 }
