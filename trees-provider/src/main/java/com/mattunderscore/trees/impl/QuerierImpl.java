@@ -25,12 +25,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.Stack;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
+import com.mattunderscore.simple.collections.WrappingSimpleCollection;
 import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
-import com.mattunderscore.trees.impl.query.FindAllPathsToLeaves;
-import com.mattunderscore.trees.impl.query.FindHeight;
 import com.mattunderscore.trees.query.Querier;
 import com.mattunderscore.trees.tree.OpenNode;
 
@@ -45,12 +50,55 @@ public final class QuerierImpl implements Querier {
 
     @Override
     public <E, N extends OpenNode<E, N>> int height(N node) {
-        return FindHeight.height(node);
+        if (node == null) {
+            throw new NullPointerException("Null has no height");
+        }
+
+        return pathsToLeaves(node)
+            .stream()
+            .mapToInt(List::size)
+            .map(l -> l - 1)
+            .max()
+            .getAsInt();
     }
 
     @Override
     public <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node) {
-        return FindAllPathsToLeaves.paths(node);
+        if (node == null) {
+            throw new NullPointerException("Null has no paths");
+        }
+
+        final Stack<BackPath<E, N>> parents = new Stack<>();
+        final Set<BackPath<E, N>> backPaths = new HashSet<>();
+
+        BackPath<E, N> current = new BackPath<>(null, node);
+        parents.push(current);
+
+        // Preorder traversal of tree constructing back paths
+        while (!parents.isEmpty()) {
+            final BackPath<E, N> n = current;
+            final N[] reversed = (N[]) Array.newInstance(n.node.getClass(), n.node.getNumberOfChildren());
+            final Iterator<? extends N> childIterator = n.node.childIterator();
+            for (int i = n.node.getNumberOfChildren() - 1; i >= 0; i--) {
+                reversed[i] = childIterator.next();
+            }
+            for (final N child : reversed) {
+                parents.push(new BackPath<>(n, child));
+            }
+            do {
+                current = parents.pop();
+            } while (current == null);
+            if (current.node.isLeaf()) {
+                backPaths.add(current);
+            }
+        }
+
+        final Set<List<N>> paths = new HashSet<>();
+        for (final BackPath<E, N> backPath : backPaths) {
+            paths.add(toPath(backPath));
+        }
+
+        return new WrappingSimpleCollection<>(paths);
     }
 
     @Override
@@ -66,5 +114,38 @@ public final class QuerierImpl implements Querier {
         return heightDifference <= 1 &&
             (node.getLeft() == null || isBalanced(node.getLeft())) &&
             (node.getRight() == null || isBalanced(node.getRight()));
+    }
+
+    /**
+     * Turn a back path into a path. Effectively reverse order.
+     */
+    private static <E, N extends OpenNode<E, N>> List<N> toPath(BackPath<E, N> backPath) {
+        BackPath<E, N>  currentPath = backPath;
+        final Stack<N> nodes = new Stack<>();
+        nodes.push(currentPath.node);
+        while (currentPath.parent != null) {
+            currentPath = currentPath.parent;
+            nodes.push(currentPath.node);
+        }
+
+        final List<N> path = new ArrayList<>();
+        while (!nodes.isEmpty()) {
+            path.add(nodes.pop());
+        }
+
+        return path;
+    }
+
+    /**
+     * Represent a path in reverse order from a leaf back to the node.
+     */
+    private static final class BackPath<E, N extends OpenNode<E, N>> {
+        private final BackPath<E, N> parent;
+        private final N node;
+
+        private BackPath(BackPath<E, N> parent, N node) {
+            this.parent = parent;
+            this.node = node;
+        }
     }
 }
