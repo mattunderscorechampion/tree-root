@@ -1,5 +1,6 @@
 package com.mattunderscore.trees.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import org.junit.Test;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.Trees;
+import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.query.Querier;
@@ -35,10 +37,11 @@ public final class TreesImplTest {
     public void availableTreeImplementations() {
         final Trees trees = Trees.get();
         final SimpleCollection<Class<?>> implementations = trees.availableTreeImplementations();
-        assertTrue(implementations.size() == 1);
+        assertEquals(2, implementations.size());
         final List<Class<?>> classes = new ArrayList<>();
         implementations.forEach(classes::add);
         assertTrue(classes.contains(LinkedTree.class));
+        assertTrue(classes.contains(MutableBinaryTreeImpl.class));
     }
 
     @Test

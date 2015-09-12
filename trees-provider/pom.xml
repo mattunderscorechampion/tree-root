@@ -79,6 +79,12 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-mutable-binary</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <profiles>

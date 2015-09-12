@@ -1,6 +1,8 @@
 package com.mattunderscore.trees.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.List;
@@ -8,9 +10,14 @@ import java.util.List;
 import org.junit.Test;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
+import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
+import com.mattunderscore.trees.binary.mutable.Constructor;
+import com.mattunderscore.trees.binary.mutable.EmptyConstructor;
+import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.query.Querier;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Unit tests for {@link QuerierImpl}.
@@ -158,5 +165,58 @@ public final class QuerierImplTest {
             assertEquals("a", path1.get(0).getElement());
             assertEquals("b", path1.get(1).getElement());
         }
+    }
+
+    @Test
+    public void emptyTreeBalanced() {
+        final Querier querier = new QuerierImpl();
+
+        assertTrue(querier.isBalanced(new EmptyConstructor<>().build()));
+    }
+
+    @Test
+    public void leafBalanced() {
+        final Querier querier = new QuerierImpl();
+
+        assertTrue(querier.isBalanced(new Constructor<String>().build("a", new MutableBinaryTreeImpl[] {})));
+    }
+
+    @Test
+    public void offByOneBalanced() {
+        final Constructor<String> constructor = new Constructor<>();
+        final Tree<String, MutableBinaryTreeNode<String>> tree =
+            constructor.build("a", new MutableBinaryTreeImpl[] {
+                constructor.build("b", new MutableBinaryTreeImpl[]{})});
+
+        final Querier querier = new QuerierImpl();
+
+        assertTrue(querier.isBalanced(tree));
+    }
+
+    @Test
+    public void unbalanced() {
+        final Constructor<String> constructor = new Constructor<>();
+        final Tree<String, MutableBinaryTreeNode<String>> tree =
+            constructor.build("a", new MutableBinaryTreeImpl[] {
+                constructor.build("b", new MutableBinaryTreeImpl[]{
+                    constructor.build("c", new MutableBinaryTreeImpl[]{
+                        constructor.build("d", new MutableBinaryTreeImpl[] {})})})});
+
+        final Querier querier = new QuerierImpl();
+
+        assertFalse(querier.isBalanced(tree));
+    }
+
+    @Test
+    public void balanced() {
+        final Constructor<String> constructor = new Constructor<>();
+        final Tree<String, MutableBinaryTreeNode<String>> tree =
+            constructor.build("a", new MutableBinaryTreeImpl[] {
+                constructor.build("b", new MutableBinaryTreeImpl[]{}),
+                constructor.build("b", new MutableBinaryTreeImpl[]{})});
+
+        final Querier querier = new QuerierImpl();
+
+        assertTrue(querier.isBalanced(tree));
     }
 }
