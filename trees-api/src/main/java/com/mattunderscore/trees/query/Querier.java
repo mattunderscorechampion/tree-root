@@ -52,8 +52,12 @@ public interface Querier {
      * @param <E> The element type
      * @param <N> The node type
      * @return The height
+     * @throws IllegalArgumentException If the tree is empty
      */
     default <E, N extends OpenNode<E, N>> int height(Tree<E, N> tree) {
+        if (tree.isEmpty()) {
+            throw new IllegalArgumentException("An empty tree does not have a height");
+        }
         return height(tree.getRoot());
     }
 

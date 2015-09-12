@@ -46,6 +46,10 @@ public final class FindAllPathsToLeaves {
     }
 
     public static <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> paths(N startingNode) {
+        if (startingNode == null) {
+            throw new NullPointerException("Null has no paths");
+        }
+
         final Stack<BackPath<E, N>> parents = new Stack<>();
         final Set<BackPath<E, N>> backPaths = new HashSet<>();
 

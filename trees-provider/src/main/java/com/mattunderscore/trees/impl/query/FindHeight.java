@@ -38,6 +38,10 @@ public final class FindHeight {
     }
 
     public static <E, N extends OpenNode<E, N>> int height(N node) {
+        if (node == null) {
+            throw new NullPointerException("Null has no height");
+        }
+
         return FindAllPathsToLeaves
             .paths(node)
             .stream()
