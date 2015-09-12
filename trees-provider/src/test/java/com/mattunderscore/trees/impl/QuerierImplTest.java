@@ -17,6 +17,7 @@ import com.mattunderscore.trees.binary.mutable.MutableBinaryTreeImpl;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.query.Querier;
+import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
@@ -25,6 +26,22 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 27/08/2015
  */
 public final class QuerierImplTest {
+
+    @Test(expected = IllegalArgumentException.class)
+    public void heightEmpty() {
+        final Tree<String, MutableSettableStructuredNode<String>> node = new LinkedTree<>(null);
+
+        final Querier querier = new QuerierImpl();
+
+        querier.height(node);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void heightNull() {
+        final Querier querier = new QuerierImpl();
+
+        querier.height((Node<String>)null);
+    }
 
     @Test
     public void heightLeaf() {
@@ -67,6 +84,22 @@ public final class QuerierImplTest {
         final Querier querier = new QuerierImpl();
 
         assertEquals(2, querier.height(node));
+    }
+
+    @Test
+    public void pathsEmpty() {
+        final Tree<String, MutableSettableStructuredNode<String>> tree = new LinkedTree<>(null);
+
+        final Querier querier = new QuerierImpl();
+
+        assertEquals(0, querier.pathsToLeaves(tree).size());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void pathsNull() {
+        final Querier querier = new QuerierImpl();
+
+        querier.pathsToLeaves((Node<String>) null);
     }
 
     @Test
@@ -167,11 +200,11 @@ public final class QuerierImplTest {
         }
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void emptyTreeBalanced() {
         final Querier querier = new QuerierImpl();
 
-        assertTrue(querier.isBalanced(new EmptyConstructor<>().build()));
+        querier.isBalanced(new EmptyConstructor<>().build());
     }
 
     @Test

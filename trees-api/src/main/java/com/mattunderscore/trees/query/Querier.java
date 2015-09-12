@@ -27,6 +27,7 @@ package com.mattunderscore.trees.query;
 
 import java.util.List;
 
+import com.mattunderscore.simple.collections.EmptySimpleCollection;
 import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -43,6 +44,7 @@ public interface Querier {
      * @param <E> The element type
      * @param <N> The node type
      * @return The height
+     * @throws NullPointerException If the node is null
      */
     <E, N extends OpenNode<E, N>> int height(N node);
 
@@ -68,6 +70,7 @@ public interface Querier {
      * @param <N> The node type
      * @return A collection of lists. The list starts with the node passed in and ends with a leaf node. The other nodes
      * in the list describe transitions in the path
+     * @throws NullPointerException If the node is null
      */
     <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node);
 
@@ -77,9 +80,12 @@ public interface Querier {
      * @param <E> The element type
      * @param <N> The node type
      * @return A collection of lists. The list starts with the node passed in and ends with a leaf node. The other nodes
-     * in the list describe transitions in the path
+     * in the list describe transitions in the path. Returns an empty collection if the tree is empty.
      */
     default <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(Tree<E, N> tree) {
+        if (tree.isEmpty()) {
+            return new EmptySimpleCollection<>();
+        }
         return pathsToLeaves(tree.getRoot());
     }
 
@@ -89,6 +95,7 @@ public interface Querier {
      * @param <E> The element type
      * @param <N> The node type
      * @return If is balanced
+     * @throws NullPointerException If the node is null
      */
     <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(N node);
 
@@ -98,8 +105,12 @@ public interface Querier {
      * @param <E> The element type
      * @param <N> The node type
      * @return If is balanced
+     * @throws IllegalArgumentException If the tree is empty
      */
     default <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(Tree<E, N> tree) {
+        if (tree.isEmpty()) {
+            throw new IllegalArgumentException("An empty tree cannot be balanced");
+        }
         return isBalanced(tree.getRoot());
     }
 }

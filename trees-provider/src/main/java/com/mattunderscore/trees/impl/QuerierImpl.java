@@ -56,13 +56,15 @@ public final class QuerierImpl implements Querier {
     @Override
     public <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(N node) {
         if (node == null) {
-            return true;
+            throw new NullPointerException("A null node cannot be balanced");
         }
 
         final int leftHeight = node.getLeft() == null ? 0 : height(node.getLeft());
         final int rightHeight = node.getRight() == null ? 0 :  height(node.getRight());
         final int heightDifference = Math.abs(leftHeight - rightHeight);
 
-        return heightDifference <= 1 && isBalanced(node.getLeft()) && isBalanced(node.getRight());
+        return heightDifference <= 1 &&
+            (node.getLeft() == null || isBalanced(node.getLeft())) &&
+            (node.getRight() == null || isBalanced(node.getRight()));
     }
 }
