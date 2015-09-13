@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
+import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
 import com.mattunderscore.trees.binary.mutable.Constructor;
 import com.mattunderscore.trees.binary.mutable.EmptyConstructor;
@@ -198,6 +199,13 @@ public final class QuerierImplTest {
             assertEquals("a", path1.get(0).getElement());
             assertEquals("b", path1.get(1).getElement());
         }
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void balancedNull() {
+        final Querier querier = new QuerierImpl();
+
+        querier.isBalanced((BinaryTreeNode<String>) null);
     }
 
     @Test(expected = IllegalArgumentException.class)
