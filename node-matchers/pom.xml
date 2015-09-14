@@ -29,6 +29,11 @@
 
         <dependency>
             <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-utilities</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-basic-nodes</artifactId>
             <scope>test</scope>
         </dependency>

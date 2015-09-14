@@ -1,4 +1,4 @@
-/* Copyright © 2014 Matthew Champion
+/* Copyright © 2015 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,52 +25,48 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.matchers;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 
-import net.jcip.annotations.Immutable;
-
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.utilities.ComparableComparator;
 
 /**
- * Matches nodes with the element equal to the value passed to it. This is based on the equals method.
- * @author Matt Champion on 09/06/14.
+ * Matches nodes with an element equal to some value according to a comparator not the equals method.
+ * @author Matt Champion on 14/09/2015
  */
-@Immutable
-public final class EqualityMatcher<E> implements Predicate<OpenNode<? extends E, ?>> {
-    private final Object value;
+public class EqualsToMatcher<E> implements Predicate<OpenNode<? extends E, ?>> {
+    private final Comparator<E> comparator;
+    private final E value;
 
-    public EqualityMatcher(Object value) {
-        if (value == null) {
-            throw new NullPointerException("Value must be null");
-        }
+    private EqualsToMatcher(Comparator<E> comparator, E value) {
+        this.comparator = comparator;
         this.value = value;
     }
 
     @Override
-    public boolean test(OpenNode<? extends E, ?> node) {
-        return value.equals(node.getElement());
+    public boolean test(OpenNode<? extends E, ?> openNode) {
+        return comparator.compare(value, openNode.getElement()) == 0;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) {
-            return false;
-        }
-        else if (o == this) {
-            return true;
-        }
-        else if (o.getClass().equals(getClass())) {
-            @SuppressWarnings("unchecked")
-            final EqualityMatcher<E> matcher = (EqualityMatcher<E>)o;
-            return matcher.value.equals(value);
-        }
-        else {
-            return false;
-        }
+    /**
+     * Create matcher using comparator.
+     * @param comparator The comparator
+     * @param value The value
+     * @param <E> The value to compare against
+     * @return The comparator
+     */
+    public static <E> Predicate<OpenNode<? extends E, ?>> create(Comparator<E> comparator, E value) {
+        return new EqualsToMatcher<>(comparator, value);
     }
 
-    @Override
-    public int hashCode() {
-        return value.hashCode();
+    /**
+     * Create matcher using comparable.
+     * @param value The value
+     * @param <E> The value to compare against
+     * @return The comparator
+     */
+    public static <E extends Comparable<E>> Predicate<OpenNode<? extends E, ?>> create(E value) {
+        return create(new ComparableComparator<>(), value);
     }
 }
