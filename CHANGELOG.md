@@ -126,3 +126,5 @@ source nodes
 * Allow calculation of node height
 * Allow listing of tree paths
 * Added stream support to simple collection
+* Added support for querying if a tree is balanced 
+* Added additional matchers based on comparators
