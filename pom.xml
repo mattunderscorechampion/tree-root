@@ -503,25 +503,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <version>2.5.4</version>
-                        <executions>
-                            <execution>
-                                <id>package-site</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>single</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>src/main/assembly/site.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
