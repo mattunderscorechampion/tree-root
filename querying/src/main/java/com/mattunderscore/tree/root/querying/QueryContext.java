@@ -26,63 +26,39 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.tree.root.querying;
 
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.utilities.ComparableComparator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.Set;
 import java.util.Stack;
 
+import static java.util.stream.Collectors.minBy;
+
 /**
- * Represent a path in reverse order from a leaf back to the node.
+ * @author Matt Champion on 27/04/16
  */
-final class BackPath<E, N extends OpenNode<E, N>> {
-    private final BackPath<E, N> parent;
-    private final N node;
-    private final int depth;
+public final class QueryContext<E, N extends OpenNode<E, N>> {
 
-    BackPath(BackPath<E, N> parent, N node) {
-        this.parent = parent;
-        this.node = node;
-        this.depth = parent == null ? 0 : parent.depth + 1;
-    }
-
-    /**
-     * @return The parent back path
-     */
-    public BackPath<E, N> getParent() {
-        return parent;
-    }
-
-    /**
-     * @return The node
-     */
-    public N getNode() {
-        return node;
-    }
-
-    /**
-     * @return The depth of the node
-     */
-    public int getDepth() {
-        return depth;
-    }
-
-    /**
-     * Turn a back path into a path. Effectively reverse order.
-     */
-    public List<N> toPath() {
-        BackPath<E, N>  currentPath = this;
-        final Stack<N> nodes = new Stack<>();
-        nodes.push(currentPath.node);
-        while (currentPath.parent != null) {
-            currentPath = currentPath.parent;
-            nodes.push(currentPath.node);
+    public int height(N node) {
+        if (node == null) {
+            throw new NullPointerException("Null has no paths");
         }
 
-        final List<N> path = new ArrayList<>();
-        while (!nodes.isEmpty()) {
-            path.add(nodes.pop());
-        }
+        final Set<BackPath<E,N>> backPaths = BackPathsFromLeaves.backPathsFromLeavesOf(node);
 
-        return path;
+        final Optional<Integer> maxDepth = backPaths
+                .stream()
+                .map(BackPath::getDepth)
+                .collect(minBy(new ComparableComparator<>()));
+
+        if (maxDepth.isPresent()) {
+            return maxDepth.get();
+        }
+        else {
+            throw new IllegalStateException("No paths found");
+        }
     }
 }

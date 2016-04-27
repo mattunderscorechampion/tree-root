@@ -1,4 +1,4 @@
-/* Copyright © 2015 Matthew Champion
+/* Copyright © 2016 Matthew Champion
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -25,59 +25,57 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.tree.root.querying;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.simple.collections.WrappingSimpleCollection;
-import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
-import com.mattunderscore.trees.query.Querier;
 import com.mattunderscore.trees.tree.OpenNode;
 
+import java.lang.reflect.Array;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.Stack;
+import java.util.stream.Collectors;
+
 /**
- * Implementation of {@link Querier}.
- * @author Matt Champion on 27/08/2015
+ * Querier to get the back paths from the leaves of a node to some other node.
+ * @author Matt Champion on 27/04/16
  */
-public final class QuerierImpl implements Querier {
+/*package*/ final class BackPathsFromLeaves {
 
-    public QuerierImpl() {
+    private BackPathsFromLeaves() {
     }
 
-    @Override
-    public <E, N extends OpenNode<E, N>> int height(N node) {
+    public static <E, N extends OpenNode<E, N>> Set<BackPath<E, N>> backPathsFromLeavesOf(N node) {
         if (node == null) {
-            throw new NullPointerException("A null node cannot be balanced");
+            throw new NullPointerException("Null has no paths");
         }
 
-        final QueryContext<E, N> context = new QueryContext<>();
-        return context.height(node);
-    }
+        final Stack<BackPath<E, N>> parents = new Stack<>();
+        final Set<BackPath<E, N>> backPaths = new HashSet<>();
 
-    @Override
-    public <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node) {
-        return new WrappingSimpleCollection<>(
-                BackPathsFromLeaves
-                        .backPathsFromLeavesOf(node)
-                        .stream()
-                        .map(BackPath::toPath)
-                        .collect(Collectors.toSet()));
-    }
+        BackPath<E, N> current = new BackPath<>(null, node);
+        parents.push(current);
 
-    @Override
-    public <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(N node) {
-        if (node == null) {
-            throw new NullPointerException("A null node cannot be balanced");
+        // Preorder traversal of tree constructing back paths
+        while (!parents.isEmpty()) {
+            final BackPath<E, N> n = current;
+            final N[] reversed = (N[]) Array.newInstance(n.getNode().getClass(), n.getNode().getNumberOfChildren());
+            final Iterator<? extends N> childIterator = n.getNode().childIterator();
+            for (int i = n.getNode().getNumberOfChildren() - 1; i >= 0; i--) {
+                reversed[i] = childIterator.next();
+            }
+            for (final N child : reversed) {
+                parents.push(new BackPath<>(n, child));
+            }
+            do {
+                current = parents.pop();
+            } while (current == null);
+            if (current.getNode().isLeaf()) {
+                backPaths.add(current);
+            }
         }
 
-        final QueryContext<E, N> context = new QueryContext<>();
-
-        final int leftHeight = node.getLeft() == null ? 0 : context.height(node.getLeft());
-        final int rightHeight = node.getRight() == null ? 0 :  context.height(node.getRight());
-        final int heightDifference = Math.abs(leftHeight - rightHeight);
-
-        return heightDifference <= 1 &&
-            (node.getLeft() == null || isBalanced(node.getLeft())) &&
-            (node.getRight() == null || isBalanced(node.getRight()));
+        return backPaths;
     }
-
 }
