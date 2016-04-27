@@ -77,9 +77,9 @@ public final class QuerierImpl implements Querier {
         // Preorder traversal of tree constructing back paths
         while (!parents.isEmpty()) {
             final BackPath<E, N> n = current;
-            final N[] reversed = (N[]) Array.newInstance(n.node.getClass(), n.node.getNumberOfChildren());
-            final Iterator<? extends N> childIterator = n.node.childIterator();
-            for (int i = n.node.getNumberOfChildren() - 1; i >= 0; i--) {
+            final N[] reversed = (N[]) Array.newInstance(n.getNode().getClass(), n.getNode().getNumberOfChildren());
+            final Iterator<? extends N> childIterator = n.getNode().childIterator();
+            for (int i = n.getNode().getNumberOfChildren() - 1; i >= 0; i--) {
                 reversed[i] = childIterator.next();
             }
             for (final N child : reversed) {
@@ -88,7 +88,7 @@ public final class QuerierImpl implements Querier {
             do {
                 current = parents.pop();
             } while (current == null);
-            if (current.node.isLeaf()) {
+            if (current.getNode().isLeaf()) {
                 backPaths.add(current);
             }
         }
@@ -122,10 +122,10 @@ public final class QuerierImpl implements Querier {
     private static <E, N extends OpenNode<E, N>> List<N> toPath(BackPath<E, N> backPath) {
         BackPath<E, N>  currentPath = backPath;
         final Stack<N> nodes = new Stack<>();
-        nodes.push(currentPath.node);
-        while (currentPath.parent != null) {
-            currentPath = currentPath.parent;
-            nodes.push(currentPath.node);
+        nodes.push(currentPath.getNode());
+        while (currentPath.getParent() != null) {
+            currentPath = currentPath.getParent();
+            nodes.push(currentPath.getNode());
         }
 
         final List<N> path = new ArrayList<>();
@@ -136,16 +136,4 @@ public final class QuerierImpl implements Querier {
         return path;
     }
 
-    /**
-     * Represent a path in reverse order from a leaf back to the node.
-     */
-    private static final class BackPath<E, N extends OpenNode<E, N>> {
-        private final BackPath<E, N> parent;
-        private final N node;
-
-        private BackPath(BackPath<E, N> parent, N node) {
-            this.parent = parent;
-            this.node = node;
-        }
-    }
 }
