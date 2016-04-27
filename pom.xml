@@ -44,6 +44,7 @@
         <module>simple-collections</module>
         <module>trees-mutable-binary</module>
         <module>common-walkers</module>
+        <module>querying</module>
     </modules>
 
     <licenses>
@@ -357,6 +358,12 @@
             <dependency>
                 <groupId>com.mattunderscore.tree.root</groupId>
                 <artifactId>common-walkers</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mattunderscore.tree.root</groupId>
+                <artifactId>querying</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

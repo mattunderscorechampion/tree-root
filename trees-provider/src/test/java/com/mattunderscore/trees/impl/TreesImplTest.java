@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mattunderscore.tree.root.querying.QuerierImpl;
 import org.junit.Test;
 
 import com.mattunderscore.simple.collections.SimpleCollection;

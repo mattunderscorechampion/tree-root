@@ -66,6 +66,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>querying</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>

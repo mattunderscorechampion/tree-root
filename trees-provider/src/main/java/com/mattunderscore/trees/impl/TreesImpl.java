@@ -29,6 +29,7 @@ import java.util.ServiceLoader;
 
 import com.mattunderscore.simple.collections.ArrayListSimpleCollection;
 import com.mattunderscore.simple.collections.SimpleCollection;
+import com.mattunderscore.tree.root.querying.QuerierImpl;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
 import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;

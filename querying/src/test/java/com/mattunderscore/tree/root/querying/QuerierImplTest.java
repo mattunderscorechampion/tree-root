@@ -1,4 +1,4 @@
-package com.mattunderscore.trees.impl;
+package com.mattunderscore.tree.root.querying;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
