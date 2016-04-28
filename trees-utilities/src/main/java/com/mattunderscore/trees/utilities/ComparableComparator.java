@@ -40,6 +40,6 @@ public final class ComparableComparator<C extends Comparable<C>> implements Comp
 
     @Override
     public int compare(C o1, C o2) {
-        return o2.compareTo(o1);
+        return o1.compareTo(o2);
     }
 }

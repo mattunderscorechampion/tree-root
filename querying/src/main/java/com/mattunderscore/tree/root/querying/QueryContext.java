@@ -28,14 +28,10 @@ package com.mattunderscore.tree.root.querying;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 
-import java.lang.reflect.Array;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
-import java.util.Stack;
 
-import static java.util.stream.Collectors.minBy;
+import static java.util.stream.Collectors.maxBy;
 
 /**
  * @author Matt Champion on 27/04/16
@@ -52,7 +48,7 @@ public final class QueryContext<E, N extends OpenNode<E, N>> {
         final Optional<Integer> maxDepth = backPaths
                 .stream()
                 .map(BackPath::getDepth)
-                .collect(minBy(new ComparableComparator<>()));
+                .collect(maxBy(new ComparableComparator<>()));
 
         if (maxDepth.isPresent()) {
             return maxDepth.get();

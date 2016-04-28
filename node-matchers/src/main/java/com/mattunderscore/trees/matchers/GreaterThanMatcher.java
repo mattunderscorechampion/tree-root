@@ -46,7 +46,7 @@ public final class GreaterThanMatcher<E> implements Predicate<OpenNode<? extends
 
     @Override
     public boolean test(OpenNode<? extends E, ?> openNode) {
-        return comparator.compare(value, openNode.getElement()) > 0;
+        return comparator.compare(value, openNode.getElement()) < 0;
     }
 
     /**

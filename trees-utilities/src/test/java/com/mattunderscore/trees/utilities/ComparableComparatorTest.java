@@ -25,9 +25,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.utilities;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Comparator test.
@@ -37,18 +42,32 @@ public final class ComparableComparatorTest {
     @Test
     public void lessThan() {
         final ComparableComparator<Integer> comparator = new ComparableComparator<>();
-        assertEquals(1, comparator.compare(3, 7));
+        assertEquals(-1, comparator.compare(3, 7));
     }
 
     @Test
     public void greaterThan() {
         final ComparableComparator<Integer> comparator = new ComparableComparator<>();
-        assertEquals(-1, comparator.compare(7, 3));
+        assertEquals(1, comparator.compare(7, 3));
     }
 
     @Test
     public void equals() {
         final ComparableComparator<Integer> comparator = new ComparableComparator<>();
         assertEquals(0, comparator.compare(4, 4));
+    }
+
+    @Test
+    public void max() {
+        final ComparableComparator<Integer> comparator = new ComparableComparator<>();
+        final List<Integer> collection = asList(1, 5, 3, 7, 3, 1, 3, 12, 5, 2);
+        assertEquals(12, (int) Collections.max(collection, comparator));
+    }
+
+    @Test
+    public void min() {
+        final ComparableComparator<Integer> comparator = new ComparableComparator<>();
+        final List<Integer> collection = asList(1, 5, 3, 7, 3, 1, 3, 12, 5, 2);
+        assertEquals(1, (int) Collections.min(collection, comparator));
     }
 }

@@ -63,7 +63,7 @@ public final class BinarySearchTree<E> implements BinaryTree<E, BinaryTreeNode<E
 
     private void addTo(MutableBinaryTreeNode<E> node, E element) {
         final int comparison = comparator.compare(node.getElement(), element);
-        if (comparison < 0) {
+        if (comparison >= 0) {
             final MutableBinaryTreeNode<E> left = node.getLeft();
             if (left == null) {
                 node.setLeft(element);

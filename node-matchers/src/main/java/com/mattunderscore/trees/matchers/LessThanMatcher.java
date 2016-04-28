@@ -46,7 +46,7 @@ public final class LessThanMatcher<E> implements Predicate<OpenNode<? extends E,
 
     @Override
     public boolean test(OpenNode<? extends E, ?> openNode) {
-        return comparator.compare(value, openNode.getElement()) < 0;
+        return comparator.compare(value, openNode.getElement()) > 0;
     }
 
     /**
