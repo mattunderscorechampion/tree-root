@@ -260,4 +260,36 @@ public final class QuerierImplTest {
 
         assertTrue(querier.isBalanced(tree));
     }
+
+    @Test
+    public void largeBalanced() {
+        final Constructor<String> constructor = new Constructor<>();
+        final Tree<String, MutableBinaryTreeNode<String>> tree =
+                constructor.build("a", new MutableBinaryTreeImpl[] {
+                        constructor.build("b", new MutableBinaryTreeImpl[]{
+                                constructor.build("c", new MutableBinaryTreeImpl[]{
+                                        constructor.build("d", new MutableBinaryTreeImpl[]{}),
+                                        constructor.build("d", new MutableBinaryTreeImpl[]{})
+                                }),
+                                constructor.build("c", new MutableBinaryTreeImpl[]{
+                                        constructor.build("d", new MutableBinaryTreeImpl[]{}),
+                                        constructor.build("d", new MutableBinaryTreeImpl[]{})
+                                })
+                        }),
+                        constructor.build("b", new MutableBinaryTreeImpl[]{
+                                constructor.build("c", new MutableBinaryTreeImpl[]{
+                                        constructor.build("d", new MutableBinaryTreeImpl[]{}),
+                                        constructor.build("d", new MutableBinaryTreeImpl[]{})
+                                }),
+                                constructor.build("c", new MutableBinaryTreeImpl[]{
+                                        constructor.build("d", new MutableBinaryTreeImpl[]{}),
+                                        constructor.build("d", new MutableBinaryTreeImpl[]{})
+                                })
+                        })
+                });
+
+        final Querier querier = new QuerierImpl();
+
+        assertTrue(querier.isBalanced(tree));
+    }
 }

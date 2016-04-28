@@ -25,36 +25,124 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.tree.root.querying;
 
+import com.mattunderscore.iterators.ConvertingIterator;
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.OpenStructuralNode;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-
-import static java.util.stream.Collectors.maxBy;
+import java.util.Stack;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @author Matt Champion on 27/04/16
  */
 public final class QueryContext<E, N extends OpenNode<E, N>> {
+    private final Map<N, Integer> heightCache = new HashMap<>();
 
     public int height(N node) {
-        if (node == null) {
-            throw new NullPointerException("Null has no paths");
+        if (node.isLeaf()) {
+            return 0;
         }
 
-        final Set<BackPath<E,N>> backPaths = BackPathsFromLeaves.backPathsFromLeavesOf(node);
+        final Integer cachedHeight = heightCache.get(node);
 
-        final Optional<Integer> maxDepth = backPaths
-                .stream()
-                .map(BackPath::getDepth)
-                .collect(maxBy(ComparableComparator.get()));
-
-        if (maxDepth.isPresent()) {
-            return maxDepth.get();
+        if (cachedHeight != null) {
+            return cachedHeight;
         }
-        else {
-            throw new IllegalStateException("No paths found");
+
+        final Stack<TraversalState<E, N>> parents = new Stack<>();
+        TraversalState<E, N> nextNode = new TraversalState<>(node);
+        final Stack<Collection<TraversalState<E, N>>> children = new Stack<>();
+        int lastHeight = 0;
+
+        while (!parents.isEmpty() || nextNode != null) {
+            if (nextNode != null) {
+                final TraversalState<E, N> state = nextNode;
+                parents.push(state);
+                if (state.children.hasNext()) {
+                    nextNode = state.children.next();
+                    final List<TraversalState<E, N>> newChildren = new ArrayList<>();
+                    newChildren.add(nextNode);
+                    children.push(newChildren);
+                    // GO LEFT
+                }
+                else {
+                    // Leaf
+                    nextNode = null;
+                    children.push(new ArrayList<>());
+                }
+            }
+            else {
+                final TraversalState<E, N> parentState = parents.peek();
+                if (parentState.children.hasNext()) {
+                    nextNode = parentState.children.next();
+                    children.peek().add(nextNode);
+                    // GO RIGHT
+                    continue;
+                }
+
+                // GO UP
+                if (!parentState.children.hasNext()) {
+                    parents.pop();
+
+                    final Optional<Integer> height = children
+                            .pop()
+                            .stream()
+                            .map(state -> state.height)
+                            .collect(Collectors.maxBy(ComparableComparator.get()));
+
+                    if (height.isPresent()) {
+                        parentState.height = height.get() + 1;
+                        lastHeight = parentState.height;
+                        heightCache.put(parentState.node, parentState.height);
+                    }
+                    else {
+                        lastHeight = 0;
+                    }
+                }
+
+            }
+        }
+
+        return lastHeight;
+    }
+
+    public static final class TraversalState<E, N extends OpenNode<E, N>> {
+        private final N node;
+        private final Iterator<TraversalState<E, N>> children;
+        private int height = 0;
+
+        @SuppressWarnings("unchecked")
+        public TraversalState(N node) {
+            this.node = node;
+            if (node instanceof OpenStructuralNode) {
+                final OpenStructuralNode structuralNode = (OpenStructuralNode) node;
+                this.children = new ToTraversalStateIterator<>(structuralNode.childStructuralIterator());
+            }
+            else {
+                this.children = new ToTraversalStateIterator<>(node.childIterator());
+            }
+        }
+
+        private final class ToTraversalStateIterator<E, N extends OpenNode<E, N>>
+                extends ConvertingIterator<TraversalState<E, N>, N> {
+            public ToTraversalStateIterator(Iterator<? extends N> delegate) {
+                super(delegate);
+            }
+
+            @Override
+            protected TraversalState<E, N> convert(N n) {
+                return new TraversalState<>(n);
+            }
         }
     }
 }

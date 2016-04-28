@@ -71,13 +71,17 @@ public final class QuerierImpl implements Querier {
 
         final QueryContext<E, N> context = new QueryContext<>();
 
+        return isBalanced(context, node);
+    }
+
+    private <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(QueryContext<E, N> context, N node) {
         final int leftHeight = node.getLeft() == null ? 0 : context.height(node.getLeft());
         final int rightHeight = node.getRight() == null ? 0 :  context.height(node.getRight());
         final int heightDifference = Math.abs(leftHeight - rightHeight);
 
         return heightDifference <= 1 &&
-            (node.getLeft() == null || isBalanced(node.getLeft())) &&
-            (node.getRight() == null || isBalanced(node.getRight()));
+                (node.getLeft() == null || isBalanced(context, node.getLeft())) &&
+                (node.getRight() == null || isBalanced(context, node.getRight()));
     }
 
 }
