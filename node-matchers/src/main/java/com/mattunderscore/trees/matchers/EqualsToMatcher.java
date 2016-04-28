@@ -67,6 +67,6 @@ public class EqualsToMatcher<E> implements Predicate<OpenNode<? extends E, ?>> {
      * @return The comparator
      */
     public static <E extends Comparable<E>> Predicate<OpenNode<? extends E, ?>> create(E value) {
-        return create(new ComparableComparator<>(), value);
+        return create(ComparableComparator.get(), value);
     }
 }

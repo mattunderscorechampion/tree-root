@@ -36,10 +36,18 @@ import net.jcip.annotations.Immutable;
  */
 @Immutable
 public final class ComparableComparator<C extends Comparable<C>> implements Comparator<C>, Serializable {
-    private static final long serialVersionUID = -3330735978390219001L;
+    private static final long serialVersionUID = 4351426416323431L;
+    private static final Comparator INSTANCE = new ComparableComparator();
+
+    private ComparableComparator() {
+    }
 
     @Override
     public int compare(C o1, C o2) {
         return o1.compareTo(o2);
+    }
+
+    public static <C> Comparator<C> get() {
+        return INSTANCE;
     }
 }

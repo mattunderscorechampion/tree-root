@@ -39,7 +39,7 @@ public final class SortingTreeBuilderImplTest {
 
     @Test
     public void buildFromClass() {
-        final Comparator<Integer> comparator = new ComparableComparator<>();
+        final Comparator<Integer> comparator = ComparableComparator.get();
         final SortingTreeBuilderImpl<Integer, BinaryTreeNode<Integer>> builder =
             new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, comparator);
         builder
@@ -56,7 +56,7 @@ public final class SortingTreeBuilderImplTest {
 
     @Test
     public void buildFromKey() {
-        final Comparator<Integer> comparator = new ComparableComparator<>();
+        final Comparator<Integer> comparator = ComparableComparator.get();
         final SortingTreeBuilderImpl<Integer, BinaryTreeNode<Integer>> builder =
             new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, comparator);
         builder

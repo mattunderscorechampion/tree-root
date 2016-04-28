@@ -49,7 +49,7 @@ public final class BinarySearchTreeTest {
 
     @Test
     public void addingAndOrdering() {
-        final Comparator<String> comparator = new ComparableComparator<>();
+        final Comparator<String> comparator = ComparableComparator.get();
         final BinarySearchTree<String> tree = new BinarySearchTree<>(comparator);
 
         assertTrue(tree.isEmpty());
@@ -114,7 +114,7 @@ public final class BinarySearchTreeTest {
 
     @Test
     public void absentNodes() {
-        final Comparator<String> comparator = new ComparableComparator<>();
+        final Comparator<String> comparator = ComparableComparator.get();
         final BinarySearchTree<String> tree = new BinarySearchTree<>(comparator);
 
         assertTrue(tree.isEmpty());

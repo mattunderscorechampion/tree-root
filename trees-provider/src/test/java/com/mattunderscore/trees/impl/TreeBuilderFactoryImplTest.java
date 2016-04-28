@@ -67,14 +67,14 @@ public class TreeBuilderFactoryImplTest {
     @Test(expected = OperationNotSupportedForType.class)
     public void testSortingTreeBuilderWithComparator() {
         final SortingTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders()
-            .sortingTreeBuilder(new ComparableComparator<String>());
+            .sortingTreeBuilder(ComparableComparator.get());
         builder.build(new TypeKey<SortingTree<String, MutableSettableStructuredNode<String>>>() {});
     }
 
     @Test(expected = UnsupportedOperationException.class) // Sorting algorithms not implemented
     public void testSortedTreeBuilder() {
         final SortedTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders()
-            .sortedTreeBuilder(new ComparableComparator<String>(), new SortingAlgorithm() {
+            .sortedTreeBuilder(ComparableComparator.get(), new SortingAlgorithm() {
         });
     }
 }

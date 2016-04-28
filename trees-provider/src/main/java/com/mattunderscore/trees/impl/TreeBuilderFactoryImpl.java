@@ -75,7 +75,7 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
 
     @Override
     public <E extends Comparable<E>, N extends OpenNode<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder() {
-        return new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, new ComparableComparator<E>());
+        return new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, ComparableComparator.get());
     }
 
     @Override
@@ -85,6 +85,6 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
 
     @Override
     public <E extends Comparable<E>, N extends OpenNode<E, N>> SortedTreeBuilder<E, N> sortedTreeBuilder(SortingAlgorithm algorithm) {
-        return sortedTreeBuilder(new ComparableComparator<E>(), algorithm);
+        return sortedTreeBuilder(ComparableComparator.get(), algorithm);
     }
 }

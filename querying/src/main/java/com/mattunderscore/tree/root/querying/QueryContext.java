@@ -48,7 +48,7 @@ public final class QueryContext<E, N extends OpenNode<E, N>> {
         final Optional<Integer> maxDepth = backPaths
                 .stream()
                 .map(BackPath::getDepth)
-                .collect(maxBy(new ComparableComparator<>()));
+                .collect(maxBy(ComparableComparator.get()));
 
         if (maxDepth.isPresent()) {
             return maxDepth.get();
