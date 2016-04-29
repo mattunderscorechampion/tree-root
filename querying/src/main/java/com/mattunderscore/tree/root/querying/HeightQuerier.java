@@ -43,21 +43,14 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
- * Stateful querier to get the height of a node or tree.
+ * Querier to get the height of a node or tree.
  * @author Matt Champion on 27/04/16
  */
 /*package*/ final class HeightQuerier<E, N extends OpenNode<E, N>> {
-    private final Map<N, Integer> heightCache = new HashMap<>();
 
     public int height(N node) {
         if (node.isLeaf()) {
             return 0;
-        }
-
-        final Integer cachedHeight = heightCache.get(node);
-
-        if (cachedHeight != null) {
-            return cachedHeight;
         }
 
         final Stack<TraversalState<E, N>> parents = new Stack<>();
@@ -104,7 +97,6 @@ import java.util.stream.Collectors;
                     if (height.isPresent()) {
                         parentState.height = height.get() + 1;
                         lastHeight = parentState.height;
-                        heightCache.put(parentState.node, parentState.height);
                     }
                     else {
                         lastHeight = 0;

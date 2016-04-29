@@ -46,21 +46,21 @@ public final class QuerierImpl implements Querier {
     @Override
     public <E, N extends OpenNode<E, N>> int height(N node) {
         if (node == null) {
-            throw new NullPointerException("A null node cannot be balanced");
+            throw new NullPointerException("A null node cannot have a height");
         }
 
-        final HeightQuerier<E, N> context = new HeightQuerier<>();
-        return context.height(node);
+        final HeightQuerier<E, N> querier = new HeightQuerier<>();
+        return querier.height(node);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node) {
         return new WrappingSimpleCollection<>(
-                BackPathsFromLeaves
-                        .backPathsFromLeavesOf(node)
-                        .stream()
-                        .map(BackPath::toPath)
-                        .collect(Collectors.toSet()));
+            BackPathsFromLeaves
+                .backPathsFromLeavesOf(node)
+                .stream()
+                .map(BackPath::toPath)
+                .collect(Collectors.toSet()));
     }
 
     @Override
@@ -70,7 +70,6 @@ public final class QuerierImpl implements Querier {
         }
 
         final IsBalancedQuerier<E, N> querier = new IsBalancedQuerier<>();
-
         return querier.isBalanced(node);
     }
 
