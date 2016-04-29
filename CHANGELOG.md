@@ -128,3 +128,4 @@ source nodes
 * Added stream support to simple collection
 * Added support for querying if a tree is balanced 
 * Added additional matchers based on comparators
+* Added support for applying a reducing function in post-order to a tree or subtree
