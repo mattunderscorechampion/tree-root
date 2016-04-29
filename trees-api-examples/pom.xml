@@ -67,6 +67,11 @@
             <groupId>com.mattunderscore.tree.root</groupId>
             <artifactId>trees-provider</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.mattunderscore.tree.root</groupId>
+            <artifactId>trees-immutable</artifactId>
+        </dependency>
     </dependencies>
 
     <profiles>
