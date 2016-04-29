@@ -42,6 +42,11 @@ import java.util.stream.Collectors;
 /*package*/ final class IsBalancedTreeReducer<E, N extends OpenBinaryTreeNode<E, N>>
         implements BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>> {
 
+    private static final IsBalancedTreeReducer REDUCER = new IsBalancedTreeReducer();
+
+    private IsBalancedTreeReducer() {
+    }
+
     @Override
     public ReductionResult<IsBalancedResult> apply(N node, Collection<IsBalancedResult> childResults) {
         if (node.isLeaf()) {
@@ -83,6 +88,10 @@ import java.util.stream.Collectors;
                     .collect(Collectors.maxBy(ComparableComparator.get()))
                     .get();
         }
+    }
+
+    public static <E, N extends OpenBinaryTreeNode<E, N>> BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>> get() {
+        return REDUCER;
     }
 
     public static final class IsBalancedResult {

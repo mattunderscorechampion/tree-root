@@ -45,7 +45,6 @@ import java.util.stream.Collectors;
  */
 public final class QuerierImpl implements Querier {
     private final PostOrderPartialReducerDriver reducerDriver = new PostOrderPartialReducerDriver();
-    private final IsBalancedTreeReducer isBalancedReducer = new IsBalancedTreeReducer();
 
     public QuerierImpl() {
     }
@@ -75,11 +74,14 @@ public final class QuerierImpl implements Querier {
             throw new NullPointerException("A null node cannot be balanced");
         }
 
-        return this.<E, N, IsBalancedResult>partialReduce(node, isBalancedReducer).isBalanced();
+        return partialReduce(node, IsBalancedTreeReducer.get()).isBalanced();
     }
 
     @Override
-    public <E, N extends OpenNode<E, N>, R> R partialReduce(N node, BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
+    public <E, N extends OpenNode<E, N>, R> R partialReduce(
+            N node,
+            BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
+
         return reducerDriver.reduce(node, reducer);
     }
 
