@@ -50,15 +50,6 @@ public final class QuerierImpl implements Querier {
     }
 
     @Override
-    public <E, N extends OpenNode<E, N>> int height(N node) {
-        if (node == null) {
-            throw new NullPointerException("A null node cannot have a height");
-        }
-
-        return this.<E, N, Integer>reduce(node, (N n, Collection<Integer> childResults) -> childResults.size() == 0 ? 0 : Collections.max(childResults) + 1);
-    }
-
-    @Override
     public <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node) {
         return new WrappingSimpleCollection<>(
             BackPathsFromLeaves

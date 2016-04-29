@@ -32,6 +32,7 @@ import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 
@@ -48,7 +49,13 @@ public interface Querier {
      * @return The height
      * @throws NullPointerException If the node is null
      */
-    <E, N extends OpenNode<E, N>> int height(N node);
+    default <E, N extends OpenNode<E, N>> int height(N node) {
+        if (node == null) {
+            throw new NullPointerException("A null node cannot have a height");
+        }
+
+        return reduce(node, (n, childResults) -> n.isLeaf() ? 0 : Collections.max(childResults) + 1);
+    }
 
     /**
      * Find the height of the root node of a tree.
@@ -117,7 +124,8 @@ public interface Querier {
     }
 
     /**
-     * Reduce the subtree starting at a node.
+     * Reduce the subtree starting at a node. Perform a post order traversal of the tree. Apply the reducer to the node
+     * and the results of applying the reducer to the nodes children. The reduction can be stopped early.
      * @param node The node to start the reduction at
      * @param reducer The reducer to apply
      * @param <E> The element type
@@ -129,7 +137,8 @@ public interface Querier {
     <E, N extends OpenNode<E, N>, R> R partialReduce(N node, BiFunction<N, Collection<R>, ReductionResult<R>> reducer);
 
     /**
-     * Reduce the subtree starting at a node.
+     * Reduce the subtree starting at a node. Perform a post order traversal of the tree. Apply the reducer to the node
+     * and the results of applying the reducer to the nodes children. The reduction can be stopped early.
      * @param tree The tree to reduce
      * @param reducer The reducer to apply
      * @param <E> The element type
@@ -138,7 +147,9 @@ public interface Querier {
      * @return The result
      * @throws IllegalArgumentException If the tree is empty
      */
-    default <E, N extends OpenNode<E, N>, R> R partialReduce(Tree<E, N> tree, BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
+    default <E, N extends OpenNode<E, N>, R> R partialReduce(
+            Tree<E, N> tree,
+            BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
         if (tree.isEmpty()) {
             throw new IllegalArgumentException("An empty tree cannot be balanced");
         }
@@ -147,7 +158,8 @@ public interface Querier {
     }
 
     /**
-     * Reduce the subtree starting at a node.
+     * Reduce the subtree starting at a node. Perform a post order traversal of the tree. Apply the reducer to the node
+     * and the results of applying the reducer to the nodes children.
      * @param node The node to start the reduction at
      * @param reducer The reducer to apply
      * @param <E> The element type
@@ -161,7 +173,8 @@ public interface Querier {
     }
 
     /**
-     * Reduce the subtree starting at a node.
+     * Reduce the subtree starting at a node. Perform a post order traversal of the tree. Apply the reducer to the node
+     * and the results of applying the reducer to the nodes children.
      * @param tree The tree to reduce
      * @param reducer The reducer to apply
      * @param <E> The element type
