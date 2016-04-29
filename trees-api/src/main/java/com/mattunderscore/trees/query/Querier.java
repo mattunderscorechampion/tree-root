@@ -25,13 +25,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.query;
 
-import java.util.List;
-
 import com.mattunderscore.simple.collections.EmptySimpleCollection;
 import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
+
+import java.util.List;
 
 /**
  * Provides querying operations.
@@ -112,5 +112,65 @@ public interface Querier {
             throw new IllegalArgumentException("An empty tree cannot be balanced");
         }
         return isBalanced(tree.getRoot());
+    }
+
+    /**
+     * Reduce the subtree starting at a node.
+     * @param node The node to start the reduction at
+     * @param reducer The reducer to apply
+     * @param <E> The element type
+     * @param <N> The node type
+     * @param <R> The type of result
+     * @return The result
+     * @throws NullPointerException If the node is null
+     */
+    <E, N extends OpenNode<E, N>, R> R reduce(N node, PostOrderPartialTreeReducer<E, N, R> reducer);
+
+    /**
+     * Reduce the subtree starting at a node.
+     * @param tree The tree to reduce
+     * @param reducer The reducer to apply
+     * @param <E> The element type
+     * @param <N> The node type
+     * @param <R> The type of result
+     * @return The result
+     * @throws IllegalArgumentException If the tree is empty
+     */
+    default <E, N extends OpenNode<E, N>, R> R reduce(Tree<E, N> tree, PostOrderPartialTreeReducer<E, N, R> reducer) {
+        if (tree.isEmpty()) {
+            throw new IllegalArgumentException("An empty tree cannot be balanced");
+        }
+        return reduce(tree.getRoot(), reducer);
+    }
+
+    /**
+     * Reduce the subtree starting at a node.
+     * @param node The node to start the reduction at
+     * @param reducer The reducer to apply
+     * @param <E> The element type
+     * @param <N> The node type
+     * @param <R> The type of result
+     * @return The result
+     * @throws NullPointerException If the node is null
+     */
+    default <E, N extends OpenNode<E, N>, R> R reduce(N node, PostOrderTreeReducer<E, N, R> reducer) {
+        return reduce(node, new PartialToTotalReductionResultAdapter<>(reducer));
+    }
+
+    /**
+     * Reduce the subtree starting at a node.
+     * @param tree The tree to reduce
+     * @param reducer The reducer to apply
+     * @param <E> The element type
+     * @param <N> The node type
+     * @param <R> The type of result
+     * @return The result
+     * @throws IllegalArgumentException If the tree is empty
+     */
+    default <E, N extends OpenNode<E, N>, R> R reduce(Tree<E, N> tree, PostOrderTreeReducer<E, N, R> reducer) {
+        if (tree.isEmpty()) {
+            throw new IllegalArgumentException("An empty tree cannot be balanced");
+        }
+        return reduce(tree.getRoot(), new PartialToTotalReductionResultAdapter<>(reducer));
     }
 }

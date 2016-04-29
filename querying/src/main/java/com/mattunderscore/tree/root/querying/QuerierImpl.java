@@ -25,12 +25,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.tree.root.querying;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.simple.collections.WrappingSimpleCollection;
+import com.mattunderscore.tree.root.querying.IsBalancedTreeReducer.IsBalancedResult;
 import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
+import com.mattunderscore.trees.query.PostOrderPartialTreeReducer;
 import com.mattunderscore.trees.query.Querier;
 import com.mattunderscore.trees.tree.OpenNode;
 
@@ -39,6 +43,8 @@ import com.mattunderscore.trees.tree.OpenNode;
  * @author Matt Champion on 27/08/2015
  */
 public final class QuerierImpl implements Querier {
+    private final PostOrderPartialReducerDriver reducerDriver = new PostOrderPartialReducerDriver();
+    private final IsBalancedTreeReducer isBalancedReducer = new IsBalancedTreeReducer();
 
     public QuerierImpl() {
     }
@@ -49,8 +55,7 @@ public final class QuerierImpl implements Querier {
             throw new NullPointerException("A null node cannot have a height");
         }
 
-        final HeightQuerier<E, N> querier = new HeightQuerier<>();
-        return querier.height(node);
+        return this.<E, N, Integer>reduce(node, (N n, Collection<Integer> childResults) -> childResults.size() == 0 ? 0 : Collections.max(childResults) + 1);
     }
 
     @Override
@@ -69,8 +74,12 @@ public final class QuerierImpl implements Querier {
             throw new NullPointerException("A null node cannot be balanced");
         }
 
-        final IsBalancedQuerier<E, N> querier = new IsBalancedQuerier<>();
-        return querier.isBalanced(node);
+        return this.<E, N, IsBalancedResult>reduce(node, isBalancedReducer).isBalanced();
+    }
+
+    @Override
+    public <E, N extends OpenNode<E, N>, R> R reduce(N node, PostOrderPartialTreeReducer<E, N, R> reducer) {
+        return reducerDriver.reduce(node, reducer);
     }
 
 }
