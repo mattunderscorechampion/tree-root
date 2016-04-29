@@ -49,7 +49,7 @@ public final class QuerierImpl implements Querier {
             throw new NullPointerException("A null node cannot be balanced");
         }
 
-        final QueryContext<E, N> context = new QueryContext<>();
+        final HeightQuerier<E, N> context = new HeightQuerier<>();
         return context.height(node);
     }
 
@@ -69,12 +69,12 @@ public final class QuerierImpl implements Querier {
             throw new NullPointerException("A null node cannot be balanced");
         }
 
-        final QueryContext<E, N> context = new QueryContext<>();
+        final HeightQuerier<E, N> context = new HeightQuerier<>();
 
         return isBalanced(context, node);
     }
 
-    private <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(QueryContext<E, N> context, N node) {
+    private <E, N extends OpenBinaryTreeNode<E, N>> boolean isBalanced(HeightQuerier<E, N> context, N node) {
         final int leftHeight = node.getLeft() == null ? 0 : context.height(node.getLeft());
         final int rightHeight = node.getRight() == null ? 0 :  context.height(node.getRight());
         final int heightDifference = Math.abs(leftHeight - rightHeight);

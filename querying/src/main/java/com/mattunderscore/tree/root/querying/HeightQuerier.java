@@ -43,9 +43,10 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
+ * Stateful querier to get the height of a node or tree.
  * @author Matt Champion on 27/04/16
  */
-public final class QueryContext<E, N extends OpenNode<E, N>> {
+/*package*/ final class HeightQuerier<E, N extends OpenNode<E, N>> {
     private final Map<N, Integer> heightCache = new HashMap<>();
 
     public int height(N node) {
