@@ -28,22 +28,24 @@ package com.mattunderscore.trees.query;
 import com.mattunderscore.trees.tree.OpenNode;
 
 import java.util.Collection;
+import java.util.function.BiFunction;
 
 /**
- * Adapter for {@link PostOrderTreeReducer} to {@link PostOrderPartialTreeReducer}.
+ * Adapter for a total reducer to a partial reducer.
  *
  * @author Matt Champion on 29/04/16
  */
 /*package*/ final class PartialToTotalReductionResultAdapter<E, N extends OpenNode<E, N>, R>
-        implements PostOrderPartialTreeReducer<E, N, R> {
-    private final PostOrderTreeReducer<E, N, R> delegate;
+        implements BiFunction<N, Collection<R>, ReductionResult<R>> {
 
-    /*package*/ PartialToTotalReductionResultAdapter(PostOrderTreeReducer<E, N, R> delegate) {
+    private final BiFunction<N, Collection<R>, R> delegate;
+
+    /*package*/ PartialToTotalReductionResultAdapter(BiFunction<N, Collection<R>, R> delegate) {
         this.delegate = delegate;
     }
 
     @Override
-    public ReductionResult<R> applyToNode(N node, Collection<R> childResults) {
-        return ReductionResults.result(delegate.applyToNode(node, childResults));
+    public ReductionResult<R> apply(N node, Collection<R> childResults) {
+        return ReductionResults.result(delegate.apply(node, childResults));
     }
 }

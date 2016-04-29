@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.tree.root.querying;
 
 import com.mattunderscore.iterators.ConvertingIterator;
-import com.mattunderscore.trees.query.PostOrderPartialTreeReducer;
 import com.mattunderscore.trees.query.ReductionResult;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.OpenStructuralNode;
@@ -37,6 +36,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
@@ -44,13 +44,16 @@ import java.util.stream.Collectors;
  * @author Matt Champion on 29/04/16
  */
 /*package*/ final class PostOrderPartialReducerDriver {
-    public <E, N extends OpenNode<E, N>, R> R reduce(N node, PostOrderPartialTreeReducer<E, N, R> reducer) {
+    public <E, N extends OpenNode<E, N>, R> R reduce(N node, BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
         return tryReduce(node, reducer).result();
     }
 
-    private <E, N extends OpenNode<E, N>, R> ReductionResult<R> tryReduce(N node, PostOrderPartialTreeReducer<E, N, R> reducer) {
+    private <E, N extends OpenNode<E, N>, R> ReductionResult<R> tryReduce(
+            N node,
+            BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
+
         if (node.isLeaf()) {
-            return reducer.applyToNode(node, Collections.emptyList());
+            return reducer.apply(node, Collections.emptyList());
         }
 
         final Stack<TraversalState<E, N, R>> parents = new Stack<>();
@@ -95,12 +98,13 @@ import java.util.stream.Collectors;
                             .map(state -> state.result)
                             .collect(Collectors.toList());
 
-                    reductionResult = reducer.applyToNode(parentState.node, childResults);
+                    reductionResult = reducer.apply(parentState.node, childResults);
                     if (!reductionResult.shouldContinue()) {
                         return reductionResult;
                     }
                     else if (reductionResult.hasResult()) {
-                        parentState.result = reductionResult.result();
+                        final R result = reductionResult.result();
+                        parentState.result = result;
                         parentState.hasResult = true;
                     }
                 }

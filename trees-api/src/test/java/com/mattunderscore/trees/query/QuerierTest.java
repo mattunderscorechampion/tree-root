@@ -5,7 +5,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -80,7 +82,7 @@ public final class QuerierTest {
         }
 
         @Override
-        public <E, N extends OpenNode<E, N>, R> R reduce(N node, PostOrderPartialTreeReducer<E, N, R> reducer) {
+        public <E, N extends OpenNode<E, N>, R> R partialReduce(N node, BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
             return null;
         }
     }

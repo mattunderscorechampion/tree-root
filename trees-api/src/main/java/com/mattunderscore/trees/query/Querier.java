@@ -31,7 +31,9 @@ import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
 
 /**
  * Provides querying operations.
@@ -124,7 +126,7 @@ public interface Querier {
      * @return The result
      * @throws NullPointerException If the node is null
      */
-    <E, N extends OpenNode<E, N>, R> R reduce(N node, PostOrderPartialTreeReducer<E, N, R> reducer);
+    <E, N extends OpenNode<E, N>, R> R partialReduce(N node, BiFunction<N, Collection<R>, ReductionResult<R>> reducer);
 
     /**
      * Reduce the subtree starting at a node.
@@ -136,11 +138,12 @@ public interface Querier {
      * @return The result
      * @throws IllegalArgumentException If the tree is empty
      */
-    default <E, N extends OpenNode<E, N>, R> R reduce(Tree<E, N> tree, PostOrderPartialTreeReducer<E, N, R> reducer) {
+    default <E, N extends OpenNode<E, N>, R> R partialReduce(Tree<E, N> tree, BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
         if (tree.isEmpty()) {
             throw new IllegalArgumentException("An empty tree cannot be balanced");
         }
-        return reduce(tree.getRoot(), reducer);
+
+        return partialReduce(tree.getRoot(), reducer);
     }
 
     /**
@@ -153,8 +156,8 @@ public interface Querier {
      * @return The result
      * @throws NullPointerException If the node is null
      */
-    default <E, N extends OpenNode<E, N>, R> R reduce(N node, PostOrderTreeReducer<E, N, R> reducer) {
-        return reduce(node, new PartialToTotalReductionResultAdapter<>(reducer));
+    default <E, N extends OpenNode<E, N>, R> R reduce(N node, BiFunction<N, Collection<R>, R> reducer) {
+        return partialReduce(node, new PartialToTotalReductionResultAdapter<>(reducer));
     }
 
     /**
@@ -167,10 +170,11 @@ public interface Querier {
      * @return The result
      * @throws IllegalArgumentException If the tree is empty
      */
-    default <E, N extends OpenNode<E, N>, R> R reduce(Tree<E, N> tree, PostOrderTreeReducer<E, N, R> reducer) {
+    default <E, N extends OpenNode<E, N>, R> R reduce(Tree<E, N> tree, BiFunction<N, Collection<R>, R> reducer) {
         if (tree.isEmpty()) {
             throw new IllegalArgumentException("An empty tree cannot be balanced");
         }
-        return reduce(tree.getRoot(), new PartialToTotalReductionResultAdapter<>(reducer));
+
+        return partialReduce(tree.getRoot(), new PartialToTotalReductionResultAdapter<>(reducer));
     }
 }

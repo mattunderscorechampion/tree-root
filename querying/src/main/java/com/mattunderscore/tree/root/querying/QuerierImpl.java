@@ -25,18 +25,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.tree.root.querying;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.simple.collections.WrappingSimpleCollection;
 import com.mattunderscore.tree.root.querying.IsBalancedTreeReducer.IsBalancedResult;
 import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
-import com.mattunderscore.trees.query.PostOrderPartialTreeReducer;
 import com.mattunderscore.trees.query.Querier;
+import com.mattunderscore.trees.query.ReductionResult;
 import com.mattunderscore.trees.tree.OpenNode;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of {@link Querier}.
@@ -74,11 +75,11 @@ public final class QuerierImpl implements Querier {
             throw new NullPointerException("A null node cannot be balanced");
         }
 
-        return this.<E, N, IsBalancedResult>reduce(node, isBalancedReducer).isBalanced();
+        return this.<E, N, IsBalancedResult>partialReduce(node, isBalancedReducer).isBalanced();
     }
 
     @Override
-    public <E, N extends OpenNode<E, N>, R> R reduce(N node, PostOrderPartialTreeReducer<E, N, R> reducer) {
+    public <E, N extends OpenNode<E, N>, R> R partialReduce(N node, BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
         return reducerDriver.reduce(node, reducer);
     }
 

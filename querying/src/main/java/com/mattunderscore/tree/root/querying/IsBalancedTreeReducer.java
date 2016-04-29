@@ -27,23 +27,23 @@ package com.mattunderscore.tree.root.querying;
 
 import com.mattunderscore.tree.root.querying.IsBalancedTreeReducer.IsBalancedResult;
 import com.mattunderscore.trees.binary.OpenBinaryTreeNode;
-import com.mattunderscore.trees.query.PostOrderPartialTreeReducer;
 import com.mattunderscore.trees.query.ReductionResult;
 import com.mattunderscore.trees.query.ReductionResults;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 
 import java.util.Collection;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of {@link PostOrderPartialTreeReducer} that tests if a subtree is balanced.
+ * Implementation of a partial reducer that tests if a subtree is balanced.
  * @author Matt Champion on 29/04/16
  */
 /*package*/ final class IsBalancedTreeReducer<E, N extends OpenBinaryTreeNode<E, N>>
-        implements PostOrderPartialTreeReducer<E, N, IsBalancedResult> {
+        implements BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>> {
 
     @Override
-    public ReductionResult<IsBalancedResult> applyToNode(N node, Collection<IsBalancedResult> childResults) {
+    public ReductionResult<IsBalancedResult> apply(N node, Collection<IsBalancedResult> childResults) {
         if (node.isLeaf()) {
             return ReductionResults.result(new IsBalancedResult(true, 0));
         }
