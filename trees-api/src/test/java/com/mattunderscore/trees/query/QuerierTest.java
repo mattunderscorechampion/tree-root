@@ -82,6 +82,11 @@ public final class QuerierTest {
         }
 
         @Override
+        public <E, N extends OpenBinaryTreeNode<E, N>> boolean isPerfectlyBalanced(N node) {
+            return false;
+        }
+
+        @Override
         public <E, N extends OpenNode<E, N>, R> R partialReduce(N node, BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
             return null;
         }

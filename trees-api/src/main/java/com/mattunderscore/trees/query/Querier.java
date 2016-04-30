@@ -124,6 +124,32 @@ public interface Querier {
     }
 
     /**
+     * Test if the subtree starting at the node is perfectly balanced. Allows no difference in the heights of child
+     * nodes.
+     * @param node The node to test
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return If is balanced
+     * @throws NullPointerException If the node is null
+     */
+    <E, N extends OpenBinaryTreeNode<E, N>> boolean isPerfectlyBalanced(N node);
+
+    /**
+     * Test if the trees is perfectly balanced. Allows no difference in the heights of child nodes.
+     * @param tree The tree to test
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return If is balanced
+     * @throws IllegalArgumentException If the tree is empty
+     */
+    default <E, N extends OpenBinaryTreeNode<E, N>> boolean isPerfectlyBalanced(Tree<E, N> tree) {
+        if (tree.isEmpty()) {
+            throw new IllegalArgumentException("An empty tree cannot be balanced");
+        }
+        return isPerfectlyBalanced(tree.getRoot());
+    }
+
+    /**
      * Reduce the subtree starting at a node. Perform a post order traversal of the tree. Apply the reducer to the node
      * and the results of applying the reducer to the nodes children. The reduction can be stopped early.
      * @param node The node to start the reduction at

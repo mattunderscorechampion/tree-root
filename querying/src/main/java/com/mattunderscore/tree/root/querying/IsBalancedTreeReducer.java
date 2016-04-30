@@ -42,9 +42,13 @@ import java.util.stream.Collectors;
 /*package*/ final class IsBalancedTreeReducer<E, N extends OpenBinaryTreeNode<E, N>>
         implements BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>> {
 
-    private static final IsBalancedTreeReducer REDUCER = new IsBalancedTreeReducer();
+    private static final IsBalancedTreeReducer BALANCED_REDUCER = new IsBalancedTreeReducer(1);
+    private static final IsBalancedTreeReducer PERFECTLY_BALANCED_REDUCER = new IsBalancedTreeReducer(0);
 
-    private IsBalancedTreeReducer() {
+    private final int allowedDifference;
+
+    private IsBalancedTreeReducer(int allowedDifference) {
+        this.allowedDifference = allowedDifference;
     }
 
     @Override
@@ -57,7 +61,7 @@ import java.util.stream.Collectors;
         final int maxHeight = getMaxHeight(childResults);
 
         final int heightDifference = maxHeight - minHeight;
-        if (heightDifference > 1) {
+        if (heightDifference > allowedDifference) {
             return ReductionResults.haltAndResult(new IsBalancedResult(false, -1));
         }
 
@@ -90,8 +94,25 @@ import java.util.stream.Collectors;
         }
     }
 
+    /**
+     * A reducing function that tests if a subtree is balanced.
+     * @param <E> The type of elements in the tree
+     * @param <N> The type of nodes in the tree
+     * @return The function
+     */
     public static <E, N extends OpenBinaryTreeNode<E, N>> BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>> get() {
-        return REDUCER;
+        return BALANCED_REDUCER;
+    }
+
+    /**
+     * A reducing function that tests if a subtree is perfectly balanced. No difference in the height of a nodes
+     * children is allowed.
+     * @param <E> The type of elements in the tree
+     * @param <N> The type of nodes in the tree
+     * @return The function
+     */
+    public static <E, N extends OpenBinaryTreeNode<E, N>> BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>> getPerfectly() {
+        return PERFECTLY_BALANCED_REDUCER;
     }
 
     public static final class IsBalancedResult {

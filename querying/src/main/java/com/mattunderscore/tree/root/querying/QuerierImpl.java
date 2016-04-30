@@ -69,6 +69,15 @@ public final class QuerierImpl implements Querier {
     }
 
     @Override
+    public <E, N extends OpenBinaryTreeNode<E, N>> boolean isPerfectlyBalanced(N node) {
+        if (node == null) {
+            throw new NullPointerException("A null node cannot be balanced");
+        }
+
+        return partialReduce(node, IsBalancedTreeReducer.getPerfectly()).isBalanced();
+    }
+
+    @Override
     public <E, N extends OpenNode<E, N>, R> R partialReduce(
             N node,
             BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
