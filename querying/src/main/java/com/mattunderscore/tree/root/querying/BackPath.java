@@ -37,12 +37,10 @@ import java.util.Stack;
 final class BackPath<E, N extends OpenNode<E, N>> {
     private final BackPath<E, N> parent;
     private final N node;
-    private final int depth;
 
     BackPath(BackPath<E, N> parent, N node) {
         this.parent = parent;
         this.node = node;
-        this.depth = parent == null ? 0 : parent.depth + 1;
     }
 
     /**
@@ -57,13 +55,6 @@ final class BackPath<E, N extends OpenNode<E, N>> {
      */
     public N getNode() {
         return node;
-    }
-
-    /**
-     * @return The depth of the node
-     */
-    public int getDepth() {
-        return depth;
     }
 
     /**
