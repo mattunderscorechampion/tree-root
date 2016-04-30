@@ -215,11 +215,32 @@ public final class QuerierImplTest {
         querier.isBalanced(new EmptyConstructor<>().build());
     }
 
+    @Test(expected = NullPointerException.class)
+    public void perfectlyBalancedNull() {
+        final Querier querier = new QuerierImpl();
+
+        querier.isPerfectlyBalanced((BinaryTreeNode<String>) null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyTreePerfectlyBalanced() {
+        final Querier querier = new QuerierImpl();
+
+        querier.isPerfectlyBalanced(new EmptyConstructor<>().build());
+    }
+
     @Test
     public void leafBalanced() {
         final Querier querier = new QuerierImpl();
 
         assertTrue(querier.isBalanced(new Constructor<String>().build("a", new MutableBinaryTreeImpl[] {})));
+    }
+
+    @Test
+    public void leafPerfectlyBalanced() {
+        final Querier querier = new QuerierImpl();
+
+        assertTrue(querier.isPerfectlyBalanced(new Constructor<String>().build("a", new MutableBinaryTreeImpl[] {})));
     }
 
     @Test
@@ -232,6 +253,18 @@ public final class QuerierImplTest {
         final Querier querier = new QuerierImpl();
 
         assertTrue(querier.isBalanced(tree));
+    }
+
+    @Test
+    public void offByOneNotPerfectlyBalanced() {
+        final Constructor<String> constructor = new Constructor<>();
+        final Tree<String, MutableBinaryTreeNode<String>> tree =
+                constructor.build("a", new MutableBinaryTreeImpl[] {
+                        constructor.build("b", new MutableBinaryTreeImpl[]{})});
+
+        final Querier querier = new QuerierImpl();
+
+        assertFalse(querier.isPerfectlyBalanced(tree));
     }
 
     @Test

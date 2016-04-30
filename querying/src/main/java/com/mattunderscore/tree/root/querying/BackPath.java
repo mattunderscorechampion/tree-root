@@ -34,7 +34,7 @@ import java.util.Stack;
 /**
  * Represent a path in reverse order from a leaf back to the node.
  */
-final class BackPath<E, N extends OpenNode<E, N>> {
+/*package*/ final class BackPath<E, N extends OpenNode<E, N>> {
     private final BackPath<E, N> parent;
     private final N node;
 

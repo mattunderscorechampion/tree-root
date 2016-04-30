@@ -61,7 +61,10 @@ import java.util.stream.Collectors;
         final int maxHeight = getMaxHeight(childResults);
 
         final int heightDifference = maxHeight - minHeight;
-        if (heightDifference > allowedDifference) {
+        if (allowedDifference == 0 && childResults.size() <2) {
+            return ReductionResults.haltAndResult(new IsBalancedResult(false, -1));
+        }
+        else if (heightDifference > allowedDifference) {
             return ReductionResults.haltAndResult(new IsBalancedResult(false, -1));
         }
 
@@ -100,7 +103,11 @@ import java.util.stream.Collectors;
      * @param <N> The type of nodes in the tree
      * @return The function
      */
-    public static <E, N extends OpenBinaryTreeNode<E, N>> BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>> get() {
+    public static
+        <E, N extends OpenBinaryTreeNode<E, N>>
+        BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>>
+        get() {
+
         return BALANCED_REDUCER;
     }
 
@@ -111,7 +118,11 @@ import java.util.stream.Collectors;
      * @param <N> The type of nodes in the tree
      * @return The function
      */
-    public static <E, N extends OpenBinaryTreeNode<E, N>> BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>> getPerfectly() {
+    public static
+        <E, N extends OpenBinaryTreeNode<E, N>>
+        BiFunction<N, Collection<IsBalancedResult>, ReductionResult<IsBalancedResult>>
+        getPerfectly() {
+
         return PERFECTLY_BALANCED_REDUCER;
     }
 
