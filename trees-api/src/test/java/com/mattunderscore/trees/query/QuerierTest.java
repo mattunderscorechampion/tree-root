@@ -1,5 +1,7 @@
 package com.mattunderscore.trees.query;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,6 +33,12 @@ public final class QuerierTest {
     @Mock
     private BinaryTreeNode<String> node;
 
+    @Mock
+    private BiFunction<BinaryTreeNode<String>, Collection<String>, ReductionResult<String>> partialReducer;
+
+    @Mock
+    private BiFunction<BinaryTreeNode<String>, Collection<String>, String> reducer;
+
     @Before
     public void setUp() {
         initMocks(this);
@@ -60,9 +68,37 @@ public final class QuerierTest {
     public void treeBalanced() {
         final Querier querier = spy(new TestQuerier());
 
-        querier.pathsToLeaves(tree);
+        querier.isBalanced(tree);
 
-        verify(querier).pathsToLeaves(node);
+        verify(querier).isBalanced(node);
+    }
+
+    @Test
+    public void treePerfectlyBalanced() {
+        final Querier querier = spy(new TestQuerier());
+
+        querier.isPerfectlyBalanced(tree);
+
+        verify(querier).isPerfectlyBalanced(node);
+    }
+
+    @Test
+    public void treePartialReduce() {
+        final Querier querier = spy(new TestQuerier());
+
+        querier.partialReduce(tree, partialReducer);
+
+        verify(querier).partialReduce(node, partialReducer);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void treeReduce() {
+        final Querier querier = spy(new TestQuerier());
+
+        querier.reduce(tree, reducer);
+
+        verify(querier).partialReduce(eq(node), isA(PartialToTotalReductionResultAdapter.class));
     }
 
     private static class TestQuerier implements Querier {
