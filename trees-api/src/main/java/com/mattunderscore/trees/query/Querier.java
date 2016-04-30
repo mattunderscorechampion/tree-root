@@ -211,7 +211,7 @@ public interface Querier {
      */
     default <E, N extends OpenNode<E, N>, R> R reduce(Tree<E, N> tree, BiFunction<N, Collection<R>, R> reducer) {
         if (tree.isEmpty()) {
-            throw new IllegalArgumentException("An empty tree cannot be balanced");
+            throw new IllegalArgumentException("An empty tree cannot be reduced");
         }
 
         return partialReduce(tree.getRoot(), new PartialToTotalReductionResultAdapter<>(reducer));

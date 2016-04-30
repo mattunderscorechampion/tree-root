@@ -1,5 +1,6 @@
 package com.mattunderscore.trees.query;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.spy;
@@ -44,6 +45,17 @@ public final class QuerierTest {
         initMocks(this);
 
         when(tree.getRoot()).thenReturn(node);
+        when(node.isLeaf()).thenReturn(true);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void nodeHeight() {
+        final Querier querier = spy(new TestQuerier());
+
+        querier.height(node);
+
+        verify(querier).reduce(eq(node), isA(BiFunction.class));
     }
 
     @Test
@@ -93,6 +105,16 @@ public final class QuerierTest {
 
     @SuppressWarnings("unchecked")
     @Test
+    public void nodeReduce() {
+        final Querier querier = spy(new TestQuerier());
+
+        querier.reduce(node, reducer);
+
+        verify(querier).partialReduce(eq(node), isA(PartialToTotalReductionResultAdapter.class));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
     public void treeReduce() {
         final Querier querier = spy(new TestQuerier());
 
@@ -101,11 +123,68 @@ public final class QuerierTest {
         verify(querier).partialReduce(eq(node), isA(PartialToTotalReductionResultAdapter.class));
     }
 
+    @Test(expected = NullPointerException.class)
+    public void nullHeight() {
+        final Querier querier = spy(new TestQuerier());
+
+        querier.height((BinaryTreeNode<String>) null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyTreeHeight() {
+        when(tree.isEmpty()).thenReturn(true);
+
+        final Querier querier = spy(new TestQuerier());
+
+        querier.height(tree);
+    }
+
+    @Test
+    public void emptyTreePaths() {
+        when(tree.isEmpty()).thenReturn(true);
+
+        final Querier querier = spy(new TestQuerier());
+
+        assertTrue(querier.pathsToLeaves(tree).isEmpty());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyTreeBalanced() {
+        when(tree.isEmpty()).thenReturn(true);
+
+        final Querier querier = spy(new TestQuerier());
+
+        querier.isBalanced(tree);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyTreePerfectlyBalanced() {
+        when(tree.isEmpty()).thenReturn(true);
+
+        final Querier querier = spy(new TestQuerier());
+
+        querier.isPerfectlyBalanced(tree);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyTreePartialReduce() {
+        when(tree.isEmpty()).thenReturn(true);
+
+        final Querier querier = spy(new TestQuerier());
+
+        querier.partialReduce(tree, partialReducer);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void emptyTreeReduce() {
+        when(tree.isEmpty()).thenReturn(true);
+
+        final Querier querier = spy(new TestQuerier());
+
+        querier.reduce(tree, reducer);
+    }
+
     private static class TestQuerier implements Querier {
-        @Override
-        public <E, N extends OpenNode<E, N>> int height(N node) {
-            return 0;
-        }
 
         @Override
         public <E, N extends OpenNode<E, N>> SimpleCollection<List<N>> pathsToLeaves(N node) {
@@ -122,9 +201,10 @@ public final class QuerierTest {
             return false;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public <E, N extends OpenNode<E, N>, R> R partialReduce(N node, BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
-            return null;
+            return (R) Integer.valueOf(0);
         }
     }
 }

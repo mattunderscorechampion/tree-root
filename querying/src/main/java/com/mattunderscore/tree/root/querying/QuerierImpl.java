@@ -81,6 +81,9 @@ public final class QuerierImpl implements Querier {
     public <E, N extends OpenNode<E, N>, R> R partialReduce(
             N node,
             BiFunction<N, Collection<R>, ReductionResult<R>> reducer) {
+        if (node == null) {
+            throw new NullPointerException("A null node cannot be reduced");
+        }
 
         return reducerDriver.reduce(node, reducer);
     }
