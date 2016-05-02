@@ -45,6 +45,7 @@
         <module>trees-mutable-binary</module>
         <module>common-walkers</module>
         <module>querying</module>
+        <module>common-reducers</module>
     </modules>
 
     <licenses>
