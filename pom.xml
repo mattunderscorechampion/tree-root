@@ -22,30 +22,30 @@
     </properties>
 
     <modules>
-        <module>linked-tree</module>
+        <module>trees-api</module>
+        <module>simple-collections</module>
+        <module>trees-spi</module>
         <module>node-matchers</module>
         <module>node-selectors</module>
-        <module>string-trees</module>
-        <module>tree-wrappers</module>
+        <module>iterators</module>
+        <module>querying</module>
+        <module>tree-traversers</module>
+        <module>common-walkers</module>
+        <module>common-reducers</module>
         <module>trees-utilities</module>
-        <module>trees-api</module>
-        <module>trees-api-examples</module>
+        <module>trees-provider</module>
         <module>trees-basic-nodes</module>
-        <module>trees-binary</module>
+        <module>tree-wrappers</module>
+        <module>linked-tree</module>
         <module>trees-immutable</module>
-        <module>trees-integration-tests</module>
         <module>trees-mutable</module>
         <module>trees-pathcopy</module>
-        <module>trees-provider</module>
-        <module>trees-spi</module>
-        <module>tree-traversers</module>
-        <module>trees-binary-search</module>
-        <module>iterators</module>
-        <module>simple-collections</module>
+        <module>trees-binary</module>
         <module>trees-mutable-binary</module>
-        <module>common-walkers</module>
-        <module>querying</module>
-        <module>common-reducers</module>
+        <module>trees-binary-search</module>
+        <module>string-trees</module>
+        <module>trees-integration-tests</module>
+        <module>trees-api-examples</module>
     </modules>
 
     <licenses>
