@@ -67,7 +67,7 @@ Element: 6
 * [Custom tree implementations](docs/custom-tree-implementations.md)
 * [Simple collections](docs/simple-collections.md)
 * [Iterators](docs/iterators.md)
-* [Tree reducers](docs/reducers.md)
+* [Tree reducers](docs/tree-reducers.md)
 
 ####Targeted Language
 
