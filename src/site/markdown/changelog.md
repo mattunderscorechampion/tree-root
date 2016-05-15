@@ -130,3 +130,4 @@ source nodes
 * Added additional matchers based on comparators
 * Added support for applying a reducing function in post-order to a tree or subtree
 * Added module for common reducers
+* Move markdown documentation so that it is also included in generated site

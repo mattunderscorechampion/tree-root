@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-stylus-skin</artifactId>
+        <version>1.5</version>
+    </skin>
+    <body>
+        <menu ref="modules" />
+        <menu name="Details">
+            <item name="Prior art" href="prior-art.html" />
+            <item name="Design pinciples" href="design-principles.html" />
+            <item name="Changelog" href="changelog.html" />
+            <item name="Definitions" href="definitions.html" />
+            <item name="Concepts" href="concepts.html" />
+            <item name="Examples" href="examples.html" />
+            <item name="Tree implementations" href="tree-implementations.html" />
+            <item name="Setup" href="setup.html" />
+            <item name="SPI" href="spi.html" />
+            <item name="Custom tree implementations" href="custom-tree-implementations.html" />
+            <item name="Simple collections" href="simple-collections.html" />
+            <item name="Iterators" href="iterators.html" />
+            <item name="Tree reducers" href="tree-reducers.html" />
+        </menu>
+        <menu ref="reports" />
+    </body>
+</project>

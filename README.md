@@ -55,19 +55,20 @@ Element: 6
 
 ####Documentation
 
-* [Prior art](docs/prior-art.md)
-* [Design principles](docs/design-principles.md)
+* [Prior art](src/site/markdown/prior-art.md)
+* [Design principles](src/site/markdown/design-principles.md)
+* [Changelog](src/site/markdown/changelog.md)
 * API
-   * [Definitions](docs/definitions.md)
-   * [Concepts](docs/concepts.md)
-   * [Examples](docs/examples.md)
-   * [Tree implementations](docs/tree-implementations.md)
-   * [Setup](docs/setup.md)
-* [SPI](docs/spi.md)
-* [Custom tree implementations](docs/custom-tree-implementations.md)
-* [Simple collections](docs/simple-collections.md)
-* [Iterators](docs/iterators.md)
-* [Tree reducers](docs/tree-reducers.md)
+   * [Definitions](src/site/markdown/definitions.md)
+   * [Concepts](src/site/markdown/concepts.md)
+   * [Examples](src/site/markdown/examples.md)
+   * [Tree implementations](src/site/markdown/tree-implementations.md)
+   * [Setup](src/site/markdown/setup.md)
+* [SPI](src/site/markdown/spi.md)
+* [Custom tree implementations](src/site/markdown/custom-tree-implementations.md)
+* [Simple collections](src/site/markdown/simple-collections.md)
+* [Iterators](src/site/markdown/iterators.md)
+* [Tree reducers](src/site/markdown/tree-reducers.md)
 
 ####Targeted Language
 
