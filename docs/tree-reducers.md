@@ -35,4 +35,22 @@ The height of a tree can then be calculated by
 height = reducerApplier(node, heightReducer)
 ```
 
-Reducing functions can be used as a generic way to evaluate a property of a node based on the properties of its children.
+Reducing functions can be used as a generic way to evaluate a property of a node based on the properties of its
+children.
+
+### Partial reduction
+
+Some functions such as a predicate to test if a tree is balanced may not need to fully traverse the tree. Once an
+unbalanced subtree has been found the entire tree must be unbalanced, any untraversed parts of the tree do not need to
+be visited.
+
+To support this a partial reduction can be performed. A partial reduction function returns a tuple of the result and if
+the reduction should continue. If the reduction should continue the applier passes the result into the reduction of the
+parent node. If the reduction should stop the applier returns the result as the result of the partial tree reduction.
+This more complex contract allows only some of the tree to be traversed to evaluate a function.
+
+### Implementation
+
+The implementation in tree-root uses the iterative method of post-order tree traversal to apply reducing functions. This
+keeps the call stack flat and ensures the simple halting of traversal for partial reductions. A total reduction
+delegates to a partial reduction that always continues to reduce code duplication.
