@@ -9,7 +9,7 @@
         <menu ref="modules" />
         <menu name="Details">
             <item name="Prior art" href="prior-art.html" />
-            <item name="Design pinciples" href="design-principles.html" />
+            <item name="Design principles" href="design-principles.html" />
             <item name="Changelog" href="changelog.html" />
             <item name="Definitions" href="definitions.html" />
             <item name="Concepts" href="concepts.html" />
