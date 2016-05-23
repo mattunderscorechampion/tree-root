@@ -350,4 +350,87 @@ public final class QuerierImplTest {
 
         assertTrue(querier.isBalanced(tree));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void leafBalanceFactor() {
+        final Constructor<String> constructor = new Constructor<>();
+        final MutableBinaryTreeImpl<String> node = constructor.build("a", new MutableBinaryTreeImpl[]{});
+
+        final Querier querier = new QuerierImpl();
+
+        querier.balanceFactor(node.getRoot());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void noRightBalanceFactor() {
+        final Constructor<String> constructor = new Constructor<>();
+        final MutableBinaryTreeImpl<String> node = constructor.build("a", new MutableBinaryTreeImpl[]{
+                constructor.build("b", new MutableBinaryTreeImpl[]{})
+        });
+
+        final Querier querier = new QuerierImpl();
+
+        querier.balanceFactor(node.getRoot());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void noLeftBalanceFactor() {
+        final EmptyConstructor<String> emptyConstructor = new EmptyConstructor<>();
+        final Constructor<String> constructor = new Constructor<>();
+        final MutableBinaryTreeImpl<String> node = constructor.build("a", new MutableBinaryTreeImpl[]{
+                emptyConstructor.build(),
+                constructor.build("b", new MutableBinaryTreeImpl[]{})
+        });
+
+        final Querier querier = new QuerierImpl();
+
+        querier.balanceFactor(node.getRoot());
+    }
+
+    @Test
+    public void leftBalanceFactor() {
+        final Constructor<String> constructor = new Constructor<>();
+        final MutableBinaryTreeImpl<String> node = constructor.build("a", new MutableBinaryTreeImpl[]{
+                constructor.build("b", new MutableBinaryTreeImpl[]{
+                        constructor.build("d", new MutableBinaryTreeImpl[]{})
+                }),
+                constructor.build("c", new MutableBinaryTreeImpl[]{})
+        });
+
+        final Querier querier = new QuerierImpl();
+
+        assertEquals(1, querier.balanceFactor(node.getRoot()));
+    }
+
+    @Test
+    public void rightBalanceFactor() {
+        final Constructor<String> constructor = new Constructor<>();
+        final MutableBinaryTreeImpl<String> node = constructor.build("a", new MutableBinaryTreeImpl[]{
+                constructor.build("b", new MutableBinaryTreeImpl[]{}),
+                constructor.build("c", new MutableBinaryTreeImpl[]{
+                        constructor.build("d", new MutableBinaryTreeImpl[]{})
+                })
+        });
+
+        final Querier querier = new QuerierImpl();
+
+        assertEquals(-1, querier.balanceFactor(node.getRoot()));
+    }
+
+    @Test
+    public void evenBalanceFactor() {
+        final Constructor<String> constructor = new Constructor<>();
+        final MutableBinaryTreeImpl<String> node = constructor.build("a", new MutableBinaryTreeImpl[]{
+                constructor.build("b", new MutableBinaryTreeImpl[]{
+                        constructor.build("d", new MutableBinaryTreeImpl[]{})
+                }),
+                constructor.build("c", new MutableBinaryTreeImpl[]{
+                        constructor.build("d", new MutableBinaryTreeImpl[]{})
+                })
+        });
+
+        final Querier querier = new QuerierImpl();
+
+        assertEquals(0, querier.balanceFactor(node.getRoot()));
+    }
 }

@@ -216,4 +216,29 @@ public interface Querier {
 
         return partialReduce(tree.getRoot(), new PartialToTotalReductionResultAdapter<>(reducer));
     }
+
+    /**
+     * Calculate the balance factor of a node.
+     * @param node The node
+     * @param <E> The element type
+     * @param <N> The node type
+     * @return The balance factor
+     */
+    default <E, N extends OpenBinaryTreeNode<E, N>> int balanceFactor(N node) {
+        if (node.isLeaf()) {
+            throw new IllegalArgumentException("Leaf does not have a balance factor");
+        }
+
+        final N left = node.getLeft();
+        final N right = node.getRight();
+
+        if (left == null || right == null) {
+            throw new IllegalArgumentException("Missing subtree");
+        }
+
+        final int leftHeight = height(left);
+        final int rightHeight = height(right);
+
+        return leftHeight - rightHeight;
+    }
 }
