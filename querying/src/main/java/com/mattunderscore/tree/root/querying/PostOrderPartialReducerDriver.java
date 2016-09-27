@@ -132,17 +132,17 @@ import java.util.stream.Collectors;
                 this.children = new ToTraversalStateIterator<>(node.childIterator());
             }
         }
+    }
 
-        private final class ToTraversalStateIterator<E, N extends OpenNode<E, N>>
-                extends ConvertingIterator<TraversalState<E, N, R>, N> {
-            public ToTraversalStateIterator(Iterator<? extends N> delegate) {
-                super(delegate);
-            }
+    private static final class ToTraversalStateIterator<E, N extends OpenNode<E, N>, R>
+            extends ConvertingIterator<TraversalState<E, N, R>, N> {
+        public ToTraversalStateIterator(Iterator<? extends N> delegate) {
+            super(delegate);
+        }
 
-            @Override
-            protected TraversalState<E, N, R> convert(N n) {
-                return new TraversalState<>(n);
-            }
+        @Override
+        protected TraversalState<E, N, R> convert(N n) {
+            return new TraversalState<>(n);
         }
     }
 }
