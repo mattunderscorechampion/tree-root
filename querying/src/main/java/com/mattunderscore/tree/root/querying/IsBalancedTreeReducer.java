@@ -71,7 +71,7 @@ import java.util.stream.Collectors;
         return ReductionResults.result(new IsBalancedResult(true, maxHeight + 1));
     }
 
-    private final int getMinHeight(Collection<IsBalancedResult> childResults) {
+    private int getMinHeight(Collection<IsBalancedResult> childResults) {
         if (childResults.size() < 2) {
             return 0;
         }
@@ -84,7 +84,7 @@ import java.util.stream.Collectors;
         }
     }
 
-    private final int getMaxHeight(Collection<IsBalancedResult> childResults) {
+    private int getMaxHeight(Collection<IsBalancedResult> childResults) {
         if (childResults.size() == 0) {
             return 0;
         }
