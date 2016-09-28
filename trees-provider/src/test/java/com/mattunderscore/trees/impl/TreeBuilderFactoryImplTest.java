@@ -74,7 +74,12 @@ public class TreeBuilderFactoryImplTest {
     @Test(expected = UnsupportedOperationException.class) // Sorting algorithms not implemented
     public void testSortedTreeBuilder() {
         final SortedTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders()
-            .sortedTreeBuilder(ComparableComparator.get(), new SortingAlgorithm() {
-        });
+            .sortedTreeBuilder(ComparableComparator.get(), new SortingAlgorithm() { });
+    }
+
+    @Test(expected = UnsupportedOperationException.class) // Sorting algorithms not implemented
+    public void testComparableSortedTreeBuilder() {
+        final SortedTreeBuilder<Integer, MutableSettableStructuredNode<Integer>> builder = trees.treeBuilders()
+            .sortedTreeBuilder(new SortingAlgorithm() { });
     }
 }
