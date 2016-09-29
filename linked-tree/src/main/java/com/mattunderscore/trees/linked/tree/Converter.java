@@ -42,6 +42,10 @@ import com.mattunderscore.simple.collections.ArrayListSimpleCollection;
 public final class Converter<E> implements TreeConverter<E, MutableSettableStructuredNode<E>, LinkedTree<E>> {
     @Override
     public <S extends OpenNode<E, S>> LinkedTree<E> build(Tree<E, S> sourceTree) {
+        if (sourceTree.isEmpty()) {
+            return new LinkedTree<>(null);
+        }
+
         final S root = sourceTree.getRoot();
         return duplicate(root.getElement(), root.childIterator(), root.getNumberOfChildren());
     }

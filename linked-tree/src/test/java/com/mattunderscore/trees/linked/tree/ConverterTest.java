@@ -1,19 +1,18 @@
 package com.mattunderscore.trees.linked.tree;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.util.Collections;
-import java.util.Iterator;
-
+import com.mattunderscore.trees.tree.Node;
+import com.mattunderscore.trees.tree.Tree;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
-import com.mattunderscore.trees.tree.Node;
-import com.mattunderscore.trees.tree.Tree;
+import java.util.Collections;
+import java.util.Iterator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 /**
  * Unit tests for {@link Converter}.
@@ -23,6 +22,8 @@ import com.mattunderscore.trees.tree.Tree;
 public final class ConverterTest {
     @Mock
     private Tree<String, Node<String>> tree;
+    @Mock
+    private Tree<String, Node<String>> emptyTree;
     @Mock
     private Node<String> root;
     @Mock
@@ -38,6 +39,7 @@ public final class ConverterTest {
         when(root.childIterator()).thenReturn(childIterator);
         final Iterator emptyIterator = Collections.emptySet().iterator();
         when(child.childIterator()).thenReturn(emptyIterator);
+        when(emptyTree.isEmpty()).thenReturn(true);
     }
 
     @Test
@@ -47,6 +49,13 @@ public final class ConverterTest {
         assertEquals("root", newTree.getRoot().getElement());
         assertEquals("child", newTree.getRoot().getChild(0).getElement());
         assertEquals(1, newTree.getRoot().getNumberOfChildren());
+    }
+
+    @Test
+    public void treeFromEmptyTree() {
+        final Converter<String> converter = new Converter<>();
+        final LinkedTree<String> newTree = converter.build(emptyTree);
+        assertTrue(newTree.isEmpty());
     }
 
     @Test
