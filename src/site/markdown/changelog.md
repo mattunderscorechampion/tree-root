@@ -133,3 +133,4 @@ source nodes
 * Move markdown documentation so that it is also included in generated site
 * Add method to calculate the balance factor for a node
 * Use mattunderscore-common-parent as the parent of the project
+* Add support for copying a tree to a new tree of a different type

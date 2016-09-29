@@ -25,8 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
-import java.util.Comparator;
-
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
@@ -39,7 +37,10 @@ import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.ComparableComparator;
+
+import java.util.Comparator;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.construction.TreeBuilderFactory}.
@@ -49,10 +50,12 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
     private final TopDownTreeRootBuilder topDownTreeRootBuilder;
     private final BottomUpTreeBuilder bottomUpTreeBuilder;
     private final EmptySortedTreeConstructorSupplierImpl emptySortedTreeConstructorSupplier;
+    private final TreeConverterSupplier treeConverterSupplier;
 
     public TreeBuilderFactoryImpl(KeyMappingSupplier keyMappingSupplier, TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, TreeConverterSupplier treeConverterSupplier, EmptySortedTreeConstructorSupplierImpl emptySortedTreeConstructorSupplier) {
         this.emptySortedTreeConstructorSupplier = emptySortedTreeConstructorSupplier;
-        topDownTreeRootBuilder = new TopDownTreeRootBuilderImpl(treeConverterSupplier, emptyTreeConstructorSupplier);
+        this.treeConverterSupplier = treeConverterSupplier;
+        topDownTreeRootBuilder = new TopDownTreeRootBuilderImpl(this.treeConverterSupplier, emptyTreeConstructorSupplier);
         bottomUpTreeBuilder = new BottomUpTreeBuilderImpl(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
     }
 
@@ -86,5 +89,10 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
     @Override
     public <E extends Comparable<E>, N extends OpenNode<E, N>> SortedTreeBuilder<E, N> sortedTreeBuilder(SortingAlgorithm algorithm) {
         return sortedTreeBuilder(ComparableComparator.get(), algorithm);
+    }
+
+    @Override
+    public <E, N extends OpenNode<E, N>, N2 extends OpenNode<E, N2>, T2 extends Tree<E, N2>> T2 copy(Tree<E, N> tree, Class<T2> klass) {
+        return treeConverterSupplier.get(klass).build(tree);
     }
 }

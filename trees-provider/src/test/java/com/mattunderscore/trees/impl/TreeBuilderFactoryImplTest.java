@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
@@ -81,5 +82,17 @@ public class TreeBuilderFactoryImplTest {
     public void testComparableSortedTreeBuilder() {
         final SortedTreeBuilder<Integer, MutableSettableStructuredNode<Integer>> builder = trees.treeBuilders()
             .sortedTreeBuilder(new SortingAlgorithm() { });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testCopy() {
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
+        assertTrue(tree.isEmpty());
+
+        final LinkedTree copy = trees.treeBuilders().copy(tree, LinkedTree.class);
+        assertNotSame(copy, tree);
+        assertTrue(copy.isEmpty());
     }
 }

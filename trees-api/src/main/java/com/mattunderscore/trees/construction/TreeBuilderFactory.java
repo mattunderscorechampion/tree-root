@@ -31,6 +31,7 @@ import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
  * Factory for tree builders.
@@ -86,4 +87,16 @@ public interface TreeBuilderFactory {
      * @return Sorted tree builder
      */
     <E extends Comparable<E>, N extends OpenNode<E, N>> SortedTreeBuilder<E, N> sortedTreeBuilder(SortingAlgorithm algorithm);
+
+    /**
+     * Copy an existing tree.
+     * @param tree The tree to copy
+     * @param klass The type of tree to create
+     * @param <E> The element type of the tree
+     * @param <N> The node type of the tree to copy
+     * @param <N2> The node type of the tree to create
+     * @param <T2> The tree type to create
+     * @return The copied tree
+     */
+    <E, N extends OpenNode<E, N>, N2 extends OpenNode<E, N2>, T2 extends Tree<E, N2>> T2 copy(Tree<E, N> tree, Class<T2> klass);
 }
