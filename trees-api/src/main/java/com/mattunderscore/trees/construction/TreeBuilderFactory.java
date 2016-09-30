@@ -91,6 +91,16 @@ public interface TreeBuilderFactory {
     /**
      * Copy an existing tree.
      * @param tree The tree to copy
+     * @param <E> The element type of the tree
+     * @param <N> The node type of the tree to copy
+     * @param <T> The tree type to copy
+     * @return The copied tree
+     */
+    <E, N extends OpenNode<E, N>, T extends Tree<E, N>> T copy(T tree);
+
+    /**
+     * Copy an existing tree as a different type.
+     * @param tree The tree to copy
      * @param klass The type of tree to create
      * @param <E> The element type of the tree
      * @param <N> The node type of the tree to copy

@@ -91,6 +91,12 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
         return sortedTreeBuilder(ComparableComparator.get(), algorithm);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> T copy(T tree) {
+        return treeConverterSupplier.get((Class<T>)tree.getClass()).build(tree);
+    }
+
     @Override
     public <E, N extends OpenNode<E, N>, N2 extends OpenNode<E, N2>, T2 extends Tree<E, N2>> T2 copy(Tree<E, N> tree, Class<T2> klass) {
         return treeConverterSupplier.get(klass).build(tree);

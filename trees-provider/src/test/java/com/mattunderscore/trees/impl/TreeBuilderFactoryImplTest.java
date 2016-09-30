@@ -95,4 +95,16 @@ public class TreeBuilderFactoryImplTest {
         assertNotSame(copy, tree);
         assertTrue(copy.isEmpty());
     }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testCopySameType() {
+        final BottomUpTreeBuilder<String, MutableSettableStructuredNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
+        final LinkedTree<String> tree = builder.build(LinkedTree.<String>typeKey());
+        assertTrue(tree.isEmpty());
+
+        final LinkedTree copy = trees.treeBuilders().copy(tree);
+        assertNotSame(copy, tree);
+        assertTrue(copy.isEmpty());
+    }
 }

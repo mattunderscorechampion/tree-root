@@ -134,3 +134,4 @@ source nodes
 * Add method to calculate the balance factor for a node
 * Use mattunderscore-common-parent as the parent of the project
 * Add support for copying a tree to a new tree of a different type
+* Add support for copying a tree to a new tree of the same type
