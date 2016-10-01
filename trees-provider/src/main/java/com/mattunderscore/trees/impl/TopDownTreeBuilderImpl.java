@@ -30,7 +30,7 @@ import net.jcip.annotations.NotThreadSafe;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.impl.providers.impl.TreeConverterProvider;
 import com.mattunderscore.trees.linked.tree.LinkedTree;
 import com.mattunderscore.trees.mutable.OpenMutableNode;
 import com.mattunderscore.trees.spi.TreeConverter;
@@ -43,16 +43,16 @@ import com.mattunderscore.trees.tree.Tree;
 @NotThreadSafe
 final class TopDownTreeBuilderImpl<E, N extends OpenNode<E, N>> implements TopDownTreeRootBuilder.TopDownTreeBuilder<E, N> {
     private final LinkedTree<E> tree;
-    private final TreeConverterSupplier treeConverterSupplier;
+    private final TreeConverterProvider treeConverterProvider;
 
-    public TopDownTreeBuilderImpl(TreeConverterSupplier treeConverterSupplier, E root) {
-        this.treeConverterSupplier = treeConverterSupplier;
+    public TopDownTreeBuilderImpl(TreeConverterProvider treeConverterProvider, E root) {
+        this.treeConverterProvider = treeConverterProvider;
         tree = new LinkedTree<>(root);
     }
 
     @Override
     public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        final TreeConverter<E, N, T> converter = treeConverterSupplier.get(klass);
+        final TreeConverter<E, N, T> converter = treeConverterProvider.get(klass);
         return converter.build(tree);
     }
 

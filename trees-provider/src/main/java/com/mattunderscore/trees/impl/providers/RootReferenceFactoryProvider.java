@@ -1,13 +1,13 @@
-package com.mattunderscore.trees.impl.suppliers;
+package com.mattunderscore.trees.impl.providers;
 
 import com.mattunderscore.trees.binary.OpenMutableBinaryTreeNode;
 import com.mattunderscore.trees.spi.ParentReferenceFactory;
 
 /**
- * Supplier for {@link ParentReferenceFactory} components.
+ * Provider for {@link ParentReferenceFactory} components.
  * @author Matt Champion on 26/08/2015
  */
-public interface RootReferenceFactorySupplier {
+public interface RootReferenceFactoryProvider {
     /**
      * Get a {@link ParentReferenceFactory}.
      * @param node The node to get a reference factory for

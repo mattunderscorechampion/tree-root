@@ -32,15 +32,15 @@ import com.mattunderscore.simple.collections.SimpleCollection;
 import com.mattunderscore.tree.root.querying.QuerierImpl;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.IteratorRemoveHandlerSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.NodeToRelatedTreeConverterSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplierImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplierImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.impl.providers.impl.EmptySortedTreeConstructorProviderImpl;
+import com.mattunderscore.trees.impl.providers.impl.EmptyTreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.IteratorRemoveHandlerProvider;
+import com.mattunderscore.trees.impl.providers.impl.KeyMappingProvider;
+import com.mattunderscore.trees.impl.providers.impl.NodeToRelatedTreeConverterProvider;
+import com.mattunderscore.trees.impl.providers.impl.RootReferenceFactoryProviderImpl;
+import com.mattunderscore.trees.impl.providers.impl.RotatorProviderImpl;
+import com.mattunderscore.trees.impl.providers.impl.TreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConverterProvider;
 import com.mattunderscore.trees.query.Querier;
 import com.mattunderscore.trees.selection.NodeSelectorFactory;
 import com.mattunderscore.trees.selection.TreeSelectorFactory;
@@ -65,23 +65,23 @@ public final class TreesImpl implements Trees {
     private final Querier querier;
 
     public TreesImpl() {
-        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
+        final KeyMappingProvider keyMappingProvider = KeyMappingProvider.get();
         nodeSelectorFactory = new NodeSelectorFactoryImpl();
         treeWalkerFactory = new TreeWalkerFactoryImpl();
         treeIteratorFactory = new TreeIteratorFactoryImpl(
-            new IteratorRemoveHandlerSupplier(keyMappingSupplier));
+            new IteratorRemoveHandlerProvider(keyMappingProvider));
         treeBuilderFactory = new TreeBuilderFactoryImpl(
-            keyMappingSupplier,
-            new TreeConstructorSupplier(keyMappingSupplier),
-            new EmptyTreeConstructorSupplier(keyMappingSupplier),
-            new TreeConverterSupplier(keyMappingSupplier),
-            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier));
+            keyMappingProvider,
+            new TreeConstructorProvider(keyMappingProvider),
+            new EmptyTreeConstructorProvider(keyMappingProvider),
+            new TreeConverterProvider(keyMappingProvider),
+            new EmptySortedTreeConstructorProviderImpl(keyMappingProvider));
         treeSelectorFactory = new TreeSelectorFactoryImpl(
-            new NodeToRelatedTreeConverterSupplier(keyMappingSupplier, treeBuilderFactory));
+            new NodeToRelatedTreeConverterProvider(keyMappingProvider, treeBuilderFactory));
         nodeStreamFactory = new NodeStreamFactoryImpl(treeIteratorFactory);
         transformations = new TreeTransformerImpl(
-            new RootReferenceFactorySupplierImpl(keyMappingSupplier),
-            new RotatorSupplierImpl(keyMappingSupplier));
+            new RootReferenceFactoryProviderImpl(keyMappingProvider),
+            new RotatorProviderImpl(keyMappingProvider));
         querier = new QuerierImpl();
     }
 

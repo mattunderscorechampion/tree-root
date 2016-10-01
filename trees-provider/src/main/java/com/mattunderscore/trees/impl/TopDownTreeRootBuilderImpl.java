@@ -28,8 +28,8 @@ package com.mattunderscore.trees.impl;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.impl.providers.impl.EmptyTreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConverterProvider;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
@@ -38,22 +38,22 @@ import com.mattunderscore.trees.tree.Tree;
  * @author Matt Champion on 15/08/14.
  */
 final class TopDownTreeRootBuilderImpl<E, N extends OpenNode<E, N>> implements TopDownTreeRootBuilder<E, N> {
-    private final EmptyTreeConstructorSupplier emptyTreeConstructorSupplier;
-    private final TreeConverterSupplier treeConverterSupplier;
+    private final EmptyTreeConstructorProvider emptyTreeConstructorProvider;
+    private final TreeConverterProvider treeConverterProvider;
 
-    public TopDownTreeRootBuilderImpl(TreeConverterSupplier treeConverterSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier) {
-        this.treeConverterSupplier = treeConverterSupplier;
-        this.emptyTreeConstructorSupplier = emptyTreeConstructorSupplier;
+    public TopDownTreeRootBuilderImpl(TreeConverterProvider treeConverterProvider, EmptyTreeConstructorProvider emptyTreeConstructorProvider) {
+        this.treeConverterProvider = treeConverterProvider;
+        this.emptyTreeConstructorProvider = emptyTreeConstructorProvider;
     }
 
     @Override
     public TopDownTreeBuilder<E, N> root(E e) {
-        return new TopDownTreeBuilderImpl<>(treeConverterSupplier, e);
+        return new TopDownTreeBuilderImpl<>(treeConverterProvider, e);
     }
 
     @Override
     public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        final EmptyTreeConstructor<E, N, T> constructor = emptyTreeConstructorSupplier.get(klass);
+        final EmptyTreeConstructor<E, N, T> constructor = emptyTreeConstructorProvider.get(klass);
         return constructor.build();
     }
 

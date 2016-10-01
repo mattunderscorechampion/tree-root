@@ -23,45 +23,33 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ServiceLoader;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.spi.KeyMapping;
+import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Supplier for {@link KeyMapping}.
+ * Provider for {@link TreeConverter}.
  * @author Matt Champion on 25/07/2015
  */
-public final class KeyMappingSupplier {
-    private final Map<Class<?>, KeyMapping> componentMap;
+public final class TreeConverterProvider extends AbstractServiceLoaderProvider<TreeConverter> {
 
-    /* package */ KeyMappingSupplier(Iterable<KeyMapping> loader) {
-        componentMap = new HashMap<>();
-        for (final KeyMapping component : loader) {
-            componentMap.put(component.forClass(), component);
-        }
+    public TreeConverterProvider(KeyMappingProvider keyMappingProvider) {
+        super(keyMappingProvider, TreeConverter.class);
     }
 
     /**
      * @param klass The key to lookup
-     * @param <T> The type of key
+     * @param <E> The type of element
+     * @param <N> The type of node
+     * @param <T> The type of tree
      * @return The empty tree constructor
      * @throws OperationNotSupportedForType If the key is not supported
      */
     @SuppressWarnings("unchecked")
-    public <T> Class<? extends T> get(Class<T> klass) {
-        final KeyMapping<T> keyMapping = componentMap.get(klass);
-        if (keyMapping == null) {
-            return klass;
-        }
-        return keyMapping.getConcreteClass();
-    }
-
-    public static KeyMappingSupplier get() {
-        return new KeyMappingSupplier(ServiceLoader.load(KeyMapping.class));
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> TreeConverter<E, N, T> get(Class<T> klass) {
+        return getRaw(klass);
     }
 }

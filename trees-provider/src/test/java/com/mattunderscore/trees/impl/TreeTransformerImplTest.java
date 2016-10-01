@@ -12,11 +12,11 @@ import org.mockito.Mock;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.binary.MutableBinaryTree;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.impl.suppliers.RootReferenceFactorySupplier;
-import com.mattunderscore.trees.impl.suppliers.RotatorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.RootReferenceFactorySupplierImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.RotatorSupplierImpl;
+import com.mattunderscore.trees.impl.providers.RootReferenceFactoryProvider;
+import com.mattunderscore.trees.impl.providers.RotatorProvider;
+import com.mattunderscore.trees.impl.providers.impl.KeyMappingProvider;
+import com.mattunderscore.trees.impl.providers.impl.RootReferenceFactoryProviderImpl;
+import com.mattunderscore.trees.impl.providers.impl.RotatorProviderImpl;
 import com.mattunderscore.trees.spi.ParentReference;
 import com.mattunderscore.trees.spi.ParentReferenceFactory;
 import com.mattunderscore.trees.spi.Rotator;
@@ -35,11 +35,11 @@ public final class TreeTransformerImplTest {
     @Mock
     private MutableBinaryTreeNode<String> root;
     @Mock
-    private RootReferenceFactorySupplier referenceFactorySupplier;
+    private RootReferenceFactoryProvider referenceFactoryProvider;
     @Mock
     private ParentReferenceFactory<String, MutableBinaryTreeNode<String>> referenceFactory;
     @Mock
-    private RotatorSupplier rotatorSupplier;
+    private RotatorProvider rotatorProvider;
     @Mock
     private Rotator rotator;
     @Mock
@@ -49,19 +49,19 @@ public final class TreeTransformerImplTest {
     public void setUp() {
         initMocks(this);
         when(tree.getRoot()).thenReturn(rootParent);
-        when(rotatorSupplier.get(isA(MutableBinaryTreeNode.class), isA(RotationDirection.class))).thenReturn(rotator);
-        when(referenceFactorySupplier.get(rootParent)).thenReturn(referenceFactory);
-        when(referenceFactorySupplier.get(root)).thenReturn(referenceFactory);
+        when(rotatorProvider.get(isA(MutableBinaryTreeNode.class), isA(RotationDirection.class))).thenReturn(rotator);
+        when(referenceFactoryProvider.get(rootParent)).thenReturn(referenceFactory);
+        when(referenceFactoryProvider.get(root)).thenReturn(referenceFactory);
         when(referenceFactory.wrap(tree)).thenReturn(reference);
         when(referenceFactory.wrap(rootParent)).thenReturn(reference);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void rotateEmptyTree() {
-        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
+        final KeyMappingProvider keyMappingProvider = KeyMappingProvider.get();
         final TreeTransformerImpl transformer = new TreeTransformerImpl(
-            new RootReferenceFactorySupplierImpl(keyMappingSupplier),
-            new RotatorSupplierImpl(keyMappingSupplier));
+            new RootReferenceFactoryProviderImpl(keyMappingProvider),
+            new RotatorProviderImpl(keyMappingProvider));
 
         when(tree.isEmpty()).thenReturn(true);
 
@@ -70,20 +70,20 @@ public final class TreeTransformerImplTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void rotateRootInPlaceNoneFound() {
-        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
+        final KeyMappingProvider keyMappingProvider = KeyMappingProvider.get();
         final TreeTransformerImpl transformer = new TreeTransformerImpl(
-            new RootReferenceFactorySupplierImpl(keyMappingSupplier),
-            new RotatorSupplierImpl(keyMappingSupplier));
+            new RootReferenceFactoryProviderImpl(keyMappingProvider),
+            new RotatorProviderImpl(keyMappingProvider));
 
         transformer.rotateRootInPlace(tree, RotationDirection.LEFT);
     }
 
     @Test(expected = OperationNotSupportedForType.class)
     public void rotateInPlaceNoneFound() {
-        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
+        final KeyMappingProvider keyMappingProvider = KeyMappingProvider.get();
         final TreeTransformerImpl transformer = new TreeTransformerImpl(
-            new RootReferenceFactorySupplierImpl(keyMappingSupplier),
-            new RotatorSupplierImpl(keyMappingSupplier));
+            new RootReferenceFactoryProviderImpl(keyMappingProvider),
+            new RotatorProviderImpl(keyMappingProvider));
 
         transformer.rotateInPlace(rootParent, root, RotationDirection.LEFT);
     }
@@ -91,8 +91,8 @@ public final class TreeTransformerImplTest {
     @Test
     public void rotateInPlaceWithMock() {
         final TreeTransformerImpl transformer = new TreeTransformerImpl(
-            referenceFactorySupplier,
-            rotatorSupplier);
+            referenceFactoryProvider,
+            rotatorProvider);
 
         transformer.rotateInPlace(rootParent, root, RotationDirection.LEFT);
 
@@ -104,8 +104,8 @@ public final class TreeTransformerImplTest {
     public void rotateRootInPlaceWithMock() {
         when(tree.getRoot()).thenReturn(root);
         final TreeTransformerImpl transformer = new TreeTransformerImpl(
-            referenceFactorySupplier,
-            rotatorSupplier);
+            referenceFactoryProvider,
+            rotatorProvider);
 
         transformer.rotateRootInPlace(tree, RotationDirection.LEFT);
 

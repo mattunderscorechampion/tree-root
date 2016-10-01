@@ -23,39 +23,45 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ServiceLoader;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.spi.TreeBuilderFactoryAware;
-import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.spi.KeyMapping;
 
 /**
- * Supplier for {@link NodeToRelatedTreeConverter}.
- * @author Matt Champion on 24/07/2015
+ * Provider for {@link KeyMapping}.
+ * @author Matt Champion on 25/07/2015
  */
-public final class NodeToRelatedTreeConverterSupplier extends AbstractServiceLoaderSupplier<NodeToRelatedTreeConverter> {
-    public NodeToRelatedTreeConverterSupplier(KeyMappingSupplier keyMappingSupplier, TreeBuilderFactory factory) {
-        super(keyMappingSupplier, NodeToRelatedTreeConverter.class);
-        componentMap
-            .values()
-            .stream()
-            .filter(converter -> converter instanceof TreeBuilderFactoryAware)
-            .forEach(converter -> ((TreeBuilderFactoryAware) converter).setTreeBuilderFactory(factory));
+public final class KeyMappingProvider {
+    private final Map<Class<?>, KeyMapping> componentMap;
+
+    /* package */ KeyMappingProvider(Iterable<KeyMapping> loader) {
+        componentMap = new HashMap<>();
+        for (final KeyMapping component : loader) {
+            componentMap.put(component.forClass(), component);
+        }
     }
 
     /**
-     * @param node The node to convert
-     * @param <E> The type of element
-     * @param <N> The type of node
-     * @param <T> The type of tree
+     * @param klass The key to lookup
+     * @param <T> The type of key
      * @return The empty tree constructor
      * @throws OperationNotSupportedForType If the key is not supported
      */
     @SuppressWarnings("unchecked")
-    public <E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> NodeToRelatedTreeConverter<E, N, T> get(N node) {
-        return getRaw(node.getClass());
+    public <T> Class<? extends T> get(Class<T> klass) {
+        final KeyMapping<T> keyMapping = componentMap.get(klass);
+        if (keyMapping == null) {
+            return klass;
+        }
+        return keyMapping.getConcreteClass();
+    }
+
+    public static KeyMappingProvider get() {
+        return new KeyMappingProvider(ServiceLoader.load(KeyMapping.class));
     }
 }

@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,16 +33,16 @@ import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.spi.SPIComponent;
 
 /**
- * Abstract Supplier implementation for {@link SPIComponent}s that constructs components using the {@link ServiceLoader}.
+ * Abstract Provider implementation for {@link SPIComponent}s that constructs components using the {@link ServiceLoader}.
  * @author Matt Champion on 24/07/2015
  */
-public abstract class AbstractServiceLoaderSupplier<C extends SPIComponent> {
+public abstract class AbstractServiceLoaderProvider<C extends SPIComponent> {
     protected final Map<Class<?>, C> componentMap = new HashMap<>();
-    private final KeyMappingSupplier keyMappingSupplier;
+    private final KeyMappingProvider keyMappingProvider;
     private final Class<C> componentClass;
 
-    public AbstractServiceLoaderSupplier(KeyMappingSupplier keyMappingSupplier, Class<C> componentClass) {
-        this.keyMappingSupplier = keyMappingSupplier;
+    public AbstractServiceLoaderProvider(KeyMappingProvider keyMappingProvider, Class<C> componentClass) {
+        this.keyMappingProvider = keyMappingProvider;
         this.componentClass = componentClass;
         final ServiceLoader<C> loader = ServiceLoader.load(componentClass);
         for (final C component : loader) {
@@ -57,7 +57,7 @@ public abstract class AbstractServiceLoaderSupplier<C extends SPIComponent> {
      * @throws OperationNotSupportedForType Dependent on onNoComponent
      */
     protected final C getRaw(Class<?> rawClass) {
-        final Class<?> mappedClass = keyMappingSupplier.get(rawClass);
+        final Class<?> mappedClass = keyMappingProvider.get(rawClass);
         final C component = componentMap.get(mappedClass);
         if (component == null) {
             return onNoComponent(rawClass);

@@ -1,4 +1,4 @@
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -8,14 +8,14 @@ import org.mockito.Mock;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.impl.suppliers.RootReferenceFactorySupplier;
+import com.mattunderscore.trees.impl.providers.RootReferenceFactoryProvider;
 
 /**
- * Unit tests for {@link RootReferenceFactorySupplierImpl}.
+ * Unit tests for {@link RootReferenceFactoryProviderImpl}.
  *
  * @author Matt Champion on 22/08/2015
  */
-public final class ParentReferenceFactorySupplierTest {
+public final class ParentReferenceFactoryProviderTest {
     @Mock
     private MutableBinaryTreeNode<String> node;
 
@@ -26,7 +26,7 @@ public final class ParentReferenceFactorySupplierTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void noneFound() {
-        final RootReferenceFactorySupplier supplier = new RootReferenceFactorySupplierImpl(KeyMappingSupplier.get());
+        final RootReferenceFactoryProvider supplier = new RootReferenceFactoryProviderImpl(KeyMappingProvider.get());
         supplier.get(node);
     }
 }

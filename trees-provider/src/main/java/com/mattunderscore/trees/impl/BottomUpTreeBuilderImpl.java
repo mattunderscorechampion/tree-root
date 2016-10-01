@@ -32,9 +32,9 @@ import net.jcip.annotations.Immutable;
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
+import com.mattunderscore.trees.impl.providers.impl.EmptyTreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.KeyMappingProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConstructorProvider;
 import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.spi.TreeConstructor;
 import com.mattunderscore.trees.tree.OpenNode;
@@ -45,42 +45,42 @@ import com.mattunderscore.trees.tree.Tree;
  */
 @Immutable
 final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements BottomUpTreeBuilder<E, N> {
-    private final TreeConstructorSupplier treeConstructorSupplier;
-    private final EmptyTreeConstructorSupplier emptyTreeConstructorSupplier;
-    private final KeyMappingSupplier keyMappingSupplier;
+    private final TreeConstructorProvider treeConstructorProvider;
+    private final EmptyTreeConstructorProvider emptyTreeConstructorProvider;
+    private final KeyMappingProvider keyMappingProvider;
     private final E root;
     private final BottomUpTreeBuilder<E, N>[] children;
 
     @SuppressWarnings("unchecked")
-    public BottomUpTreeBuilderImpl(TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, KeyMappingSupplier keyMappingSupplier) {
-        this(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, null, new BottomUpTreeBuilder[0]);
+    public BottomUpTreeBuilderImpl(TreeConstructorProvider treeConstructorProvider, EmptyTreeConstructorProvider emptyTreeConstructorProvider, KeyMappingProvider keyMappingProvider) {
+        this(treeConstructorProvider, emptyTreeConstructorProvider, keyMappingProvider, null, new BottomUpTreeBuilder[0]);
     }
 
     @SuppressWarnings("unchecked")
-    private BottomUpTreeBuilderImpl(TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, KeyMappingSupplier keyMappingSupplier, E e) {
-        this(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, e, new BottomUpTreeBuilder[0]);
+    private BottomUpTreeBuilderImpl(TreeConstructorProvider treeConstructorProvider, EmptyTreeConstructorProvider emptyTreeConstructorProvider, KeyMappingProvider keyMappingProvider, E e) {
+        this(treeConstructorProvider, emptyTreeConstructorProvider, keyMappingProvider, e, new BottomUpTreeBuilder[0]);
     }
 
-    private BottomUpTreeBuilderImpl(TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, KeyMappingSupplier keyMappingSupplier, E e, BottomUpTreeBuilder<E, N>[] builders) {
-        this.treeConstructorSupplier = treeConstructorSupplier;
-        this.emptyTreeConstructorSupplier = emptyTreeConstructorSupplier;
-        this.keyMappingSupplier = keyMappingSupplier;
+    private BottomUpTreeBuilderImpl(TreeConstructorProvider treeConstructorProvider, EmptyTreeConstructorProvider emptyTreeConstructorProvider, KeyMappingProvider keyMappingProvider, E e, BottomUpTreeBuilder<E, N>[] builders) {
+        this.treeConstructorProvider = treeConstructorProvider;
+        this.emptyTreeConstructorProvider = emptyTreeConstructorProvider;
+        this.keyMappingProvider = keyMappingProvider;
         root = e;
         children = builders;
     }
 
     @Override
     public BottomUpTreeBuilder<E, N> create(E e) {
-        return new BottomUpTreeBuilderImpl<>(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier, e);
+        return new BottomUpTreeBuilderImpl<>(treeConstructorProvider, emptyTreeConstructorProvider, keyMappingProvider, e);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder) {
         return new BottomUpTreeBuilderImpl<>(
-            treeConstructorSupplier,
-            emptyTreeConstructorSupplier,
-            keyMappingSupplier,
+            treeConstructorProvider,
+            emptyTreeConstructorProvider,
+            keyMappingProvider,
             e,
             new BottomUpTreeBuilder[] { builder });
     }
@@ -89,9 +89,9 @@ final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements Bott
     @Override
     public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1) {
         return new BottomUpTreeBuilderImpl<>(
-            treeConstructorSupplier,
-            emptyTreeConstructorSupplier,
-            keyMappingSupplier,
+            treeConstructorProvider,
+            emptyTreeConstructorProvider,
+            keyMappingProvider,
             e,
             new BottomUpTreeBuilder[] {
                 builder0,
@@ -103,9 +103,9 @@ final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements Bott
     @Override
     public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2) {
         return new BottomUpTreeBuilderImpl<>(
-            treeConstructorSupplier,
-            emptyTreeConstructorSupplier,
-            keyMappingSupplier,
+            treeConstructorProvider,
+            emptyTreeConstructorProvider,
+            keyMappingProvider,
             e,
             new BottomUpTreeBuilder[] {
                 builder0,
@@ -118,9 +118,9 @@ final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements Bott
     @Override
     public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2, BottomUpTreeBuilder<E, N> builder3) {
         return new BottomUpTreeBuilderImpl<>(
-            treeConstructorSupplier,
-            emptyTreeConstructorSupplier,
-            keyMappingSupplier,
+            treeConstructorProvider,
+            emptyTreeConstructorProvider,
+            keyMappingProvider,
             e,
             new BottomUpTreeBuilder[] {
                 builder0,
@@ -134,9 +134,9 @@ final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements Bott
     @Override
     public BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N> builder0, BottomUpTreeBuilder<E, N> builder1, BottomUpTreeBuilder<E, N> builder2, BottomUpTreeBuilder<E, N> builder3, BottomUpTreeBuilder<E, N> builder4) {
         return new BottomUpTreeBuilderImpl<>(
-            treeConstructorSupplier,
-            emptyTreeConstructorSupplier,
-            keyMappingSupplier,
+            treeConstructorProvider,
+            emptyTreeConstructorProvider,
+            keyMappingProvider,
             e,
             new BottomUpTreeBuilder[] {
                 builder0,
@@ -151,9 +151,9 @@ final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements Bott
     @SafeVarargs
     public final BottomUpTreeBuilder<E, N> create(E e, BottomUpTreeBuilder<E, N>... builders) {
         return new BottomUpTreeBuilderImpl<>(
-            treeConstructorSupplier,
-            emptyTreeConstructorSupplier,
-            keyMappingSupplier,
+            treeConstructorProvider,
+            emptyTreeConstructorProvider,
+            keyMappingProvider,
             e,
             builders);
     }
@@ -162,15 +162,15 @@ final class BottomUpTreeBuilderImpl<E, N extends OpenNode<E, N>> implements Bott
     @Override
     public <T extends Tree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
         if (root == null) {
-            final EmptyTreeConstructor<E, N, T> constructor = emptyTreeConstructorSupplier.get(klass);
+            final EmptyTreeConstructor<E, N, T> constructor = emptyTreeConstructorProvider.get(klass);
             return constructor.build();
         }
         else {
-            final T[] subtrees = (T[])Array.newInstance(keyMappingSupplier.get(klass), children.length);
+            final T[] subtrees = (T[])Array.newInstance(keyMappingProvider.get(klass), children.length);
             for (int i = 0; i < children.length; i++) {
                 subtrees[i] = children[i].build(klass);
             }
-            final TreeConstructor<E, N, T> constructor = treeConstructorSupplier.get(klass);
+            final TreeConstructor<E, N, T> constructor = treeConstructorProvider.get(klass);
             return constructor.build(root, subtrees);
         }
     }

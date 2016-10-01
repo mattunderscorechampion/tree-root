@@ -23,26 +23,25 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.spi.DefaultRemovalHandler;
-import com.mattunderscore.trees.spi.IteratorRemoveHandler;
+import com.mattunderscore.trees.spi.EmptyTreeConstructor;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Supplier for {@link IteratorRemoveHandler}.
- * @author Matt Champion on 25/07/2015
+ * Provider for {@link EmptyTreeConstructor}s.
+ * @author Matt Champion on 24/07/2015
  */
-public final class IteratorRemoveHandlerSupplier extends AbstractServiceLoaderSupplier<IteratorRemoveHandler> {
+public final class EmptyTreeConstructorProvider extends AbstractServiceLoaderProvider<EmptyTreeConstructor> {
 
-    public IteratorRemoveHandlerSupplier(KeyMappingSupplier keyMappingSupplier) {
-        super(keyMappingSupplier, IteratorRemoveHandler.class);
+    public EmptyTreeConstructorProvider(KeyMappingProvider keyMappingProvider) {
+        super(keyMappingProvider, EmptyTreeConstructor.class);
     }
 
     /**
-     * @param tree The tree to get the handler for
+     * @param klass The key to lookup
      * @param <E> The type of element
      * @param <N> The type of node
      * @param <T> The type of tree
@@ -50,12 +49,7 @@ public final class IteratorRemoveHandlerSupplier extends AbstractServiceLoaderSu
      * @throws OperationNotSupportedForType If the key is not supported
      */
     @SuppressWarnings("unchecked")
-    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> get(T tree) {
-        return getRaw(tree.getClass());
-    }
-
-    @Override
-    protected IteratorRemoveHandler onNoComponent(Class<?> rawClass) {
-        return new DefaultRemovalHandler<>();
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> EmptyTreeConstructor<E, N, T> get(Class<T> klass) {
+        return getRaw(klass);
     }
 }

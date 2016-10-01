@@ -31,7 +31,7 @@ import java.util.List;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.suppliers.EmptySortedTreeConstructorSupplier;
+import com.mattunderscore.trees.impl.providers.EmptySortedTreeConstructorProvider;
 import com.mattunderscore.trees.sorted.SortingTree;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
@@ -41,12 +41,12 @@ import com.mattunderscore.trees.tree.OpenNode;
  * @author Matt Champion on 06/09/14.
  */
 public final class SortingTreeBuilderImpl<E, N extends OpenNode<E, N>> implements SortingTreeBuilder<E, N> {
-    private final EmptySortedTreeConstructorSupplier emptyTreeConstructorSupplier;
+    private final EmptySortedTreeConstructorProvider emptyTreeConstructorProvider;
     private final Comparator<E> comparator;
     private final List<E> elements = new ArrayList<>();
 
-    public SortingTreeBuilderImpl(EmptySortedTreeConstructorSupplier emptyTreeConstructorSupplier, Comparator<E> comparator) {
-        this.emptyTreeConstructorSupplier = emptyTreeConstructorSupplier;
+    public SortingTreeBuilderImpl(EmptySortedTreeConstructorProvider emptyTreeConstructorProvider, Comparator<E> comparator) {
+        this.emptyTreeConstructorProvider = emptyTreeConstructorProvider;
         this.comparator = comparator;
     }
 
@@ -58,7 +58,7 @@ public final class SortingTreeBuilderImpl<E, N extends OpenNode<E, N>> implement
 
     @Override
     public <T extends SortingTree<E, N>> T build(Class<T> klass) throws OperationNotSupportedForType {
-        final EmptySortedTreeConstructor<E, N, T> constructor = emptyTreeConstructorSupplier.get(klass);
+        final EmptySortedTreeConstructor<E, N, T> constructor = emptyTreeConstructorProvider.get(klass);
         final T tree = constructor.build(comparator);
         for (final E element : elements) {
             tree.addElement(element);

@@ -1,4 +1,4 @@
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import org.junit.Test;
 
@@ -6,16 +6,15 @@ import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Unit tests for {@link TreeConverterSupplier}.
+ * Unit tests for {@link EmptyTreeConstructorProvider}.
  *
  * @author Matt Champion on 23/08/2015
  */
-public final class TreeConverterSupplierTest {
-
+public final class EmptyTreeConstructorProviderTest {
     @Test(expected = OperationNotSupportedForType.class)
     public void get() {
-        final TreeConverterSupplier supplier = new TreeConverterSupplier(
-            KeyMappingSupplier.get());
+        final EmptyTreeConstructorProvider supplier = new EmptyTreeConstructorProvider(
+            KeyMappingProvider.get());
 
         supplier.get(Tree.class);
     }

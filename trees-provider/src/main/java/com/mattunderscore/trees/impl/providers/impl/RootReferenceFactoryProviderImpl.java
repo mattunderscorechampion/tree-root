@@ -23,33 +23,23 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
-import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.spi.EmptyTreeConstructor;
-import com.mattunderscore.trees.tree.OpenNode;
-import com.mattunderscore.trees.tree.Tree;
+import com.mattunderscore.trees.binary.OpenMutableBinaryTreeNode;
+import com.mattunderscore.trees.impl.providers.RootReferenceFactoryProvider;
+import com.mattunderscore.trees.spi.ParentReferenceFactory;
 
 /**
- * Supplier for {@link EmptyTreeConstructor}s.
- * @author Matt Champion on 24/07/2015
+ * Implementation {@link RootReferenceFactoryProvider}.
+ * @author Matt Champion on 22/08/2015
  */
-public final class EmptyTreeConstructorSupplier extends AbstractServiceLoaderSupplier<EmptyTreeConstructor> {
-
-    public EmptyTreeConstructorSupplier(KeyMappingSupplier keyMappingSupplier) {
-        super(keyMappingSupplier, EmptyTreeConstructor.class);
+public final class RootReferenceFactoryProviderImpl extends AbstractServiceLoaderProvider<ParentReferenceFactory> implements RootReferenceFactoryProvider {
+    public RootReferenceFactoryProviderImpl(KeyMappingProvider keyMappingProvider) {
+        super(keyMappingProvider, ParentReferenceFactory.class);
     }
 
-    /**
-     * @param klass The key to lookup
-     * @param <E> The type of element
-     * @param <N> The type of node
-     * @param <T> The type of tree
-     * @return The empty tree constructor
-     * @throws OperationNotSupportedForType If the key is not supported
-     */
-    @SuppressWarnings("unchecked")
-    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> EmptyTreeConstructor<E, N, T> get(Class<T> klass) {
-        return getRaw(klass);
+    @Override
+    public <E, N extends OpenMutableBinaryTreeNode<E, N>> ParentReferenceFactory<E, N> get(N node) {
+        return getRaw(node.getClass());
     }
 }

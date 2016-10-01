@@ -25,22 +25,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.mattunderscore.trees.impl;
 
+import java.util.Comparator;
+
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.construction.TopDownTreeRootBuilder;
 import com.mattunderscore.trees.construction.TreeBuilderFactory;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.impl.providers.impl.EmptySortedTreeConstructorProviderImpl;
+import com.mattunderscore.trees.impl.providers.impl.EmptyTreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.KeyMappingProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConverterProvider;
 import com.mattunderscore.trees.sorted.SortedTreeBuilder;
 import com.mattunderscore.trees.sorted.SortingAlgorithm;
 import com.mattunderscore.trees.sorted.SortingTreeBuilder;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 import com.mattunderscore.trees.utilities.ComparableComparator;
-
-import java.util.Comparator;
 
 /**
  * Implementation of {@link com.mattunderscore.trees.construction.TreeBuilderFactory}.
@@ -49,14 +49,14 @@ import java.util.Comparator;
 public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
     private final TopDownTreeRootBuilder topDownTreeRootBuilder;
     private final BottomUpTreeBuilder bottomUpTreeBuilder;
-    private final EmptySortedTreeConstructorSupplierImpl emptySortedTreeConstructorSupplier;
-    private final TreeConverterSupplier treeConverterSupplier;
+    private final EmptySortedTreeConstructorProviderImpl emptySortedTreeConstructorProvider;
+    private final TreeConverterProvider treeConverterProvider;
 
-    public TreeBuilderFactoryImpl(KeyMappingSupplier keyMappingSupplier, TreeConstructorSupplier treeConstructorSupplier, EmptyTreeConstructorSupplier emptyTreeConstructorSupplier, TreeConverterSupplier treeConverterSupplier, EmptySortedTreeConstructorSupplierImpl emptySortedTreeConstructorSupplier) {
-        this.emptySortedTreeConstructorSupplier = emptySortedTreeConstructorSupplier;
-        this.treeConverterSupplier = treeConverterSupplier;
-        topDownTreeRootBuilder = new TopDownTreeRootBuilderImpl(this.treeConverterSupplier, emptyTreeConstructorSupplier);
-        bottomUpTreeBuilder = new BottomUpTreeBuilderImpl(treeConstructorSupplier, emptyTreeConstructorSupplier, keyMappingSupplier);
+    public TreeBuilderFactoryImpl(KeyMappingProvider keyMappingProvider, TreeConstructorProvider treeConstructorProvider, EmptyTreeConstructorProvider emptyTreeConstructorProvider, TreeConverterProvider treeConverterProvider, EmptySortedTreeConstructorProviderImpl emptySortedTreeConstructorProvider) {
+        this.emptySortedTreeConstructorProvider = emptySortedTreeConstructorProvider;
+        this.treeConverterProvider = treeConverterProvider;
+        topDownTreeRootBuilder = new TopDownTreeRootBuilderImpl(treeConverterProvider, emptyTreeConstructorProvider);
+        bottomUpTreeBuilder = new BottomUpTreeBuilderImpl(treeConstructorProvider, emptyTreeConstructorProvider, keyMappingProvider);
     }
 
     @SuppressWarnings("unchecked")
@@ -73,12 +73,12 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
 
     @Override
     public <E, N extends OpenNode<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder(Comparator<E> comparator) {
-        return new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, comparator);
+        return new SortingTreeBuilderImpl<>(emptySortedTreeConstructorProvider, comparator);
     }
 
     @Override
     public <E extends Comparable<E>, N extends OpenNode<E, N>> SortingTreeBuilder<E, N> sortingTreeBuilder() {
-        return new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, ComparableComparator.get());
+        return new SortingTreeBuilderImpl<>(emptySortedTreeConstructorProvider, ComparableComparator.get());
     }
 
     @Override
@@ -94,11 +94,11 @@ public final class TreeBuilderFactoryImpl implements TreeBuilderFactory {
     @SuppressWarnings("unchecked")
     @Override
     public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> T copy(T tree) {
-        return treeConverterSupplier.get((Class<T>)tree.getClass()).build(tree);
+        return treeConverterProvider.get((Class<T>)tree.getClass()).build(tree);
     }
 
     @Override
     public <E, N extends OpenNode<E, N>, N2 extends OpenNode<E, N2>, T2 extends Tree<E, N2>> T2 copy(Tree<E, N> tree, Class<T2> klass) {
-        return treeConverterSupplier.get(klass).build(tree);
+        return treeConverterProvider.get(klass).build(tree);
     }
 }

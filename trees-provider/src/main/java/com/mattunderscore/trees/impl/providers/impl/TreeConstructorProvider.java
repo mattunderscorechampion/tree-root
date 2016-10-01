@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.spi.TreeConstructor;
@@ -31,13 +31,13 @@ import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Supplier for {@link TreeConstructor}.
+ * Provider for {@link TreeConstructor}.
  * @author Matt Champion on 25/07/2015
  */
-public final class TreeConstructorSupplier extends AbstractServiceLoaderSupplier<TreeConstructor> {
+public final class TreeConstructorProvider extends AbstractServiceLoaderProvider<TreeConstructor> {
 
-    public TreeConstructorSupplier(KeyMappingSupplier keyMappingSupplier) {
-        super(keyMappingSupplier, TreeConstructor.class);
+    public TreeConstructorProvider(KeyMappingProvider keyMappingProvider) {
+        super(keyMappingProvider, TreeConstructor.class);
     }
 
     /**

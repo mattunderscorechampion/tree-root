@@ -33,11 +33,11 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.impl.providers.impl.EmptySortedTreeConstructorProviderImpl;
+import com.mattunderscore.trees.impl.providers.impl.EmptyTreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.KeyMappingProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConverterProvider;
 
 /**
  * Unit tests for {@link MutableTreeImplNodeConverter}.
@@ -47,14 +47,14 @@ public final class MutableTreeImplNodeConverterTest {
 
     @Test
     public void key() {
-        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
+        final KeyMappingProvider keyMappingProvider = KeyMappingProvider.get();
         final MutableTreeImplNodeConverter<String> converter = new MutableTreeImplNodeConverter<>();
         converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
-            keyMappingSupplier,
-            new TreeConstructorSupplier(keyMappingSupplier),
-            new EmptyTreeConstructorSupplier(keyMappingSupplier),
-            new TreeConverterSupplier(keyMappingSupplier),
-            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier)));
+            keyMappingProvider,
+            new TreeConstructorProvider(keyMappingProvider),
+            new EmptyTreeConstructorProvider(keyMappingProvider),
+            new TreeConverterProvider(keyMappingProvider),
+            new EmptySortedTreeConstructorProviderImpl(keyMappingProvider)));
         assertEquals(MutableTreeImpl.class, converter.forClass());
     }
 
@@ -67,14 +67,14 @@ public final class MutableTreeImplNodeConverterTest {
             builder.create("right"))
             .build(MutableTree.typeKey());
 
-        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
+        final KeyMappingProvider keyMappingProvider = KeyMappingProvider.get();
         final MutableTreeImplNodeConverter<String> converter = new MutableTreeImplNodeConverter<>();
         converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
-            keyMappingSupplier,
-            new TreeConstructorSupplier(keyMappingSupplier),
-            new EmptyTreeConstructorSupplier(keyMappingSupplier),
-            new TreeConverterSupplier(keyMappingSupplier),
-            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier)));
+            keyMappingProvider,
+            new TreeConstructorProvider(keyMappingProvider),
+            new EmptyTreeConstructorProvider(keyMappingProvider),
+            new TreeConverterProvider(keyMappingProvider),
+            new EmptySortedTreeConstructorProviderImpl(keyMappingProvider)));
 
         final MutableTree<String, MutableSettableNode<String>> newTree = converter.treeFromRootNode(tree.getRoot());
         assertFalse(newTree.isEmpty());

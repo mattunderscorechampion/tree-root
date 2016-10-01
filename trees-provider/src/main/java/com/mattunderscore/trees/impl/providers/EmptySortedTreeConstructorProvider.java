@@ -1,4 +1,4 @@
-package com.mattunderscore.trees.impl.suppliers;
+package com.mattunderscore.trees.impl.providers;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
@@ -6,10 +6,10 @@ import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Supplier for {@link EmptySortedTreeConstructor}.
+ * Provider for {@link EmptySortedTreeConstructor}.
  * @author Matt Champion on 25/07/2015
  */
-public interface EmptySortedTreeConstructorSupplier {
+public interface EmptySortedTreeConstructorProvider {
     /**
      * @param klass The key to lookup
      * @param <E> The type of element

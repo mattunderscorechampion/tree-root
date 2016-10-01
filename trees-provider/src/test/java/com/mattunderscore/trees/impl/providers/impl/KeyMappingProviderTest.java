@@ -1,4 +1,4 @@
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -6,23 +6,21 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ServiceLoader;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.spi.KeyMapping;
 import com.mattunderscore.trees.tree.Node;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Unit tests for {@link KeyMappingSupplier}.
+ * Unit tests for {@link KeyMappingProvider}.
  *
  * @author Matt Champion on 25/08/2015
  */
-public final class KeyMappingSupplierTest {
+public final class KeyMappingProviderTest {
 
     @Mock
     private Iterable<KeyMapping> loader;
@@ -43,14 +41,14 @@ public final class KeyMappingSupplierTest {
 
     @Test
     public void getReal() {
-        final KeyMappingSupplier supplier = KeyMappingSupplier.get();
+        final KeyMappingProvider supplier = KeyMappingProvider.get();
 
         assertEquals(Tree.class, supplier.get(Tree.class));
     }
 
     @Test
     public void getFakes() {
-        final KeyMappingSupplier supplier = new KeyMappingSupplier(loader);
+        final KeyMappingProvider supplier = new KeyMappingProvider(loader);
 
         assertEquals(FakeTree.class, supplier.get(Tree.class));
     }

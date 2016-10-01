@@ -23,23 +23,27 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
-import com.mattunderscore.trees.binary.OpenMutableBinaryTreeNode;
-import com.mattunderscore.trees.impl.suppliers.RootReferenceFactorySupplier;
-import com.mattunderscore.trees.spi.ParentReferenceFactory;
+import com.mattunderscore.trees.impl.providers.EmptySortedTreeConstructorProvider;
+import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
+import com.mattunderscore.trees.tree.OpenNode;
+import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Implementation {@link RootReferenceFactorySupplier}.
- * @author Matt Champion on 22/08/2015
+ * Provider for {@link EmptySortedTreeConstructor}.
+ * @author Matt Champion on 25/07/2015
  */
-public final class RootReferenceFactorySupplierImpl extends AbstractServiceLoaderSupplier<ParentReferenceFactory> implements RootReferenceFactorySupplier {
-    public RootReferenceFactorySupplierImpl(KeyMappingSupplier keyMappingSupplier) {
-        super(keyMappingSupplier, ParentReferenceFactory.class);
+public final class EmptySortedTreeConstructorProviderImpl extends AbstractServiceLoaderProvider<EmptySortedTreeConstructor>
+        implements EmptySortedTreeConstructorProvider {
+
+    public EmptySortedTreeConstructorProviderImpl(KeyMappingProvider keyMappingProvider) {
+        super(keyMappingProvider, EmptySortedTreeConstructor.class);
     }
 
     @Override
-    public <E, N extends OpenMutableBinaryTreeNode<E, N>> ParentReferenceFactory<E, N> get(N node) {
-        return getRaw(node.getClass());
+    @SuppressWarnings("unchecked")
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> EmptySortedTreeConstructor<E, N, T> get(Class<T> klass) {
+        return getRaw(klass);
     }
 }

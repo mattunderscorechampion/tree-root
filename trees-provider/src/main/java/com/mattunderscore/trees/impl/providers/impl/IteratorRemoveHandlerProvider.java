@@ -23,27 +23,39 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
-import com.mattunderscore.trees.impl.suppliers.EmptySortedTreeConstructorSupplier;
-import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
+import com.mattunderscore.trees.OperationNotSupportedForType;
+import com.mattunderscore.trees.spi.DefaultRemovalHandler;
+import com.mattunderscore.trees.spi.IteratorRemoveHandler;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Supplier for {@link EmptySortedTreeConstructor}.
+ * Provider for {@link IteratorRemoveHandler}.
  * @author Matt Champion on 25/07/2015
  */
-public final class EmptySortedTreeConstructorSupplierImpl extends AbstractServiceLoaderSupplier<EmptySortedTreeConstructor>
-        implements EmptySortedTreeConstructorSupplier {
+public final class IteratorRemoveHandlerProvider extends AbstractServiceLoaderProvider<IteratorRemoveHandler> {
 
-    public EmptySortedTreeConstructorSupplierImpl(KeyMappingSupplier keyMappingSupplier) {
-        super(keyMappingSupplier, EmptySortedTreeConstructor.class);
+    public IteratorRemoveHandlerProvider(KeyMappingProvider keyMappingProvider) {
+        super(keyMappingProvider, IteratorRemoveHandler.class);
+    }
+
+    /**
+     * @param tree The tree to get the handler for
+     * @param <E> The type of element
+     * @param <N> The type of node
+     * @param <T> The type of tree
+     * @return The empty tree constructor
+     * @throws OperationNotSupportedForType If the key is not supported
+     */
+    @SuppressWarnings("unchecked")
+    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> IteratorRemoveHandler<E, N, T> get(T tree) {
+        return getRaw(tree.getClass());
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> EmptySortedTreeConstructor<E, N, T> get(Class<T> klass) {
-        return getRaw(klass);
+    protected IteratorRemoveHandler onNoComponent(Class<?> rawClass) {
+        return new DefaultRemovalHandler<>();
     }
 }

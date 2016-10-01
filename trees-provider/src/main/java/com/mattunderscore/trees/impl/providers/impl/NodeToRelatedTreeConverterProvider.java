@@ -23,25 +23,31 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
-import com.mattunderscore.trees.spi.TreeConverter;
+import com.mattunderscore.trees.construction.TreeBuilderFactory;
+import com.mattunderscore.trees.spi.TreeBuilderFactoryAware;
+import com.mattunderscore.trees.spi.NodeToRelatedTreeConverter;
 import com.mattunderscore.trees.tree.OpenNode;
 import com.mattunderscore.trees.tree.Tree;
 
 /**
- * Supplier for {@link TreeConverter}.
- * @author Matt Champion on 25/07/2015
+ * Provider for {@link NodeToRelatedTreeConverter}.
+ * @author Matt Champion on 24/07/2015
  */
-public final class TreeConverterSupplier extends AbstractServiceLoaderSupplier<TreeConverter> {
-
-    public TreeConverterSupplier(KeyMappingSupplier keyMappingSupplier) {
-        super(keyMappingSupplier, TreeConverter.class);
+public final class NodeToRelatedTreeConverterProvider extends AbstractServiceLoaderProvider<NodeToRelatedTreeConverter> {
+    public NodeToRelatedTreeConverterProvider(KeyMappingProvider keyMappingProvider, TreeBuilderFactory factory) {
+        super(keyMappingProvider, NodeToRelatedTreeConverter.class);
+        componentMap
+            .values()
+            .stream()
+            .filter(converter -> converter instanceof TreeBuilderFactoryAware)
+            .forEach(converter -> ((TreeBuilderFactoryAware) converter).setTreeBuilderFactory(factory));
     }
 
     /**
-     * @param klass The key to lookup
+     * @param node The node to convert
      * @param <E> The type of element
      * @param <N> The type of node
      * @param <T> The type of tree
@@ -49,7 +55,7 @@ public final class TreeConverterSupplier extends AbstractServiceLoaderSupplier<T
      * @throws OperationNotSupportedForType If the key is not supported
      */
     @SuppressWarnings("unchecked")
-    public <E, N extends OpenNode<E, N>, T extends Tree<E, N>> TreeConverter<E, N, T> get(Class<T> klass) {
-        return getRaw(klass);
+    public <E, N extends OpenNode<E, ? extends N>, T extends Tree<E, ? extends N>> NodeToRelatedTreeConverter<E, N, T> get(N node) {
+        return getRaw(node.getClass());
     }
 }

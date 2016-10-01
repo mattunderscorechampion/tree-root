@@ -13,7 +13,7 @@ import org.mockito.Mock;
 
 import com.mattunderscore.trees.binary.BinaryTreeNode;
 import com.mattunderscore.trees.construction.TypeKey;
-import com.mattunderscore.trees.impl.suppliers.EmptySortedTreeConstructorSupplier;
+import com.mattunderscore.trees.impl.providers.EmptySortedTreeConstructorProvider;
 import com.mattunderscore.trees.spi.EmptySortedTreeConstructor;
 import com.mattunderscore.trees.utilities.ComparableComparator;
 
@@ -27,13 +27,13 @@ public final class SortingTreeBuilderImplTest {
     @Mock
     private EmptySortedTreeConstructor emptySortedTreeConstructor;
     @Mock
-    private EmptySortedTreeConstructorSupplier emptySortedTreeConstructorSupplier;
+    private EmptySortedTreeConstructorProvider emptySortedTreeConstructorProvider;
 
     @Before
     public void setUp() {
         initMocks(this);
 
-        when(emptySortedTreeConstructorSupplier.get(TestSortingTree.class)).thenReturn(emptySortedTreeConstructor);
+        when(emptySortedTreeConstructorProvider.get(TestSortingTree.class)).thenReturn(emptySortedTreeConstructor);
         when(emptySortedTreeConstructor.build(isA(Comparator.class))).thenReturn(tree);
     }
 
@@ -41,14 +41,14 @@ public final class SortingTreeBuilderImplTest {
     public void buildFromClass() {
         final Comparator<Integer> comparator = ComparableComparator.get();
         final SortingTreeBuilderImpl<Integer, BinaryTreeNode<Integer>> builder =
-            new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, comparator);
+            new SortingTreeBuilderImpl<>(emptySortedTreeConstructorProvider, comparator);
         builder
             .addElement(5)
             .addElement(2)
             .addElement(3)
             .build(TestSortingTree.class);
 
-        verify(emptySortedTreeConstructorSupplier).get(TestSortingTree.class);
+        verify(emptySortedTreeConstructorProvider).get(TestSortingTree.class);
         verify(tree).addElement(5);
         verify(tree).addElement(2);
         verify(tree).addElement(3);
@@ -58,14 +58,14 @@ public final class SortingTreeBuilderImplTest {
     public void buildFromKey() {
         final Comparator<Integer> comparator = ComparableComparator.get();
         final SortingTreeBuilderImpl<Integer, BinaryTreeNode<Integer>> builder =
-            new SortingTreeBuilderImpl<>(emptySortedTreeConstructorSupplier, comparator);
+            new SortingTreeBuilderImpl<>(emptySortedTreeConstructorProvider, comparator);
         builder
             .addElement(5)
             .addElement(2)
             .addElement(3)
             .build(new TypeKey<TestSortingTree>() {});
 
-        verify(emptySortedTreeConstructorSupplier).get(TestSortingTree.class);
+        verify(emptySortedTreeConstructorProvider).get(TestSortingTree.class);
         verify(tree).addElement(5);
         verify(tree).addElement(2);
         verify(tree).addElement(3);

@@ -1,4 +1,4 @@
-package com.mattunderscore.trees.impl.suppliers.impl;
+package com.mattunderscore.trees.impl.providers.impl;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -8,15 +8,15 @@ import org.mockito.Mock;
 
 import com.mattunderscore.trees.OperationNotSupportedForType;
 import com.mattunderscore.trees.binary.MutableBinaryTreeNode;
-import com.mattunderscore.trees.impl.suppliers.RotatorSupplier;
+import com.mattunderscore.trees.impl.providers.RotatorProvider;
 import com.mattunderscore.trees.transformation.RotationDirection;
 
 /**
- * Unit tests for {@link RotatorSupplierImpl}.
+ * Unit tests for {@link RotatorProviderImpl}.
  *
  * @author Matt Champion on 22/08/2015
  */
-public final class RotatorSupplierTest {
+public final class RotatorProviderTest {
     @Mock
     private MutableBinaryTreeNode<String> node;
 
@@ -27,13 +27,13 @@ public final class RotatorSupplierTest {
 
     @Test(expected = OperationNotSupportedForType.class)
     public void noneFoundLeft() {
-        final RotatorSupplier supplier = new RotatorSupplierImpl(KeyMappingSupplier.get());
+        final RotatorProvider supplier = new RotatorProviderImpl(KeyMappingProvider.get());
         supplier.get(node, RotationDirection.LEFT);
     }
 
     @Test(expected = OperationNotSupportedForType.class)
     public void noneFoundRight() {
-        final RotatorSupplier supplier = new RotatorSupplierImpl(KeyMappingSupplier.get());
+        final RotatorProvider supplier = new RotatorProviderImpl(KeyMappingProvider.get());
         supplier.get(node, RotationDirection.RIGHT);
     }
 }

@@ -36,12 +36,11 @@ import org.junit.Test;
 import com.mattunderscore.trees.Trees;
 import com.mattunderscore.trees.construction.BottomUpTreeBuilder;
 import com.mattunderscore.trees.impl.TreeBuilderFactoryImpl;
-import com.mattunderscore.trees.impl.TreesImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptySortedTreeConstructorSupplierImpl;
-import com.mattunderscore.trees.impl.suppliers.impl.EmptyTreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.KeyMappingSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConstructorSupplier;
-import com.mattunderscore.trees.impl.suppliers.impl.TreeConverterSupplier;
+import com.mattunderscore.trees.impl.providers.impl.EmptySortedTreeConstructorProviderImpl;
+import com.mattunderscore.trees.impl.providers.impl.EmptyTreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.KeyMappingProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConstructorProvider;
+import com.mattunderscore.trees.impl.providers.impl.TreeConverterProvider;
 import com.mattunderscore.trees.mutable.MutableNode;
 
 /**
@@ -56,14 +55,14 @@ public final class NodeConverterTest {
         final BottomUpTreeBuilder<String, MutableNode<String>> builder = trees.treeBuilders().bottomUpBuilder();
         final PathCopyTree<String> tree = builder.create("a", builder.create("b"), builder.create("c")).build(PathCopyTree.typeKey());
 
-        final KeyMappingSupplier keyMappingSupplier = KeyMappingSupplier.get();
+        final KeyMappingProvider keyMappingProvider = KeyMappingProvider.get();
         final NodeConverter<String> converter = new NodeConverter<>();
         converter.setTreeBuilderFactory(new TreeBuilderFactoryImpl(
-            keyMappingSupplier,
-            new TreeConstructorSupplier(keyMappingSupplier),
-            new EmptyTreeConstructorSupplier(keyMappingSupplier),
-            new TreeConverterSupplier(keyMappingSupplier),
-            new EmptySortedTreeConstructorSupplierImpl(keyMappingSupplier)));
+            keyMappingProvider,
+            new TreeConstructorProvider(keyMappingProvider),
+            new EmptyTreeConstructorProvider(keyMappingProvider),
+            new TreeConverterProvider(keyMappingProvider),
+            new EmptySortedTreeConstructorProviderImpl(keyMappingProvider)));
 
         final PathCopyTree<String> convertedTree =
             converter.treeFromRootNode(tree.getRoot());

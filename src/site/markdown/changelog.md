@@ -135,3 +135,4 @@ source nodes
 * Use mattunderscore-common-parent as the parent of the project
 * Add support for copying a tree to a new tree of a different type
 * Add support for copying a tree to a new tree of the same type
+* Rename suppliers to providers to prevent confusion with the Java 8 class
