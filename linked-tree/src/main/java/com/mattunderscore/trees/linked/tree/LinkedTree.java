@@ -28,16 +28,14 @@ package com.mattunderscore.trees.linked.tree;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
-import net.jcip.annotations.NotThreadSafe;
-
-import com.mattunderscore.iterators.FilteringIterator;
+import com.mattunderscore.iterators.NonNullIterator;
 import com.mattunderscore.trees.base.AbstractSettableNode;
 import com.mattunderscore.trees.construction.TypeKey;
 import com.mattunderscore.trees.mutable.MutableSettableStructuredNode;
 import com.mattunderscore.trees.mutable.MutableTree;
-import com.mattunderscore.simple.collections.ArrayListSimpleCollection;
+
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * A simple tree implementation. Commonly used for temporary trees.
@@ -144,26 +142,5 @@ public final class LinkedTree<E> extends AbstractSettableNode<E, MutableSettable
      */
     public static <E> TypeKey<LinkedTree<E>> typeKey() {
         return new TypeKey<LinkedTree<E>>() {};
-    }
-
-    private static final class NonNullIterator<T> extends FilteringIterator<T> {
-        private NonNullIterator(Iterator<T> delegate) {
-            super(delegate);
-        }
-
-        @Override
-        protected boolean accept(T element) {
-            return element != null;
-        }
-
-        @Override
-        protected boolean isRemoveSupported() {
-            return true;
-        }
-
-        @Override
-        protected void remove(T current) {
-            delegate.remove();
-        }
     }
 }

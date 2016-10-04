@@ -29,9 +29,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
-import net.jcip.annotations.NotThreadSafe;
+import com.mattunderscore.iterators.NonNullIterator;
 
-import com.mattunderscore.iterators.FilteringIterator;
+import net.jcip.annotations.NotThreadSafe;
 
 /**
  * Wrap a {@link Collection} as a {@link SimpleCollection}.
@@ -57,12 +57,7 @@ public final class WrappingSimpleCollection<E> implements SimpleCollection<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new FilteringIterator<E>(delegateCollection.iterator()) {
-            @Override
-            protected boolean accept(E element) {
-                return element != null;
-            }
-        };
+        return new NonNullIterator<>(delegateCollection.iterator());
     }
 
     @Override
