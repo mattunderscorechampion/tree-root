@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.matchers;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import com.mattunderscore.trees.tree.OpenNode;
@@ -47,6 +48,29 @@ public final class GreaterThanMatcher<E> implements Predicate<OpenNode<? extends
     @Override
     public boolean test(OpenNode<? extends E, ?> openNode) {
         return comparator.compare(value, openNode.getElement()) < 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            @SuppressWarnings("unchecked")
+            final GreaterThanMatcher<E> matcher = (GreaterThanMatcher<E>)o;
+            return matcher.comparator.equals(comparator) && matcher.value.equals(value);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, comparator);
     }
 
     /**
