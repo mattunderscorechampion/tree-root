@@ -1,5 +1,6 @@
 package com.mattunderscore.trees.matchers;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -36,5 +37,44 @@ public final class LessThanMatcherTest {
         final OpenNode<Integer, Node<Integer>> node = new ImmutableNode<Integer, Node<Integer>>(5, new Object[0]) {};
         final Predicate<OpenNode<? extends Integer, ?>> matcher = LessThanMatcher.create(5);
         assertFalse(matcher.test(node));
+    }
+
+    @Test
+    public void testEquals() {
+        final Predicate<OpenNode<? extends Integer, ?>> matcher0 = LessThanMatcher.create(3);
+        final Predicate<OpenNode<? extends Integer, ?>> matcher1 = LessThanMatcher.create(3);
+
+        assertTrue(matcher0.equals(matcher1));
+        assertTrue(matcher1.equals(matcher0));
+        assertEquals(matcher0.hashCode(), matcher1.hashCode());
+    }
+
+    @Test
+    public void testEqualsSelf() {
+        final Predicate<OpenNode<? extends Integer, ?>> matcher0 = LessThanMatcher.create(3);
+
+        assertTrue(matcher0.equals(matcher0));
+    }
+
+    @Test
+    public void testNotEquals0() {
+        final Predicate<OpenNode<? extends Integer, ?>> matcher0 = LessThanMatcher.create(3);
+        final Predicate<OpenNode<? extends Integer, ?>> matcher1 = LessThanMatcher.create(5);
+
+        assertFalse(matcher0.equals(matcher1));
+    }
+
+    @Test
+    public void testNotEquals1() {
+        final Predicate<OpenNode<? extends Integer, ?>> matcher0 = LessThanMatcher.create(3);
+
+        assertFalse(matcher0.equals(null));
+    }
+
+    @Test
+    public void testNotEquals2() {
+        final Predicate<OpenNode<? extends Integer, ?>> matcher0 = LessThanMatcher.create(3);
+
+        assertFalse(matcher0.equals(new Object()));
     }
 }
