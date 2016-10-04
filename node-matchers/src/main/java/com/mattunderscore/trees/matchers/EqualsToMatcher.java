@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 package com.mattunderscore.trees.matchers;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import com.mattunderscore.trees.tree.OpenNode;
@@ -35,7 +36,7 @@ import com.mattunderscore.trees.utilities.ComparableComparator;
  * Matches nodes with an element equal to some value according to a comparator not the equals method.
  * @author Matt Champion on 14/09/2015
  */
-public class EqualsToMatcher<E> implements Predicate<OpenNode<? extends E, ?>> {
+public final class EqualsToMatcher<E> implements Predicate<OpenNode<? extends E, ?>> {
     private final Comparator<E> comparator;
     private final E value;
 
@@ -47,6 +48,29 @@ public class EqualsToMatcher<E> implements Predicate<OpenNode<? extends E, ?>> {
     @Override
     public boolean test(OpenNode<? extends E, ?> openNode) {
         return comparator.compare(value, openNode.getElement()) == 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        else if (o == this) {
+            return true;
+        }
+        else if (o.getClass().equals(getClass())) {
+            @SuppressWarnings("unchecked")
+            final EqualsToMatcher<E> matcher = (EqualsToMatcher<E>)o;
+            return matcher.comparator.equals(comparator) && matcher.value.equals(value);
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, comparator);
     }
 
     /**
